@@ -1006,6 +1006,7 @@
   @media (max-width: 768px) {
     .header-phone { display: none; }
     .hero-stats-inner { flex-direction: column; }
+    #pieces [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
     .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
     .steps-grid { grid-template-columns: 1fr; }
     .testimonials-grid { grid-template-columns: 1fr; }
@@ -1666,6 +1667,71 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ═══ PIECES A APPORTER ═══ -->
+<section class="section section-alt" id="pieces">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Dossier</span>
+      <h2>Les pieces a preparer</h2>
+      <p class="section-lead">Pour que votre dossier soit traite rapidement, voici les documents que Jeremy vous aidera a reunir.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto" class="reveal">
+
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--green)"></div>
+        <div style="font-size:20px;margin-bottom:10px">&#128203;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)">Justificatifs d'identite</div>
+        <ul style="font-size:13px;color:var(--muted);line-height:1.8;list-style:none;padding:0">
+          <li>&#10003; Piece d'identite (CNI ou passeport)</li>
+          <li>&#10003; Justificatif de domicile de moins de 3 mois</li>
+          <li>&#10003; Attestation de propriete ou bail de location</li>
+        </ul>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)"></div>
+        <div style="font-size:20px;margin-bottom:10px">&#128176;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)">Justificatifs de revenus</div>
+        <ul style="font-size:13px;color:var(--muted);line-height:1.8;list-style:none;padding:0">
+          <li>&#10003; Dernier avis d'imposition (revenus N-1)</li>
+          <li>&#10003; Nombre de personnes dans le foyer fiscal</li>
+          <li>&#10003; Releve de prestations CAF (si applicable)</li>
+        </ul>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--emerald)"></div>
+        <div style="font-size:20px;margin-bottom:10px">&#127968;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)">Informations sur le logement</div>
+        <ul style="font-size:13px;color:var(--muted);line-height:1.8;list-style:none;padding:0">
+          <li>&#10003; Anciennete du logement (+ de 15 ans requis)</li>
+          <li>&#10003; Surface habitable</li>
+          <li>&#10003; Photos des pieces a adapter (salle de bain, escaliers...)</li>
+        </ul>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--green-light)"></div>
+        <div style="font-size:20px;margin-bottom:10px">&#128221;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)">Documents medicaux (si - de 70 ans)</div>
+        <ul style="font-size:13px;color:var(--muted);line-height:1.8;list-style:none;padding:0">
+          <li>&#10003; Certificat medical attestant la perte d'autonomie</li>
+          <li>&#10003; Notification GIR (si evaluation APA effectuee)</li>
+          <li>&#10003; Justificatif de handicap (MDPH, si applicable)</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:28px" class="reveal">
+      <div style="display:inline-flex;align-items:center;gap:10px;background:var(--green-pale);border:1px solid rgba(45,106,79,.2);border-radius:100px;padding:12px 24px;font-size:13px;color:var(--green);font-weight:600">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Pas de panique — Jeremy vous accompagne pour chaque document
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ CALCULATOR ═══ -->
 <section class="section" id="calculateur">
   <div class="container">
@@ -2035,7 +2101,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="whatsapp-label">WhatsApp</span>
 </a>
 
-<!-- ═══ CHATBOT ═══ -->
+<!-- ═══ CHATBOT SOPHIE IA ═══ -->
 <div class="chatbot-bubble" id="chatbot">
   <div class="chatbot-panel" id="chatbot-panel">
     <div class="chatbot-header">
@@ -2044,8 +2110,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
         <div>
-          <div class="chatbot-name">Sophie — Conseillère IDF</div>
-          <div class="chatbot-status"><span class="chatbot-dot"></span> Disponible maintenant</div>
+          <div class="chatbot-name">Sophie — Conseillere IA</div>
+          <div class="chatbot-status"><span class="chatbot-dot"></span> <span id="chat-status-text">Disponible maintenant</span></div>
         </div>
       </div>
       <button type="button" class="chatbot-close" onclick="toggleChat()">
@@ -2053,15 +2119,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </button>
     </div>
     <div class="chatbot-messages" id="chat-messages">
-      <div class="msg msg-bot">Bonjour ! Je suis Sophie, conseillère MaPrimeAdapt IDF. Pour vous aider au mieux, c'est pour vous ou pour un proche ?</div>
+      <div class="msg msg-bot">Bonjour ! Je suis Sophie, votre conseillere MaPrimeAdapt. Je connais toutes les aides pour adapter votre logement. Posez-moi n'importe quelle question, ou dites-moi si c'est pour vous ou pour un proche.</div>
     </div>
     <div class="chatbot-quick" id="quick-replies">
-      <button type="button" class="quick-btn" onclick="chatQuickReply('Pour moi')">Pour moi</button>
-      <button type="button" class="quick-btn" onclick="chatQuickReply('Pour un proche')">Pour un proche</button>
+      <button type="button" class="quick-btn" onclick="sophieSend('C\'est pour moi')">Pour moi</button>
+      <button type="button" class="quick-btn" onclick="sophieSend('C\'est pour un proche')">Pour un proche</button>
+      <button type="button" class="quick-btn" onclick="sophieSend('Combien je peux toucher ?')">Combien puis-je toucher ?</button>
+      <button type="button" class="quick-btn" onclick="sophieSend('Je veux etre rappele')">Etre rappele</button>
     </div>
     <div class="chatbot-input-row">
-      <input class="chatbot-input" type="text" id="chat-input" placeholder="Votre question..." onkeypress="if(event.key==='Enter')sendChat()">
-      <button type="button" class="chatbot-send" onclick="sendChat()">
+      <input class="chatbot-input" type="text" id="chat-input" placeholder="Posez votre question a Sophie..." onkeypress="if(event.key==='Enter')sendChat()">
+      <button type="button" class="chatbot-send" onclick="sendChat()" id="chat-send-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </div>
@@ -2317,225 +2385,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>`;
   }
 
-  // ─── CHATBOT ───
+  // ─── CHATBOT SOPHIE IA ───
   let chatOpen = false;
+  let chatSending = false;
   let relanceTimer = null;
   let relanceIndex = 0;
-  let chatStep = 'beneficiaire';
-  let chatProfile = {};
+  const chatHistory = [];
+  const CHAT_API = '/api/chat';
 
-  // Principe : FLOW[X].bot = question posée QUAND chatStep vaut X
-  //            FLOW[X].save = clé où est sauvegardée la réponse donnée à l'étape X
-  const FLOW = {
-    beneficiaire: {
-      next: 'age',
-      save: 'beneficiaire',
-      bot: null, quick: []  // message initial en HTML, jamais affiché via FLOW
-    },
-    age: {
-      next: 'statut',
-      save: 'age',
-      bot: "Merci ! Pour vérifier votre éligibilité, quel est l\'âge de la personne concernée ?",
-      quick: ["Moins de 60 ans", "60 à 69 ans", "70 ans et plus"]
-    },
-    statut: {
-      next: 'region',
-      save: 'statut',
-      bot: "Parfait ! Et concernant votre logement, vous êtes :",
-      quick: ["Propriétaire occupant", "Locataire du parc privé"]
-    },
-    region: {
-      next: 'travaux',
-      save: 'region',
-      bot: "Parfait. Dans quelle région habitez-vous ?",
-      quick: ["Île-de-France", "Grand Est", "Auvergne-Rhône-Alpes", "Provence-Alpes-Côte d'Azur", "Autre région"]
-    },
-    region_precision: {
-      next: 'travaux',
-      save: 'region',
-      bot: null, quick: []  // saisie libre, géré dans advanceStep
-    },
-    travaux: {
-      next: 'composition',
-      save: 'travaux',
-      bot: "Super ! Quel type de travaux vous intéresse pour adapter votre logement ?",
-      quick: ["Salle de bain / douche PMR", "Monte-escalier / élévateur", "Rampes d'accès", "Plusieurs aménagements", "Je ne sais pas encore"]
-    },
-    composition: {
-      next: 'revenus',
-      save: 'composition',
-      bot: "Combien de personnes composent votre foyer ? (Pour calculer vos plafonds d'aide)",
-      quick: ["1 personne", "2 personnes", "3 personnes", "4 personnes", "5 personnes ou plus"]
-    },
-    revenus: {
-      next: 'prenom',
-      save: 'revenus',
-      bot: "Dernière question ! Quel est le revenu fiscal annuel de référence de votre foyer ? (Sur votre avis d'imposition, confidentiel)",
-      quick: ["Moins de 17 000 €", "De 17 000 à 35 000 €", "De 35 000 à 52 000 €", "Plus de 52 000 €", "Je préfère ne pas dire"]
-    },
-    prenom: {
-      next: 'tel',
-      save: 'prenom',
-      bot: null, quick: []  // message généré par getEligibilityMsg()
-    },
-    tel: {
-      next: 'done',
-      save: 'tel',
-      bot: null, quick: []  // message généré dynamiquement avec chatProfile.prenom
-    }
-  };
-
-  function classifyProfil() {
-    var idf = chatProfile.region === 'Île-de-France';
-    var comp = chatProfile.composition || '1 personne';
-    var rev = chatProfile.revenus || '';
-    var seuils = {
-      '1 personne':          { bleu: idf ? 23768 : 17173, jaune: idf ? 28933 : 22015 },
-      '2 personnes':         { bleu: idf ? 34884 : 25115, jaune: idf ? 42463 : 32197 },
-      '3 personnes':         { bleu: idf ? 41893 : 30206, jaune: idf ? 51000 : 38719 },
-      '4 personnes':         { bleu: idf ? 48914 : 35285, jaune: idf ? 59549 : 45234 },
-      '5 personnes ou plus': { bleu: idf ? 55961 : 40388, jaune: idf ? 68123 : 51775 }
-    };
-    var s = seuils[comp] || seuils['1 personne'];
-    var rfr = 0;
-    if (rev === 'Moins de 17 000 €')        rfr = 12000;
-    else if (rev === 'De 17 000 à 35 000 €') rfr = 26000;
-    else if (rev === 'De 35 000 à 52 000 €') rfr = 43500;
-    else if (rev === 'Plus de 52 000 €')     rfr = 60000;
-    else return 'À QUALIFIER';
-    if (rfr <= s.bleu)  return 'BLEU';
-    if (rfr <= s.jaune) return 'JAUNE';
-    return 'NON ÉLIGIBLE';
-  }
-
-  function getEligibilityMsg() {
-    var profil = classifyProfil();
-    chatProfile.profil = profil;
-    if (chatProfile.age === 'Moins de 60 ans') {
-      return 'Des exceptions existent selon votre situation. Jérémy étudiera votre cas en détail pour ne rien vous faire rater.\n\nComment vous appelez-vous ?';
-    }
-    if (profil === 'BLEU') {
-      return 'Excellente nouvelle ! Votre profil est prioritaire — vous êtes éligible à 70 % de prise en charge, soit jusqu\'à 15 400 € financés.\n\nJérémy vous contacte en priorité. Comment vous appelez-vous ?';
-    }
-    if (profil === 'JAUNE') {
-      return 'Bonne nouvelle ! Vous êtes éligible à 50 % de prise en charge, soit jusqu\'à 11 000 € financés.\n\nJérémy vous préparera un dossier personnalisé. Comment vous appelez-vous ?';
-    }
-    if (profil === 'NON ÉLIGIBLE') {
-      return 'D\'après vos revenus, MaPrimeAdapt est difficile dans votre situation. Cependant d\'autres aides existent. Jérémy peut étudier votre dossier gratuitement.\n\nComment vous appelez-vous ?';
-    }
-    return 'Jérémy calculera votre aide exacte lors de votre échange. Les familles accompagnées reçoivent en moyenne 9 800 €.\n\nComment vous appelez-vous ?';
-  }
-
-  function showQuick(replies) {
-    const qr = document.getElementById('quick-replies');
-    qr.innerHTML = '';
-    replies.forEach(function(r) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'quick-btn';
-      btn.textContent = r;
-      btn.onclick = function() { chatQuickReply(r); };
-      qr.appendChild(btn);
-    });
-  }
-
-  function advanceStep(answer) {
-    const step = FLOW[chatStep];
-    if (!step) return;
-
-    // Cas spécial : "Autre région" → demander la région exacte par saisie libre
-    if (chatStep === 'region' && answer === 'Autre région') {
-      chatStep = 'region_precision';
-      clearTimeout(relanceTimer);
-      setTimeout(function() {
-        addMsg('Dans quelle région exactement ? (ex : Bretagne, Occitanie, Normandie...)', 'bot');
-        showQuick([]);
-        document.getElementById('chat-input').placeholder = 'Tapez votre région...';
-      }, 800);
-      return;
-    }
-
-    if (step.save) chatProfile[step.save] = answer;
-    chatStep = step.next;
-    clearTimeout(relanceTimer);
-
-    setTimeout(function() {
-      if (chatStep === 'done') {
-        sendProfileToJeremy(function(ok) {
-          if (ok) {
-            addMsg('Merci ' + (chatProfile.prenom || '') + ' ! Votre profil a bien été transmis à Jérémy. Il vous rappelle au ' + chatProfile.tel + ' dans les meilleurs délais. Vous pouvez aussi l\'appeler directement : 06 04 43 34 20 (Lun–Sam, 9h–18h).', 'bot');
-          } else {
-            addMsg('Une erreur s\'est produite lors de l\'envoi. Appelez directement Jérémy au 06 04 43 34 20 ou écrivez à Jeremy@maprimeadapt-idf.fr.', 'bot');
-          }
-        });
-        showQuick([]);
-        document.getElementById('chat-input').placeholder = 'Votre question...';
-        return;
-      }
-
-      const next = FLOW[chatStep];
-      let msg = next.bot;
-
-      // Étape prenom : afficher le résultat d'éligibilité + demander le prénom
-      if (chatStep === 'prenom') {
-        msg = getEligibilityMsg();
-        document.getElementById('chat-input').placeholder = 'Votre prénom...';
-      }
-      // Étape tel : chatProfile.prenom est maintenant sauvegardé
-      if (chatStep === 'tel') {
-        msg = 'Ravie de vous connaître, ' + chatProfile.prenom + ' ! Pour que Jérémy vous rappelle au moment qui vous convient, quel est votre numéro de téléphone ?';
-        document.getElementById('chat-input').placeholder = 'Votre téléphone...';
-      }
-
-      addMsg(msg, 'bot');
-      showQuick(next.quick || []);
-      scheduleRelance();
-    }, 800);
-  }
-
-  function chatQuickReply(text) {
-    addMsg(text, 'user');
-    document.getElementById('quick-replies').innerHTML = '';
-    clearTimeout(relanceTimer);
-    advanceStep(text);
-  }
-
-  function sendProfileToJeremy(callback) {
-    var now = new Date();
-    var horodatage = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
-    var profil = chatProfile.profil || classifyProfil();
-    var body = [
-      '=== LEAD CHATBOT — ' + horodatage + ' ===',
-      'PROFIL ANAH : ' + profil,
-      '',
-      'Bénéficiaire : ' + (chatProfile.beneficiaire || '-'),
-      'Âge : ' + (chatProfile.age || '-'),
-      'Statut : ' + (chatProfile.statut || '-'),
-      'Région : ' + (chatProfile.region || '-'),
-      'Composition du foyer : ' + (chatProfile.composition || '-'),
-      'Travaux souhaités : ' + (chatProfile.travaux || '-'),
-      'Revenus annuels : ' + (chatProfile.revenus || '-'),
-      '',
-      'Prénom : ' + (chatProfile.prenom || '-'),
-      'Téléphone : ' + (chatProfile.tel || '-'),
-      '',
-      'Source : Chatbot maprimeadapt-idf.fr'
-    ].join('\n');
-    var sujet = '[' + profil + '] Lead chatbot — ' + (chatProfile.prenom || 'Inconnu') + ' — ' + (chatProfile.tel || '') + ' — ' + horodatage;
-    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: sujet,
-        _replyto: 'Jeremy@maprimeadapt-idf.fr',
-        _cc: 'renovhabitatparis@gmail.com',
-        message: body,
-        prenom: chatProfile.prenom,
-        telephone: chatProfile.tel,
-        profil_anah: profil
-      })
-    }).then(function(r) { callback(r.ok); }).catch(function() { callback(false); });
-  }
+  const relanceMessages = [
+    "Vous hesitez ? Je suis la pour repondre a toutes vos questions, sans engagement.",
+    "Le budget ANAH 2026 est en cours d'attribution. Plus tot vous deposez, mieux c'est.",
+    "Jeremy est disponible au 06 04 43 34 20 si vous preferez echanger de vive voix."
+  ];
 
   function addMsg(text, type) {
     const msgs = document.getElementById('chat-messages');
@@ -2546,84 +2408,168 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     msgs.scrollTop = msgs.scrollHeight;
   }
 
-  const relanceMessages = [
-    "Vous hésitez ? C\'est normal, MaPrimeAdapt peut sembler complexe. Je suis là pour simplifier tout ça étape par étape 😊",
-    "💡 Bon à savoir : le budget ANAH 2026 est partiellement engagé. Plus tôt vous déposez votre dossier, mieux c\'est.",
-    "Jérémy est disponible maintenant au 06 04 43 34 20 pour répondre à toutes vos questions sans engagement."
-  ];
-
-  function scheduleRelance() {
-    clearTimeout(relanceTimer);
-    relanceTimer = setTimeout(function() {
-      if (chatOpen && relanceIndex < relanceMessages.length && chatStep !== 'done') {
-        addMsg(relanceMessages[relanceIndex++], 'bot');
-        scheduleRelance();
-      }
-    }, 30000);
+  function showTyping() {
+    const msgs = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = 'msg msg-bot';
+    div.id = 'sophie-typing';
+    div.innerHTML = '<span style="opacity:.5">Sophie redige...</span>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
   }
 
-  let chatSending = false;
+  function hideTyping() {
+    const t = document.getElementById('sophie-typing');
+    if (t) t.remove();
+  }
+
+  function showQuick(replies) {
+    const qr = document.getElementById('quick-replies');
+    qr.innerHTML = '';
+    replies.forEach(function(r) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'quick-btn';
+      btn.textContent = r;
+      btn.onclick = function() { sophieSend(r); };
+      qr.appendChild(btn);
+    });
+  }
+
+  function sophieSend(text) {
+    if (chatSending) return;
+    addMsg(text, 'user');
+    document.getElementById('quick-replies').innerHTML = '';
+    chatHistory.push({ role: 'user', content: text });
+    callSophie();
+  }
 
   function sendChat() {
     if (chatSending) return;
     const input = document.getElementById('chat-input');
     const text = input.value.trim();
     if (!text) return;
-
-    // Validation téléphone stricte
-    if (chatStep === 'tel') {
-      const digits = text.replace(/\D/g, '');
-      if (digits.length < 9 || digits.length > 15) {
-        addMsg('Merci de saisir un numéro valide (ex : 06 12 34 56 78).', 'bot');
-        return;
-      }
-    }
-
-    // Validation prénom : pas de chiffres
-    if (chatStep === 'prenom') {
-      if (text.replace(/[^a-zA-ZÀ-ÿ\s\-]/g, '').length < 2) {
-        addMsg('Merci d\'indiquer votre prénom.', 'bot');
-        return;
-      }
-    }
-
-    chatSending = true;
-    addMsg(text, 'user');
     input.value = '';
-    clearTimeout(relanceTimer);
-
-    const freeInputSteps = ['region_precision', 'prenom', 'tel'];
-    if (freeInputSteps.indexOf(chatStep) !== -1) {
-      advanceStep(text);
-    } else if (chatStep === 'done') {
-      setTimeout(function() {
-        addMsg('Votre dossier est bien enregistré. Jérémy vous recontacte rapidement. Pour toute urgence : 06 04 43 34 20.', 'bot');
-      }, 600);
-    } else {
-      // L\'utilisateur tape au lieu de cliquer un bouton — on lui rappelle les options
-      setTimeout(function() {
-        var step = FLOW[chatStep];
-        if (step && step.quick && step.quick.length > 0) {
-          addMsg('Utilisez les boutons ci-dessous pour répondre — ou appelez Jérémy directement : 06 04 43 34 20.', 'bot');
-          showQuick(step.quick);
-        } else {
-          addMsg('Jérémy est disponible pour vous répondre au 06 04 43 34 20 (Lun–Sam, 9h–18h).', 'bot');
-        }
-        scheduleRelance();
-      }, 800);
-    }
-    setTimeout(function() { chatSending = false; }, 800);
+    sophieSend(text);
   }
 
-  function resetChat() {
-    chatStep = 'beneficiaire';
-    chatProfile = {};
-    relanceIndex = 0;
+  async function callSophie() {
+    chatSending = true;
     clearTimeout(relanceTimer);
-    const msgs = document.getElementById('chat-messages');
-    msgs.innerHTML = '<div class="msg msg-bot">Bonjour ! Je suis Sophie, conseillère MaPrimeAdapt IDF. Pour vous aider au mieux, c\'est pour vous ou pour un proche ?</div>';
-    showQuick(['Pour moi', 'Pour un proche']);
-    document.getElementById('chat-input').placeholder = 'Votre question...';
+    document.getElementById('chat-status-text').textContent = 'Sophie redige...';
+    document.getElementById('chat-send-btn').disabled = true;
+    showTyping();
+
+    try {
+      const resp = await fetch(CHAT_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory.slice(-16) })
+      });
+
+      hideTyping();
+
+      if (!resp.ok) {
+        // Fallback: mode hors-ligne
+        addMsg('Je rencontre un petit souci technique. Appelez directement Jeremy au 06 04 43 34 20, il pourra vous aider immediatement.', 'bot');
+        scheduleRelance();
+        chatSending = false;
+        document.getElementById('chat-status-text').textContent = 'Disponible maintenant';
+        document.getElementById('chat-send-btn').disabled = false;
+        return;
+      }
+
+      const data = await resp.json();
+      const reply = data.reply || '';
+
+      addMsg(reply, 'bot');
+      chatHistory.push({ role: 'assistant', content: reply });
+
+      // Si un telephone a ete detecte, envoyer le lead automatiquement
+      if (data.lead_detected && data.phone) {
+        sendLeadFromChat(data.phone);
+      }
+
+      // Suggestions contextuelles apres la reponse
+      updateQuickReplies();
+      scheduleRelance();
+
+    } catch (e) {
+      hideTyping();
+      addMsg('Connexion interrompue. Vous pouvez rappeler Jeremy au 06 04 43 34 20 ou reessayer dans un instant.', 'bot');
+    }
+
+    chatSending = false;
+    document.getElementById('chat-status-text').textContent = 'Disponible maintenant';
+    document.getElementById('chat-send-btn').disabled = false;
+  }
+
+  function updateQuickReplies() {
+    const msgCount = chatHistory.filter(function(m) { return m.role === 'user'; }).length;
+    if (msgCount <= 1) {
+      showQuick(['Suis-je eligible ?', 'Combien puis-je toucher ?', 'Comment ca marche ?']);
+    } else if (msgCount <= 3) {
+      showQuick(['Je veux etre rappele', 'Quels travaux sont couverts ?', 'C\'est vraiment gratuit ?']);
+    } else if (msgCount <= 5) {
+      showQuick(['Etre rappele par Jeremy', 'Voir le simulateur']);
+    } else {
+      showQuick(['Rappeler-moi', '06 04 43 34 20']);
+    }
+  }
+
+  function sendLeadFromChat(phone) {
+    // Extraire le prenom de la conversation si possible
+    var prenom = '';
+    chatHistory.forEach(function(m) {
+      if (m.role === 'assistant' && m.content.match(/\b(Ravie?|Enchante|Bonjour)\b.*?,\s*(\w+)/i)) {
+        var match = m.content.match(/,\s*([A-Z][a-z]+)/);
+        if (match) prenom = match[1];
+      }
+    });
+
+    var now = new Date();
+    var horodatage = now.toLocaleDateString('fr-FR') + ' a ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+
+    var convResume = chatHistory.map(function(m) {
+      return (m.role === 'user' ? 'Visiteur' : 'Sophie') + ': ' + m.content.substring(0, 200);
+    }).join('\n');
+
+    var body = [
+      '=== LEAD CHATBOT IA - ' + horodatage + ' ===',
+      'Prenom : ' + (prenom || 'A qualifier'),
+      'Telephone : ' + phone,
+      '',
+      '--- CONVERSATION ---',
+      convResume,
+      '',
+      'Source : Chatbot IA Sophie - maprimeadapt-idf.fr'
+    ].join('\n');
+
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: '[LEAD IA] ' + (prenom || 'Visiteur') + ' - ' + phone + ' - ' + horodatage,
+        _replyto: 'jeremy@maprimeadapt-idf.fr',
+        _cc: 'renovhabitatparis@gmail.com',
+        message: body,
+        prenom: prenom,
+        telephone: phone
+      })
+    }).catch(function() {});
+
+    // GA4 event
+    try { if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'chatbot_ia', event_label: 'sophie' }); } catch(_) {}
+  }
+
+  function scheduleRelance() {
+    clearTimeout(relanceTimer);
+    relanceTimer = setTimeout(function() {
+      if (chatOpen && relanceIndex < relanceMessages.length) {
+        addMsg(relanceMessages[relanceIndex++], 'bot');
+        scheduleRelance();
+      }
+    }, 40000);
   }
 
   function toggleChat() {
@@ -2631,10 +2577,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     chatOpen = !panel.classList.contains('open');
     panel.classList.toggle('open');
     document.getElementById('chat-notif').style.display = 'none';
-    // Réinitialiser si la conversation est terminée
-    if (chatOpen && chatStep === 'done') resetChat();
-    if (chatOpen) scheduleRelance();
-    else clearTimeout(relanceTimer);
+    if (chatOpen) {
+      scheduleRelance();
+      setTimeout(function() { document.getElementById('chat-input').focus(); }, 300);
+    } else {
+      clearTimeout(relanceTimer);
+    }
   }
 
   setTimeout(function() {
