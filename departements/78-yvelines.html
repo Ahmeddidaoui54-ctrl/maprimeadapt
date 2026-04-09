@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="MaPrimeAdapt — Financez l'adaptation de votre logement jusqu'à 70% partout en France. Spécialiste Île-de-France. Simulation gratuite en 3 minutes. Accompagnement personnalisé.">
+<meta name="description" content="Expert MaPrimeAdapt dans les Yvelines (78). Accompagnement à Versailles, Mantes-la-Jolie et dans tout le 78. Simulation gratuite en 3 minutes. Zéro avance de frais.">
 <meta name="robots" content="index, follow">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<link rel="canonical" href="https://www.maprimeadapt-idf.fr/">
-<title>MaPrimeAdapt | Adaptation logement senior partout en France — jusqu'à 70% financé</title>
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/78-yvelines/">
+<title>MaPrimeAdapt Yvelines (78) — Adaptation logement senior jusqu'à 70%</title>
 
 <!-- ─── OPEN GRAPH ─── -->
 <meta property="og:type" content="website">
@@ -644,7 +644,13 @@
     flex: 1; font-style: italic; margin-bottom: 20px;
   }
   .testimonial-author { display: flex; align-items: center; gap: 14px; }
-  .testimonial-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #1a5c8a, #1a3d2b); color: #fff; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .testimonial-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #1a5c8a, #1a3d2b);
+    color: #fff; font-size: 1.5rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; letter-spacing: 0;
+  }
   .testimonial-photo {
     width: 52px; height: 52px; border-radius: 50%;
     object-fit: cover; flex-shrink: 0;
@@ -1158,49 +1164,6 @@
   /* ── RGPD BANNER ── */
   .rgpd-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#fff;border-top:2px solid #1a3d2b;box-shadow:0 -4px 24px rgba(0,0,0,.12);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font);font-size:13px;color:#374151}
   /* Sur mobile, bannière RGPD compacte et fermée rapidement */
-
-  .hamburger {
-    display: none; flex-direction: column; justify-content: center; gap: 5px;
-    cursor: pointer; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
-    border-radius: 8px; padding: 9px 10px; width: 42px; height: 42px; transition: background .2s;
-  }
-  .hamburger:hover { background: rgba(255,255,255,.2); }
-  .hamburger span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .2s; transform-origin: center; }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-nav { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; flex-direction: column; background: #1a3d2b; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; }
-  .mobile-nav.open { display: flex; transform: translateX(0); }
-  .mobile-nav-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,.1); }
-  .mobile-nav-logo { display: flex; align-items: center; gap: 10px; color: #fff; }
-  .mobile-nav-badge { width: 34px; height: 34px; background: #fff; border-radius: 7px; display: grid; place-items: center; font-size: 14px; font-weight: 800; color: #1a3d2b; }
-  .mobile-nav-name { font-size: 15px; font-weight: 700; }
-  .mobile-nav-close { width: 36px; height: 36px; background: rgba(255,255,255,.1); border: none; border-radius: 8px; cursor: pointer; color: #fff; display: grid; place-items: center; font-size: 20px; line-height: 1; transition: background .2s; }
-  .mobile-nav-close:hover { background: rgba(255,255,255,.2); }
-  .mobile-nav-urgence { margin: 16px 20px; background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.3); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
-  .mobile-nav-urgence-dot { width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
-  .mobile-nav-urgence-text { font-size: 13px; color: rgba(255,255,255,.85); line-height: 1.4; }
-  .mobile-nav-urgence-text strong { color: #fbbf24; }
-  .mobile-nav-links { flex: 1; padding: 8px 0; }
-  .mobile-nav-link { display: flex; align-items: center; gap: 14px; padding: 16px 24px; color: rgba(255,255,255,.85); font-size: 16px; font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.06); transition: background .15s, color .15s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; width: 100%; text-align: left; }
-  .mobile-nav-link:hover, .mobile-nav-link:active { background: rgba(255,255,255,.07); color: #fff; }
-  .mobile-nav-link svg { width: 18px; height: 18px; opacity: .6; flex-shrink: 0; }
-  .mobile-nav-link-arrow { margin-left: auto; opacity: .3; font-size: 18px; }
-  .mobile-nav-footer { padding: 20px 20px 32px; display: flex; flex-direction: column; gap: 10px; }
-  .mobile-nav-cta { display: block; text-align: center; padding: 16px; background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff; font-size: 16px; font-weight: 700; border-radius: 10px; border: none; cursor: pointer; width: 100%; box-shadow: 0 6px 20px rgba(245,158,11,.4); }
-  .mobile-nav-tel { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; background: rgba(255,255,255,.1); color: #fff; font-size: 15px; font-weight: 600; border-radius: 10px; text-decoration: none; }
-  .mobile-nav-tel svg { width: 16px; height: 16px; }
-  .mobile-cta-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 900; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(26,61,43,.97); backdrop-filter: blur(16px); border-top: 1px solid rgba(255,255,255,.1); flex-direction: row; gap: 8px; box-shadow: 0 -4px 24px rgba(0,0,0,.3); }
-  .mobile-cta-call { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 13px 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 14px; font-weight: 600; border-radius: 8px; text-decoration: none; flex: 0 0 auto; white-space: nowrap; }
-  .mobile-cta-call svg { width: 15px; height: 15px; }
-  .mobile-cta-eligibility { flex: 1; padding: 13px 16px; background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff; font-size: 14px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(245,158,11,.4); }
-  .sp-toast { position: fixed; bottom: 80px; left: 12px; z-index: 800; background: #fff; border-radius: 10px; padding: 10px 14px; box-shadow: 0 4px 20px rgba(0,0,0,.18); display: flex; align-items: center; gap: 10px; font-size: 13px; color: #111827; transform: translateX(-120%); transition: transform .4s cubic-bezier(.4,0,.2,1); max-width: 260px; pointer-events: none; }
-  .sp-toast.show { transform: translateX(0); }
-  .sp-toast-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #1a3d2b, #2d6a4f); color: #fff; font-weight: 700; font-size: 14px; display: grid; place-items: center; flex-shrink: 0; }
-  .sp-toast-text strong { display: block; font-weight: 600; }
-  .sp-toast-text span { color: #6b7280; font-size: 11px; }
-  .sp-toast-amount { color: #059669; font-weight: 700; font-size: 13px; }
-  @media(max-width:768px){ .hamburger { display: flex; } .mobile-cta-bar { display: flex; } .btn-header { display: none; } body { padding-bottom: 72px; } .whatsapp-btn { bottom: 82px; } .chatbot-trigger { bottom: 82px; } }
   @media(max-width:768px){.rgpd-banner{flex-direction:row;align-items:center;padding:10px 14px;font-size:12px}.rgpd-text{flex:1;min-width:0}.rgpd-btns{flex-shrink:0}}
   .rgpd-banner.hidden{display:none}
   .rgpd-text{flex:1;min-width:220px;line-height:1.5}
@@ -1210,6 +1173,158 @@
   .rgpd-accept:hover{background:#2d6a4f}
   .rgpd-refuse{background:transparent;color:#6b7280;border:1px solid #d1d5db;padding:9px 16px;border-radius:7px;font-size:13px;cursor:pointer;font-family:var(--font);transition:all .15s;min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   .rgpd-refuse:hover{border-color:#1a3d2b;color:#1a3d2b}
+
+  /* ─── HAMBURGER BUTTON ─── */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    cursor: pointer; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 8px; padding: 9px 10px; width: 42px; height: 42px;
+    transition: background .2s;
+  }
+  .hamburger:hover { background: rgba(255,255,255,.2); }
+  .hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: #fff; border-radius: 2px;
+    transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .2s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ─── MOBILE NAV OVERLAY PRO ─── */
+  .mobile-nav {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 9999; flex-direction: column;
+    background: #1a3d2b;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+    overflow-y: auto;
+  }
+  .mobile-nav.open { display: flex; transform: translateX(0); }
+  .mobile-nav-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .mobile-nav-logo {
+    display: flex; align-items: center; gap: 10px; color: #fff;
+  }
+  .mobile-nav-badge {
+    width: 34px; height: 34px; background: #fff; border-radius: 7px;
+    display: grid; place-items: center;
+    font-size: 14px; font-weight: 800; color: #1a3d2b;
+  }
+  .mobile-nav-name { font-size: 15px; font-weight: 700; }
+  .mobile-nav-close {
+    width: 36px; height: 36px; background: rgba(255,255,255,.1);
+    border: none; border-radius: 8px; cursor: pointer; color: #fff;
+    display: grid; place-items: center; font-size: 20px; line-height: 1;
+    transition: background .2s;
+  }
+  .mobile-nav-close:hover { background: rgba(255,255,255,.2); }
+
+  /* Urgence strip dans le menu */
+  .mobile-nav-urgence {
+    margin: 16px 20px; background: rgba(245,158,11,.15);
+    border: 1px solid rgba(245,158,11,.3); border-radius: 10px;
+    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .mobile-nav-urgence-dot {
+    width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+  .mobile-nav-urgence-text { font-size: 13px; color: rgba(255,255,255,.85); line-height: 1.4; }
+  .mobile-nav-urgence-text strong { color: #fbbf24; }
+
+  /* Nav links */
+  .mobile-nav-links { flex: 1; padding: 8px 0; }
+  .mobile-nav-link {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 24px; color: rgba(255,255,255,.85);
+    font-size: 16px; font-weight: 500; text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    transition: background .15s, color .15s;
+    cursor: pointer; background: none; border-left: none; border-right: none; border-top: none;
+    width: 100%; text-align: left;
+  }
+  .mobile-nav-link:hover, .mobile-nav-link:active { background: rgba(255,255,255,.07); color: #fff; }
+  .mobile-nav-link svg { width: 18px; height: 18px; opacity: .6; flex-shrink: 0; }
+  .mobile-nav-link-arrow { margin-left: auto; opacity: .3; font-size: 18px; }
+
+  /* CTA bottom */
+  .mobile-nav-footer { padding: 20px 20px 32px; display: flex; flex-direction: column; gap: 10px; }
+  .mobile-nav-cta {
+    display: block; text-align: center; padding: 16px;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: #fff; font-size: 16px; font-weight: 700; border-radius: 10px;
+    border: none; cursor: pointer; width: 100%;
+    box-shadow: 0 6px 20px rgba(245,158,11,.4);
+  }
+  .mobile-nav-tel {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px; background: rgba(255,255,255,.1);
+    color: #fff; font-size: 15px; font-weight: 600; border-radius: 10px;
+    text-decoration: none;
+  }
+  .mobile-nav-tel svg { width: 16px; height: 16px; }
+
+  /* ─── BARRE CTA STICKY BAS (mobile only) ─── */
+  .mobile-cta-bar {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 900;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(26,61,43,.97);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255,255,255,.1);
+    flex-direction: row; gap: 8px;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.3);
+  }
+  .mobile-cta-call {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 13px 16px; background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #fff; font-size: 14px; font-weight: 600; border-radius: 8px;
+    text-decoration: none; flex: 0 0 auto; white-space: nowrap;
+  }
+  .mobile-cta-call svg { width: 15px; height: 15px; }
+  .mobile-cta-eligibility {
+    flex: 1; padding: 13px 16px;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: #fff; font-size: 14px; font-weight: 700; border-radius: 8px;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(245,158,11,.4);
+  }
+
+  /* ─── SOCIAL PROOF TOAST ─── */
+  .sp-toast {
+    position: fixed; bottom: 80px; left: 12px; z-index: 800;
+    background: #fff; border-radius: 10px; padding: 10px 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.18);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: #111827;
+    transform: translateX(-120%); transition: transform .4s cubic-bezier(.4,0,.2,1);
+    max-width: 260px; pointer-events: none;
+  }
+  .sp-toast.show { transform: translateX(0); }
+  .sp-toast-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #1a3d2b, #2d6a4f);
+    color: #fff; font-weight: 700; font-size: 14px;
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .sp-toast-text strong { display: block; font-weight: 600; }
+  .sp-toast-text span { color: #6b7280; font-size: 11px; }
+  .sp-toast-amount { color: #059669; font-weight: 700; font-size: 13px; }
+
+  @media(max-width:768px){
+    .hamburger { display: flex; }
+    .mobile-cta-bar { display: flex; }
+    .btn-header { display: none; }
+    .header-phone div div:last-child { display: none; }
+    /* Espace pour la barre CTA bas */
+    body { padding-bottom: 72px; }
+    .whatsapp-btn { bottom: 82px; }
+    .chatbot-trigger { bottom: 82px; }
+  }
 </style>
 <!-- ══════════════════════════════════════════
      CONFIGURATION — à renseigner une seule fois
@@ -1309,13 +1424,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══ HEADER ═══ -->
 <header class="header" id="header">
+  <div id="mobile-nav" class="mobile-nav">
+    <div class="mobile-nav-header">
+      <div class="mobile-nav-logo">
+        <div class="mobile-nav-badge">MA</div>
+        <div class="mobile-nav-name">MaPrimeAdapt IDF</div>
+      </div>
+      <button class="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="mobile-nav-urgence">
+      <div class="mobile-nav-urgence-dot"></div>
+      <div class="mobile-nav-urgence-text"><strong>Budget ANAH 2026 — Yvelines (78)</strong><br>Déposez votre dossier avant la fin d'exercice</div>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="#comment-ca-marche" class="mobile-nav-link" onclick="toggleMobileNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Comment ça marche<span class="mobile-nav-link-arrow">›</span>
+      </a>
+      <a href="#simulateur" class="mobile-nav-link" onclick="toggleMobileNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Simulateur gratuit<span class="mobile-nav-link-arrow">›</span>
+      </a>
+      <a href="#temoignages" class="mobile-nav-link" onclick="toggleMobileNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Témoignages<span class="mobile-nav-link-arrow">›</span>
+      </a>
+      <a href="#faq" class="mobile-nav-link" onclick="toggleMobileNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ<span class="mobile-nav-link-arrow">›</span>
+      </a>
+    </div>
+    <div class="mobile-nav-footer">
+      <button class="mobile-nav-cta" onclick="toggleMobileNav();openModal()">✓ Vérifier mon éligibilité gratuitement</button>
+      <a href="tel:0604433420" class="mobile-nav-tel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 013.98 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        Appeler le 06 04 43 34 20
+      </a>
+    </div>
+  </div>
   <div class="container">
     <div class="header-inner">
       <a class="logo" href="#hero">
         <div class="logo-badge">MA</div>
         <div class="logo-text">
           <div class="logo-name">MaPrimeAdapt</div>
-          <div class="logo-sub">Partout en France · Spécialiste IDF</div>
+          <div class="logo-sub">Spécialiste Yvelines · IDF</div>
         </div>
       </a>
       <div class="header-right">
@@ -1332,36 +1485,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </header>
-
-<!-- ═══ MOBILE NAV ═══ -->
-<div class="mobile-nav" id="mobile-nav">
-  <div class="mobile-nav-header">
-    <div class="mobile-nav-logo"><div class="mobile-nav-badge">MP</div><div class="mobile-nav-name">MaPrimeAdapt</div></div>
-    <button type="button" class="mobile-nav-close" onclick="toggleMobileNav()">&times;</button>
-  </div>
-  <div class="mobile-nav-urgence">
-    <div class="mobile-nav-urgence-dot"></div>
-    <div class="mobile-nav-urgence-text"><strong>Budget ANAH 2026 en cours</strong><br>Deposez votre dossier rapidement</div>
-  </div>
-  <div class="mobile-nav-links">
-    <button class="mobile-nav-link" onclick="toggleMobileNav();document.getElementById('simulator').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Simulation gratuite<span class="mobile-nav-link-arrow">&rsaquo;</span></button>
-    <button class="mobile-nav-link" onclick="toggleMobileNav();document.getElementById('etapes').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Comment ca marche<span class="mobile-nav-link-arrow">&rsaquo;</span></button>
-    <button class="mobile-nav-link" onclick="toggleMobileNav();document.getElementById('calcul').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Calculer mon aide<span class="mobile-nav-link-arrow">&rsaquo;</span></button>
-    <button class="mobile-nav-link" onclick="toggleMobileNav();document.getElementById('temoignages').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Temoignages<span class="mobile-nav-link-arrow">&rsaquo;</span></button>
-    <button class="mobile-nav-link" onclick="toggleMobileNav();document.getElementById('faq').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Questions frequentes<span class="mobile-nav-link-arrow">&rsaquo;</span></button>
-  </div>
-  <div class="mobile-nav-footer">
-    <button class="mobile-nav-cta" onclick="toggleMobileNav();openModal()">Verifier mon eligibilite</button>
-    <a href="tel:+33604433420" class="mobile-nav-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>06 04 43 34 20</a>
-  </div>
-</div>
-
-<!-- ═══ SOCIAL PROOF TOAST ═══ -->
-<div class="sp-toast" id="sp-toast">
-  <div class="sp-toast-avatar" id="sp-toast-avatar">M</div>
-  <div class="sp-toast-text"><strong id="sp-toast-name">Marie P.</strong><span id="sp-toast-loc">Creteil (94)</span></div>
-  <div class="sp-toast-amount" id="sp-toast-amount">12 400 &euro;</div>
-</div>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
@@ -2013,7 +2136,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="footer-bottom">
       <p class="footer-legal">
-        MaPrimeAdapt IDF est un service d'accompagnement indépendant, non affilié à l'ANAH ni à l'État. Nous accompagnons les démarches administratives de nos clients. Les montants d'aide indiqués sont des estimations à titre indicatif ; le montant définitif est déterminé par l'ANAH après instruction du dossier. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de portabilité et de suppression de vos données. Pour exercer ces droits : <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a> · Conseiller : <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a>. SIRET : 123 456 789 00010 · TVA : FR12 123456789.
+        MaPrimeAdapt IDF est un service d'accompagnement indépendant, non affilié à l'ANAH ni à l'État. Nous accompagnons les démarches administratives de nos clients. Les montants d'aide indiqués sont des estimations à titre indicatif ; le montant définitif est déterminé par l'ANAH après instruction du dossier. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de portabilité et de suppression de vos données. Pour exercer ces droits : <a href="mailto:contact@maprimeadapt-idf.fr">contact@maprimeadapt-idf.fr</a> · Conseiller : <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a>. SIRET : 123 456 789 00010 · TVA : FR12 123456789.
       </p>
       <div class="footer-rgpd">
         <div class="rgpd-badge">RGPD</div>
@@ -2095,7 +2218,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="form-field">
         <label class="form-label" for="f-tel">Téléphone <span style="color:#ef4444">*</span></label>
-        <input id="f-tel" class="form-input" type="tel" placeholder="06 xx xx xx xx" autocomplete="tel" inputmode="numeric" pattern="[0-9\s\+\-\.]{9,15}" oninput="this.value=this.value.replace(/[^0-9\s\+\-\.]/g,'')">
+        <input id="f-tel" class="form-input" type="tel" placeholder="06 xx xx xx xx" autocomplete="tel" inputmode="tel">
       </div>
       <div class="form-field">
         <label class="form-label" for="f-cp">Code postal</label>
@@ -2116,7 +2239,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ─── HEADER SCROLL ───
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
@@ -2231,6 +2354,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   updateCalc();
 
   // ─── FAQ ───
+  
+  function toggleMobileNav() {
+    var nav = document.getElementById('mobile-nav');
+    var btn = document.getElementById('hamburger-btn');
+    var isOpen = nav.classList.toggle('open');
+    btn.classList.toggle('open');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    // Forcer display:flex à l'ouverture (CSS transition)
+    if (isOpen) nav.style.display = 'flex';
+    else setTimeout(function(){ if(!nav.classList.contains('open')) nav.style.display = ''; }, 350);
+  }
+
+  // ─── SOCIAL PROOF TOAST ───
+  (function(){
+    var proofs = [
+      {avatar:'M', name:'Marie, Paris 15e', action:'vient de vérifier son éligibilité', amount:'→ 13 200 € obtenus'},
+      {avatar:'J', name:'Jacques, Versailles', action:'a déposé son dossier', amount:'→ Dossier accepté ✓'},
+      {avatar:'S', name:'Sylvie, Vincennes', action:'vient de simuler ses aides', amount:'→ 9 800 € estimés'},
+      {avatar:'R', name:'Robert, Créteil', action:'a contacté un conseiller', amount:'→ RDV fixé en 24h'},
+      {avatar:'C', name:'Colette, Montreuil', action:'vient de vérifier son éligibilité', amount:'→ 15 400 € obtenus'},
+    ];
+    var idx = 0;
+    function showToast(){
+      var toast = document.getElementById('sp-toast');
+      if(!toast) return;
+      var p = proofs[idx % proofs.length]; idx++;
+      document.getElementById('sp-avatar').textContent = p.avatar;
+      document.getElementById('sp-name').textContent = p.name;
+      document.getElementById('sp-action').textContent = p.action;
+      document.getElementById('sp-amount').textContent = p.amount;
+      toast.classList.add('show');
+      setTimeout(function(){ toast.classList.remove('show'); }, 4000);
+    }
+    // Premier toast après 6s, puis toutes les 18s
+    setTimeout(function(){
+      showToast();
+      setInterval(showToast, 18000);
+    }, 6000);
+  })();
   function toggleFaq(btn) {
     const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('open');
@@ -2335,14 +2497,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     age: {
       next: 'statut',
       save: 'age',
-      bot: "Merci ! Pour vérifier votre éligibilité, quel est l\'âge de la personne concernée ?",
+      bot: "Merci ! Pour bien vous orienter, quel est l'âge de la personne concernée ?",
       quick: ["Moins de 60 ans", "60 à 69 ans", "70 ans et plus"]
     },
     statut: {
       next: 'region',
       save: 'statut',
-      bot: "Parfait ! Et concernant votre logement, vous êtes :",
-      quick: ["Propriétaire occupant", "Locataire du parc privé"]
+      bot: "Très bien ! Êtes-vous propriétaire ou locataire du logement ?",
+      quick: ["Propriétaire", "Locataire"]
     },
     region: {
       next: 'travaux',
@@ -2547,9 +2709,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   const relanceMessages = [
-    "Vous hésitez ? C\'est normal, MaPrimeAdapt peut sembler complexe. Je suis là pour simplifier tout ça étape par étape 😊",
-    "💡 Bon à savoir : le budget ANAH 2026 est partiellement engagé. Plus tôt vous déposez votre dossier, mieux c\'est.",
-    "Jérémy est disponible maintenant au 06 04 43 34 20 pour répondre à toutes vos questions sans engagement."
+    "Vous hésitez ? Je suis là pour vous guider étape par étape.",
+    "Notre conseiller Jérémy est disponible maintenant au 06 04 43 34 20.",
+    "Des milliers de seniors partout en France ont déjà bénéficié de MaPrimeAdapt grâce à notre accompagnement."
   ];
 
   function scheduleRelance() {
@@ -2570,19 +2732,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const text = input.value.trim();
     if (!text) return;
 
-    // Validation téléphone stricte
+    // Validation téléphone
     if (chatStep === 'tel') {
       const digits = text.replace(/\D/g, '');
-      if (digits.length < 9 || digits.length > 15) {
-        addMsg('Merci de saisir un numéro valide (ex : 06 12 34 56 78).', 'bot');
-        return;
-      }
-    }
-
-    // Validation prénom : pas de chiffres
-    if (chatStep === 'prenom') {
-      if (text.replace(/[^a-zA-ZÀ-ÿ\s\-]/g, '').length < 2) {
-        addMsg('Merci d\'indiquer votre prénom.', 'bot');
+      if (digits.length < 9) {
+        addMsg('Merci de saisir un numéro de téléphone valide (ex : 06 12 34 56 78).', 'bot');
         return;
       }
     }
@@ -2592,27 +2746,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     input.value = '';
     clearTimeout(relanceTimer);
 
-    const freeInputSteps = ['region_precision', 'prenom', 'tel'];
-    if (freeInputSteps.indexOf(chatStep) !== -1) {
+    if (['region_precision', 'prenom', 'tel'].indexOf(chatStep) !== -1) {
       advanceStep(text);
-    } else if (chatStep === 'done') {
-      setTimeout(function() {
-        addMsg('Votre dossier est bien enregistré. Jérémy vous recontacte rapidement. Pour toute urgence : 06 04 43 34 20.', 'bot');
-      }, 600);
     } else {
-      // L\'utilisateur tape au lieu de cliquer un bouton — on lui rappelle les options
       setTimeout(function() {
-        var step = FLOW[chatStep];
-        if (step && step.quick && step.quick.length > 0) {
-          addMsg('Utilisez les boutons ci-dessous pour répondre — ou appelez Jérémy directement : 06 04 43 34 20.', 'bot');
-          showQuick(step.quick);
-        } else {
-          addMsg('Jérémy est disponible pour vous répondre au 06 04 43 34 20 (Lun–Sam, 9h–18h).', 'bot');
-        }
+        addMsg('Notre conseiller Jérémy peut répondre à toutes vos questions. Appelez le 06 04 43 34 20 ou utilisez les boutons ci-dessus pour continuer.', 'bot');
         scheduleRelance();
       }, 800);
     }
-    setTimeout(function() { chatSending = false; }, 800);
+    setTimeout(function() { chatSending = false; }, 1000);
   }
 
   function resetChat() {
@@ -2658,55 +2800,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>`;
     document.body.appendChild(b);
     document.body.classList.add('rgpd-active');
+    // Prevent RGPD banner from blocking taps on page content (iOS fix)
     setTimeout(function(){ document.body.style.paddingBottom = b.offsetHeight + 'px'; }, 50);
     function dismissBanner(){ b.classList.add('hidden'); document.body.style.paddingBottom = ''; document.body.classList.remove('rgpd-active'); }
     document.getElementById('rgpd-ok').onclick=function(){
-      localStorage.setItem(KEY,'accepted');
-      dismissBanner();
-      if(typeof gtag!=='undefined') gtag('consent','update',{analytics_storage:'granted'});
-    };
-    document.getElementById('rgpd-no').onclick=function(){
-      localStorage.setItem(KEY,'refused');
-      dismissBanner();
-      if(typeof gtag!=='undefined') gtag('consent','update',{analytics_storage:'denied'});
-    };
-  })();
-
-  // ── MOBILE NAV ──
-  function toggleMobileNav() {
-    const nav = document.getElementById('mobile-nav');
-    const btn = document.getElementById('hamburger-btn');
-    nav.classList.toggle('open');
-    if (btn) btn.classList.toggle('open');
-  }
-
-  // ── SOCIAL PROOF TOAST ──
-  (function(){
-    const proofs = [
-      {name:'Marie P.', loc:'Creteil (94)', amount:'12 400', init:'M'},
-      {name:'Pierre L.', loc:'Meaux (77)', amount:'9 800', init:'P'},
-      {name:'Sylvie D.', loc:'Versailles (78)', amount:'15 400', init:'S'},
-      {name:'Jean-Claude R.', loc:'Evry (91)', amount:'11 200', init:'J'},
-      {name:'Monique B.', loc:'Nanterre (92)', amount:'13 600', init:'M'},
-      {name:'Ahmed K.', loc:'Bobigny (93)', amount:'10 500', init:'A'},
-      {name:'Francoise T.', loc:'Vincennes (94)', amount:'14 200', init:'F'},
-      {name:'Robert M.', loc:'Argenteuil (95)', amount:'8 900', init:'R'}
-    ];
-    let idx = 0;
-    function showToast(){
-      const t = document.getElementById('sp-toast');
-      const p = proofs[idx % proofs.length];
-      document.getElementById('sp-toast-avatar').textContent = p.init;
-      document.getElementById('sp-toast-name').textContent = p.name;
-      document.getElementById('sp-toast-loc').textContent = p.loc;
-      document.getElementById('sp-toast-amount').textContent = p.amount + ' \u20ac';
-      t.classList.add('show');
-      setTimeout(function(){ t.classList.remove('show'); }, 4000);
-      idx++;
-    }
-    setTimeout(showToast, 12000);
-    setInterval(showToast, 25000);
-  })();
-</script>
-</body>
-</html>
+      localStor
