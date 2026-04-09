@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superviseur ArbiBot</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #0891b2;
+    --accent-light: #22d3ee;
+    --accent-mid: #0e7490;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding: 1rem; }
+
+  .header {
+    background: linear-gradient(135deg, #062e3e, #0891b2);
+    border: 1px solid var(--accent-mid);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+  .badge {
+    background: rgba(34,211,238,0.15);
+    border: 1px solid var(--accent-light);
+    color: var(--accent-light);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .kpi-item label { display: block; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .kpi-item input[type="number"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .kpi-item input[type="number"]:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  .status-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .status-btn {
+    flex: 1; min-width: 80px;
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .status-btn.active-vert { border-color: #22c55e; background: rgba(34,197,94,0.1); color: #22c55e; }
+  .status-btn.active-orange { border-color: #f97316; background: rgba(249,115,22,0.1); color: #f97316; }
+  .status-btn.active-rouge { border-color: #ef4444; background: rgba(239,68,68,0.1); color: #ef4444; }
+
+  .health-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.85rem;
+    font-family: monospace;
+    min-height: 60px;
+    color: var(--muted);
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .health-ok { color: #22c55e; }
+  .health-err { color: #ef4444; }
+  .health-loading { color: var(--accent-light); }
+
+  .dry-run-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid;
+    margin-top: 0.5rem;
+  }
+  .dry-run-on { background: rgba(249,115,22,0.1); border-color: #f97316; color: #f97316; }
+  .dry-run-off { background: rgba(34,197,94,0.1); border-color: #22c55e; color: #22c55e; }
+
+  .actions-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
+  .btn-accent {
+    background: rgba(8,145,178,0.2);
+    border-color: var(--accent);
+    color: var(--accent-light);
+  }
+  .btn-primary {
+    background: var(--accent-mid);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-primary:hover { background: var(--accent); color: #fff; }
+
+  .scan-result {
+    margin-top: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    display: none;
+  }
+  .scan-result.show { display: block; }
+  .scan-ok { background: rgba(34,197,94,0.1); border: 1px solid #22c55e; color: #22c55e; }
+  .scan-err { background: rgba(239,68,68,0.1); border: 1px solid #ef4444; color: #ef4444; }
+
+  textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 90px;
+    font-family: inherit;
+  }
+  textarea:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  .link-dg {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .link-dg:hover { text-decoration: underline; }
+
+  .timestamp-display {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.5rem;
+    min-height: 1.2em;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  .server-item { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+  .server-item:last-child { border-bottom: none; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-ok { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+  .dot-err { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+  .dot-unk { background: var(--muted); }
+
+  @media (max-width: 600px) {
+    .header { flex-direction: column; align-items: flex-start; }
+    .kpi-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    body { overflow-x: hidden; }
+    .header { padding: .75rem 1rem !important; flex-wrap: wrap; }
+    .header h1 { font-size: 1rem !important; }
+    .header-badge { display: none; }
+    .main, .content, .panel { padding: .75rem !important; }
+    .form-row, .row-2 { grid-template-columns: 1fr !important; }
+    .btn { min-height: 44px !important; font-size: .88rem; }
+    .score-row { flex-direction: column; }
+    .funnel-row { flex-direction: column; gap: .25rem; }
+    input, select, textarea { font-size: 16px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ Superviseur ArbiBot</h1>
+  <span class="badge">Rapporte à : Adjoint DG</span>
+</div>
+
+<div class="grid">
+  <!-- Connexion / Health -->
+  <div class="card">
+    <h3>🌐 État du serveur</h3>
+    <div class="actions-grid" style="margin-bottom:0.75rem;">
+      <button type="button" class="btn btn-accent" onclick="testHealth()">🔌 Tester connexion</button>
+    </div>
+    <div class="health-panel" id="health-panel">Cliquer pour tester la connexion...</div>
+    <div class="server-item" style="margin-top:0.75rem;">
+      <span>oddsapi.io</span><div class="dot dot-unk" id="dot-odds"></div>
+    </div>
+    <div class="server-item">
+      <span>Scraping engine</span><div class="dot dot-unk" id="dot-scraping"></div>
+    </div>
+    <div class="server-item">
+      <span>Serveur ArbiBot</span><div class="dot dot-unk" id="dot-server"></div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="card">
+    <h3>📊 KPIs ArbiBot</h3>
+    <div class="kpi-grid">
+      <div class="kpi-item">
+        <label>Scans effectués</label>
+        <input type="number" id="scans" value="0" min="0">
+      </div>
+      <div class="kpi-item">
+        <label>Arbs détectés</label>
+        <input type="number" id="arbs" value="0" min="0">
+      </div>
+      <div class="kpi-item">
+        <label>Marge max (%)</label>
+        <input type="number" id="marge" value="0" min="0" max="100" step="0.1">
+      </div>
+      <div class="kpi-item">
+        <label>Sources actives</label>
+        <input type="number" id="sources" value="0" min="0">
+      </div>
+    </div>
+    <div style="margin-top:1rem;">
+      <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.3rem;">Mode DRY_RUN</div>
+      <div class="dry-run-badge dry-run-on" id="dry-run-badge">🧪 DRY_RUN : ACTIVÉ (simulation)</div>
+    </div>
+  </div>
+
+  <!-- Statut -->
+  <div class="card">
+    <h3>🚦 Statut opérationnel</h3>
+    <div class="status-selector">
+      <button type="button" class="status-btn active-vert" data-status="vert" onclick="setStatus('vert')">✅ Vert<br><small>Opérationnel</small></button>
+      <button type="button" class="status-btn" data-status="orange" onclick="setStatus('orange')">⚠️ Orange<br><small>Attention</small></button>
+      <button type="button" class="status-btn" data-status="rouge" onclick="setStatus('rouge')">🔴 Rouge<br><small>Bloqué</small></button>
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="card">
+    <h3>⚡ Actions rapides</h3>
+    <div class="actions-grid">
+      <a class="btn" href="../arbitrage-sport.html">🤖 Ouvrir ArbiBot</a>
+      <button type="button" class="btn btn-accent" onclick="lancerScan()">▶️ Scan manuel</button>
+      <a class="btn" href="../dashboard.html">📊 Dashboard</a>
+    </div>
+    <div class="scan-result" id="scan-result"></div>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="card" style="margin-bottom:1rem;">
+  <h3>📝 Notes & observations</h3>
+  <textarea id="notes" placeholder="Observations, anomalies, arbs manqués, sources à vérifier..."></textarea>
+</div>
+
+<!-- Envoi rapport -->
+<div class="card">
+  <button type="button" class="btn btn-primary" onclick="envoyerRapport()">📤 Envoyer rapport à l'Adjoint DG</button>
+  <div class="timestamp-display" id="last-ts">Aucun rapport envoyé</div>
+  <a class="link-dg" href="./adjoint-dg.html">🔗 Tableau de bord Adjoint DG</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const TOKEN = 'cc51f5e7f5a78a488d0b7e3e657c2b4c5d274275b4863bef';
+  let currentStatus = 'vert';
+
+  function setStatus(s) {
+    currentStatus = s;
+    document.querySelectorAll('.status-btn').forEach(b => {
+      b.className = 'status-btn';
+      if (b.dataset.status === s) b.classList.add('active-' + s);
+    });
+  }
+
+  function updateDryRun() {
+    const dryRun = localStorage.getItem('arbi_dry_run') !== 'false';
+    const badge = document.getElementById('dry-run-badge');
+    if (dryRun) {
+      badge.className = 'dry-run-badge dry-run-on';
+      badge.textContent = '🧪 DRY_RUN : ACTIVÉ (simulation)';
+    } else {
+      badge.className = 'dry-run-badge dry-run-off';
+      badge.textContent = '🚀 DRY_RUN : DÉSACTIVÉ (réel)';
+    }
+  }
+
+  async function testHealth() {
+    const panel = document.getElementById('health-panel');
+    panel.className = 'health-panel health-loading';
+    panel.textContent = 'Connexion en cours...';
+    try {
+      const resp = await fetch('http://localhost:3001/health', { signal: AbortSignal.timeout(5000) });
+      const data = await resp.json();
+      panel.className = 'health-panel health-ok';
+      panel.textContent = JSON.stringify(data, null, 2);
+      setDots(data);
+    } catch(e) {
+      panel.className = 'health-panel health-err';
+      panel.textContent = 'Erreur connexion : ' + e.message + '\n(Serveur localhost:3001 inaccessible)';
+      document.getElementById('dot-server').className = 'dot dot-err';
+      document.getElementById('dot-odds').className = 'dot dot-unk';
+      document.getElementById('dot-scraping').className = 'dot dot-unk';
+    }
+  }
+
+  function setDots(data) {
+    document.getElementById('dot-server').className = 'dot dot-ok';
+    const oddsOk = data.oddsapi || data.odds_api || data.sources?.oddsapi;
+    const scrapOk = data.scraping || data.sources?.scraping;
+    document.getElementById('dot-odds').className = 'dot ' + (oddsOk ? 'dot-ok' : 'dot-err');
+    document.getElementById('dot-scraping').className = 'dot ' + (scrapOk ? 'dot-ok' : 'dot-err');
+  }
+
+  async function lancerScan() {
+    const res = document.getElementById('scan-result');
+    res.className = 'scan-result show health-loading';
+    res.textContent = 'Lancement du scan...';
+    try {
+      const resp = await fetch('http://localhost:3001/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+        body: JSON.stringify({ token: TOKEN }),
+        signal: AbortSignal.timeout(10000)
+      });
+      const data = await resp.json();
+      res.className = 'scan-result show scan-ok';
+      res.textContent = '✅ Scan lancé : ' + JSON.stringify(data);
+      document.getElementById('scans').value = (parseInt(document.getElementById('scans').value) || 0) + 1;
+    } catch(e) {
+      res.className = 'scan-result show scan-err';
+      res.textContent = '❌ Erreur scan : ' + e.message;
+    }
+  }
+
+  function envoyerRapport() {
+    const data = {
+      scans: parseInt(document.getElementById('scans').value) || 0,
+      status: currentStatus,
+      notes: document.getElementById('notes').value,
+      ts: new Date().toISOString(),
+      kpis: {
+        scans: parseInt(document.getElementById('scans').value) || 0,
+        arbs: parseInt(document.getElementById('arbs').value) || 0,
+        marge_max: parseFloat(document.getElementById('marge').value) || 0,
+        sources_actives: parseInt(document.getElementById('sources').value) || 0,
+        dry_run: localStorage.getItem('arbi_dry_run') !== 'false',
+      }
+    };
+    localStorage.setItem('sup_report_arbibot', JSON.stringify(data));
+    const ts = new Date().toLocaleString('fr-FR');
+    document.getElementById('last-ts').textContent = 'Dernier rapport : ' + ts;
+    showToast('✅ Rapport envoyé à l\'Adjoint DG — ' + ts);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function loadSaved() {
+    const raw = localStorage.getItem('sup_report_arbibot');
+    if (!raw) return;
+    try {
+      const d = JSON.parse(raw);
+      if (d.kpis) {
+        document.getElementById('scans').value = d.kpis.scans || 0;
+        document.getElementById('arbs').value = d.kpis.arbs || 0;
+        document.getElementById('marge').value = d.kpis.marge_max || 0;
+        document.getElementById('sources').value = d.kpis.sources_actives || 0;
+      }
+      if (d.status) setStatus(d.status);
+      if (d.notes) document.getElementById('notes').value = d.notes;
+      if (d.ts) document.getElementById('last-ts').textContent = 'Dernier rapport : ' + new Date(d.ts).toLocaleString('fr-FR');
+    } catch(e) {}
+  }
+
+  loadSaved();
+  updateDryRun();
+</script>
+</body>
+</html>

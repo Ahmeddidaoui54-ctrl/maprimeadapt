@@ -1,0 +1,21 @@
+{
+  "name": "arbibot-server",
+  "version": "1.0.0",
+  "description": "ArbiBot — backend temps réel, arbitrage sports méconnus",
+  "main": "server.js",
+  "scripts": {
+    "start":   "node server.js",
+    "dev":     "node --watch server.js",
+    "install-browser": "npx playwright install chromium",
+    "setup":   "node setup.js"
+  },
+  "dependencies": {
+    "playwright":  "^1.43.0",
+    "axios":       "^1.7.2",
+    "ws":          "^8.17.0",
+    "express":     "^4.19.2",
+    "dotenv":      "^16.4.5",
+    "chalk":       "^4.1.2",
+    "node-cron":   "^3.0.3"
+  }
+}

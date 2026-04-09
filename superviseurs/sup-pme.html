@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superviseur PME Services</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #ea580c;
+    --accent-light: #fb923c;
+    --accent-mid: #c2410c;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding: 1rem; }
+
+  .header {
+    background: linear-gradient(135deg, #3d1a00, #ea580c);
+    border: 1px solid var(--accent-mid);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 700; }
+  .badge {
+    background: rgba(251,146,60,0.15);
+    border: 1px solid var(--accent-light);
+    color: var(--accent-light);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0.25rem; background: var(--bg); border-radius: 10px; padding: 0.25rem; border: 1px solid var(--border); margin-bottom: 1rem; }
+  .tab-btn {
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+  }
+  .tab-btn:hover:not(.active) { background: var(--surface); color: var(--text); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .field-group label { display: block; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .field-group input[type="number"], .field-group input[type="text"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .field-group input[type="text"] { color: var(--text); font-weight: 400; font-size: 0.85rem; }
+  .field-group input:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+  .field-group.full { grid-column: 1 / -1; }
+
+  /* Global KPIs */
+  .global-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  .kpi-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; text-align: center; }
+  .kpi-stat .val { font-size: 1.5rem; font-weight: 700; color: var(--accent-light); }
+  .kpi-stat .lbl { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* Progress bars */
+  .obj-row { margin-bottom: 0.75rem; }
+  .obj-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.3rem; }
+  .obj-label .lbl { color: var(--muted); }
+  .obj-label .pct { color: var(--text); font-weight: 600; }
+  .progress-track { height: 10px; background: var(--bg); border-radius: 99px; overflow: hidden; border: 1px solid var(--border); }
+  .progress-fill { height: 100%; border-radius: 99px; transition: width 0.5s ease; }
+  .fill-j30 { background: linear-gradient(90deg, #f97316, #fb923c); }
+  .fill-j60 { background: linear-gradient(90deg, #eab308, #facc15); }
+  .fill-j90 { background: linear-gradient(90deg, #22c55e, #4ade80); }
+
+  /* Status */
+  .status-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .status-btn {
+    flex: 1; min-width: 80px;
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .status-btn.active-vert { border-color: #22c55e; background: rgba(34,197,94,0.1); color: #22c55e; }
+  .status-btn.active-orange { border-color: #f97316; background: rgba(249,115,22,0.1); color: #f97316; }
+  .status-btn.active-rouge { border-color: #ef4444; background: rgba(239,68,68,0.1); color: #ef4444; }
+
+  .actions-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
+  .btn-primary {
+    background: var(--accent-mid);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-primary:hover { background: var(--accent); color: #fff; }
+
+  textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 90px;
+    font-family: inherit;
+  }
+  textarea:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  .link-dg {
+    display: block; text-align: center; margin-top: 0.75rem;
+    color: var(--accent-light); text-decoration: none; font-size: 0.85rem;
+  }
+  .link-dg:hover { text-decoration: underline; }
+
+  .timestamp-display {
+    font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.5rem; min-height: 1.2em;
+  }
+
+  .toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--accent-mid); color: #fff;
+    padding: 0.8rem 1.2rem; border-radius: 10px;
+    font-size: 0.9rem; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    opacity: 0; transform: translateY(1rem); transition: all 0.3s;
+    z-index: 9999; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .header { flex-direction: column; }
+    .service-grid, .global-kpis { grid-template-columns: 1fr; }
+    .tab-btn { font-size: 0.75rem; padding: 0.5rem 0.25rem; }
+  }
+  @media (max-width: 480px) {
+    body { overflow-x: hidden; }
+    .header { padding: .75rem 1rem !important; flex-wrap: wrap; }
+    .header h1 { font-size: 1rem !important; }
+    .header-badge { display: none; }
+    .main, .content, .panel { padding: .75rem !important; }
+    .form-row, .row-2 { grid-template-columns: 1fr !important; }
+    .btn { min-height: 44px !important; font-size: .88rem; }
+    .score-row { flex-direction: column; }
+    .funnel-row { flex-direction: column; gap: .25rem; }
+    input, select, textarea { font-size: 16px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏢 Superviseur PME Services</h1>
+  <span class="badge">Rapporte à : Adjoint DG</span>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button type="button" class="tab-btn active" onclick="switchTab('ia')">🤖 IA PME</button>
+  <button type="button" class="tab-btn" onclick="switchTab('seniors')">👴 Seniors PACA</button>
+  <button type="button" class="tab-btn" onclick="switchTab('leads')">📊 Leads B2B</button>
+</div>
+
+<!-- Tab: IA PME -->
+<div class="tab-panel active" id="tab-ia">
+  <div class="card">
+    <h3>🤖 Service IA PME</h3>
+    <div class="service-grid">
+      <div class="field-group">
+        <label>Prospects en pipeline</label>
+        <input type="number" id="ia_prospects" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>Clients actifs</label>
+        <input type="number" id="ia_clients" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>CA mensuel estimé (€)</label>
+        <input type="number" id="ia_ca" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>Prochaine action</label>
+        <input type="text" id="ia_action" placeholder="Ex: Relancer 5 prospects...">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Seniors PACA -->
+<div class="tab-panel" id="tab-seniors">
+  <div class="card">
+    <h3>👴 Service Seniors PACA</h3>
+    <div class="service-grid">
+      <div class="field-group">
+        <label>Prospects en pipeline</label>
+        <input type="number" id="seniors_prospects" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>Clients actifs</label>
+        <input type="number" id="seniors_clients" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>CA mensuel estimé (€)</label>
+        <input type="number" id="seniors_ca" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>Prochaine action</label>
+        <input type="text" id="seniors_action" placeholder="Ex: Envoyer brochure...">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Leads B2B -->
+<div class="tab-panel" id="tab-leads">
+  <div class="card">
+    <h3>📊 Service Leads B2B</h3>
+    <div class="service-grid">
+      <div class="field-group">
+        <label>Prospects en pipeline</label>
+        <input type="number" id="leads_prospects" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>Clients actifs</label>
+        <input type="number" id="leads_clients" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>CA mensuel estimé (€)</label>
+        <input type="number" id="leads_ca" value="0" min="0" oninput="updateGlobals()">
+      </div>
+      <div class="field-group">
+        <label>Prochaine action</label>
+        <input type="text" id="leads_action" placeholder="Ex: LinkedIn outreach...">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Global KPIs -->
+<div class="card">
+  <h3>📈 KPIs consolidés (tous services)</h3>
+  <div class="global-kpis">
+    <div class="kpi-stat">
+      <div class="val" id="total-prospects">0</div>
+      <div class="lbl">Total prospects</div>
+    </div>
+    <div class="kpi-stat">
+      <div class="val" id="total-clients">0</div>
+      <div class="lbl">Total clients</div>
+    </div>
+    <div class="kpi-stat">
+      <div class="val" id="total-ca">0 €</div>
+      <div class="lbl">CA mensuel total</div>
+    </div>
+  </div>
+</div>
+
+<!-- Objectifs -->
+<div class="card">
+  <h3>🎯 Objectifs CA mensuel</h3>
+  <div class="obj-row">
+    <div class="obj-label"><span class="lbl">J30 — Objectif 500 €</span><span class="pct" id="pct-j30">0%</span></div>
+    <div class="progress-track"><div class="progress-fill fill-j30" id="fill-j30" style="width:0%"></div></div>
+  </div>
+  <div class="obj-row">
+    <div class="obj-label"><span class="lbl">J60 — Objectif 1 500 €</span><span class="pct" id="pct-j60">0%</span></div>
+    <div class="progress-track"><div class="progress-fill fill-j60" id="fill-j60" style="width:0%"></div></div>
+  </div>
+  <div class="obj-row">
+    <div class="obj-label"><span class="lbl">J90 — Objectif 3 000 €</span><span class="pct" id="pct-j90">0%</span></div>
+    <div class="progress-track"><div class="progress-fill fill-j90" id="fill-j90" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- Statut -->
+<div class="card">
+  <h3>🚦 Statut opérationnel</h3>
+  <div class="status-selector">
+    <button type="button" class="status-btn active-vert" data-status="vert" onclick="setStatus('vert')">✅ Vert<br><small>Opérationnel</small></button>
+    <button type="button" class="status-btn" data-status="orange" onclick="setStatus('orange')">⚠️ Orange<br><small>Attention</small></button>
+    <button type="button" class="status-btn" data-status="rouge" onclick="setStatus('rouge')">🔴 Rouge<br><small>Bloqué</small></button>
+  </div>
+</div>
+
+<!-- Actions -->
+<div class="card">
+  <h3>⚡ Actions rapides</h3>
+  <div class="actions-grid">
+    <a class="btn" href="../pme/outils-rh/bot-prospect.html">🤖 Bot Prospection</a>
+    <a class="btn" href="../pme/templates/hub.html">📋 Templates</a>
+    <a class="btn" href="../pme/strategie-revisee.html">📌 Stratégie</a>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="card">
+  <h3>📝 Notes & observations</h3>
+  <textarea id="notes" placeholder="Pipeline, blocages, opportunités identifiées..."></textarea>
+</div>
+
+<!-- Envoi rapport -->
+<div class="card">
+  <button type="button" class="btn btn-primary" onclick="envoyerRapport()">📤 Envoyer rapport à l'Adjoint DG</button>
+  <div class="timestamp-display" id="last-ts">Aucun rapport envoyé</div>
+  <a class="link-dg" href="./adjoint-dg.html">🔗 Tableau de bord Adjoint DG</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let currentStatus = 'vert';
+  let activeTab = 'ia';
+
+  function switchTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function setStatus(s) {
+    currentStatus = s;
+    document.querySelectorAll('.status-btn').forEach(b => {
+      b.className = 'status-btn';
+      if (b.dataset.status === s) b.classList.add('active-' + s);
+    });
+  }
+
+  function updateGlobals() {
+    const tp = (parseInt(document.getElementById('ia_prospects').value) || 0)
+             + (parseInt(document.getElementById('seniors_prospects').value) || 0)
+             + (parseInt(document.getElementById('leads_prospects').value) || 0);
+    const tc = (parseInt(document.getElementById('ia_clients').value) || 0)
+             + (parseInt(document.getElementById('seniors_clients').value) || 0)
+             + (parseInt(document.getElementById('leads_clients').value) || 0);
+    const tca = (parseInt(document.getElementById('ia_ca').value) || 0)
+              + (parseInt(document.getElementById('seniors_ca').value) || 0)
+              + (parseInt(document.getElementById('leads_ca').value) || 0);
+
+    document.getElementById('total-prospects').textContent = tp;
+    document.getElementById('total-clients').textContent = tc;
+    document.getElementById('total-ca').textContent = tca.toLocaleString('fr-FR') + ' €';
+
+    const p30 = Math.min(100, Math.round((tca / 500) * 100));
+    const p60 = Math.min(100, Math.round((tca / 1500) * 100));
+    const p90 = Math.min(100, Math.round((tca / 3000) * 100));
+
+    document.getElementById('fill-j30').style.width = p30 + '%';
+    document.getElementById('pct-j30').textContent = p30 + '%';
+    document.getElementById('fill-j60').style.width = p60 + '%';
+    document.getElementById('pct-j60').textContent = p60 + '%';
+    document.getElementById('fill-j90').style.width = p90 + '%';
+    document.getElementById('pct-j90').textContent = p90 + '%';
+  }
+
+  function envoyerRapport() {
+    const totalCa = (parseInt(document.getElementById('ia_ca').value) || 0)
+                  + (parseInt(document.getElementById('seniors_ca').value) || 0)
+                  + (parseInt(document.getElementById('leads_ca').value) || 0);
+    const totalProspects = (parseInt(document.getElementById('ia_prospects').value) || 0)
+                         + (parseInt(document.getElementById('seniors_prospects').value) || 0)
+                         + (parseInt(document.getElementById('leads_prospects').value) || 0);
+
+    const data = {
+      prospects: totalProspects,
+      status: currentStatus,
+      notes: document.getElementById('notes').value,
+      ts: new Date().toISOString(),
+      kpis: {
+        ia: {
+          prospects: parseInt(document.getElementById('ia_prospects').value) || 0,
+          clients: parseInt(document.getElementById('ia_clients').value) || 0,
+          ca: parseInt(document.getElementById('ia_ca').value) || 0,
+          action: document.getElementById('ia_action').value,
+        },
+        seniors: {
+          prospects: parseInt(document.getElementById('seniors_prospects').value) || 0,
+          clients: parseInt(document.getElementById('seniors_clients').value) || 0,
+          ca: parseInt(document.getElementById('seniors_ca').value) || 0,
+          action: document.getElementById('seniors_action').value,
+        },
+        leads_b2b: {
+          prospects: parseInt(document.getElementById('leads_prospects').value) || 0,
+          clients: parseInt(document.getElementById('leads_clients').value) || 0,
+          ca: parseInt(document.getElementById('leads_ca').value) || 0,
+          action: document.getElementById('leads_action').value,
+        },
+        total_ca: totalCa,
+        total_prospects: totalProspects,
+      }
+    };
+    localStorage.setItem('sup_report_pme', JSON.stringify(data));
+    const ts = new Date().toLocaleString('fr-FR');
+    document.getElementById('last-ts').textContent = 'Dernier rapport : ' + ts;
+    showToast('✅ Rapport envoyé à l\'Adjoint DG — ' + ts);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function loadSaved() {
+    const raw = localStorage.getItem('sup_report_pme');
+    if (!raw) return;
+    try {
+      const d = JSON.parse(raw);
+      if (d.kpis) {
+        const k = d.kpis;
+        if (k.ia) {
+          document.getElementById('ia_prospects').value = k.ia.prospects || 0;
+          document.getElementById('ia_clients').value = k.ia.clients || 0;
+          document.getElementById('ia_ca').value = k.ia.ca || 0;
+          document.getElementById('ia_action').value = k.ia.action || '';
+        }
+        if (k.seniors) {
+          document.getElementById('seniors_prospects').value = k.seniors.prospects || 0;
+          document.getElementById('seniors_clients').value = k.seniors.clients || 0;
+          document.getElementById('seniors_ca').value = k.seniors.ca || 0;
+          document.getElementById('seniors_action').value = k.seniors.action || '';
+        }
+        if (k.leads_b2b) {
+          document.getElementById('leads_prospects').value = k.leads_b2b.prospects || 0;
+          document.getElementById('leads_clients').value = k.leads_b2b.clients || 0;
+          document.getElementById('leads_ca').value = k.leads_b2b.ca || 0;
+          document.getElementById('leads_action').value = k.leads_b2b.action || '';
+        }
+      }
+      if (d.status) setStatus(d.status);
+      if (d.notes) document.getElementById('notes').value = d.notes;
+      if (d.ts) document.getElementById('last-ts').textContent = 'Dernier rapport : ' + new Date(d.ts).toLocaleString('fr-FR');
+      updateGlobals();
+    } catch(e) {}
+  }
+
+  loadSaved();
+  updateGlobals();
+</script>
+</body>
+</html>

@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Templates Hub — MaPrimeAdapt & PME</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #273548;
+      --border: #334155;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --accent3: #10b981;
+      --accent4: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --green: #1a3d2b;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 800; }
+    .header h1 span { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header p { font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+    .header-actions { display: flex; gap: .75rem; }
+
+    /* NAV TABS */
+    .nav-tabs {
+      display: flex; gap: .25rem;
+      padding: 1rem 2rem 0;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    .nav-tab {
+      padding: .6rem 1.25rem;
+      border-radius: 8px 8px 0 0;
+      font-size: .85rem; font-weight: 600;
+      cursor: pointer; border: none;
+      background: none; color: var(--muted);
+      transition: all .2s;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      border-bottom: none;
+    }
+    .nav-tab:hover { color: var(--text); background: var(--surface); }
+    .nav-tab.active { color: #fff; background: var(--surface); border-color: var(--border); }
+    .nav-tab .tab-icon { margin-right: .4rem; }
+
+    /* MAIN */
+    .main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* SECTION TITLE */
+    .section-intro {
+      margin-bottom: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .section-intro .icon { font-size: 2rem; flex-shrink: 0; }
+    .section-intro h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: .3rem; }
+    .section-intro p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    /* TEMPLATES GRID */
+    .templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
+
+    .tpl-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .tpl-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .tpl-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .tpl-badge {
+      padding: .2rem .65rem;
+      border-radius: 20px;
+      font-size: .7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .badge-blue { background: rgba(59,130,246,.2); color: #60a5fa; }
+    .badge-purple { background: rgba(139,92,246,.2); color: #a78bfa; }
+    .badge-green { background: rgba(16,185,129,.2); color: #34d399; }
+    .badge-orange { background: rgba(245,158,11,.2); color: #fbbf24; }
+    .badge-red { background: rgba(239,68,68,.2); color: #f87171; }
+
+    .tpl-title { font-weight: 700; font-size: .95rem; }
+    .tpl-subtitle { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+
+    .tpl-body { padding: 1.25rem; }
+
+    .tpl-preview {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: .82rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .tpl-preview::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(transparent, #0f172a);
+    }
+    .tpl-preview.expanded { max-height: none; }
+    .tpl-preview.expanded::after { display: none; }
+
+    .tpl-meta {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      margin: .75rem 0;
+    }
+    .meta-chip {
+      display: flex; align-items: center; gap: .3rem;
+      padding: .2rem .6rem;
+      background: var(--surface2);
+      border-radius: 20px;
+      font-size: .72rem; color: var(--muted);
+    }
+
+    .tpl-actions { display: flex; gap: .5rem; margin-top: .75rem; }
+    .btn-copy {
+      flex: 1; padding: .55rem;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 8px;
+      font-size: .82rem; font-weight: 700;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-copy:hover { background: #2563eb; }
+    .btn-expand {
+      padding: .55rem .9rem;
+      background: var(--surface2); color: var(--muted);
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: .82rem; cursor: pointer; transition: all .2s;
+    }
+    .btn-expand:hover { color: var(--text); border-color: var(--accent); }
+
+    /* EMAIL PREVIEW */
+    .email-wrapper {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: .75rem;
+    }
+    .email-top-bar {
+      background: #f3f4f6;
+      padding: .5rem .75rem;
+      font-size: .72rem;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .email-body-preview {
+      padding: 1rem;
+      font-size: .82rem;
+      line-height: 1.65;
+      color: #111827;
+      max-height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .email-body-preview::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, #fff);
+    }
+
+    /* SCORE INDICATORS */
+    .score-row {
+      display: flex; gap: .5rem;
+      margin: .75rem 0 .5rem;
+      font-size: .72rem;
+    }
+    .score-item {
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--surface2); border-radius: 8px;
+      padding: .4rem .6rem; flex: 1;
+    }
+    .score-val { font-size: 1.1rem; font-weight: 800; }
+    .score-lbl { color: var(--muted); margin-top: .1rem; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: #1e293b; color: #fff;
+      padding: .75rem 1.2rem; border-radius: 8px;
+      font-size: .88rem; box-shadow: 0 4px 16px rgba(0,0,0,.4);
+      transform: translateY(60px); opacity: 0; transition: all .3s; z-index: 999;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+      .main { padding: 1rem !important; }
+      .nav-tabs { padding: .75rem 1rem 0; flex-wrap: nowrap; overflow-x: auto; padding-bottom: .25rem; -webkit-overflow-scrolling: touch; }
+      .nav-tab { flex-shrink: 0; }
+      .header { padding: 1rem; flex-direction: column; align-items: flex-start; gap: .75rem; }
+      .templates-grid { grid-template-columns: 1fr !important; }
+      .tpl-preview { font-size: .78rem; }
+      .score-row { flex-wrap: wrap; gap: .4rem; }
+      .score-item { min-width: calc(33% - .3rem); }
+    }
+    @media (max-width: 480px) {
+      .header { flex-direction: column; align-items: flex-start; gap: .5rem; }
+      .header h1 { font-size: 1rem; }
+      .tpl-actions { flex-direction: column; }
+      .btn-copy, .btn-expand { width: 100%; }
+      .score-item { min-width: calc(50% - .2rem); }
+      input, select, textarea { font-size: 16px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📁 <span>Templates Hub</span></h1>
+    <p>MaPrimeAdapt · PME · ArbiBot — Tous tes meilleurs templates en un endroit</p>
+  </div>
+  <div class="header-actions">
+    <span style="font-size:.78rem;color:var(--muted);align-self:center">Dernière MàJ : <span id="lastUpdate"></span></span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('emails')" data-tab="emails"><span class="tab-icon">📧</span>Emails Brevo</button>
+  <button class="nav-tab" onclick="showTab('meta')" data-tab="meta"><span class="tab-icon">📱</span>Meta Ads</button>
+  <button class="nav-tab" onclick="showTab('linkedin')" data-tab="linkedin"><span class="tab-icon">💼</span>LinkedIn</button>
+  <button class="nav-tab" onclick="showTab('sms')" data-tab="sms"><span class="tab-icon">💬</span>SMS / WhatsApp</button>
+  <button class="nav-tab" onclick="showTab('scripts')" data-tab="scripts"><span class="tab-icon">📞</span>Scripts Tél.</button>
+</div>
+
+<div class="main">
+
+  <!-- ══════════════════════════════════════
+       TAB: EMAILS BREVO
+  ══════════════════════════════════════ -->
+  <div class="tab-content active" id="tab-emails">
+    <div class="section-intro">
+      <div class="icon">📧</div>
+      <div>
+        <h2>Templates Emails — Brevo CRM</h2>
+        <p>3 séquences optimisées : confirmation immédiate → relance J+2 → nurturing J+7. Taux d'ouverture moyen ciblé : 45%+. À importer directement dans Brevo > Campagnes > Email transactionnel.</p>
+      </div>
+    </div>
+
+    <div class="templates-grid">
+
+      <!-- EMAIL 1 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-green">✓ J+0 Immédiat</span>
+          <div>
+            <div class="tpl-title">Confirmation de demande</div>
+            <div class="tpl-subtitle">Envoyé automatiquement après soumission formulaire</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">52%</div><div class="score-lbl">Ouverture</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">38%</div><div class="score-lbl">Clic</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">J+0</div><div class="score-lbl">Délai</div></div>
+          </div>
+          <div class="email-wrapper">
+            <div class="email-top-bar">
+              <strong>Objet :</strong> ✅ Votre simulation MaPrimeAdapt est confirmée, {{prenom}}
+            </div>
+            <div class="email-body-preview" id="email1-preview">
+Bonjour {{prenom}},
+
+Bonne nouvelle — nous avons bien reçu votre demande de simulation pour votre logement en Île-de-France.
+
+📋 Ce que nous allons faire pour vous :
+• Analyser votre éligibilité MaPrimeAdapt (jusqu'à 70%)
+• Estimer le montant exact de votre prime
+• Vous rappeler sous 24h avec nos conclusions
+
+💰 Rappel : selon votre profil, vous pouvez obtenir jusqu'à 15 400 € de financement pour adapter votre logement.
+
+Un conseiller dédié vous contactera au {{telephone}} dans les prochaines 24 heures (lun–sam, 9h–18h).
+
+Des questions ? Répondez directement à cet email ou appelez le 06 04 43 34 20.
+
+À très vite,
+L'équipe MaPrimeAdapt IDF
+
+---
+MaPrimeAdapt Île-de-France | contact@maprimeadapt-idf.fr
+Conformément au RGPD, vous pouvez vous désabonner à tout moment.
+            </div>
+          </div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⏱️ Délai : immédiat</span>
+            <span class="meta-chip">👤 Variable : {{prenom}}, {{telephone}}</span>
+            <span class="meta-chip">🎯 Objectif : réassurance</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('email1')">📋 Copier le texte</button>
+            <button class="btn-expand" onclick="expandTpl('email1-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL 2 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-orange">⚡ J+2 Relance</span>
+          <div>
+            <div class="tpl-title">Relance sans réponse</div>
+            <div class="tpl-subtitle">Si pas de rappel / pas de réponse après 48h</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">41%</div><div class="score-lbl">Ouverture</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">29%</div><div class="score-lbl">Clic</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">J+2</div><div class="score-lbl">Délai</div></div>
+          </div>
+          <div class="email-wrapper">
+            <div class="email-top-bar">
+              <strong>Objet :</strong> {{prenom}}, votre dossier MaPrimeAdapt nous attend encore
+            </div>
+            <div class="email-body-preview" id="email2-preview">
+Bonjour {{prenom}},
+
+Nous n'avons pas encore eu l'occasion d'échanger avec vous concernant votre projet d'adaptation à domicile.
+
+Nous ne voulons pas que vous passiez à côté de cette aide — les dossiers MaPrimeAdapt peuvent prendre du temps à être traités par l'ANAH, et commencer maintenant, c'est gagner plusieurs semaines.
+
+🔔 Rappel de votre simulation :
+→ Aide potentielle : entre 30% et 70% du montant des travaux
+→ Plafond : jusqu'à 22 000 € de travaux pris en charge
+→ Délai : 6 à 10 semaines de la simulation à la fin des travaux
+
+Prenez 5 minutes pour qu'on fasse le point ensemble.
+
+👉 Appelez-nous : 06 04 43 34 20 (lun–sam, 9h–18h)
+👉 Ou répondez à cet email pour qu'on vous rappelle au moment qui vous convient.
+
+Cordialement,
+Sophie — Conseillère MaPrimeAdapt IDF
+            </div>
+          </div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⏱️ Délai : J+2</span>
+            <span class="meta-chip">👤 Variable : {{prenom}}</span>
+            <span class="meta-chip">🎯 Objectif : réactiver</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('email2')">📋 Copier le texte</button>
+            <button class="btn-expand" onclick="expandTpl('email2-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL 3 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-purple">🎓 J+7 Nurturing</span>
+          <div>
+            <div class="tpl-title">Email éducatif — Urgence ANAH</div>
+            <div class="tpl-subtitle">Contenu de valeur + deadline psychologique</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">35%</div><div class="score-lbl">Ouverture</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">22%</div><div class="score-lbl">Clic</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">J+7</div><div class="score-lbl">Délai</div></div>
+          </div>
+          <div class="email-wrapper">
+            <div class="email-top-bar">
+              <strong>Objet :</strong> Ce que 73% des seniors ignorent sur MaPrimeAdapt (et qui leur coûte cher)
+            </div>
+            <div class="email-body-preview" id="email3-preview">
+Bonjour {{prenom}},
+
+Voici une information que beaucoup de familles découvrent trop tard :
+
+❌ Erreur n°1 : Attendre que la situation devienne urgente
+Les dossiers déposés en urgence (après une chute, une hospitalisation) sont souvent moins bien préparés et obtiennent des montants d'aide inférieurs.
+
+❌ Erreur n°2 : Ne pas savoir que les locataires y ont aussi droit
+Sous conditions, un locataire peut percevoir jusqu'à 50% d'aide sur les travaux — avec l'accord du propriétaire.
+
+❌ Erreur n°3 : Confondre MaPrimeAdapt et MaPrimeRénov'
+Ce sont deux dispositifs distincts. MaPrimeAdapt est spécifiquement dédié à l'adaptation pour les seniors et personnes en situation de handicap.
+
+✅ Ce qu'on fait pour vous en 30 minutes :
+→ Vérification de votre éligibilité exacte
+→ Estimation précise de votre prime
+→ Liste des travaux couverts pour VOTRE logement
+→ Démarrage du dossier si vous le souhaitez
+
+Il n'y a aucun engagement. Si on peut vous aider, parfait. Sinon, vous repartez avec toutes les informations gratuitement.
+
+📞 06 04 43 34 20 — Lun–Sam 9h–18h
+✉️ contact@maprimeadapt-idf.fr
+
+À bientôt,
+L'équipe MaPrimeAdapt IDF
+            </div>
+          </div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⏱️ Délai : J+7</span>
+            <span class="meta-chip">👤 Variable : {{prenom}}</span>
+            <span class="meta-chip">🎯 Objectif : convertir par valeur</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('email3')">📋 Copier le texte</button>
+            <button class="btn-expand" onclick="expandTpl('email3-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL 4 — PME IA -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-blue">🤖 PME IA</span>
+          <div>
+            <div class="tpl-title">Prospection PME — Accompagnement IA</div>
+            <div class="tpl-subtitle">Cold email B2B pour les dirigeants de PME</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">28%</div><div class="score-lbl">Ouverture</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">12%</div><div class="score-lbl">Réponse</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">B2B</div><div class="score-lbl">Type</div></div>
+          </div>
+          <div class="email-wrapper">
+            <div class="email-top-bar">
+              <strong>Objet :</strong> {{prenom}}, combien de temps perdez-vous sur des tâches que l'IA peut faire en 30 secondes ?
+            </div>
+            <div class="email-body-preview" id="email4-preview">
+Bonjour {{prenom}},
+
+Question directe : dans votre PME, combien d'heures par semaine sont consacrées à des tâches répétitives — emails, devis, rapports, tri de données ?
+
+Pour la plupart des dirigeants que j'accompagne, c'est entre 8 et 15 heures. Des heures qui pourraient aller à la croissance.
+
+Ce que je fais concrètement :
+→ Audit gratuit 30 min de vos processus chronophages
+→ Identification des 3 tâches automatisables immédiatement
+→ Mise en place et formation en 1 session (< 2h)
+→ Suivi mensuel avec ajustements
+
+Résultat constaté chez mes clients : 6 à 10h récupérées par semaine dès le premier mois.
+
+Tarif : 300€/mois — moins qu'une demi-journée de consultant traditionnel.
+
+Ça vaut 30 minutes de votre temps pour en parler ?
+
+Bonne journée,
+[Votre nom]
+Accompagnement IA PME
+📞 [Téléphone] | contact@[domaine].fr
+            </div>
+          </div>
+          <div class="tpl-meta">
+            <span class="meta-chip">🎯 Cible : dirigeants PME</span>
+            <span class="meta-chip">💰 Offre : 300€/mois</span>
+            <span class="meta-chip">🔑 Accroche : perte de temps</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('email4')">📋 Copier le texte</button>
+            <button class="btn-expand" onclick="expandTpl('email4-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB: META ADS
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="tab-meta">
+    <div class="section-intro">
+      <div class="icon">📱</div>
+      <div>
+        <h2>Templates Meta Ads — Budget 50€</h2>
+        <p>3 formats optimisés pour Facebook & Instagram. Objectif : CPL (coût par lead) &lt; 8€ en ciblant 60+ IDF. Chaque template inclut texte principal, titre, description et CTA.</p>
+      </div>
+    </div>
+
+    <div class="templates-grid">
+
+      <!-- AD 1 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-blue">🖼️ Image statique</span>
+          <div>
+            <div class="tpl-title">Ad Principale — Accroche chiffre</div>
+            <div class="tpl-subtitle">Format recommandé pour débutants · CPL estimé 6-9€</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">3.2%</div><div class="score-lbl">CTR moy.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">7€</div><div class="score-lbl">CPL est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">60+</div><div class="score-lbl">Cible âge</div></div>
+          </div>
+          <div class="tpl-preview" id="meta1-preview">🟢 TEXTE PRINCIPAL :
+"Vous avez 60 ans ou plus et êtes propriétaire en Île-de-France ?
+
+L'État finance jusqu'à 70% de l'adaptation de votre logement — douche italienne, rampes, monte-escalier — grâce à MaPrimeAdapt.
+
+👉 Simulation gratuite en 3 minutes. Résultat immédiat."
+
+━━━━━━━━━━━━━━━━━━
+🔵 TITRE DE L'AD :
+"Jusqu'à 15 400€ financés par l'État"
+
+📝 DESCRIPTION :
+"Simulation gratuite · Sans engagement · Rappel sous 24h"
+
+📲 BOUTON CTA :
+"En savoir plus" → maprimeadapt-idf.fr
+
+━━━━━━━━━━━━━━━━━━
+🎨 VISUEL RECOMMANDÉ :
+Photo senior souriant dans une salle de bain lumineuse adaptée.
+Fond blanc ou vert clair. Texte overlay : "Jusqu'à 70% financé"
+Format : 1080×1080px (carré) ou 1200×628px (paysage)
+
+━━━━━━━━━━━━━━━━━━
+🎯 CIBLAGE :
+Âge : 55-75 ans (toucher les enfants aussi)
+Géo : Île-de-France (75, 77, 78, 91, 92, 93, 94, 95)
+Intérêts : Retraite, Santé, Maison & jardin, ANAH, CAF
+Exclure : Professionnels de l'immobilier</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">💰 Budget : 15€/j max 3j</span>
+            <span class="meta-chip">📐 Format : 1080×1080</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('meta1')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('meta1-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AD 2 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-purple">🎠 Carrousel</span>
+          <div>
+            <div class="tpl-title">Ad Carrousel — 3 travaux couverts</div>
+            <div class="tpl-subtitle">Meilleur engagement · Idéal pour expliquer l'offre</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">4.1%</div><div class="score-lbl">CTR moy.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">8€</div><div class="score-lbl">CPL est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">+35%</div><div class="score-lbl">Engagement</div></div>
+          </div>
+          <div class="tpl-preview" id="meta2-preview">🟢 TEXTE PRINCIPAL (au-dessus du carrousel) :
+"Saviez-vous que ces travaux sont financés jusqu'à 70% par l'État pour les seniors d'Île-de-France ? Faites glisser →"
+
+━━━━━━━━━━━━━━━━━━
+🃏 CARTE 1 — Salle de bain
+Titre : "Douche à l'italienne"
+Desc : "Accès sécurisé · Zéro risque de chute"
+Visuel : salle de bain moderne adaptée
+
+🃏 CARTE 2 — Escaliers
+Titre : "Monte-escalier ou rampe"
+Desc : "Restez dans votre maison, à votre rythme"
+Visuel : monte-escalier moderne, senior souriant
+
+🃏 CARTE 3 — Entrée
+Titre : "Élargissement de portes"
+Desc : "Accès facilité fauteuil roulant ou déambulateur"
+Visuel : porte large lumineuse
+
+🃏 CARTE 4 (CTA)
+Titre : "Simulation gratuite →"
+Desc : "Résultat en 3 minutes · Sans engagement"
+Visuel : fond vert avec texte blanc
+URL : maprimeadapt-idf.fr
+
+━━━━━━━━━━━━━━━━━━
+🎯 CIBLAGE : identique Ad 1
+💡 ASTUCE : La dernière carte doit toujours être le CTA</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">💰 Budget : 20€/j max 2j</span>
+            <span class="meta-chip">🃏 4 cartes min</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('meta2')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('meta2-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AD 3 — PME IA -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-orange">🤖 B2B PME</span>
+          <div>
+            <div class="tpl-title">Ad Meta — Accompagnement IA PME</div>
+            <div class="tpl-subtitle">Ciblage dirigeants · Lead gen B2B</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">1.8%</div><div class="score-lbl">CTR moy.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">18€</div><div class="score-lbl">CPL est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">B2B</div><div class="score-lbl">Type</div></div>
+          </div>
+          <div class="tpl-preview" id="meta3-preview">🟢 TEXTE PRINCIPAL :
+"Vous dirigez une PME de moins de 20 personnes ?
+
+En 2025, vos concurrents utilisent déjà l'IA pour aller 3× plus vite sur leurs devis, emails et rapports.
+
+Audit gratuit de 30 min → on identifie ensemble les 3 tâches que l'IA peut prendre en charge cette semaine.
+
+0 jargon. 0 technique. 100% opérationnel.
+Résultat garanti ou remboursé."
+
+━━━━━━━━━━━━━━━━━━
+🔵 TITRE :
+"Gagnez 8h/semaine avec l'IA — Audit gratuit"
+
+📝 DESCRIPTION :
+"300€/mois · Sans engagement · Pour PME <20 pers."
+
+📲 BOUTON : "Réserver mon audit"
+
+━━━━━━━━━━━━━━━━━━
+🎯 CIBLAGE B2B META :
+Titre de poste : Gérant, Directeur général, CEO, Fondateur
+Secteur : Commerce, Services aux entreprises, Retail
+Taille entreprise : 1-50 employés
+Géo : France métropolitaine (ou IDF pour commencer)
+Intérêts : Entrepreneuriat, Gestion d'entreprise, Productivité
+⚠️ Meta B2B = CPL plus élevé mais leads qualifiés</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">💰 Budget : 15€/j</span>
+            <span class="meta-chip">🎯 Cible : dirigeants PME</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('meta3')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('meta3-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB: LINKEDIN
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="tab-linkedin">
+    <div class="section-intro">
+      <div class="icon">💼</div>
+      <div>
+        <h2>Templates LinkedIn — Posts & Pages</h2>
+        <p>5 posts stratégiques pour lancer la présence PME sur LinkedIn. Alternance : expertise · storytelling · preuve sociale · offre directe · éducation. Fréquence recommandée : 3×/semaine.</p>
+      </div>
+    </div>
+
+    <div class="templates-grid">
+
+      <!-- POST 1 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-blue">🚀 Post #1</span>
+          <div>
+            <div class="tpl-title">Post de lancement — Présentation PME</div>
+            <div class="tpl-subtitle">Premier post · Accroche forte · Portée maximale</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">+200</div><div class="score-lbl">Reach est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">4.5%</div><div class="score-lbl">Engage.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">Pinné</div><div class="score-lbl">Action</div></div>
+          </div>
+          <div class="tpl-preview" id="li1-preview">J'ai passé 6 mois à regarder des PME perdre des heures chaque jour sur des tâches que l'IA peut faire en 30 secondes.
+
+Alors j'ai décidé de faire quelque chose.
+
+Je lance aujourd'hui [Nom de la PME] — un service d'accompagnement IA pour les dirigeants de PME de moins de 20 personnes qui veulent récupérer du temps sans devenir ingénieur.
+
+Ce que je ne fais PAS :
+❌ Vous vendre un logiciel
+❌ Vous expliquer ce qu'est "le machine learning"
+❌ Vous promettre une révolution en 6 mois
+
+Ce que je fais :
+✅ Un audit gratuit de 30 min de vos vraies tâches chronophages
+✅ On identifie ensemble les 3 automatisations à fort ROI
+✅ Je les mets en place avec vous. En 1 session.
+✅ Résultat mesurable dès la première semaine.
+
+Le prix ? 300€/mois. Moins qu'un stagiaire.
+
+Si vous dirigez une PME et que vous perdez plus de 5h/semaine sur des tâches répétitives, ce post est pour vous.
+
+Commentez "AUDIT" ci-dessous ou envoyez-moi un message.
+
+---
+🔁 Si vous connaissez un dirigeant qui pourrait en bénéficier, partagez ce post — vous lui rendrez service.</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">📌 À épingler en haut du profil</span>
+            <span class="meta-chip">🕗 Mardi 8h ou Jeudi 12h</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('li1')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('li1-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POST 2 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-green">💡 Post #2</span>
+          <div>
+            <div class="tpl-title">Post éducatif — Cas concret IA</div>
+            <div class="tpl-subtitle">Démontre l'expertise · Génère des sauvegardes</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">+350</div><div class="score-lbl">Reach est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">6.2%</div><div class="score-lbl">Engage.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">J+3</div><div class="score-lbl">Timing</div></div>
+          </div>
+          <div class="tpl-preview" id="li2-preview">Un gérant de boutique m'a dit cette semaine :
+
+"Je passe 2h par jour à répondre aux mêmes emails clients."
+
+Voilà ce qu'on a mis en place en 45 minutes :
+
+1️⃣ Un assistant IA formé sur ses 50 emails les plus fréquents
+2️⃣ Une réponse automatique en 30 secondes pour 80% des demandes
+3️⃣ Une alerte pour les 20% qui nécessitent son attention
+
+Résultat : 1h30 récupérée par jour. Dès le lendemain.
+
+Ce n'est pas de la magie. Ce n'est pas technique. C'est juste savoir quoi utiliser et comment l'configurer.
+
+Les outils utilisés ?
+→ ChatGPT (version gratuite suffit pour démarrer)
+→ Un simple template de prompt que j'ai écrit avec lui
+→ Un filtre Gmail (5 min à configurer)
+
+Coût total : 0€ supplémentaire.
+
+C'est ça l'accompagnement IA pour PME : pas un abonnement de plus, mais apprendre à utiliser ce que vous avez déjà.
+
+---
+Vous perdez du temps sur une tâche répétitive ? Décrivez-la en commentaire, je vous propose une solution concrète.</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">🕗 Mercredi 12h ou Jeudi 8h</span>
+            <span class="meta-chip">💬 Appel à commentaires</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('li2')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('li2-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POST 3 -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-orange">🎯 Post #3</span>
+          <div>
+            <div class="tpl-title">Post offre directe — Audit gratuit</div>
+            <div class="tpl-subtitle">Génération de leads directe · À alterner avec posts éducatifs</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">+180</div><div class="score-lbl">Reach est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">2.8%</div><div class="score-lbl">Engage.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">J+7</div><div class="score-lbl">Timing</div></div>
+          </div>
+          <div class="tpl-preview" id="li3-preview">Je réserve 5 créneaux d'audit gratuit cette semaine.
+
+Voici ce que vous obtenez en 30 minutes :
+
+🔍 Analyse de vos 5 tâches les plus chronophages
+🤖 Identification de celles que l'IA peut prendre en charge
+📋 Un plan d'action concret avec les outils exacts à utiliser
+💰 Une estimation honnête du temps récupéré par semaine
+
+Pas de pitch commercial. Pas de vente forcée.
+Si l'IA peut vous aider, je vous le dis avec des exemples.
+Si ce n'est pas le bon moment, je vous le dis aussi.
+
+À qui s'adresse cet audit ?
+→ Dirigeant(e) de PME de 1 à 20 personnes
+→ Vous avez l'impression de courir tout le temps
+→ Vous entendez parler de l'IA mais ne savez pas par où commencer
+
+Pour réserver : DM "AUDIT" ou commentez ci-dessous.
+
+5 places. Cette semaine uniquement.
+
+---
+P.S. Si vous connaissez un dirigeant qui court après le temps, mentionnez-le en commentaire. Vous lui rendrez peut-être service.</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⚡ Urgence : 5 places seulement</span>
+            <span class="meta-chip">🕗 Mardi ou vendredi matin</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('li3')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('li3-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POST 4 — Leads B2B -->
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-red">📊 Post #4</span>
+          <div>
+            <div class="tpl-title">Post Leads B2B — Garantie 5 leads</div>
+            <div class="tpl-subtitle">Pour le service génération de leads PME</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="score-row">
+            <div class="score-item"><div class="score-val" style="color:#34d399">+280</div><div class="score-lbl">Reach est.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#60a5fa">5.1%</div><div class="score-lbl">Engage.</div></div>
+            <div class="score-item"><div class="score-val" style="color:#fbbf24">J+10</div><div class="score-lbl">Timing</div></div>
+          </div>
+          <div class="tpl-preview" id="li4-preview">Garantie commerciale inhabituelle dans notre secteur :
+
+Si on ne vous génère pas 5 leads qualifiés le premier mois, on vous rembourse.
+
+Voilà ce qu'on fait pour y arriver :
+
+📌 Campagnes Meta & LinkedIn ciblées sur votre secteur
+📌 Pages de capture optimisées (taux de conversion testé)
+📌 Qualification des leads avant livraison (formulaire + scoring)
+📌 Rapport hebdomadaire avec coût par lead, source, qualité
+
+Ce que vous recevez chaque semaine :
+→ Nom · Email · Téléphone · Besoin exprimé · Score de qualification
+
+Vous n'avez plus qu'à appeler.
+
+Tarif : 150 à 250€/mois selon le volume ciblé.
+
+Pour qui ?
+✅ PME B2B ou B2C avec une offre claire
+✅ Vous avez un produit/service qui se vend mais manquez de prospects
+✅ Vous ne voulez pas gérer la pub vous-même
+
+Secteurs où on obtient les meilleurs résultats : services à la personne, coaching B2B, artisans, cabinets conseil, e-commerce local.
+
+Intéressé(e) ? DM ou commentez "LEADS" ci-dessous.
+
+---
+🔄 Partagez si vous connaissez une PME qui cherche des clients.</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">💰 Garantie : 5 leads ou remboursé</span>
+            <span class="meta-chip">🕗 Jeudi 12h</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('li4')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('li4-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB: SMS / WHATSAPP
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="tab-sms">
+    <div class="section-intro">
+      <div class="icon">💬</div>
+      <div>
+        <h2>Templates SMS & WhatsApp</h2>
+        <p>SMS : 160 caractères max, taux d'ouverture 95% en 3 min. WhatsApp : plus long, ton conversationnel. À utiliser après un premier contact téléphonique ou un lead entrant.</p>
+      </div>
+    </div>
+
+    <div class="templates-grid">
+
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-green">📱 SMS — MaPrimeAdapt</span>
+          <div>
+            <div class="tpl-title">SMS confirmation lead</div>
+            <div class="tpl-subtitle">Envoyé immédiatement après soumission formulaire</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-preview" id="sms1-preview">MaPrimeAdapt IDF : Bonjour {{prenom}}, votre demande est bien reçue. Un conseiller vous rappelle sous 24h au {{telephone}}. Questions : 06 04 43 34 20. Stop : STOP</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">📏 155 caractères</span>
+            <span class="meta-chip">⏱️ Envoi : immédiat</span>
+            <span class="meta-chip">✅ Mention STOP obligatoire</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('sms1')">📋 Copier</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-blue">💬 WhatsApp — PME IA</span>
+          <div>
+            <div class="tpl-title">WhatsApp suivi après appel</div>
+            <div class="tpl-subtitle">Envoyé dans l'heure suivant un premier appel</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-preview" id="sms2-preview">Bonjour {{prenom}} 👋
+
+C'était sympa d'échanger avec vous à l'instant.
+
+Comme promis, voici ce que j'ai retenu de votre situation :
+→ [Problème principal évoqué]
+→ [Objectif mentionné]
+
+Prochaine étape : [action convenue]
+
+Je vous envoie aussi notre documentation sur [sujet] par email d'ici ce soir.
+
+À très vite,
+[Prénom] — [PME]</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⏱️ Envoi : &lt; 1h après appel</span>
+            <span class="meta-chip">🎯 Objectif : crédibilité + mémo</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('sms2')">📋 Copier</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-orange">📱 SMS — Relance J+1</span>
+          <div>
+            <div class="tpl-title">SMS relance si non joint</div>
+            <div class="tpl-subtitle">Quand le prospect n'a pas décroché</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-preview" id="sms3-preview">MaPrimeAdapt IDF : Bonjour {{prenom}}, j'ai essayé de vous joindre. Pour votre simulation éligibilité (jusqu'à 70% financé), rappelez-moi au 06 04 43 34 20. Stop : STOP</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">📏 158 caractères</span>
+            <span class="meta-chip">⏱️ J+1 matin</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('sms3')">📋 Copier</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB: SCRIPTS TÉL
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="tab-scripts">
+    <div class="section-intro">
+      <div class="icon">📞</div>
+      <div>
+        <h2>Scripts Téléphoniques</h2>
+        <p>Scripts structurés pour les appels sortants. Durée optimale : 4-7 min. Objectif : prendre un RDV, pas vendre au premier appel. Taux de conversion script structuré vs improvisation : +40%.</p>
+      </div>
+    </div>
+
+    <div class="templates-grid">
+
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-green">📞 Script #1</span>
+          <div>
+            <div class="tpl-title">Appel entrant — Lead MaPrimeAdapt</div>
+            <div class="tpl-subtitle">Rappel d'un lead formulaire dans les 24h</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-preview" id="script1-preview">[OUVERTURE — 30 sec]
+"Bonjour, je suis [Prénom] de MaPrimeAdapt Île-de-France. Je vous rappelle suite à votre demande de simulation sur notre site. Vous avez bien quelques minutes ?"
+
+[SI OUI → QUALIFICATION — 2 min]
+"Parfait. Pour vous donner une simulation précise, j'ai besoin de 3 informations rapides :
+1. Vous êtes propriétaire ou locataire de ce logement ?
+2. Vous avez quel âge, si ce n'est pas indiscret ?
+3. Quels types de travaux vous envisagez — salle de bain, escaliers, autre ?"
+
+[PRÉSENTATION AIDE — 1 min]
+"Très bien. Sur la base de ce que vous me dites, vous êtes a priori éligible à MaPrimeAdapt. Selon vos revenus, l'État peut financer entre [X]% et [Y]% des travaux, plafonné à 22 000€. Ça peut représenter jusqu'à 15 400€ de prime."
+
+[OBJECTION — "je dois réfléchir"]
+"Je comprends tout à fait. Pour que vous puissiez réfléchir avec tous les éléments, on peut prévoir un rendez-vous de 20 minutes — par téléphone ou chez vous — pour que je vous présente votre dossier complet. Vous préférez cette semaine ou la semaine prochaine ?"
+
+[CLÔTURE — Prise de RDV]
+"Je note donc [jour] à [heure]. Je vous envoie un email de confirmation avec toutes les informations. Vous avez bien [email] ?"
+
+[FIN]
+"Parfait [prénom]. À [jour] ! N'hésitez pas à m'appeler au 06 04 43 34 20 si vous avez des questions d'ici là. Bonne journée !"</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⏱️ Durée : 5-7 min</span>
+            <span class="meta-chip">🎯 Objectif : RDV</span>
+            <span class="meta-chip">📊 Conv. visée : 60%</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('script1')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('script1-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tpl-card">
+        <div class="tpl-header">
+          <span class="tpl-badge badge-blue">📞 Script #2</span>
+          <div>
+            <div class="tpl-title">Cold call — PME IA B2B</div>
+            <div class="tpl-subtitle">Appel sortant vers dirigeants de PME</div>
+          </div>
+        </div>
+        <div class="tpl-body">
+          <div class="tpl-preview" id="script2-preview">[OUVERTURE — 15 sec]
+"Bonjour, je cherche [Prénom du gérant]. C'est [Votre prénom] à l'appareil. J'ai 30 secondes ?"
+
+[SI OUI → ACCROCHE]
+"Je travaille avec des dirigeants de PME comme vous pour récupérer 6 à 10 heures par semaine grâce à l'IA. Pas de la théorie — des outils concrets, opérationnels la semaine même. Est-ce que c'est un sujet qui vous parle ?"
+
+[SI OUI → QUALIFICATION]
+"Super. Question directe : dans votre activité, c'est quoi la tâche qui vous prend le plus de temps et que vous trouvez la plus répétitive ?"
+[Écouter, noter]
+"Et si on pouvait réduire ça de 80% cette semaine, ça vaudrait 30 minutes de votre temps pour en parler ?"
+
+[OBJECTION — "j'ai pas le temps"]
+"Justement — c'est exactement pour ça que je vous appelle. Est-ce que vous avez 20 minutes mardi matin ou jeudi en fin de journée ?"
+
+[OBJECTION — "j'y connais rien en IA"]
+"C'est parfait, c'est exactement le profil pour qui je travaille. Pas besoin de savoir — j'apporte tout, vous jugez juste le résultat."
+
+[CLÔTURE]
+"Je vous propose qu'on se parle [jour] à [heure] — c'est gratuit, sans engagement, et vous repartez avec un plan d'action concret de toute façon. Ça vous convient ?"</div>
+          <div class="tpl-meta">
+            <span class="meta-chip">⏱️ Durée : 3-5 min</span>
+            <span class="meta-chip">🎯 Objectif : RDV audit</span>
+            <span class="meta-chip">📊 Conv. visée : 15-20%</span>
+          </div>
+          <div class="tpl-actions">
+            <button class="btn-copy" onclick="copyTpl('script2')">📋 Copier</button>
+            <button class="btn-expand" onclick="expandTpl('script2-preview', this)">Voir tout</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Contenu text brut pour copier
+const TEXTS = {
+  email1: `Objet : ✅ Votre simulation MaPrimeAdapt est confirmée, {{prenom}}
+
+Bonjour {{prenom}},
+
+Bonne nouvelle — nous avons bien reçu votre demande de simulation pour votre logement en Île-de-France.
+
+📋 Ce que nous allons faire pour vous :
+• Analyser votre éligibilité MaPrimeAdapt (jusqu'à 70%)
+• Estimer le montant exact de votre prime
+• Vous rappeler sous 24h avec nos conclusions
+
+💰 Rappel : selon votre profil, vous pouvez obtenir jusqu'à 15 400 € de financement pour adapter votre logement.
+
+Un conseiller dédié vous contactera au {{telephone}} dans les prochaines 24 heures (lun–sam, 9h–18h).
+
+Des questions ? Répondez directement à cet email ou appelez le 06 04 43 34 20.
+
+À très vite,
+L'équipe MaPrimeAdapt IDF`,
+
+  email2: `Objet : {{prenom}}, votre dossier MaPrimeAdapt nous attend encore
+
+Bonjour {{prenom}},
+
+Nous n'avons pas encore eu l'occasion d'échanger avec vous concernant votre projet d'adaptation à domicile.
+
+Nous ne voulons pas que vous passiez à côté de cette aide — les dossiers MaPrimeAdapt peuvent prendre du temps à être traités par l'ANAH, et commencer maintenant, c'est gagner plusieurs semaines.
+
+🔔 Rappel de votre simulation :
+→ Aide potentielle : entre 30% et 70% du montant des travaux
+→ Plafond : jusqu'à 22 000 € de travaux pris en charge
+→ Délai : 6 à 10 semaines de la simulation à la fin des travaux
+
+Prenez 5 minutes pour qu'on fasse le point ensemble.
+
+👉 Appelez-nous : 06 04 43 34 20 (lun–sam, 9h–18h)
+👉 Ou répondez à cet email pour qu'on vous rappelle au moment qui vous convient.
+
+Cordialement,
+Sophie — Conseillère MaPrimeAdapt IDF`,
+
+  email3: `Objet : Ce que 73% des seniors ignorent sur MaPrimeAdapt (et qui leur coûte cher)
+
+Bonjour {{prenom}},
+
+Voici une information que beaucoup de familles découvrent trop tard :
+
+❌ Erreur n°1 : Attendre que la situation devienne urgente
+❌ Erreur n°2 : Ne pas savoir que les locataires y ont aussi droit
+❌ Erreur n°3 : Confondre MaPrimeAdapt et MaPrimeRénov'
+
+✅ Ce qu'on fait pour vous en 30 minutes :
+→ Vérification de votre éligibilité exacte
+→ Estimation précise de votre prime
+→ Liste des travaux couverts pour VOTRE logement
+→ Démarrage du dossier si vous le souhaitez
+
+📞 06 04 43 34 20 — Lun–Sam 9h–18h`,
+
+  email4: `Objet : {{prenom}}, combien de temps perdez-vous sur des tâches que l'IA peut faire en 30 secondes ?
+
+Bonjour {{prenom}},
+
+Question directe : dans votre PME, combien d'heures par semaine sont consacrées à des tâches répétitives — emails, devis, rapports, tri de données ?
+
+Pour la plupart des dirigeants que j'accompagne, c'est entre 8 et 15 heures.
+
+Ce que je fais concrètement :
+→ Audit gratuit 30 min de vos processus chronophages
+→ Identification des 3 tâches automatisables immédiatement
+→ Mise en place et formation en 1 session (< 2h)
+
+Résultat constaté : 6 à 10h récupérées par semaine dès le premier mois.
+Tarif : 300€/mois.
+
+Ça vaut 30 minutes de votre temps ?`,
+
+  meta1: `TEXTE PRINCIPAL :
+"Vous avez 60 ans ou plus et êtes propriétaire en Île-de-France ?
+
+L'État finance jusqu'à 70% de l'adaptation de votre logement — douche italienne, rampes, monte-escalier — grâce à MaPrimeAdapt.
+
+👉 Simulation gratuite en 3 minutes. Résultat immédiat."
+
+TITRE : "Jusqu'à 15 400€ financés par l'État"
+DESCRIPTION : "Simulation gratuite · Sans engagement · Rappel sous 24h"
+BOUTON : "En savoir plus" → maprimeadapt-idf.fr
+
+CIBLAGE : 55-75 ans · Île-de-France · Retraite, Santé, Maison`,
+
+  meta2: `TEXTE PRINCIPAL : "Saviez-vous que ces travaux sont financés jusqu'à 70% par l'État pour les seniors d'Île-de-France ? Faites glisser →"
+
+CARTE 1 — Douche à l'italienne : "Accès sécurisé · Zéro risque de chute"
+CARTE 2 — Monte-escalier : "Restez dans votre maison, à votre rythme"
+CARTE 3 — Élargissement de portes : "Accès facilité fauteuil roulant"
+CARTE 4 (CTA) — "Simulation gratuite → Résultat en 3 minutes · Sans engagement"`,
+
+  meta3: `TEXTE PRINCIPAL :
+"Vous dirigez une PME de moins de 20 personnes ?
+
+Vos concurrents utilisent déjà l'IA pour aller 3× plus vite.
+
+Audit gratuit de 30 min → on identifie ensemble les 3 tâches que l'IA peut prendre en charge cette semaine.
+
+0 jargon. 0 technique. 100% opérationnel. Résultat garanti ou remboursé."
+
+TITRE : "Gagnez 8h/semaine avec l'IA — Audit gratuit"
+DESCRIPTION : "300€/mois · Sans engagement · Pour PME <20 pers."
+BOUTON : "Réserver mon audit"`,
+
+  li1: `J'ai passé 6 mois à regarder des PME perdre des heures chaque jour sur des tâches que l'IA peut faire en 30 secondes.
+
+Alors j'ai décidé de faire quelque chose.
+
+Je lance aujourd'hui [Nom de la PME] — un service d'accompagnement IA pour les dirigeants de PME de moins de 20 personnes.
+
+Ce que je ne fais PAS :
+❌ Vous vendre un logiciel
+❌ Vous expliquer ce qu'est "le machine learning"
+❌ Vous promettre une révolution en 6 mois
+
+Ce que je fais :
+✅ Un audit gratuit de 30 min de vos vraies tâches chronophages
+✅ On identifie ensemble les 3 automatisations à fort ROI
+✅ Je les mets en place avec vous. En 1 session.
+✅ Résultat mesurable dès la première semaine.
+
+Le prix ? 300€/mois. Moins qu'un stagiaire.
+
+Commentez "AUDIT" ou envoyez-moi un message.
+
+🔁 Si vous connaissez un dirigeant qui pourrait en bénéficier, partagez ce post.`,
+
+  li2: `Un gérant de boutique m'a dit cette semaine :
+"Je passe 2h par jour à répondre aux mêmes emails clients."
+
+Voilà ce qu'on a mis en place en 45 minutes :
+1️⃣ Un assistant IA formé sur ses 50 emails les plus fréquents
+2️⃣ Une réponse automatique en 30 secondes pour 80% des demandes
+3️⃣ Une alerte pour les 20% qui nécessitent son attention
+
+Résultat : 1h30 récupérée par jour. Dès le lendemain.
+
+Les outils utilisés ?
+→ ChatGPT (version gratuite suffit)
+→ Un template de prompt
+→ Un filtre Gmail (5 min)
+
+Coût total : 0€ supplémentaire.
+
+Vous perdez du temps sur une tâche répétitive ? Décrivez-la en commentaire.`,
+
+  li3: `Je réserve 5 créneaux d'audit gratuit cette semaine.
+
+En 30 minutes :
+🔍 Analyse de vos 5 tâches les plus chronophages
+🤖 Identification de celles que l'IA peut prendre en charge
+📋 Plan d'action concret avec les outils exacts
+💰 Estimation honnête du temps récupéré
+
+À qui s'adresse cet audit ?
+→ Dirigeant(e) de PME de 1 à 20 personnes
+→ Vous avez l'impression de courir tout le temps
+→ Vous entendez parler de l'IA mais ne savez pas par où commencer
+
+Pour réserver : DM "AUDIT" ou commentez ci-dessous.
+5 places. Cette semaine uniquement.`,
+
+  li4: `Garantie commerciale inhabituelle dans notre secteur :
+
+Si on ne vous génère pas 5 leads qualifiés le premier mois, on vous rembourse.
+
+Ce que vous recevez chaque semaine :
+→ Nom · Email · Téléphone · Besoin exprimé · Score de qualification
+
+Vous n'avez plus qu'à appeler.
+
+Tarif : 150 à 250€/mois selon le volume.
+
+Secteurs : services à la personne, coaching B2B, artisans, cabinets conseil.
+
+Intéressé(e) ? DM ou commentez "LEADS" ci-dessous.`,
+
+  sms1: `MaPrimeAdapt IDF : Bonjour {{prenom}}, votre demande est bien reçue. Un conseiller vous rappelle sous 24h au {{telephone}}. Questions : 06 04 43 34 20. Stop : STOP`,
+  sms2: `Bonjour {{prenom}} 👋\n\nC'était sympa d'échanger avec vous à l'instant.\n\nComme promis, voici ce que j'ai retenu :\n→ [Problème principal]\n→ [Objectif mentionné]\n\nProchaine étape : [action convenue]\n\nÀ très vite,\n[Prénom]`,
+  sms3: `MaPrimeAdapt IDF : Bonjour {{prenom}}, j'ai essayé de vous joindre. Pour votre simulation éligibilité (jusqu'à 70% financé), rappelez-moi au 06 04 43 34 20. Stop : STOP`,
+  script1: `OUVERTURE : "Bonjour, je suis [Prénom] de MaPrimeAdapt Île-de-France. Je vous rappelle suite à votre demande de simulation sur notre site. Vous avez bien quelques minutes ?"\n\nQUALIFICATION : "Propriétaire ou locataire ? Quel âge ? Quels travaux envisagés ?"\n\nPRÉSENTATION : "Vous êtes a priori éligible. L'État finance entre X% et Y%, jusqu'à 15 400€."\n\nOBJECTION 'je réfléchis' : "Justement, prenons 20 min pour que vous ayez tous les éléments. Cette semaine ou la semaine prochaine ?"\n\nCLÔTURE : Confirmer date + email de confirmation.`,
+  script2: `OUVERTURE : "Bonjour, je cherche [Prénom du gérant]. C'est [Votre prénom]. J'ai 30 secondes ?"\n\nACCROCHE : "Je travaille avec des dirigeants de PME pour récupérer 6 à 10h/semaine grâce à l'IA. Est-ce que c'est un sujet qui vous parle ?"\n\nQUALIFICATION : "C'est quoi la tâche qui vous prend le plus de temps ?"\n\nCLÔTURE : "20 minutes mardi matin ou jeudi soir ? Audit gratuit, sans engagement."`,
+};
+
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector(`[data-tab="${name}"]`).classList.add('active');
+}
+
+function copyTpl(key) {
+  const text = TEXTS[key];
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => showToast('📋 Copié dans le presse-papiers !'));
+}
+
+function expandTpl(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('expanded');
+  btn.textContent = el.classList.contains('expanded') ? 'Réduire' : 'Voir tout';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('fr-FR');
+</script>
+</body>
+</html>

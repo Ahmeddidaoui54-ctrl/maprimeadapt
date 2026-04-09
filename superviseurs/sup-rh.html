@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superviseur RH Luxembourg</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #7c3aed;
+    --accent-light: #a78bfa;
+    --accent-mid: #6d28d9;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding: 1rem; }
+
+  .header {
+    background: linear-gradient(135deg, #2d1060, #7c3aed);
+    border: 1px solid var(--accent-mid);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 700; }
+  .badge {
+    background: rgba(167,139,250,0.15);
+    border: 1px solid var(--accent-light);
+    color: var(--accent-light);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .kpi-item label { display: block; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .kpi-item input[type="number"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .kpi-item input[type="number"]:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  /* Funnel */
+  .funnel { display: flex; flex-direction: column; gap: 0.5rem; }
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    position: relative;
+  }
+  .funnel-step:not(:last-child)::after {
+    content: '↓';
+    position: absolute;
+    bottom: -1.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 1rem;
+    z-index: 1;
+  }
+  .funnel-icon { font-size: 1.2rem; }
+  .funnel-info { flex: 1; }
+  .funnel-label { font-size: 0.75rem; color: var(--muted); }
+  .funnel-val { font-size: 1.1rem; font-weight: 700; color: var(--accent-light); }
+  .funnel-bar { height: 6px; background: var(--border); border-radius: 99px; margin-top: 0.3rem; overflow: hidden; }
+  .funnel-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent-mid), var(--accent-light)); transition: width 0.4s; }
+
+  /* Marché */
+  .marche-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .marche-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem;
+  }
+  .marche-top { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .marche-top input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent-light); cursor: pointer; }
+  .marche-top label { font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+  .marche-item input[type="text"] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.35rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-family: inherit;
+  }
+  .marche-item input[type="text"]:focus { outline: 1px solid var(--accent-light); }
+
+  /* Status */
+  .status-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .status-btn {
+    flex: 1; min-width: 80px;
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .status-btn.active-vert { border-color: #22c55e; background: rgba(34,197,94,0.1); color: #22c55e; }
+  .status-btn.active-orange { border-color: #f97316; background: rgba(249,115,22,0.1); color: #f97316; }
+  .status-btn.active-rouge { border-color: #ef4444; background: rgba(239,68,68,0.1); color: #ef4444; }
+
+  .actions-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
+  .btn-primary {
+    background: var(--accent-mid);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-primary:hover { background: var(--accent); color: #fff; }
+
+  textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 90px;
+    font-family: inherit;
+  }
+  textarea:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  .link-dg { display: block; text-align: center; margin-top: 0.75rem; color: var(--accent-light); text-decoration: none; font-size: 0.85rem; }
+  .link-dg:hover { text-decoration: underline; }
+  .timestamp-display { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.5rem; min-height: 1.2em; }
+
+  .toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--accent-mid); color: #fff;
+    padding: 0.8rem 1.2rem; border-radius: 10px;
+    font-size: 0.9rem; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    opacity: 0; transform: translateY(1rem); transition: all 0.3s;
+    z-index: 9999; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .header { flex-direction: column; }
+    .kpi-grid, .marche-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    body { overflow-x: hidden; }
+    .header { padding: .75rem 1rem !important; flex-wrap: wrap; }
+    .header h1 { font-size: 1rem !important; }
+    .header-badge { display: none; }
+    .main, .content, .panel { padding: .75rem !important; }
+    .form-row, .row-2 { grid-template-columns: 1fr !important; }
+    .btn { min-height: 44px !important; font-size: .88rem; }
+    .score-row { flex-direction: column; }
+    .funnel-row { flex-direction: column; gap: .25rem; }
+    input, select, textarea { font-size: 16px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>💼 Superviseur RH Luxembourg</h1>
+  <span class="badge">Rapporte à : Adjoint DG</span>
+</div>
+
+<div class="grid">
+  <!-- KPIs -->
+  <div class="card">
+    <h3>📊 KPIs RH semaine</h3>
+    <div class="kpi-grid">
+      <div class="kpi-item">
+        <label>CVs générés (semaine)</label>
+        <input type="number" id="cvs" value="0" min="0" oninput="updateFunnel()">
+      </div>
+      <div class="kpi-item">
+        <label>Prospects contactés</label>
+        <input type="number" id="contactes" value="0" min="0" oninput="updateFunnel()">
+      </div>
+      <div class="kpi-item">
+        <label>Réponses reçues</label>
+        <input type="number" id="reponses" value="0" min="0" oninput="updateFunnel()">
+      </div>
+      <div class="kpi-item">
+        <label>RDV obtenus</label>
+        <input type="number" id="rdv" value="0" min="0" oninput="updateFunnel()">
+      </div>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="card">
+    <h3>🚦 Statut opérationnel</h3>
+    <div class="status-selector">
+      <button type="button" class="status-btn active-vert" data-status="vert" onclick="setStatus('vert')">✅ Vert<br><small>Opérationnel</small></button>
+      <button type="button" class="status-btn" data-status="orange" onclick="setStatus('orange')">⚠️ Orange<br><small>Attention</small></button>
+      <button type="button" class="status-btn" data-status="rouge" onclick="setStatus('rouge')">🔴 Rouge<br><small>Bloqué</small></button>
+    </div>
+    <div style="margin-top:1rem;">
+      <h3>⚡ Actions rapides</h3>
+      <div class="actions-grid" style="margin-top:0.5rem;">
+        <a class="btn" href="../pme/outils-rh/generateur-cv.html">📄 Générateur CV</a>
+        <a class="btn" href="../pme/outils-rh/bot-prospect.html">🤖 Bot Prospection</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Funnel -->
+<div class="card" style="margin-bottom:1rem;">
+  <h3>🔽 Entonnoir de conversion</h3>
+  <div class="funnel">
+    <div class="funnel-step">
+      <div class="funnel-icon">📞</div>
+      <div class="funnel-info">
+        <div class="funnel-label">Contactés</div>
+        <div class="funnel-val" id="f-contactes">0</div>
+        <div class="funnel-bar"><div class="funnel-bar-fill" id="fb-contactes" style="width:100%"></div></div>
+      </div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-icon">💬</div>
+      <div class="funnel-info">
+        <div class="funnel-label">Réponses reçues</div>
+        <div class="funnel-val" id="f-reponses">0</div>
+        <div class="funnel-bar"><div class="funnel-bar-fill" id="fb-reponses" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-icon">📅</div>
+      <div class="funnel-info">
+        <div class="funnel-label">RDV obtenus</div>
+        <div class="funnel-val" id="f-rdv">0</div>
+        <div class="funnel-bar"><div class="funnel-bar-fill" id="fb-rdv" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-icon">🤝</div>
+      <div class="funnel-info">
+        <div class="funnel-label">Clients signés</div>
+        <div class="funnel-val" id="f-clients">0</div>
+        <div class="funnel-bar"><div class="funnel-bar-fill" id="fb-clients" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Marchés -->
+<div class="card" style="margin-bottom:1rem;">
+  <h3>🗺️ Marchés ciblés</h3>
+  <div class="marche-grid">
+    <div class="marche-item">
+      <div class="marche-top">
+        <input type="checkbox" id="m-lux" checked>
+        <label for="m-lux">🇱🇺 Luxembourg</label>
+      </div>
+      <input type="text" id="m-lux-notes" placeholder="Notes Luxembourg...">
+    </div>
+    <div class="marche-item">
+      <div class="marche-top">
+        <input type="checkbox" id="m-fr">
+        <label for="m-fr">🇫🇷 France</label>
+      </div>
+      <input type="text" id="m-fr-notes" placeholder="Notes France...">
+    </div>
+    <div class="marche-item">
+      <div class="marche-top">
+        <input type="checkbox" id="m-paca">
+        <label for="m-paca">☀️ PACA</label>
+      </div>
+      <input type="text" id="m-paca-notes" placeholder="Notes PACA...">
+    </div>
+    <div class="marche-item">
+      <div class="marche-top">
+        <input type="checkbox" id="m-be">
+        <label for="m-be">🇧🇪 Belgique</label>
+      </div>
+      <input type="text" id="m-be-notes" placeholder="Notes Belgique...">
+    </div>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="card" style="margin-bottom:1rem;">
+  <h3>📝 Notes & observations</h3>
+  <textarea id="notes" placeholder="Profils en cours, obstacles réglementaires, marchés prometteurs..."></textarea>
+</div>
+
+<!-- Envoi rapport -->
+<div class="card">
+  <button type="button" class="btn btn-primary" onclick="envoyerRapport()">📤 Envoyer rapport à l'Adjoint DG</button>
+  <div class="timestamp-display" id="last-ts">Aucun rapport envoyé</div>
+  <a class="link-dg" href="./adjoint-dg.html">🔗 Tableau de bord Adjoint DG</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let currentStatus = 'vert';
+
+  function setStatus(s) {
+    currentStatus = s;
+    document.querySelectorAll('.status-btn').forEach(b => {
+      b.className = 'status-btn';
+      if (b.dataset.status === s) b.classList.add('active-' + s);
+    });
+  }
+
+  function updateFunnel() {
+    const contactes = parseInt(document.getElementById('contactes').value) || 0;
+    const reponses = parseInt(document.getElementById('reponses').value) || 0;
+    const rdv = parseInt(document.getElementById('rdv').value) || 0;
+    const clients = Math.round(rdv * 0.3); // estimation
+
+    document.getElementById('f-contactes').textContent = contactes;
+    document.getElementById('f-reponses').textContent = reponses;
+    document.getElementById('f-rdv').textContent = rdv;
+    document.getElementById('f-clients').textContent = clients;
+
+    const base = contactes || 1;
+    document.getElementById('fb-contactes').style.width = '100%';
+    document.getElementById('fb-reponses').style.width = Math.min(100, Math.round((reponses / base) * 100)) + '%';
+    document.getElementById('fb-rdv').style.width = Math.min(100, Math.round((rdv / base) * 100)) + '%';
+    document.getElementById('fb-clients').style.width = Math.min(100, Math.round((clients / base) * 100)) + '%';
+  }
+
+  function envoyerRapport() {
+    const data = {
+      cvs: parseInt(document.getElementById('cvs').value) || 0,
+      status: currentStatus,
+      notes: document.getElementById('notes').value,
+      ts: new Date().toISOString(),
+      kpis: {
+        cvs_semaine: parseInt(document.getElementById('cvs').value) || 0,
+        prospects_contactes: parseInt(document.getElementById('contactes').value) || 0,
+        reponses: parseInt(document.getElementById('reponses').value) || 0,
+        rdv: parseInt(document.getElementById('rdv').value) || 0,
+        marches: {
+          luxembourg: { actif: document.getElementById('m-lux').checked, notes: document.getElementById('m-lux-notes').value },
+          france: { actif: document.getElementById('m-fr').checked, notes: document.getElementById('m-fr-notes').value },
+          paca: { actif: document.getElementById('m-paca').checked, notes: document.getElementById('m-paca-notes').value },
+          belgique: { actif: document.getElementById('m-be').checked, notes: document.getElementById('m-be-notes').value },
+        }
+      }
+    };
+    localStorage.setItem('sup_report_rh', JSON.stringify(data));
+    const ts = new Date().toLocaleString('fr-FR');
+    document.getElementById('last-ts').textContent = 'Dernier rapport : ' + ts;
+    showToast('✅ Rapport envoyé à l\'Adjoint DG — ' + ts);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function loadSaved() {
+    const raw = localStorage.getItem('sup_report_rh');
+    if (!raw) return;
+    try {
+      const d = JSON.parse(raw);
+      if (d.kpis) {
+        document.getElementById('cvs').value = d.kpis.cvs_semaine || 0;
+        document.getElementById('contactes').value = d.kpis.prospects_contactes || 0;
+        document.getElementById('reponses').value = d.kpis.reponses || 0;
+        document.getElementById('rdv').value = d.kpis.rdv || 0;
+        if (d.kpis.marches) {
+          const m = d.kpis.marches;
+          if (m.luxembourg) { document.getElementById('m-lux').checked = m.luxembourg.actif; document.getElementById('m-lux-notes').value = m.luxembourg.notes || ''; }
+          if (m.france) { document.getElementById('m-fr').checked = m.france.actif; document.getElementById('m-fr-notes').value = m.france.notes || ''; }
+          if (m.paca) { document.getElementById('m-paca').checked = m.paca.actif; document.getElementById('m-paca-notes').value = m.paca.notes || ''; }
+          if (m.belgique) { document.getElementById('m-be').checked = m.belgique.actif; document.getElementById('m-be-notes').value = m.belgique.notes || ''; }
+        }
+      }
+      if (d.status) setStatus(d.status);
+      if (d.notes) document.getElementById('notes').value = d.notes;
+      if (d.ts) document.getElementById('last-ts').textContent = 'Dernier rapport : ' + new Date(d.ts).toLocaleString('fr-FR');
+      updateFunnel();
+    } catch(e) {}
+  }
+
+  loadSaved();
+  updateFunnel();
+</script>
+</body>
+</html>

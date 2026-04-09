@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stanxay — Bot Prospection LinkedIn</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bleu: #1a2d4e;
+      --bleu-clair: #2563eb;
+      --bleu-pale: #eff6ff;
+      --accent: #3b82f6;
+      --gris: #f8fafc;
+      --gris-bord: #e2e8f0;
+      --texte: #1e293b;
+      --texte-sec: #64748b;
+      --vert: #16a34a;
+      --orange: #ea580c;
+      --rouge: #dc2626;
+      --blanc: #fff;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--gris);
+      color: var(--texte);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, var(--bleu) 0%, #1e3a5f 100%);
+      color: #fff;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .header-icon { font-size: 2rem; }
+    .header h1 { font-size: 1.4rem; font-weight: 700; }
+    .header p { font-size: .85rem; opacity: .8; margin-top: .2rem; }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 8px;
+      padding: .4rem .9rem;
+      font-size: .8rem;
+      text-align: center;
+    }
+
+    /* ── LAYOUT ── */
+    .main {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* ── PANNEAU GAUCHE ── */
+    .panel {
+      background: var(--blanc);
+      border: 1px solid var(--gris-bord);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .panel-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--bleu);
+      margin-bottom: 1.2rem;
+      padding-bottom: .6rem;
+      border-bottom: 2px solid var(--bleu-pale);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--texte-sec);
+      margin-bottom: .35rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: .6rem .85rem;
+      border: 1px solid var(--gris-bord);
+      border-radius: 8px;
+      font-size: .9rem;
+      background: var(--gris);
+      color: var(--texte);
+      transition: border-color .2s;
+    }
+    .form-group select:focus,
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+
+    .tag-group { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .4rem; }
+    .tag {
+      padding: .3rem .7rem;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid var(--gris-bord);
+      background: var(--gris);
+      transition: all .15s;
+      user-select: none;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .tag.active { background: var(--bleu-clair); border-color: var(--bleu-clair); color: #fff; }
+
+    .btn {
+      width: 100%;
+      padding: .75rem;
+      border: none;
+      border-radius: 8px;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .btn-primary { background: var(--bleu-clair); color: #fff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+    .btn-secondary { background: var(--gris); color: var(--texte); border: 1px solid var(--gris-bord); margin-top: .5rem; }
+    .btn-secondary:hover { background: var(--gris-bord); }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+    .btn-primary.loading .spinner { display: block; }
+    .btn-primary.loading .btn-label { display: none; }
+
+    /* ── PANNEAU DROIT ── */
+    .right-col { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    /* Résultat IA */
+    .result-panel {
+      background: var(--blanc);
+      border: 1px solid var(--gris-bord);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .result-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gris-bord);
+      background: var(--gris);
+    }
+    .result-tab {
+      padding: .7rem 1.2rem;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--texte-sec);
+      border-bottom: 2px solid transparent;
+      transition: all .15s;
+    }
+    .result-tab.active { color: var(--bleu-clair); border-bottom-color: var(--bleu-clair); background: #fff; }
+
+    .result-content { padding: 1.5rem; min-height: 200px; }
+    .result-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 180px;
+      color: var(--texte-sec);
+      gap: .75rem;
+    }
+    .result-placeholder .icon { font-size: 3rem; opacity: .4; }
+    .result-placeholder p { font-size: .9rem; }
+
+    .message-box {
+      background: var(--gris);
+      border: 1px solid var(--gris-bord);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      font-size: .9rem;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      color: var(--texte);
+      position: relative;
+      min-height: 120px;
+    }
+    .copy-btn {
+      position: absolute;
+      top: .6rem;
+      right: .6rem;
+      background: var(--blanc);
+      border: 1px solid var(--gris-bord);
+      border-radius: 6px;
+      padding: .3rem .6rem;
+      font-size: .75rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .copy-btn:hover { background: var(--bleu-pale); border-color: var(--accent); }
+
+    .score-bar {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .score-label { font-size: .8rem; font-weight: 600; color: var(--texte-sec); min-width: 100px; }
+    .score-track {
+      flex: 1;
+      height: 6px;
+      background: var(--gris-bord);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--bleu-clair), var(--vert));
+      transition: width .6s ease;
+    }
+    .score-val { font-size: .8rem; font-weight: 700; color: var(--bleu-clair); min-width: 30px; }
+
+    /* Pipeline */
+    .pipeline-panel {
+      background: var(--blanc);
+      border: 1px solid var(--gris-bord);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .pipeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .pipeline-stats {
+      display: flex;
+      gap: 1rem;
+    }
+    .stat-chip {
+      padding: .25rem .75rem;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .stat-chip.total { background: var(--bleu-pale); color: var(--bleu-clair); }
+    .stat-chip.sent { background: #fef9c3; color: #854d0e; }
+    .stat-chip.reply { background: #dcfce7; color: #166534; }
+
+    .pipeline-table-wrap { overflow-x: auto; }
+    .pipeline-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .84rem;
+    }
+    .pipeline-table th {
+      text-align: left;
+      padding: .5rem .75rem;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--texte-sec);
+      background: var(--gris);
+      border-bottom: 1px solid var(--gris-bord);
+    }
+    .pipeline-table td {
+      padding: .6rem .75rem;
+      border-bottom: 1px solid var(--gris-bord);
+      vertical-align: middle;
+    }
+    .pipeline-table tr:last-child td { border-bottom: none; }
+    .pipeline-table tr:hover td { background: var(--gris); }
+
+    .status-badge {
+      padding: .2rem .55rem;
+      border-radius: 12px;
+      font-size: .72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .status-new { background: var(--bleu-pale); color: var(--bleu-clair); }
+    .status-sent { background: #fef9c3; color: #854d0e; }
+    .status-reply { background: #dcfce7; color: #166534; }
+    .status-rdv { background: #ede9fe; color: #5b21b6; }
+    .status-ko { background: #fee2e2; color: #991b1b; }
+
+    .action-btns { display: flex; gap: .4rem; }
+    .icon-btn {
+      background: none;
+      border: 1px solid var(--gris-bord);
+      border-radius: 6px;
+      padding: .25rem .5rem;
+      cursor: pointer;
+      font-size: .8rem;
+      transition: all .15s;
+    }
+    .icon-btn:hover { background: var(--gris-bord); }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--texte-sec);
+      font-size: .88rem;
+    }
+
+    /* Templates rapides */
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .6rem;
+      margin-top: .5rem;
+    }
+    .template-card {
+      border: 1.5px solid var(--gris-bord);
+      border-radius: 8px;
+      padding: .6rem .8rem;
+      cursor: pointer;
+      transition: all .15s;
+      background: var(--gris);
+    }
+    .template-card:hover { border-color: var(--accent); background: var(--bleu-pale); }
+    .template-card.selected { border-color: var(--bleu-clair); background: var(--bleu-pale); }
+    .template-card .tpl-icon { font-size: 1.2rem; }
+    .template-card .tpl-name { font-size: .78rem; font-weight: 700; margin-top: .2rem; }
+    .template-card .tpl-desc { font-size: .72rem; color: var(--texte-sec); margin-top: .1rem; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #1e293b;
+      color: #fff;
+      padding: .75rem 1.2rem;
+      border-radius: 8px;
+      font-size: .88rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,.3);
+      transform: translateY(60px);
+      opacity: 0;
+      transition: all .3s;
+      z-index: 1000;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; }
+      .templates-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .header { padding: 1rem; }
+      .header h1 { font-size: 1.1rem; }
+      .main { padding: 1rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .templates-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-icon">⚡</div>
+  <div>
+    <h1>Stanxay — Bot Prospection LinkedIn</h1>
+    <p>Messages personnalisés IA pour chefs d'entreprise · Agences intérim · DRH</p>
+  </div>
+  <div class="header-badge">
+    <div style="font-size:.7rem;opacity:.7">Powered by</div>
+    <div style="font-weight:700">Gemini AI</div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- ── PANNEAU GAUCHE ── -->
+  <div>
+    <div class="panel">
+      <div class="panel-title">⚙️ Paramètres du message</div>
+
+      <!-- Type de message -->
+      <div class="form-group">
+        <label>Type de message</label>
+        <div class="templates-grid" id="templateGrid">
+          <div class="template-card selected" data-tpl="linkedin">
+            <div class="tpl-icon">💼</div>
+            <div class="tpl-name">LinkedIn DM</div>
+            <div class="tpl-desc">Connexion directe</div>
+          </div>
+          <div class="template-card" data-tpl="email">
+            <div class="tpl-icon">📧</div>
+            <div class="tpl-name">Email pro</div>
+            <div class="tpl-desc">DRH / recruteur</div>
+          </div>
+          <div class="template-card" data-tpl="phone">
+            <div class="tpl-icon">📞</div>
+            <div class="tpl-name">Script tél.</div>
+            <div class="tpl-desc">Cold call 30s</div>
+          </div>
+          <div class="template-card" data-tpl="followup">
+            <div class="tpl-icon">🔄</div>
+            <div class="tpl-name">Follow-up</div>
+            <div class="tpl-desc">Relance J+5</div>
+          </div>
+          <div class="template-card" data-tpl="referral">
+            <div class="tpl-icon">🤝</div>
+            <div class="tpl-name">Réseau</div>
+            <div class="tpl-desc">Introduction mutuelle</div>
+          </div>
+          <div class="template-card" data-tpl="inmail">
+            <div class="tpl-icon">⭐</div>
+            <div class="tpl-name">InMail</div>
+            <div class="tpl-desc">Hors réseau</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Stanxay à vendre -->
+      <div class="form-group">
+        <label>Service à proposer</label>
+        <select id="market">
+          <option value="ia_pme">🤖 Accompagnement IA PME (300–400€/mois)</option>
+          <option value="leads_b2b">🎯 Génération Leads B2B (150–250€/mois)</option>
+          <option value="cv_linkedin">📄 CV + Personal Branding LinkedIn (à la demande)</option>
+          <option value="pack_complet">💼 Pack complet Stanxay (IA + Leads)</option>
+        </select>
+      </div>
+
+      <!-- Type de prospect -->
+      <div class="form-group">
+        <label>Profil du prospect LinkedIn</label>
+        <select id="sector">
+          <option value="chef_entreprise">Chef d'entreprise / Gérant PME</option>
+          <option value="agence_interim">Directeur agence intérim</option>
+          <option value="drh">DRH / Responsable RH</option>
+          <option value="directeur_commercial">Directeur commercial / Ventes</option>
+          <option value="independant">Indépendant / Consultant</option>
+          <option value="retail">Gérant commerce / Retail</option>
+        </select>
+      </div>
+
+      <!-- Profil prospect -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Poste exact (optionnel)</label>
+          <input type="text" id="prospectTitle" placeholder="ex: CEO, DG, Fondateur" />
+        </div>
+        <div class="form-group">
+          <label>Ton du message</label>
+          <select id="lang">
+            <option value="direct">Direct & ROI</option>
+            <option value="chaleureux">Chaleureux & Réseau</option>
+            <option value="curiosite">Curiosité (question)</option>
+            <option value="urgence">Urgence & Opportunité</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Contexte prospect -->
+      <div class="form-group">
+        <label>Info spécifique sur ce prospect (optionnel)</label>
+        <textarea id="context" placeholder="Ex: dirige une agence de 12 personnes, cherche à automatiser ses relances clients, actif sur LinkedIn..."></textarea>
+      </div>
+
+      <!-- Angle de vente -->
+      <div class="form-group">
+        <label>Angle de vente à mettre en avant</label>
+        <div class="tag-group" id="skillTags">
+          <span class="tag active" data-val="gain_temps">Gain de temps</span>
+          <span class="tag active" data-val="roi">ROI mesurable</span>
+          <span class="tag" data-val="gratuit_audit">Audit gratuit 30min</span>
+          <span class="tag" data-val="garantie">Garantie résultats</span>
+          <span class="tag" data-val="ia">Intelligence artificielle</span>
+          <span class="tag" data-val="automatisation">Automatisation</span>
+          <span class="tag" data-val="leads_qualifies">Leads qualifiés</span>
+          <span class="tag" data-val="sans_engagement">Sans engagement</span>
+        </div>
+      </div>
+
+      <!-- Nom prospect (optionnel) -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom prospect (optionnel)</label>
+          <input type="text" id="prospectName" placeholder="ex: Sophie" />
+        </div>
+        <div class="form-group">
+          <label>Nom entreprise (optionnel)</label>
+          <input type="text" id="companyName" placeholder="ex: BGL BNP Paribas" />
+        </div>
+      </div>
+
+      <!-- Ton -->
+      <div class="form-group">
+        <label>Ton du message</label>
+        <select id="tone">
+          <option value="professionnel">Professionnel & Direct</option>
+          <option value="chaleureux">Chaleureux & Humain</option>
+          <option value="percutant">Percutant & ROI-focused</option>
+          <option value="formel">Formel (grandes entreprises)</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="generateBtn" onclick="generateMessage()">
+        <span class="btn-label">✨ Générer le message</span>
+        <div class="spinner"></div>
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="saveToQueue()">➕ Ajouter au pipeline sans générer</button>
+    </div>
+  </div>
+
+  <!-- ── PANNEAU DROIT ── -->
+  <div class="right-col">
+
+    <!-- Résultat IA -->
+    <div class="result-panel">
+      <div class="result-tabs">
+        <button type="button" class="result-tab active" data-tab="message" onclick="switchTab('message')">💬 Message généré</button>
+        <button type="button" class="result-tab" data-tab="analysis" onclick="switchTab('analysis')">📊 Analyse</button>
+        <button type="button" class="result-tab" data-tab="variations" onclick="switchTab('variations')">🔀 Variations</button>
+      </div>
+      <div class="result-content">
+
+        <!-- Tab: Message -->
+        <div id="tab-message">
+          <div class="result-placeholder" id="placeholder">
+            <div class="icon">🤖</div>
+            <p>Remplis les paramètres et clique sur <strong>Générer</strong></p>
+          </div>
+          <div id="messageResult" style="display:none">
+            <div class="message-box" id="messageText">
+              <button type="button" class="copy-btn" onclick="copyMessage()">📋 Copier</button>
+              <span id="messageContent"></span>
+            </div>
+            <div id="scoreSection" style="margin-top:1rem"></div>
+            <div style="display:flex;gap:.6rem;margin-top:1rem">
+              <button type="button" class="btn btn-primary" style="flex:1" onclick="saveToQueue()">✅ Ajouter au pipeline</button>
+              <button type="button" class="btn btn-secondary" style="flex:1;margin-top:0" onclick="generateMessage()">🔄 Régénérer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Analyse -->
+        <div id="tab-analysis" style="display:none">
+          <div class="result-placeholder" id="placeholder-analysis">
+            <div class="icon">📊</div>
+            <p>L'analyse apparaîtra après génération</p>
+          </div>
+          <div id="analysisResult" style="display:none">
+            <div id="analysisContent"></div>
+          </div>
+        </div>
+
+        <!-- Tab: Variations -->
+        <div id="tab-variations" style="display:none">
+          <div class="result-placeholder" id="placeholder-variations">
+            <div class="icon">🔀</div>
+            <p>Variations A/B disponibles après génération</p>
+          </div>
+          <div id="variationsResult" style="display:none">
+            <button type="button" class="btn btn-secondary" style="margin-bottom:1rem" onclick="generateVariations(lastPrompt)">🔀 Générer variations A/B</button>
+            <div id="variationsContent"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Pipeline -->
+    <div class="pipeline-panel">
+      <div class="pipeline-header">
+        <div class="panel-title" style="margin:0;border:none;padding:0">📋 Pipeline prospects</div>
+        <div class="pipeline-stats">
+          <span class="stat-chip total" id="statTotal">0 total</span>
+          <span class="stat-chip sent" id="statSent">0 envoyé</span>
+          <span class="stat-chip reply" id="statReply">0 réponse</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:.5rem;margin-bottom:1rem">
+        <button type="button" class="btn btn-secondary" style="flex:1;padding:.5rem" onclick="exportCSV()">📥 Export CSV</button>
+        <button type="button" class="btn btn-secondary" style="flex:1;padding:.5rem" onclick="clearPipeline()">🗑️ Vider</button>
+      </div>
+      <div class="pipeline-table-wrap">
+        <table class="pipeline-table">
+          <thead>
+            <tr>
+              <th>Prospect</th>
+              <th>Entreprise</th>
+              <th>Type</th>
+              <th>Marché</th>
+              <th>Statut</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pipelineBody">
+            <tr><td colspan="7"><div class="empty-state">Aucun prospect — génère ton premier message !</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════
+const GEMINI_KEY = 'AIzaSyAKWg3-z0TaCRiOaIQXkZpkEl31l_ekxCw';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let selectedTemplate = 'linkedin';
+let selectedSkills = ['gain_temps', 'roi'];
+let pipeline = JSON.parse(localStorage.getItem('prospect_pipeline') || '[]');
+let lastGenerated = null;
+let lastPrompt = null;
+
+// ══════════════════════════════════════════
+//  TEMPLATE SELECTION
+// ══════════════════════════════════════════
+document.querySelectorAll('[data-tpl]').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('[data-tpl]').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedTemplate = card.dataset.tpl;
+  });
+});
+
+// ══════════════════════════════════════════
+//  SKILL TAGS
+// ══════════════════════════════════════════
+document.querySelectorAll('#skillTags .tag').forEach(tag => {
+  tag.addEventListener('click', () => {
+    tag.classList.toggle('active');
+    const val = tag.dataset.val;
+    if (tag.classList.contains('active')) {
+      selectedSkills.push(val);
+    } else {
+      selectedSkills = selectedSkills.filter(s => s !== val);
+    }
+  });
+});
+
+// ══════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  ['message','analysis','variations'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === tab ? 'block' : 'none';
+  });
+}
+
+// ══════════════════════════════════════════
+//  MARKET / SECTOR LABELS
+// ══════════════════════════════════════════
+const MARKET_LABELS = {
+  ia_pme: 'Accompagnement IA pour PME — automatiser les tâches répétitives, devis auto, chatbot client, reporting IA. Tarif: 300–400€/mois. Audit gratuit 30min offert.',
+  leads_b2b: 'Génération de leads B2B qualifiés via Meta Ads et LinkedIn. Garantie: 5 leads qualifiés par mois ou remboursé. Tarif: 150–250€/mois. Zéro engagement.',
+  cv_linkedin: 'Création de CV professionnel et optimisation du profil LinkedIn. Service à la demande, livraison 48h. Idéal pour candidats, reconversions, promotions.',
+  pack_complet: 'Pack complet Stanxay: IA PME + Génération leads. Solution tout-en-un pour accélérer la croissance. Tarif préférentiel pack. Premier mois découverte.'
+};
+const SECTOR_LABELS = {
+  chef_entreprise: 'Chef d\'entreprise / Gérant de PME (5 à 50 salariés)',
+  agence_interim: 'Directeur d\'agence intérim ou cabinet de recrutement',
+  drh: 'DRH ou Responsable Ressources Humaines',
+  directeur_commercial: 'Directeur commercial ou Responsable des ventes',
+  independant: 'Indépendant, consultant ou freelance',
+  retail: 'Gérant de commerce, retail ou franchise'
+};
+const TYPE_LABELS = {
+  linkedin: 'LinkedIn DM (message direct, 300 caractères max, ton naturel)',
+  email: 'Email professionnel (objet percutant + corps court)',
+  phone: 'Script téléphonique (cold call 30 secondes, aller droit au but)',
+  followup: 'Message de relance J+5 (rappel doux, nouvelle accroche)',
+  referral: 'Introduction par connexion commune (mentionner le contact mutuel)',
+  inmail: 'LinkedIn InMail (hors réseau, 1900 caractères max, plus complet)'
+};
+const LANG_LABELS = {
+  direct: 'direct et axé résultats concrets',
+  chaleureux: 'chaleureux, réseau, partage de valeur',
+  curiosite: 'basé sur une question qui intrigue le prospect',
+  urgence: 'sentiment d\'opportunité limitée, agir maintenant'
+};
+const TONE_LABELS = LANG_LABELS;
+
+// ══════════════════════════════════════════
+//  GENERATE MESSAGE
+// ══════════════════════════════════════════
+async function generateMessage() {
+  const btn = document.getElementById('generateBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const market = document.getElementById('market').value;
+  const sector = document.getElementById('sector').value;
+  const lang = document.getElementById('lang').value;
+  const tone = document.getElementById('tone').value;
+  const prospectTitle = document.getElementById('prospectTitle').value || 'DRH / Responsable recrutement';
+  const prospectName = document.getElementById('prospectName').value;
+  const companyName = document.getElementById('companyName').value;
+  const context = document.getElementById('context').value;
+  const skills = selectedSkills.length ? selectedSkills.join(', ') : 'recrutement, ressources humaines';
+
+  const luxContext = market === 'luxembourg' ? `
+Contexte Luxembourg IMPORTANT:
+- 57% de la main-d'œuvre sont des frontaliers (principalement français, belges, allemands)
+- Le marché RH luxembourgeois est très concurrentiel et international
+- Les entreprises cherchent des profils trilingues FR/EN/DE
+- Les salaires sont 30-40% supérieurs à la France
+- Atouts à valoriser: expertise frontaliers, conformité droit travail LU, multilinguisme
+` : '';
+
+  const nameStr = prospectName ? `Prénom du prospect: ${prospectName}` : '';
+  const companyStr = companyName ? `Entreprise ciblée: ${companyName}` : '';
+
+  const prompt = `Tu es un expert en prospection commerciale B2B pour Stanxay, une agence digitale française.
+
+Stanxay vend des services à des dirigeants de PME et agences.
+
+SERVICE À VENDRE: ${MARKET_LABELS[market]}
+FORMAT DU MESSAGE: ${TYPE_LABELS[selectedTemplate]}
+PROFIL DU PROSPECT: ${SECTOR_LABELS[sector]}${prospectTitle ? ' — ' + prospectTitle : ''}
+${nameStr}
+${companyStr}
+STYLE D'APPROCHE: ${LANG_LABELS[lang]}
+ANGLES DE VENTE À UTILISER: ${skills}
+INFO SPÉCIFIQUE SUR CE PROSPECT: ${context || 'Aucune info particulière'}
+
+RÈGLES ABSOLUES:
+1. Jamais "Je me permets de vous contacter" — accroche directe et originale
+2. Mentionner un bénéfice concret lié au profil du prospect (pas générique)
+3. 1 seul appel à l'action à la fin (audit gratuit, appel 15min, réponse oui/non)
+4. LinkedIn DM: max 300 caractères, aller à l'essentiel
+5. Email: "Objet: [titre]\n\n[corps]" — max 150 mots
+6. Script tél.: "[ACCROCHE 5s] → [VALEUR 10s] → [CTA 5s]"
+7. Jamais de formules creuses ("solution innovante", "accompagnement sur-mesure")
+8. Si prénom prospect connu: l'utiliser naturellement, pas en début de phrase
+
+Réponds UNIQUEMENT avec le message final, sans commentaire ni explication.`;
+
+  try {
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.8, maxOutputTokens: 600 }
+      })
+    });
+    const data = await res.json();
+    const message = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+    if (!message) throw new Error('Pas de réponse IA');
+
+    lastPrompt = prompt;
+    lastGenerated = {
+      message,
+      template: selectedTemplate,
+      market,
+      sector,
+      lang,
+      prospectTitle,
+      prospectName,
+      companyName,
+      skills,
+      ts: new Date().toISOString()
+    };
+
+    // Afficher le message
+    document.getElementById('placeholder').style.display = 'none';
+    document.getElementById('messageResult').style.display = 'block';
+    document.getElementById('messageContent').textContent = message;
+
+    // Scores
+    const charCount = message.length;
+    const wordCount = message.split(/\s+/).length;
+    const hasPersonalization = (prospectName || companyName) ? 100 : 70;
+    const lengthScore = selectedTemplate === 'linkedin'
+      ? Math.max(0, Math.min(100, 100 - Math.abs(charCount - 200) / 2))
+      : Math.max(0, Math.min(100, 100 - Math.abs(wordCount - 150) / 2));
+    const skillScore = Math.min(100, selectedSkills.length * 20);
+    const overall = Math.round((hasPersonalization + lengthScore + skillScore) / 3);
+
+    document.getElementById('scoreSection').innerHTML = `
+      <div style="font-size:.78rem;font-weight:600;color:var(--texte-sec);margin-bottom:.5rem">ANALYSE QUALITÉ</div>
+      ${renderScore('Personnalisation', hasPersonalization)}
+      ${renderScore('Longueur optimale', Math.round(lengthScore))}
+      ${renderScore('Expertise mise en avant', Math.round(skillScore))}
+      ${renderScore('Score global', overall)}
+    `;
+
+    // Tab analyse
+    document.getElementById('placeholder-analysis').style.display = 'none';
+    document.getElementById('analysisResult').style.display = 'block';
+    document.getElementById('analysisContent').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div style="background:var(--gris);border-radius:8px;padding:1rem">
+          <div style="font-size:.75rem;text-transform:uppercase;color:var(--texte-sec);margin-bottom:.5rem">Statistiques</div>
+          <div style="font-size:.88rem;line-height:1.8">
+            📝 ${charCount} caractères<br>
+            📖 ${wordCount} mots<br>
+            🌍 ${MARKET_LABELS[market].split('(')[0]}<br>
+            💼 ${SECTOR_LABELS[sector]}<br>
+            🔤 ${LANG_LABELS[lang]}
+          </div>
+        </div>
+        <div style="background:var(--gris);border-radius:8px;padding:1rem">
+          <div style="font-size:.75rem;text-transform:uppercase;color:var(--texte-sec);margin-bottom:.5rem">Compétences valorisées</div>
+          <div style="font-size:.85rem;line-height:1.8">${selectedSkills.map(s => '✓ ' + s).join('<br>') || 'Aucune sélectionnée'}</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.75rem;font-size:.84rem;color:#166534">
+        <strong>💡 Conseil d'envoi:</strong> ${getTip(selectedTemplate, market)}
+      </div>
+    `;
+
+    showToast('✅ Message généré avec succès !');
+    switchTab('message');
+
+  } catch (err) {
+    showToast('❌ Erreur: ' + err.message);
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+function renderScore(label, val) {
+  const color = val >= 80 ? '#16a34a' : val >= 60 ? '#d97706' : '#dc2626';
+  return `<div class="score-bar">
+    <div class="score-label">${label}</div>
+    <div class="score-track"><div class="score-fill" style="width:${val}%;background:${color}"></div></div>
+    <div class="score-val" style="color:${color}">${val}%</div>
+  </div>`;
+}
+
+function getTip(template, market) {
+  const tips = {
+    linkedin: market === 'luxembourg'
+      ? 'Envoie entre 8h-9h heure de Luxembourg. Les DRH luxembourgeois consultent LinkedIn le matin avant les réunions.'
+      : 'Meilleur timing: mardi ou mercredi, 8h-10h ou 17h-19h. Évite le lundi matin et vendredi après-midi.',
+    email: 'Objet < 50 caractères, évite "proposition" ou "partenariat". Teste avec "Question rapide" ou un chiffre clé.',
+    phone: 'Appelle entre 8h30-9h30 ou 16h30-17h30. Prépare une objection réponse pour "je n\'ai pas le temps".',
+    followup: 'Attends exactement 5 jours ouvrables. Référence ton premier message sans être insistant.',
+    referral: 'Mentionne d\'abord le contact commun AVANT de parler de toi. La crédibilité du référent est clé.',
+    inmail: 'Taux de réponse InMail: 18-25%. Personnalise l\'objet avec le nom de l\'entreprise ou un projet récent.'
+  };
+  return tips[template] || 'Personnalise au maximum avec des éléments spécifiques à l\'entreprise.';
+}
+
+async function generateVariations(originalPrompt) {
+  try {
+    const varPrompt = originalPrompt.replace(
+      'Réponds UNIQUEMENT avec le message',
+      'Génère 2 variations courtes du message (version A et version B), séparées par "---VARIATION B---". Chaque variation doit avoir une approche différente (accroche différente). Réponds uniquement avec les deux variations'
+    );
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: varPrompt }] }],
+        generationConfig: { temperature: 1.0, maxOutputTokens: 800 }
+      })
+    });
+    const data = await res.json();
+    const variations = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    if (!variations) return;
+
+    const parts = variations.split('---VARIATION B---');
+    document.getElementById('placeholder-variations').style.display = 'none';
+    document.getElementById('variationsResult').style.display = 'block';
+    document.getElementById('variationsContent').innerHTML = parts.map((v, i) => `
+      <div style="margin-bottom:1rem">
+        <div style="font-size:.78rem;font-weight:700;color:var(--bleu-clair);margin-bottom:.4rem">
+          VERSION ${String.fromCharCode(65+i)} ${i===0?'(originale)':'(alternative)'}
+        </div>
+        <div class="message-box" style="position:relative">
+          <button type="button" class="copy-btn" onclick="copyText(this)">📋 Copier</button>
+          ${v.trim()}
+        </div>
+      </div>
+    `).join('');
+  } catch(e) { /* silencieux */ }
+}
+
+function copyText(btn) {
+  const box = btn.parentElement;
+  const text = box.childNodes[box.childNodes.length - 1].textContent.trim();
+  navigator.clipboard.writeText(text).then(() => showToast('📋 Copié !'));
+}
+
+// ══════════════════════════════════════════
+//  PIPELINE
+// ══════════════════════════════════════════
+function saveToQueue() {
+  const name = document.getElementById('prospectName').value || 'Prospect';
+  const company = document.getElementById('companyName').value || '—';
+  const market = document.getElementById('market').value;
+
+  const entry = {
+    id: Date.now(),
+    name,
+    company,
+    type: selectedTemplate,
+    market,
+    sector: document.getElementById('sector').value,
+    status: 'new',
+    message: lastGenerated?.message || '',
+    date: new Date().toLocaleDateString('fr-FR'),
+    ts: new Date().toISOString()
+  };
+
+  pipeline.unshift(entry);
+  localStorage.setItem('prospect_pipeline', JSON.stringify(pipeline));
+  renderPipeline();
+  showToast('✅ Ajouté au pipeline !');
+}
+
+function updateStatus(id, status) {
+  pipeline = pipeline.map(p => p.id === id ? { ...p, status } : p);
+  localStorage.setItem('prospect_pipeline', JSON.stringify(pipeline));
+  renderPipeline();
+}
+
+function removeEntry(id) {
+  pipeline = pipeline.filter(p => p.id !== id);
+  localStorage.setItem('prospect_pipeline', JSON.stringify(pipeline));
+  renderPipeline();
+}
+
+function copyMessage() {
+  const text = document.getElementById('messageContent').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('📋 Message copié !'));
+}
+
+const STATUS_OPTIONS = [
+  { val: 'new', label: 'Nouveau', cls: 'status-new' },
+  { val: 'sent', label: 'Envoyé', cls: 'status-sent' },
+  { val: 'reply', label: 'Répondu', cls: 'status-reply' },
+  { val: 'rdv', label: 'RDV fixé', cls: 'status-rdv' },
+  { val: 'ko', label: 'Sans suite', cls: 'status-ko' },
+];
+
+const TYPE_ICONS = {
+  linkedin: '💼', email: '📧', phone: '📞',
+  followup: '🔄', referral: '🤝', inmail: '⭐'
+};
+
+const MARKET_FLAGS = {
+  luxembourg: '🇱🇺', france: '🇫🇷', paca: '☀️', belgique: '🇧🇪'
+};
+
+function renderPipeline() {
+  const tbody = document.getElementById('pipelineBody');
+  if (!pipeline.length) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">Aucun prospect — génère ton premier message !</div></td></tr>';
+  } else {
+    tbody.innerHTML = pipeline.map(p => {
+      const st = STATUS_OPTIONS.find(s => s.val === p.status) || STATUS_OPTIONS[0];
+      return `<tr>
+        <td><strong>${esc(p.name)}</strong></td>
+        <td>${esc(p.company)}</td>
+        <td>${TYPE_ICONS[p.type] || '📝'} ${p.type}</td>
+        <td>${MARKET_FLAGS[p.market] || ''} ${p.market}</td>
+        <td>
+          <select class="status-badge ${st.cls}" onchange="updateStatus(${p.id}, this.value)" style="border:none;background:inherit;color:inherit;font-weight:700;font-size:.72rem;cursor:pointer;padding:.15rem .35rem;border-radius:12px">
+            ${STATUS_OPTIONS.map(s => `<option value="${s.val}"${s.val===p.status?' selected':''}>${s.label}</option>`).join('')}
+          </select>
+        </td>
+        <td style="font-size:.78rem;color:var(--texte-sec)">${p.date}</td>
+        <td>
+          <div class="action-btns">
+            ${p.message ? `<button type="button" class="icon-btn" title="Voir message" onclick="showMsg(${p.id})">👁️</button>` : ''}
+            <button type="button" class="icon-btn" title="Supprimer" onclick="removeEntry(${p.id})">🗑️</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Stats
+  document.getElementById('statTotal').textContent = pipeline.length + ' total';
+  document.getElementById('statSent').textContent = pipeline.filter(p => p.status === 'sent').length + ' envoyé';
+  document.getElementById('statReply').textContent = pipeline.filter(p => ['reply','rdv'].includes(p.status)).length + ' réponse';
+}
+
+function showMsg(id) {
+  const entry = pipeline.find(p => p.id === id);
+  if (!entry?.message) return;
+  document.getElementById('messageContent').textContent = entry.message;
+  document.getElementById('placeholder').style.display = 'none';
+  document.getElementById('messageResult').style.display = 'block';
+  switchTab('message');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function clearPipeline() {
+  if (!confirm('Vider tout le pipeline ?')) return;
+  pipeline = [];
+  localStorage.removeItem('prospect_pipeline');
+  renderPipeline();
+  showToast('🗑️ Pipeline vidé');
+}
+
+function exportCSV() {
+  if (!pipeline.length) { showToast('Pipeline vide'); return; }
+  const headers = ['Nom', 'Entreprise', 'Type', 'Marché', 'Secteur', 'Statut', 'Date', 'Message'];
+  const rows = pipeline.map(p => [
+    p.name, p.company, p.type, p.market, p.sector, p.status, p.date,
+    (p.message || '').replace(/"/g, '""')
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'pipeline_rh.csv';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('📥 Export CSV téléchargé');
+}
+
+// ══════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════
+function esc(str) {
+  return String(str || '').replace(/[&<>"']/g, c =>
+    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]
+  );
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+renderPipeline();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "slip_alert_ms": 12000,
+  "confirm_before_bet": true,
+  "headless": false,
+  "kill_apps_before_run": true,
+
+  "bookmakers": {
+    "betclic": {
+      "base": "https://www.betclic.fr",
+      "login": "/connexion",
+      "sel": {
+        "stake_input": "input[data-automation='stake-input'], input.stake-input, input[name='stake']",
+        "bet_btn":     "button[data-automation='place-bet'], button.place-bet-btn",
+        "coupon":      ".bet-slip, .coupon, [data-automation='betslip']",
+        "odd_val":     ".event-odd, .odd-value"
+      }
+    },
+    "winamax": {
+      "base": "https://www.winamax.fr",
+      "login": "/connexion",
+      "sel": {
+        "stake_input": "input.bet-amount, input[placeholder*='Mise'], input[data-cy='stake']",
+        "bet_btn":     "button.validate-bet, button[data-cy='place-bet']",
+        "coupon":      ".betslip-container, .bet-slip",
+        "odd_val":     ".odds, .cote-value"
+      }
+    },
+    "unibet": {
+      "base": "https://www.unibet.fr",
+      "login": "/login",
+      "sel": {
+        "stake_input": "input[data-test='stake-input'], input.KambiBC-bet-slip-input__stake",
+        "bet_btn":     "button[data-test='place-bet'], button.KambiBC-btn--primary",
+        "coupon":      ".KambiBC-bet-slip-list, .betslip",
+        "odd_val":     ".KambiBC-outcome__odds, .odds-value"
+      }
+    }
+  }
+}

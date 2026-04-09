@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open:*)",
+      "Bash(npm --version)",
+      "Bash(npm install:*)",
+      "Bash(sudo npm:*)",
+      "Bash(node capital-calc.js)",
+      "Bash(chmod:*)",
+      "Bash(node:*)",
+      "WebSearch",
+      "Read(//Users/yourmacbookair/.claude/projects/-Users-yourmacbookair-Desktop-maprimeadapt/memory/**)",
+      "Bash(wc -c /Users/yourmacbookair/Desktop/maprimeadapt/arbi-placer/*.js /Users/yourmacbookair/Desktop/maprimeadapt/arbi-placer/*.json /Users/yourmacbookair/Desktop/maprimeadapt/arbi-placer/.env.example)",
+      "Bash(npx wrangler:*)",
+      "Read(//Users/yourmacbookair/.wrangler/config/**)",
+      "Read(//Users/yourmacbookair/Library/Preferences/.wrangler/config/**)",
+      "Bash(curl:*)",
+      "Bash(python3 -m json.tool)",
+      "WebFetch(domain:www.stanway.lu)",
+      "WebFetch(domain:stanway.lu)",
+      "Bash(bash /Users/yourmacbookair/Desktop/maprimeadapt/scripts/hourly-check.sh)"
+    ]
+  }
+}

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Croquis — Architecture des Bots · Stanxay</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --card2: #1e2235;
+    --border: #2a2f45;
+    --blue: #3b82f6;
+    --blue-l: #93c5fd;
+    --green: #10b981;
+    --green-l: #6ee7b7;
+    --purple: #8b5cf6;
+    --purple-l: #c4b5fd;
+    --gold: #f59e0b;
+    --gold-l: #fde68a;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 13px; padding: 32px 24px; min-height: 100vh; }
+
+  h1 { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -.3px; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-bottom: 36px; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 0; }
+  .tab {
+    padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; background: none; color: var(--muted); border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color .15s, border-color .15s; font-family: var(--font);
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: #fff; border-bottom-color: var(--blue); }
+
+  /* PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* FLOW DIAGRAM */
+  .flow { display: flex; align-items: flex-start; gap: 0; overflow-x: auto; padding-bottom: 16px; }
+  .flow-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .arrow-h {
+    width: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    padding-top: 20px;
+  }
+  .arrow-h::after { content: '→'; font-size: 18px; color: var(--muted); }
+
+  /* BOXES */
+  .box {
+    border-radius: 10px; border: 1px solid var(--border);
+    padding: 16px 14px; min-width: 160px; max-width: 180px;
+    background: var(--card);
+  }
+  .box-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
+  .box-items { display: flex; flex-direction: column; gap: 5px; }
+  .box-item {
+    font-size: 12px; padding: 5px 8px; border-radius: 5px;
+    background: rgba(255,255,255,.04); border: 1px solid var(--border);
+    line-height: 1.4;
+  }
+  .box-item .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0; }
+
+  /* COLORS */
+  .c-blue  { border-color: rgba(59,130,246,.4);  }
+  .c-blue .box-title  { color: var(--blue-l); }
+  .c-green { border-color: rgba(16,185,129,.4); }
+  .c-green .box-title { color: var(--green-l); }
+  .c-purple{ border-color: rgba(139,92,246,.4); }
+  .c-purple .box-title{ color: var(--purple-l); }
+  .c-gold  { border-color: rgba(245,158,11,.4); }
+  .c-gold .box-title  { color: var(--gold-l); }
+  .c-red   { border-color: rgba(239,68,68,.4);  }
+  .c-red .box-title   { color: #fca5a5; }
+
+  .dot-blue   { background: var(--blue); }
+  .dot-green  { background: var(--green); }
+  .dot-purple { background: var(--purple); }
+  .dot-gold   { background: var(--gold); }
+  .dot-red    { background: var(--red); }
+
+  /* VERTICAL ARROW */
+  .arrow-v { text-align: center; color: var(--muted); font-size: 16px; padding: 4px 0; }
+
+  /* LEGEND */
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 28px; padding: 14px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ARCHITECTURE GRID */
+  .arch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .arch-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden;
+  }
+  .arch-card-header {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .arch-card-body { padding: 14px 16px; }
+  .arch-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04); font-size: 12px;
+  }
+  .arch-row:last-child { border-bottom: none; }
+  .arch-key { color: var(--muted); }
+  .arch-val { font-weight: 600; color: var(--text); text-align: right; max-width: 55%; }
+  .chip {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    display: inline-block;
+  }
+  .chip-blue   { background: rgba(59,130,246,.15); color: var(--blue-l); }
+  .chip-green  { background: rgba(16,185,129,.15); color: var(--green-l); }
+  .chip-gold   { background: rgba(245,158,11,.15); color: var(--gold-l); }
+  .chip-purple { background: rgba(139,92,246,.15); color: var(--purple-l); }
+  .chip-red    { background: rgba(239,68,68,.15);  color: #fca5a5; }
+
+  /* DETAIL BOX */
+  .detail { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .detail-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .detail-sub { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .detail-item { background: rgba(255,255,255,.04); border-radius: 6px; padding: 10px 12px; }
+  .detail-item-label { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 4px; }
+  .detail-item-val { font-size: 13px; font-weight: 600; }
+
+  /* BIG FLOW */
+  .big-flow { position: relative; }
+  .bf-row { display: flex; align-items: stretch; gap: 12px; margin-bottom: 12px; }
+  .bf-node {
+    flex: 1; border-radius: 8px; padding: 12px 14px;
+    border: 1px solid var(--border); background: var(--card);
+  }
+  .bf-node-num { font-size: 10px; font-weight: 800; color: var(--muted); margin-bottom: 4px; }
+  .bf-node-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .bf-node-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .bf-arrow { display: flex; align-items: center; color: var(--muted); font-size: 18px; flex-shrink: 0; }
+  .bf-center { text-align: center; padding: 14px; }
+
+  /* SECTION LABEL */
+  .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+  @media (max-width: 600px) {
+    body { padding: 16px 12px; }
+    .flow { flex-direction: column; }
+    .arrow-h { transform: rotate(90deg); }
+    .detail-grid { grid-template-columns: 1fr; }
+    .arch-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Croquis — Architecture des Bots</h1>
+<p class="subtitle">Stanxay · Vue technique et fonctionnelle · 2026</p>
+
+<div class="tabs">
+  <button type="button" class="tab active" onclick="showTab('linkedin')">🤖 Bot LinkedIn</button>
+  <button type="button" class="tab" onclick="showTab('arbibot')">📈 ArbiBot Sport</button>
+  <button type="button" class="tab" onclick="showTab('crypto')">₿ Crypto Scanner</button>
+  <button type="button" class="tab" onclick="showTab('global')">🗺 Vue globale</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 1 — BOT LINKEDIN
+════════════════════════════════════════════ -->
+<div class="panel active" id="tab-linkedin">
+
+  <div class="section-label">Flux de génération — Bot Prospection LinkedIn</div>
+
+  <!-- BIG FLOW -->
+  <div class="big-flow">
+    <div class="bf-row">
+      <div class="bf-node c-blue" style="background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.3)">
+        <div class="bf-node-num">ÉTAPE 1</div>
+        <div class="bf-node-title" style="color:var(--blue-l)">🎯 Paramètres d'entrée</div>
+        <div class="bf-node-desc">
+          • <strong>Service</strong> : IA PME / Leads B2B / CV LinkedIn / Pack Stanxay<br>
+          • <strong>Profil prospect</strong> : Chef entreprise, DRH, Agence intérim, Dir. commercial, Indépendant, Retail<br>
+          • <strong>Format</strong> : DM LinkedIn / Note connexion / Email / Séquence 3 étapes / Cold call<br>
+          • <strong>Ton</strong> : Direct, Chaleureux, Curiosité, Urgence<br>
+          • <strong>Angles de vente</strong> : gain temps · ROI · audit gratuit · garantie · IA · sans engagement
+        </div>
+      </div>
+      <div class="bf-arrow">→</div>
+      <div class="bf-node c-purple" style="background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.3)">
+        <div class="bf-node-num">ÉTAPE 2</div>
+        <div class="bf-node-title" style="color:var(--purple-l)">🧠 Gemini 2.0 Flash</div>
+        <div class="bf-node-desc">
+          • <strong>API</strong> : generativelanguage.googleapis.com<br>
+          • <strong>Modèle</strong> : gemini-2.0-flash<br>
+          • <strong>Prompt système</strong> : expert B2B Stanxay<br>
+          • <strong>Règles absolues injectées</strong> :<br>
+          &nbsp;&nbsp;— Jamais "Je me permets"<br>
+          &nbsp;&nbsp;— 1 seul CTA<br>
+          &nbsp;&nbsp;— DM max 300 chars<br>
+          &nbsp;&nbsp;— Bénéfice concret + profil<br>
+          • <strong>Température</strong> : 0.85 (créatif)
+        </div>
+      </div>
+      <div class="bf-arrow">→</div>
+      <div class="bf-node c-green" style="background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.3)">
+        <div class="bf-node-num">ÉTAPE 3</div>
+        <div class="bf-node-title" style="color:var(--green-l)">✅ Output + Score</div>
+        <div class="bf-node-desc">
+          • <strong>Message généré</strong> affiché<br>
+          • <strong>Score qualité</strong> calculé :<br>
+          &nbsp;&nbsp;— Longueur (format respecté)<br>
+          &nbsp;&nbsp;— Angles de vente présents<br>
+          &nbsp;&nbsp;— Score global /100<br>
+          • <strong>Conseil d'envoi</strong> contextuel<br>
+          • <strong>Bouton Copier</strong> en 1 clic<br>
+          • <strong>Régénérer</strong> si insatisfait<br>
+          • <strong>Historique</strong> sessionStorage
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- ARCHITECTURE CARDS -->
+  <div class="section-label">Détail technique</div>
+  <div class="arch-grid">
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--blue-l)">
+        <span>📥</span> Inputs
+      </div>
+      <div class="arch-card-body">
+        <div class="arch-row">
+          <span class="arch-key">market (service)</span>
+          <span class="arch-val"><span class="chip chip-blue">ia_pme</span> <span class="chip chip-blue">leads_b2b</span> <span class="chip chip-blue">cv_linkedin</span> <span class="chip chip-blue">pack_complet</span></span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">sector (prospect)</span>
+          <span class="arch-val">6 profils cibles</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">selectedTemplate</span>
+          <span class="arch-val">linkedin · note · email · sequence · call</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">lang (ton)</span>
+          <span class="arch-val">direct · chaleureux · curiosite · urgence</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">selectedSkills</span>
+          <span class="arch-val">7 angles (défaut: gain_temps + roi)</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">prospectTitle</span>
+          <span class="arch-val">Texte libre optionnel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--purple-l)">
+        <span>🔌</span> API Gemini
+      </div>
+      <div class="arch-card-body">
+        <div class="arch-row">
+          <span class="arch-key">Endpoint</span>
+          <span class="arch-val">v1beta/models/gemini-2.0-flash</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Clé</span>
+          <span class="arch-val"><span class="chip chip-green">GEMINI_KEY ✓</span></span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Quota gratuit</span>
+          <span class="arch-val"><span class="chip chip-gold">1 500 req/jour</span></span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Method</span>
+          <span class="arch-val">POST · fetch() côté client</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Fallback</span>
+          <span class="arch-val">Template statique si API down</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">2e appel</span>
+          <span class="arch-val">Conseil d'envoi personnalisé</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--green-l)">
+        <span>📤</span> Output
+      </div>
+      <div class="arch-card-body">
+        <div class="arch-row">
+          <span class="arch-key">Message</span>
+          <span class="arch-val">Texte brut copyable</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Score longueur</span>
+          <span class="arch-val">DM ≤300c = 100 · email = libre</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Score angles</span>
+          <span class="arch-val">+20 pts par angle présent</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Conseil</span>
+          <span class="arch-val">Heure envoi · ton · personnalisation</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Copier</span>
+          <span class="arch-val">navigator.clipboard</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Historique</span>
+          <span class="arch-val">sessionStorage (session courante)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--gold-l)">
+        <span>⚡</span> Logique de scoring
+      </div>
+      <div class="arch-card-body">
+        <div class="arch-row">
+          <span class="arch-key">DM LinkedIn</span>
+          <span class="arch-val">≤300c → 100 · &gt;300c → pénalité</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Email</span>
+          <span class="arch-val">150–400c = score max</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Séquence</span>
+          <span class="arch-val">3 messages scorés séparément</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Angles</span>
+          <span class="arch-val">min(100, nb_angles × 20)</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Score final</span>
+          <span class="arch-val">(longueur + angles) / 2</span>
+        </div>
+        <div class="arch-row">
+          <span class="arch-key">Seuil bon</span>
+          <span class="arch-val"><span class="chip chip-green">≥ 70 = vert</span> <span class="chip chip-gold">&lt;70 = orange</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FICHIER -->
+  <br>
+  <div class="detail">
+    <div class="detail-title">📁 Fichier</div>
+    <div class="detail-sub">pme/outils-rh/bot-prospect.html · Single-page · Zéro backend · API key en dur côté client</div>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <div class="detail-item-label">Localisation</div>
+        <div class="detail-item-val" style="font-size:11px">pme/outils-rh/bot-prospect.html</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-item-label">Architecture</div>
+        <div class="detail-item-val">100% client-side</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-item-label">Dépendances</div>
+        <div class="detail-item-val">Aucune (vanilla JS)</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-item-label">Utilisation</div>
+        <div class="detail-item-val">Ouvrir dans navigateur</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 2 — ARBIBOT SPORT
+════════════════════════════════════════════ -->
+<div class="panel" id="tab-arbibot">
+
+  <div class="section-label">Flux de détection — ArbiBot Sport</div>
+
+  <div class="big-flow">
+    <div class="bf-row">
+      <div class="bf-node" style="background:rgba(59,130,246,.06);border-color:rgba(59,130,246,.3)">
+        <div class="bf-node-num">SOURCES (cascade)</div>
+        <div class="bf-node-title" style="color:var(--blue-l)">📡 APIs Cotes</div>
+        <div class="bf-node-desc">
+          <strong style="color:var(--green-l)">✓ Odds-API.io</strong> — FR bookmakers<br>
+          <span style="color:var(--red)">✗ TheRundown</span> — clé manquante<br>
+          <span style="color:var(--red)">✗ The-Odds-API</span> — clé manquante<br>
+          <strong>⬇ Fallback</strong> : Scraping OddsPortal<br>
+          (Playwright headless, max 20/h)
+        </div>
+      </div>
+      <div class="bf-arrow">→</div>
+      <div class="bf-node" style="background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.3)">
+        <div class="bf-node-num">TRAITEMENT</div>
+        <div class="bf-node-title" style="color:var(--gold-l)">🔍 detectArbs()</div>
+        <div class="bf-node-desc">
+          Pour chaque match :<br>
+          • Trouver la meilleure cote/outcome<br>
+          • Calculer sumRecip = Σ(1/cote)<br>
+          • margin = (1/sumRecip - 1) × 100<br>
+          • Filtrer si margin ≥ MIN_MARGIN (0.3%)<br>
+          • Trier par marge décroissante
+        </div>
+      </div>
+      <div class="bf-arrow">→</div>
+      <div class="bf-node" style="background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.3)">
+        <div class="bf-node-num">DIFFUSION</div>
+        <div class="bf-node-title" style="color:var(--green-l)">📢 Broadcast</div>
+        <div class="bf-node-desc">
+          • <strong>WebSocket</strong> port 3002 → clients<br>
+          • <strong>REST</strong> /api/opportunities<br>
+          • <strong>macOS notif</strong> si opps &gt; 3<br>
+          • <strong>Brevo CRM</strong> email alert<br>
+          • Scan toutes les <strong>60s</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="section-label">Sports scannés (12 niches)</div>
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--blue-l)"><span>🏈</span> Sports actifs</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">aussierules</span><span class="chip chip-blue">niche</span></div>
+        <div class="arch-row"><span class="arch-key">rugbyleague</span><span class="chip chip-blue">niche</span></div>
+        <div class="arch-row"><span class="arch-key">handball_europe</span><span class="chip chip-blue">niche</span></div>
+        <div class="arch-row"><span class="arch-key">waterpolo</span><span class="chip chip-blue">niche</span></div>
+        <div class="arch-row"><span class="arch-key">volleyball_intl</span><span class="chip chip-blue">niche</span></div>
+        <div class="arch-row"><span class="arch-key">bandy</span><span class="chip chip-gold">rare</span></div>
+        <div class="arch-row"><span class="arch-key">kabaddi</span><span class="chip chip-gold">rare</span></div>
+        <div class="arch-row"><span class="arch-key">pesapallo</span><span class="chip chip-gold">rare</span></div>
+      </div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--gold-l)"><span>⚙️</span> Config serveur</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Port HTTP</span><span class="arch-val">3001</span></div>
+        <div class="arch-row"><span class="arch-key">Port WebSocket</span><span class="arch-val">3002</span></div>
+        <div class="arch-row"><span class="arch-key">Scan interval</span><span class="arch-val">60s</span></div>
+        <div class="arch-row"><span class="arch-key">Marge min</span><span class="arch-val">0.3%</span></div>
+        <div class="arch-row"><span class="arch-key">DRY_RUN</span><span class="arch-val"><span class="chip chip-green">true</span></span></div>
+        <div class="arch-row"><span class="arch-key">Risk/trade</span><span class="arch-val">0.5% bankroll</span></div>
+        <div class="arch-row"><span class="arch-key">Stake max</span><span class="arch-val">50€</span></div>
+        <div class="arch-row"><span class="arch-key">SCAN_TOKEN</span><span class="arch-val"><span class="chip chip-green">✓ sécurisé</span></span></div>
+      </div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--red)"><span>⚠️</span> Blocages actuels</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">TheRundown</span><span class="chip chip-red">clé vide</span></div>
+        <div class="arch-row"><span class="arch-key">The-Odds-API</span><span class="chip chip-red">clé vide</span></div>
+        <div class="arch-row"><span class="arch-key">Betfair</span><span class="chip chip-red">clé vide</span></div>
+        <div class="arch-row"><span class="arch-key">0 arbs détectés</span><span class="arch-val">→ sources insuffisantes</span></div>
+        <div class="arch-row"><span class="arch-key">Fix</span><span class="arch-val">Créer compte TheRundown (gratuit)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 3 — CRYPTO SCANNER
+════════════════════════════════════════════ -->
+<div class="panel" id="tab-crypto">
+
+  <div class="section-label">3 stratégies d'arbitrage crypto</div>
+
+  <div class="arch-grid">
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--green-l)"><span>↔️</span> Stratégie 1 — CEX/CEX Spot</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Principe</span><span class="arch-val">Acheter A ask · Vendre B bid</span></div>
+        <div class="arch-row"><span class="arch-key">Exchanges</span><span class="arch-val">Binance · Kraken · Bybit</span></div>
+        <div class="arch-row"><span class="arch-key">Paires</span><span class="arch-val">15 paires (BTC,ETH,SOL...)</span></div>
+        <div class="arch-row"><span class="arch-key">Frais inclus</span><span class="arch-val">Binance 0.1% · Kraken 0.26%</span></div>
+        <div class="arch-row"><span class="arch-key">Seuil min</span><span class="arch-val">0.20% net</span></div>
+        <div class="arch-row"><span class="arch-key">Risque</span><span class="arch-val"><span class="chip chip-green">Très faible</span></span></div>
+        <div class="arch-row"><span class="arch-key">Clé requise</span><span class="arch-val"><span class="chip chip-green">Aucune (public)</span></span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--blue-l)"><span>🔺</span> Stratégie 2 — Triangulaire</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Principe</span><span class="arch-val">USDT→A→B→USDT &gt; 1</span></div>
+        <div class="arch-row"><span class="arch-key">Exchange</span><span class="arch-val">Binance uniquement</span></div>
+        <div class="arch-row"><span class="arch-key">Triangles</span><span class="arch-val">10 triangles (BTC/ETH/SOL...)</span></div>
+        <div class="arch-row"><span class="arch-key">Calcul</span><span class="arch-val">ratio = ∏(3 taux) × (1-fee)³</span></div>
+        <div class="arch-row"><span class="arch-key">Seuil min</span><span class="arch-val">0.15%</span></div>
+        <div class="arch-row"><span class="arch-key">Vitesse requise</span><span class="arch-val"><span class="chip chip-gold">Très rapide &lt;1s</span></span></div>
+        <div class="arch-row"><span class="arch-key">Risque</span><span class="arch-val"><span class="chip chip-gold">Faible (slippage)</span></span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--purple-l)"><span>💰</span> Stratégie 3 — Funding Rate</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Principe</span><span class="arch-val">Short perp + Long spot = neutre</span></div>
+        <div class="arch-row"><span class="arch-key">Source</span><span class="arch-val">Binance fapi (200+ perps)</span></div>
+        <div class="arch-row"><span class="arch-key">Fréquence</span><span class="arch-val">Toutes les 8h</span></div>
+        <div class="arch-row"><span class="arch-key">Seuil min</span><span class="arch-val">0.05%/8h</span></div>
+        <div class="arch-row"><span class="arch-key">APR moyen</span><span class="arch-val">5–80% (marché bull)</span></div>
+        <div class="arch-row"><span class="arch-key">Risque</span><span class="arch-val"><span class="chip chip-green">Très faible (delta-neutre)</span></span></div>
+        <div class="arch-row"><span class="arch-key">Clé requise</span><span class="arch-val"><span class="chip chip-green">Aucune (read only)</span></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <br>
+  <div class="section-label">Architecture fichiers</div>
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--gold-l)"><span>📁</span> crypto-scanner.js</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">fetchBinancePrices()</span><span class="arch-val">bid/ask tous symboles</span></div>
+        <div class="arch-row"><span class="arch-key">fetchKrakenPrices()</span><span class="arch-val">XBT→BTC normalisé</span></div>
+        <div class="arch-row"><span class="arch-key">fetchBybitPrices()</span><span class="arch-val">spot category</span></div>
+        <div class="arch-row"><span class="arch-key">fetchBinanceFunding()</span><span class="arch-val">premiumIndex perps</span></div>
+        <div class="arch-row"><span class="arch-key">detectCEXArbs()</span><span class="arch-val">cross-exchange</span></div>
+        <div class="arch-row"><span class="arch-key">detectTriangularArbs()</span><span class="arch-val">in-exchange</span></div>
+        <div class="arch-row"><span class="arch-key">detectFundingArbs()</span><span class="arch-val">top 20 funding</span></div>
+        <div class="arch-row"><span class="arch-key">runCryptoScan()</span><span class="arch-val">parallel fetch + detect</span></div>
+      </div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:var(--blue-l)"><span>🌐</span> Endpoints REST</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">GET /crypto/health</span><span class="arch-val">status + summary</span></div>
+        <div class="arch-row"><span class="arch-key">GET /crypto/arbs</span><span class="arch-val">CEX + triangulaire</span></div>
+        <div class="arch-row"><span class="arch-key">GET /crypto/funding</span><span class="arch-val">top funding rates</span></div>
+        <div class="arch-row"><span class="arch-key">GET /crypto/all</span><span class="arch-val">tout en un</span></div>
+        <div class="arch-row"><span class="arch-key">GET /api/opportunities</span><span class="arch-val">sport + crypto unifié</span></div>
+        <div class="arch-row"><span class="arch-key">WS :3002</span><span class="arch-val">broadcast crypto_result</span></div>
+        <div class="arch-row"><span class="arch-key">Scan interval</span><span class="arch-val">30s</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     PANEL 4 — VUE GLOBALE
+════════════════════════════════════════════ -->
+<div class="panel" id="tab-global">
+
+  <div class="section-label">Écosystème complet — Stanxay 2026</div>
+
+  <div class="arch-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))">
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:#60a5fa"><span>🔵</span> Bot LinkedIn Stanxay</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Fichier</span><span class="arch-val" style="font-size:10px">pme/outils-rh/bot-prospect.html</span></div>
+        <div class="arch-row"><span class="arch-key">IA</span><span class="arch-val">Gemini 2.0 Flash</span></div>
+        <div class="arch-row"><span class="arch-key">Usage</span><span class="arch-val">Prospection DM quotidienne</span></div>
+        <div class="arch-row"><span class="arch-key">Objectif</span><span class="arch-val">50 DMs/j → 1 client/sem</span></div>
+        <div class="arch-row"><span class="arch-key">Status</span><span class="chip chip-green">✓ Opérationnel</span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:#fbbf24"><span>📄</span> Templates DM</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Fichier</span><span class="arch-val" style="font-size:10px">pme/dm-templates-stanxay.html</span></div>
+        <div class="arch-row"><span class="arch-key">CV LinkedIn</span><span class="arch-val">5 templates</span></div>
+        <div class="arch-row"><span class="arch-key">IA PME</span><span class="arch-val">4 templates</span></div>
+        <div class="arch-row"><span class="arch-key">Leads B2B</span><span class="arch-val">4 templates</span></div>
+        <div class="arch-row"><span class="arch-key">Relances</span><span class="arch-val">3 templates (J+3/7/14)</span></div>
+        <div class="arch-row"><span class="arch-key">Status</span><span class="chip chip-green">✓ Opérationnel</span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:#a78bfa"><span>⚽</span> ArbiBot Sport</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Fichier</span><span class="arch-val" style="font-size:10px">arbi-placer/server.js</span></div>
+        <div class="arch-row"><span class="arch-key">Sources actives</span><span class="arch-val">odds-api.io + scraping</span></div>
+        <div class="arch-row"><span class="arch-key">Sports</span><span class="arch-val">12 niches</span></div>
+        <div class="arch-row"><span class="arch-key">Arbs détectés</span><span class="arch-val"><span class="chip chip-red">0 (manque clés)</span></span></div>
+        <div class="arch-row"><span class="arch-key">Status</span><span class="chip chip-gold">⚠ Online, 0 arb</span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:#34d399"><span>₿</span> Crypto Scanner</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Fichier</span><span class="arch-val" style="font-size:10px">arbi-placer/crypto-scanner.js</span></div>
+        <div class="arch-row"><span class="arch-key">Stratégies</span><span class="arch-val">CEX/CEX · Triangulaire · Funding</span></div>
+        <div class="arch-row"><span class="arch-key">Sources</span><span class="arch-val">Binance · Kraken · Bybit</span></div>
+        <div class="arch-row"><span class="arch-key">Clé requise</span><span class="arch-val"><span class="chip chip-green">Aucune (lecture)</span></span></div>
+        <div class="arch-row"><span class="arch-key">Dashboard</span><span class="arch-val" style="font-size:10px">arbi-placer/crypto-dashboard.html</span></div>
+        <div class="arch-row"><span class="arch-key">Status</span><span class="chip chip-green">✓ Intégré</span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:#f87171"><span>🏠</span> MaPrimeAdapt IDF</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Fichier</span><span class="arch-val" style="font-size:10px">maprimeadapt-idf.html</span></div>
+        <div class="arch-row"><span class="arch-key">Leads captés</span><span class="arch-val"><span class="chip chip-red">0 (local only)</span></span></div>
+        <div class="arch-row"><span class="arch-key">Simulateur</span><span class="arch-val">✓ Fonctionnel</span></div>
+        <div class="arch-row"><span class="arch-key">CRM</span><span class="arch-val">Brevo (9000 mails/mois)</span></div>
+        <div class="arch-row"><span class="arch-key">Ticker</span><span class="arch-val">✓ Ajouté</span></div>
+        <div class="arch-row"><span class="arch-key">Status</span><span class="chip chip-gold">⚠ À déployer</span></div>
+      </div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header" style="color:#93c5fd"><span>📊</span> Plan d'action</div>
+      <div class="arch-card-body">
+        <div class="arch-row"><span class="arch-key">Fichier</span><span class="arch-val" style="font-size:10px">plan-action.html</span></div>
+        <div class="arch-row"><span class="arch-key">Suivi</span><span class="arch-val">J1→J90 timeline</span></div>
+        <div class="arch-row"><span class="arch-key">Rapport</span><span class="arch-val">logs/rapport-horaire.json</span></div>
+        <div class="arch-row"><span class="arch-key">Cron</span><span class="arch-val">Toutes les heures</span></div>
+        <div class="arch-row"><span class="arch-key">Status</span><span class="chip chip-green">✓ Actif</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LÉGENDE PRIORITÉS -->
+  <br>
+  <div class="detail">
+    <div class="detail-title">🎯 Prochaines actions prioritaires</div>
+    <div class="detail-sub">Pour générer les premiers revenus réels</div>
+    <div class="detail-grid">
+      <div class="detail-item" style="border-left:3px solid var(--red)">
+        <div class="detail-item-label">URGENT — Revenue</div>
+        <div class="detail-item-val" style="font-size:12px">Envoyer 10 DMs CV LinkedIn ce soir<br>→ 1 client = 250€ = Claude Pro payé</div>
+      </div>
+      <div class="detail-item" style="border-left:3px solid var(--gold)">
+        <div class="detail-item-label">J+3 — Crypto passif</div>
+        <div class="detail-item-val" style="font-size:12px">Ouvrir Binance + 100€ funding rate<br>→ 27€/mois passif automatique</div>
+      </div>
+      <div class="detail-item" style="border-left:3px solid var(--blue)">
+        <div class="detail-item-label">J+7 — Leads site</div>
+        <div class="detail-item-val" style="font-size:12px">Déployer maprimeadapt-idf.html<br>→ Cloudflare Pages (gratuit)</div>
+      </div>
+      <div class="detail-item" style="border-left:3px solid var(--purple)">
+        <div class="detail-item-label">J+7 — Sport arb</div>
+        <div class="detail-item-val" style="font-size:12px">Créer compte TheRundown.io<br>→ 20k data points/jour gratuit</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+</body>
+</html>

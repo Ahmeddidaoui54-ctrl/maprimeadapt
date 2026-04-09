@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bot System v4.0 — Dashboard</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#0a0a0f; color:#e0e0e0; }
+.header { background:linear-gradient(135deg,#1a1a2e,#16213e); padding:20px 30px; border-bottom:1px solid #2a2a4a; display:flex; justify-content:space-between; align-items:center; }
+.header h1 { font-size:20px; color:#fff; }
+.header h1 span { color:#00d4aa; }
+.status-dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; }
+.status-dot.on { background:#00d4aa; box-shadow:0 0 8px #00d4aa; }
+.status-dot.off { background:#ff4757; }
+.header-right { display:flex; gap:15px; align-items:center; font-size:13px; color:#888; }
+.grid { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:15px; padding:20px 30px; }
+.card { background:#12121f; border:1px solid #2a2a4a; border-radius:10px; padding:18px; }
+.card h3 { font-size:12px; text-transform:uppercase; color:#666; margin-bottom:10px; letter-spacing:1px; }
+.card .value { font-size:28px; font-weight:700; color:#fff; }
+.card .value.green { color:#00d4aa; }
+.card .value.orange { color:#ffa502; }
+.card .value.red { color:#ff4757; }
+.card .sub { font-size:12px; color:#666; margin-top:4px; }
+.section { padding:10px 30px 20px; }
+.section h2 { font-size:15px; color:#888; margin-bottom:12px; border-bottom:1px solid #1a1a2e; padding-bottom:8px; }
+.table { width:100%; border-collapse:collapse; }
+.table th { text-align:left; font-size:11px; text-transform:uppercase; color:#555; padding:8px 12px; border-bottom:1px solid #1a1a2e; }
+.table td { padding:8px 12px; font-size:13px; border-bottom:1px solid #0f0f1a; }
+.table tr:hover { background:#1a1a2e; }
+.badge { padding:3px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.badge.rouge { background:#ff475722; color:#ff4757; }
+.badge.orange { background:#ffa50222; color:#ffa502; }
+.badge.verte { background:#00d4aa22; color:#00d4aa; }
+.badge.on { background:#00d4aa22; color:#00d4aa; }
+.badge.off { background:#ff475722; color:#ff4757; }
+.badge.open { background:#3742fa22; color:#5f6bff; }
+.badge.sold { background:#00d4aa22; color:#00d4aa; }
+.badge.new { background:#ffa50222; color:#ffa502; }
+.niches-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+.niche-card { background:#12121f; border:1px solid #2a2a4a; border-radius:8px; padding:14px; }
+.niche-card .name { font-size:14px; font-weight:600; color:#fff; }
+.niche-card .meta { font-size:12px; color:#666; margin-top:4px; }
+.niche-card .score-bar { height:4px; background:#1a1a2e; border-radius:2px; margin-top:8px; overflow:hidden; }
+.niche-card .score-fill { height:100%; background:linear-gradient(90deg,#00d4aa,#3742fa); border-radius:2px; }
+.btn { background:#1a1a3e; border:1px solid #3742fa; color:#5f6bff; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:13px; }
+.btn:hover { background:#3742fa; color:#fff; }
+.actions { display:flex; gap:10px; padding:10px 30px; }
+#refresh-time { color:#444; font-size:11px; }
+.logs-container { max-height:300px; overflow-y:auto; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>●</span> Bot System <span>v4.0</span></h1>
+  <div class="header-right">
+    <span id="refresh-time">—</span>
+    <span id="supabase-status">Supabase: ...</span>
+    <span id="dry-run-status">Mode: ...</span>
+  </div>
+</div>
+
+<div class="grid" id="stats-grid">
+  <div class="card"><h3>Bots actifs</h3><div class="value" id="bots-count">—</div><div class="sub" id="bots-list"></div></div>
+  <div class="card"><h3>Opportunités</h3><div class="value orange" id="opps-count">—</div><div class="sub">en attente</div></div>
+  <div class="card"><h3>Trades ouverts</h3><div class="value" id="trades-count">—</div><div class="sub" id="trades-engaged"></div></div>
+  <div class="card"><h3>P&L Total</h3><div class="value green" id="pnl-total">—</div><div class="sub" id="pnl-ops"></div></div>
+</div>
+
+<div class="actions">
+  <button class="btn" onclick="runTask('check_evenement')">Scan événements</button>
+  <button class="btn" onclick="runTask('scan_differentiel')">Scan marchés</button>
+  <button class="btn" onclick="runTask('check_relances')">Check relances</button>
+  <button class="btn" onclick="runTask('rapport_pl')">Rapport P&L</button>
+  <button class="btn" onclick="loadNiches()">Top niches</button>
+</div>
+
+<div class="section">
+  <h2>Opportunités détectées</h2>
+  <table class="table" id="opps-table">
+    <thead><tr><th>Heure</th><th>Source</th><th>Signal</th><th>Score</th><th>Urgence</th><th>Acheteur</th><th>Action</th></tr></thead>
+    <tbody id="opps-body"></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Trades</h2>
+  <table class="table" id="trades-table">
+    <thead><tr><th>ID</th><th>Produit</th><th>Achat</th><th>Vente</th><th>P&L</th><th>Statut</th><th>Deadline</th></tr></thead>
+    <tbody id="trades-body"></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Niches arbitrage (ce mois)</h2>
+  <div class="niches-grid" id="niches-grid"></div>
+</div>
+
+<div class="section">
+  <h2>Logs récents</h2>
+  <div class="logs-container">
+    <table class="table">
+      <thead><tr><th>Heure</th><th>Bot</th><th>Action</th><th>Résultat</th></tr></thead>
+      <tbody id="logs-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:3001';
+
+async function fetchJSON(path) {
+  try { const r = await fetch(API + path); return await r.json(); }
+  catch(e) { console.error(path, e); return null; }
+}
+
+async function refresh() {
+  // Health
+  const h = await fetchJSON('/health');
+  if (!h) return;
+
+  const botsOn = Object.values(h.bots).filter(b => b.active).length;
+  document.getElementById('bots-count').textContent = botsOn + '/4';
+  document.getElementById('bots-list').textContent = Object.entries(h.bots).map(([k,v]) => k + ':' + (v.active ? 'ON' : 'OFF')).join(' · ');
+  document.getElementById('trades-count').textContent = h.trades.open;
+  document.getElementById('trades-engaged').textContent = h.trades.totalEngaged + '€ engagés';
+  document.getElementById('opps-count').textContent = h.opportunities;
+  document.getElementById('refresh-time').textContent = 'Mis à jour: ' + new Date().toLocaleTimeString('fr-FR');
+
+  // Opportunités
+  const ops = await fetchJSON('/api/opportunities?status=new');
+  const tbody = document.getElementById('opps-body');
+  tbody.innerHTML = '';
+  if (ops && ops.length) {
+    ops.forEach(op => {
+      const buyer = op.data?.buyerLikely;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${op.ts ? new Date(op.ts).toLocaleTimeString('fr-FR') : '—'}</td>
+        <td>${op.source || '—'}</td>
+        <td>${(op.signal || '').slice(0, 60)}</td>
+        <td><strong>${op.score}/10</strong></td>
+        <td><span class="badge ${(op.urgence||'').toLowerCase()}">${op.urgence || '—'}</span></td>
+        <td>${buyer ? '<span class="badge on">OUI</span>' : '<span class="badge off">NON</span>'}</td>
+        <td>${op.data?.url ? '<a href="' + op.data.url + '" target="_blank" style="color:#5f6bff">Voir</a>' : '—'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } else {
+    tbody.innerHTML = '<tr><td colspan="7" style="color:#444;text-align:center">Aucune opportunité en attente</td></tr>';
+  }
+
+  // Trades
+  const trades = await fetchJSON('/api/trades');
+  const tbody2 = document.getElementById('trades-body');
+  tbody2.innerHTML = '';
+  let totalPnl = 0;
+  if (trades && trades.length) {
+    trades.forEach(t => {
+      const pnl = t.pnl ? parseFloat(t.pnl) : null;
+      if (pnl) totalPnl += pnl;
+      const deadline = t.deadline ? new Date(t.deadline) : null;
+      const overdue = deadline && deadline < new Date();
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>#${t.id}</td>
+        <td>${(t.signal || '').slice(0, 40)}</td>
+        <td>${t.prix_achat || '—'}€</td>
+        <td>${t.prix_vente || '—'}€</td>
+        <td style="color:${pnl > 0 ? '#00d4aa' : pnl < 0 ? '#ff4757' : '#666'}">${pnl !== null ? pnl + '€' : '—'}</td>
+        <td><span class="badge ${t.status}">${t.status}</span></td>
+        <td style="color:${overdue ? '#ff4757' : '#666'}">${deadline ? deadline.toLocaleDateString('fr-FR') : '—'}</td>
+      `;
+      tbody2.appendChild(tr);
+    });
+  } else {
+    tbody2.innerHTML = '<tr><td colspan="7" style="color:#444;text-align:center">Aucun trade ouvert</td></tr>';
+  }
+  document.getElementById('pnl-total').textContent = totalPnl.toFixed(2) + '€';
+  document.getElementById('pnl-ops').textContent = (trades?.length || 0) + ' opérations';
+
+  // Logs
+  const logs = await fetchJSON('/api/logs?limit=15');
+  const tbody3 = document.getElementById('logs-body');
+  tbody3.innerHTML = '';
+  if (logs && logs.length) {
+    logs.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="color:#444">${l.ts ? new Date(l.ts).toLocaleTimeString('fr-FR') : '—'}</td>
+        <td>${l.bot}</td>
+        <td>${l.action}</td>
+        <td style="color:#888">${(l.result || '').slice(0, 80)}</td>
+      `;
+      tbody3.appendChild(tr);
+    });
+  }
+}
+
+async function runTask(task) {
+  const r = await fetch(API + '/api/dispatch', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task })
+  });
+  const result = await r.json();
+  console.log(task, result);
+  setTimeout(refresh, 1000);
+}
+
+async function loadNiches() {
+  const niches = await fetchJSON('/api/niches/arbitrage?max=8');
+  const grid = document.getElementById('niches-grid');
+  grid.innerHTML = '';
+  if (niches && niches.length) {
+    niches.forEach(n => {
+      const pct = Math.round((n.score / 14) * 100);
+      const div = document.createElement('div');
+      div.className = 'niche-card';
+      div.innerHTML = `
+        <div class="name">${n.name}</div>
+        <div class="meta">${n.cat} · marge ${n.margin} · ${n.speed} · ${n.buyersActive ? '🟢 acheteurs actifs' : '🔴 peu d\'acheteurs'}</div>
+        <div class="meta" style="margin-top:4px;color:#555">${n.keywords.join(', ')}</div>
+        <div class="score-bar"><div class="score-fill" style="width:${pct}%"></div></div>
+        <div class="meta" style="margin-top:4px">Score: ${n.score}/14</div>
+      `;
+      grid.appendChild(div);
+    });
+  }
+}
+
+// Auto-refresh toutes les 30s
+refresh();
+loadNiches();
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>

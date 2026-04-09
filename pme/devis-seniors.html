@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devis — Conciergerie Seniors</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; background: #f4f4f4; color: #111; }
+  .page { max-width: 860px; margin: 40px auto; background: #fff; padding: 60px; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #111; padding-bottom: 24px; margin-bottom: 32px; }
+  .logo { font-size: 24px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+  .logo span { display: block; font-size: 11px; font-weight: 400; letter-spacing: 3px; color: #555; margin-top: 4px; }
+  .devis-meta { text-align: right; font-size: 13px; line-height: 1.8; }
+  .devis-meta strong { font-size: 18px; display: block; margin-bottom: 6px; }
+  .devis-num { background: #111; color: #fff; padding: 4px 12px; font-size: 12px; letter-spacing: 1px; display: inline-block; margin-bottom: 8px; }
+
+  .client-section { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+  .info-block label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+  .info-block input {
+    width: 100%; border: none; border-bottom: 1px solid #ccc;
+    font-family: 'Georgia', serif; font-size: 15px; padding: 6px 0;
+    background: transparent; color: #111; outline: none;
+  }
+  .info-block input:focus { border-bottom-color: #111; }
+
+  .devis-title { text-align: center; margin-bottom: 36px; }
+  .devis-title h1 { font-size: 21px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .devis-title p { font-size: 13px; color: #555; margin-top: 8px; }
+
+  /* FORFAITS */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 28px; font-size: 14px; }
+  thead tr { background: #111; color: #fff; }
+  thead th { padding: 12px 16px; text-align: left; font-weight: 600; letter-spacing: 0.5px; font-size: 12px; text-transform: uppercase; }
+  tbody tr { border-bottom: 1px solid #e8e8e8; }
+  tbody td { padding: 16px 16px; vertical-align: top; line-height: 1.5; }
+  tbody tr:nth-child(even) { background: #fafafa; }
+  .col-prix { text-align: right; font-weight: 600; white-space: nowrap; }
+  .col-reel { text-align: right; color: #333; font-size: 13px; }
+  .badge { display: inline-block; background: #111; color: #fff; font-size: 10px; padding: 2px 8px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .badge-recommande { background: #444; }
+
+  /* ENCART CI */
+  .encart-ci {
+    background: #fffde7;
+    border: 2px solid #f9c826;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-radius: 2px;
+  }
+  .encart-ci strong { display: block; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .encart-ci .ci-exemple { margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ci-card { background: #fff; border: 1px solid #f0d000; padding: 10px; text-align: center; font-size: 12px; }
+  .ci-card .montant { font-size: 20px; font-weight: 700; display: block; margin: 4px 0; }
+  .ci-card .label { color: #888; font-size: 11px; }
+
+  /* SERVICES */
+  .services-section { margin-bottom: 28px; }
+  .services-section h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .service-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; padding: 12px; border: 1px solid #e8e8e8; }
+  .service-item .icon { font-size: 18px; flex-shrink: 0; }
+
+  /* MENTION LÉGALE SAP */
+  .mention-sap { background: #f9f9f9; border-left: 4px solid #111; padding: 14px 18px; margin-bottom: 28px; font-size: 12px; color: #555; line-height: 1.6; }
+  .mention-sap strong { color: #111; }
+
+  /* CONDITIONS */
+  .conditions { border: 1px solid #ddd; padding: 18px 22px; margin-bottom: 24px; font-size: 13px; line-height: 1.7; }
+  .conditions h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .conditions ul { padding-left: 18px; }
+  .conditions li { margin-bottom: 5px; }
+
+  /* SIGNATURE */
+  .signature-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .sig-block h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 12px; }
+  .sig-line { border-bottom: 1px solid #ccc; height: 48px; margin-bottom: 8px; }
+  .sig-date { font-size: 12px; color: #888; }
+  .checkbox-wrap { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; cursor: pointer; }
+  .checkbox-wrap input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #111; }
+
+  /* FORFAIT CHOISI */
+  .forfait-choisi { margin-bottom: 28px; }
+  .forfait-choisi h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+  .forfait-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .forfait-btn { padding: 10px 20px; border: 2px solid #ccc; background: #fff; cursor: pointer; font-family: 'Georgia', serif; font-size: 13px; transition: all 0.2s; }
+  .forfait-btn.selected, .forfait-btn:hover { border-color: #111; background: #111; color: #fff; }
+
+  footer { border-top: 1px solid #ddd; padding-top: 20px; font-size: 11px; color: #888; line-height: 1.8; display: flex; justify-content: space-between; }
+
+  .print-btn {
+    display: block; width: 100%; padding: 16px;
+    background: #111; color: #fff; border: none; cursor: pointer;
+    font-family: 'Georgia', serif; font-size: 14px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 20px;
+    transition: background 0.2s;
+  }
+  .print-btn:hover { background: #333; }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; padding: 40px; }
+    .print-btn, .no-print { display: none; }
+  }
+
+  /* ===== RESPONSIVE — 768px ===== */
+  @media (max-width: 768px) {
+    .page { padding: 32px 24px; margin: 16px auto; }
+
+    .header { flex-direction: column; gap: 16px; }
+    .devis-meta { text-align: left; }
+
+    .client-section { grid-template-columns: 1fr; gap: 16px; }
+
+    .devis-title h1 { font-size: 18px; }
+
+    table { font-size: 13px; }
+    thead th { padding: 10px 10px; font-size: 11px; }
+    tbody td { padding: 10px 10px; }
+
+    .encart-ci .ci-exemple { grid-template-columns: 1fr; gap: 8px; }
+
+    .services-grid { grid-template-columns: 1fr; }
+
+    .signature-section { grid-template-columns: 1fr; gap: 24px; }
+
+    .forfait-buttons { flex-direction: column; }
+    .forfait-btn { width: 100%; text-align: center; }
+
+    footer { flex-direction: column; gap: 12px; }
+    footer div { text-align: left !important; }
+
+    .print-btn { font-size: 13px; padding: 14px; }
+  }
+
+  /* ===== RESPONSIVE — 480px ===== */
+  @media (max-width: 480px) {
+    .page { padding: 20px 14px; margin: 0; box-shadow: none; }
+
+    .logo { font-size: 18px; }
+    .devis-title h1 { font-size: 15px; }
+    .devis-num { font-size: 11px; }
+
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { font-size: 12px; min-width: 480px; }
+    thead th { padding: 8px 8px; }
+    tbody td { padding: 8px 8px; }
+
+    .encart-ci { padding: 14px 14px; }
+    .conditions { padding: 14px 14px; }
+    .mention-sap { padding: 12px 14px; }
+
+    .print-btn { font-size: 12px; letter-spacing: 1px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">
+      PME Services
+      <span>Conciergerie &amp; Aide à domicile</span>
+    </div>
+    <div class="devis-meta">
+      <span class="devis-num" id="devisNum">DEVIS-S-2026-001</span>
+      <strong>DEVIS</strong>
+      <div>Date : <span id="dateDevis"></span></div>
+      <div>Valable 30 jours</div>
+    </div>
+  </div>
+
+  <!-- CLIENT INFO -->
+  <div class="client-section">
+    <div class="info-block">
+      <label>Bénéficiaire</label>
+      <input type="text" id="nomClient" placeholder="Nom Prénom du bénéficiaire" />
+    </div>
+    <div class="info-block">
+      <label>Contact / Famille</label>
+      <input type="text" id="contactFamille" placeholder="Nom du contact référent" />
+    </div>
+    <div class="info-block">
+      <label>Adresse</label>
+      <input type="text" id="adresseClient" placeholder="Adresse du domicile" />
+    </div>
+    <div class="info-block">
+      <label>Téléphone</label>
+      <input type="tel" id="telClient" placeholder="06 XX XX XX XX" />
+    </div>
+  </div>
+
+  <!-- TITRE -->
+  <div class="devis-title">
+    <h1>Services d'Assistance à Domicile — Conciergerie Seniors</h1>
+    <p>Accompagnement personnalisé pour un maintien à domicile en toute sérénité</p>
+  </div>
+
+  <!-- SÉLECTION FORFAIT -->
+  <div class="forfait-choisi no-print">
+    <h3>Sélectionner le forfait retenu</h3>
+    <div class="forfait-buttons">
+      <button type="button" class="forfait-btn" onclick="selectForfait('essentiel', this)">Forfait Essentiel</button>
+      <button type="button" class="forfait-btn" onclick="selectForfait('confort', this)">Forfait Confort</button>
+      <button type="button" class="forfait-btn" onclick="selectForfait('serenite', this)">Forfait Sérénité</button>
+    </div>
+  </div>
+
+  <!-- TABLEAU FORFAITS -->
+  <div class="table-scroll-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:20%">Forfait</th>
+        <th style="width:25%">Heures incluses</th>
+        <th style="width:20%">Tarif mensuel HT</th>
+        <th style="width:20%">Après CI 50%*</th>
+        <th style="width:15%">Sélectionné</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="row-essentiel">
+        <td><span class="badge">Essentiel</span></td>
+        <td>4 heures / mois<br><small style="color:#888">Idéal pour une aide ponctuelle</small></td>
+        <td class="col-prix">120 € /mois</td>
+        <td class="col-reel"><strong>60 € /mois</strong><br><small>coût réel</small></td>
+        <td style="text-align:center;" id="check-essentiel">—</td>
+      </tr>
+      <tr id="row-confort">
+        <td><span class="badge badge-recommande">Confort</span></td>
+        <td>8 heures / mois<br><small style="color:#888">Recommandé — le plus choisi</small></td>
+        <td class="col-prix">220 € /mois</td>
+        <td class="col-reel"><strong>110 € /mois</strong><br><small>coût réel</small></td>
+        <td style="text-align:center;" id="check-confort">—</td>
+      </tr>
+      <tr id="row-serenite">
+        <td><span class="badge">Sérénité</span></td>
+        <td>15 heures / mois<br><small style="color:#888">Accompagnement complet</small></td>
+        <td class="col-prix">380 € /mois</td>
+        <td class="col-reel"><strong>190 € /mois</strong><br><small>coût réel</small></td>
+        <td style="text-align:center;" id="check-serenite">—</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ENCART CRÉDIT D'IMPÔT -->
+  <div class="encart-ci">
+    <strong>Éligible au Crédit d'Impôt à 50% — Services à la Personne</strong>
+    Vous ne payez réellement que la <strong>moitié du montant facturé</strong>. Le crédit d'impôt de 50% s'applique directement sur votre déclaration de revenus, ou par avance de trésorerie via le service CESU+. Pour un foyer non imposable, le remboursement est versé directement.
+    <div class="ci-exemple">
+      <div class="ci-card">
+        <div class="label">Forfait Essentiel</div>
+        <span class="montant">60 €</span>
+        <div class="label">coût réel / mois</div>
+      </div>
+      <div class="ci-card">
+        <div class="label">Forfait Confort</div>
+        <span class="montant">110 €</span>
+        <div class="label">coût réel / mois</div>
+      </div>
+      <div class="ci-card">
+        <div class="label">Forfait Sérénité</div>
+        <span class="montant">190 €</span>
+        <div class="label">coût réel / mois</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES INCLUS -->
+  <div class="services-section">
+    <h3>Services inclus dans tous les forfaits</h3>
+    <div class="services-grid">
+      <div class="service-item">
+        <span class="icon">🛒</span>
+        <div><strong>Courses &amp; Ravitaillement</strong><br>Courses alimentaires, pharmacie, livraisons diverses</div>
+      </div>
+      <div class="service-item">
+        <span class="icon">📋</span>
+        <div><strong>Démarches Administratives</strong><br>Courriers, formulaires, dossiers, déclarations</div>
+      </div>
+      <div class="service-item">
+        <span class="icon">🏥</span>
+        <div><strong>Accompagnements Médicaux</strong><br>Rendez-vous médecins, hôpital, kiné, pharmacie</div>
+      </div>
+      <div class="service-item">
+        <span class="icon">💻</span>
+        <div><strong>Aide Numérique</strong><br>Smartphone, tablette, internet, visio avec la famille</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENTION SAP -->
+  <div class="mention-sap">
+    <strong>Agrément Services à la Personne (SAP)</strong><br>
+    Notre structure est titulaire de l'agrément SAP délivré par la DREETS, numéro <strong>SAP XXXXXXXXX</strong>.
+    Toutes nos prestations ouvrent droit au crédit d'impôt prévu à l'article 199 sexdecies du Code général des impôts.
+    Une attestation fiscale annuelle vous sera remise chaque janvier pour votre déclaration de revenus.
+  </div>
+
+  <!-- CONDITIONS -->
+  <div class="conditions">
+    <h3>Conditions générales de la prestation</h3>
+    <ul>
+      <li>Sans engagement de durée — résiliation possible à tout moment avec <strong>15 jours de préavis</strong></li>
+      <li>Les heures non utilisées dans le mois ne sont <strong>pas reportables</strong> sur le mois suivant</li>
+      <li>Facturation mensuelle — règlement par virement, chèque ou CESU préfinancé</li>
+      <li>Possibilité de modifier le forfait chaque mois selon les besoins</li>
+      <li>Intervenant(e) dédié(e) dans la mesure du possible — remplacement assuré en cas d'absence</li>
+    </ul>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div class="signature-section">
+    <div class="sig-block">
+      <h3>Prestataire — PME Services</h3>
+      <div class="sig-line"></div>
+      <div class="sig-date">Signature &amp; cachet</div>
+      <label class="checkbox-wrap">
+        <input type="checkbox" />
+        Lu et approuvé par le prestataire
+      </label>
+    </div>
+    <div class="sig-block">
+      <h3>Bénéficiaire / Représentant légal</h3>
+      <div class="sig-line"></div>
+      <div class="sig-date">Fait à ______________, le ___________</div>
+      <label class="checkbox-wrap">
+        <input type="checkbox" />
+        Lu et approuvé — bon pour accord
+      </label>
+    </div>
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <button type="button" class="print-btn no-print" onclick="window.print()">
+    Imprimer / Télécharger en PDF
+  </button>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <strong>PME Services</strong><br>
+      SIRET : XXX XXX XXX XXXXX<br>
+      Agrément SAP : SAP XXXXXXXXX
+    </div>
+    <div style="text-align:center;">
+      Email : seniors@pme-services.fr<br>
+      Tél : 06 XX XX XX XX<br>
+      Disponible 7j/7
+    </div>
+    <div style="text-align:right;">
+      * Art. 199 sexdecies CGI<br>
+      Sous réserve conditions fiscales<br>
+      Plafond 12 000€/an
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const today = new Date();
+  const opts = { day: '2-digit', month: 'long', year: 'numeric' };
+  document.getElementById('dateDevis').textContent = today.toLocaleDateString('fr-FR', opts);
+
+  let num = parseInt(localStorage.getItem('devisNum_seniors') || '1');
+  document.getElementById('devisNum').textContent = 'DEVIS-S-' + today.getFullYear() + '-' + String(num).padStart(3, '0');
+
+  const fields = ['nomClient', 'contactFamille', 'adresseClient', 'telClient'];
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const saved = localStorage.getItem('devis_seniors_' + id);
+    if (saved) el.value = saved;
+    el.addEventListener('input', () => localStorage.setItem('devis_seniors_' + id, el.value));
+  });
+
+  let forfaitSelectionne = localStorage.getItem('devis_seniors_forfait') || '';
+  if (forfaitSelectionne) {
+    applyForfait(forfaitSelectionne);
+    document.querySelectorAll('.forfait-btn').forEach(btn => {
+      if (btn.textContent.toLowerCase().includes(forfaitSelectionne)) btn.classList.add('selected');
+    });
+  }
+
+  function selectForfait(nom, btn) {
+    document.querySelectorAll('.forfait-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    localStorage.setItem('devis_seniors_forfait', nom);
+    applyForfait(nom);
+  }
+
+  function applyForfait(nom) {
+    ['essentiel', 'confort', 'serenite'].forEach(f => {
+      document.getElementById('check-' + f).textContent = (f === nom) ? 'RETENU' : '—';
+      document.getElementById('row-' + f).style.fontWeight = (f === nom) ? '700' : '';
+      document.getElementById('row-' + f).style.background = (f === nom) ? '#f0f0f0' : '';
+    });
+  }
+</script>
+</body>
+</html>

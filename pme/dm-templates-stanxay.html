@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Templates DM LinkedIn — Stanxay</title>
+<style>
+  :root {
+    --noir: #0a0a0a;
+    --gris-f: #111827;
+    --gris-m: #374151;
+    --gris-l: #6b7280;
+    --bord: #e5e7eb;
+    --bg: #f9fafb;
+    --blue: #0a66c2;
+    --green: #10b981;
+    --gold: #f59e0b;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--gris-f); font-size: 15px; }
+
+  header {
+    background: var(--noir); color: #fff;
+    padding: 20px 32px; display: flex; align-items: center; justify-content: space-between;
+  }
+  header h1 { font-size: 18px; font-weight: 700; letter-spacing: .5px; }
+  header span { font-size: 12px; color: rgba(255,255,255,.5); }
+  .li-badge { background: var(--blue); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; letter-spacing: .5px; margin-right: 8px; }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 64px); }
+
+  /* SIDEBAR */
+  .sidebar { background: #fff; border-right: 1px solid var(--bord); padding: 24px 0; }
+  .sidebar-section { margin-bottom: 8px; }
+  .sidebar-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gris-l); padding: 8px 20px 4px; }
+  .sidebar-item {
+    display: block; padding: 10px 20px; font-size: 13px; font-weight: 500;
+    color: var(--gris-m); cursor: pointer; transition: background .15s, color .15s;
+    border: none; background: none; width: 100%; text-align: left;
+    border-left: 3px solid transparent;
+  }
+  .sidebar-item:hover { background: var(--bg); color: var(--gris-f); }
+  .sidebar-item.active { background: #eff6ff; color: var(--blue); border-left-color: var(--blue); font-weight: 600; }
+  .sidebar-badge { float: right; font-size: 10px; background: var(--bord); color: var(--gris-l); padding: 1px 6px; border-radius: 8px; }
+
+  /* MAIN */
+  .main { padding: 32px; max-width: 820px; }
+  .main-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; letter-spacing: -.3px; }
+  .main-sub { font-size: 14px; color: var(--gris-l); margin-bottom: 28px; }
+
+  /* PERSONA SELECTOR */
+  .personas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .persona-btn {
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    border: 1.5px solid var(--bord); background: #fff; color: var(--gris-m);
+    cursor: pointer; transition: all .15s;
+  }
+  .persona-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .persona-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* TEMPLATE CARDS */
+  .template-card {
+    background: #fff; border: 1px solid var(--bord); border-radius: 10px;
+    margin-bottom: 16px; overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .template-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+  .card-header {
+    padding: 16px 20px 12px; display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 12px;
+    border-bottom: 1px solid var(--bord);
+  }
+  .card-meta { flex: 1; }
+  .card-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;
+  }
+  .tag-dm    { background: #dbeafe; color: #1d4ed8; }
+  .tag-email { background: #fef3c7; color: #92400e; }
+  .tag-note  { background: #d1fae5; color: #065f46; }
+  .tag-relance { background: #ede9fe; color: #5b21b6; }
+  .card-name { font-size: 15px; font-weight: 700; }
+  .card-chars { font-size: 11px; color: var(--gris-l); margin-top: 3px; }
+  .card-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .perf-badge {
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+  }
+  .perf-hot  { background: #fee2e2; color: #991b1b; }
+  .perf-good { background: #d1fae5; color: #065f46; }
+  .perf-test { background: #fef3c7; color: #92400e; }
+
+  .card-body { padding: 16px 20px; }
+  .template-text {
+    font-size: 14px; line-height: 1.7; color: var(--gris-f);
+    background: var(--bg); border-radius: 8px; padding: 16px;
+    border-left: 3px solid var(--blue); white-space: pre-wrap;
+    font-family: var(--font); margin-bottom: 12px;
+    cursor: text; user-select: all;
+  }
+  .card-variables { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .var-chip {
+    font-size: 11px; background: #eff6ff; color: var(--blue);
+    padding: 2px 8px; border-radius: 4px; font-weight: 600;
+  }
+  .card-actions { display: flex; gap: 8px; }
+  .btn-copy {
+    padding: 8px 16px; background: var(--noir); color: #fff;
+    border: none; border-radius: 6px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .15s; font-family: var(--font);
+  }
+  .btn-copy:hover { background: #333; }
+  .btn-copy.copied { background: var(--green); }
+  .btn-edit {
+    padding: 8px 16px; background: #fff; color: var(--gris-m);
+    border: 1.5px solid var(--bord); border-radius: 6px; font-size: 13px;
+    cursor: pointer; transition: all .15s; font-family: var(--font);
+  }
+  .btn-edit:hover { border-color: var(--noir); color: var(--noir); }
+
+  .card-tip {
+    font-size: 12px; color: var(--gris-l); margin-top: 10px;
+    padding: 8px 12px; background: #fffbeb; border-radius: 6px;
+    border-left: 3px solid var(--gold);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-box {
+    background: #fff; border: 1px solid var(--bord); border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .stat-box-label { font-size: 11px; color: var(--gris-l); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 4px; }
+  .stat-box-value { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+  .stat-box-value.green { color: var(--green); }
+  .stat-box-value.blue  { color: var(--blue); }
+  .stat-box-value.gold  { color: var(--gold); }
+
+  .section-divider { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gris-l); margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--bord); }
+
+  /* PANEL VISIBILITY */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--bord); padding: 12px 0; display: flex; overflow-x: auto; gap: 0; }
+    .sidebar-section { display: flex; margin: 0; }
+    .sidebar-label { display: none; }
+    .sidebar-item { white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; }
+    .sidebar-item.active { border-bottom-color: var(--blue); border-left-color: transparent; }
+    .main { padding: 20px 16px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="li-badge">in</span> Templates DM — Stanxay</h1>
+  <span>Prospection LinkedIn B2B · Prêts à envoyer</span>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Messages</div>
+      <button type="button" class="sidebar-item active" onclick="showPanel('cv')">
+        CV LinkedIn <span class="sidebar-badge">5</span>
+      </button>
+      <button type="button" class="sidebar-item" onclick="showPanel('ia')">
+        Accompagnement IA <span class="sidebar-badge">4</span>
+      </button>
+      <button type="button" class="sidebar-item" onclick="showPanel('leads')">
+        Leads B2B <span class="sidebar-badge">4</span>
+      </button>
+      <button type="button" class="sidebar-item" onclick="showPanel('relances')">
+        Relances <span class="sidebar-badge">3</span>
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Règles</div>
+      <button type="button" class="sidebar-item" onclick="showPanel('regles')">
+        Les 7 règles d'or
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stat-box">
+        <div class="stat-box-label">Taux réponse cible</div>
+        <div class="stat-box-value blue">10–15%</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">Taux close cible</div>
+        <div class="stat-box-value green">20%</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">DMs / jour</div>
+        <div class="stat-box-value gold">50</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">Client / semaine</div>
+        <div class="stat-box-value green">1–2</div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL CV LINKEDIN ═══ -->
+    <div class="panel active" id="panel-cv">
+      <div class="main-title">CV & Personal Branding LinkedIn</div>
+      <div class="main-sub">5 templates pour vendre la refonte de profil LinkedIn · Cible: dirigeants, DRH, indépendants</div>
+
+      <div class="personas">
+        <button type="button" class="persona-btn active">Tous</button>
+        <button type="button" class="persona-btn">Chef d'entreprise</button>
+        <button type="button" class="persona-btn">DRH</button>
+        <button type="button" class="persona-btn">Agence intérim</button>
+        <button type="button" class="persona-btn">Indépendant</button>
+      </div>
+
+      <!-- TEMPLATE 1 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Court · LinkedIn</div>
+            <div class="card-name">L'observation directe</div>
+            <div class="card-chars">≈ 220 caractères · Note de connexion ou DM</div>
+          </div>
+          <div class="card-badges">
+            <span class="perf-badge perf-hot">🔥 Meilleur taux</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-cv-1">Votre parcours est solide, [PRÉNOM] — mais votre profil LinkedIn ne le montre pas encore.
+
+Je refais des profils de dirigeants en 48h. Résultat garanti ou remboursé.
+
+On en parle 10 min ?</div>
+          <div class="card-variables">
+            <span class="var-chip">[PRÉNOM]</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-cv-1', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-cv-1')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 Idéal après avoir vu le profil LinkedIn du prospect — mentionner un détail spécifique de son parcours booste le taux à 20%+</div>
+        </div>
+      </div>
+
+      <!-- TEMPLATE 2 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Moyen · LinkedIn</div>
+            <div class="card-name">La question miroir</div>
+            <div class="card-chars">≈ 280 caractères</div>
+          </div>
+          <div class="card-badges">
+            <span class="perf-badge perf-good">✓ Efficace</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-cv-2">Bonjour [PRÉNOM], est-ce que votre LinkedIn reflète vraiment ce que vous avez accompli ces 3 dernières années ?
+
+La plupart des profils que je vois sous-estiment leur propriétaire de 40%.
+
+Je refais ça en 72h, 250€. Intéressé(e) ?</div>
+          <div class="card-variables">
+            <span class="var-chip">[PRÉNOM]</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-cv-2', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-cv-2')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 La question en ouverture crée une réflexion → le prospect se demande si son profil est vraiment bon</div>
+        </div>
+      </div>
+
+      <!-- TEMPLATE 3 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-note">Note de connexion</div>
+            <div class="card-name">La connexion value-first</div>
+            <div class="card-chars">≈ 290 caractères · Invitation LinkedIn</div>
+          </div>
+          <div class="card-badges">
+            <span class="perf-badge perf-good">✓ Connexion +30%</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-cv-3">Bonjour [PRÉNOM] — j'aide les [SECTEUR] à optimiser leur visibilité LinkedIn. J'ai quelques idées pour votre profil qui pourraient vous apporter des opportunités concrètes. Heureux(se) de connecter !</div>
+          <div class="card-variables">
+            <span class="var-chip">[PRÉNOM]</span>
+            <span class="var-chip">[SECTEUR]</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-cv-3', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-cv-3')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 [SECTEUR] = "directeurs commerciaux" / "dirigeants de PME" / "DRH" — personnaliser maximise l'acceptation</div>
+        </div>
+      </div>
+
+      <!-- TEMPLATE 4 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-email">Email / InMail</div>
+            <div class="card-name">L'audit gratuit comme accroche</div>
+            <div class="card-chars">≈ 180 mots · Email ou InMail</div>
+          </div>
+          <div class="card-badges">
+            <span class="perf-badge perf-test">🧪 À tester</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-cv-4">Objet : Votre profil LinkedIn — ce que j'ai remarqué
+
+Bonjour [PRÉNOM],
+
+J'ai pris 2 minutes pour analyser votre profil LinkedIn. Trois choses m'ont sauté aux yeux :
+
+→ Votre headline ne contient aucun mot-clé cherché par vos clients
+→ La section "À propos" ne parle pas de leurs problèmes
+→ Vos expériences listent des tâches, pas des résultats
+
+Ce n'est pas un jugement — c'est la norme pour 90% des profils.
+
+Je fais une refonte complète en 72h (headline, about, expériences, mots-clés) pour 250€ HT. Garanti ou remboursé.
+
+Vous voulez que je vous envoie les 3 premiers ajustements gratuits pour voir la différence ?
+
+[VOTRE PRÉNOM] — Stanxay</div>
+          <div class="card-variables">
+            <span class="var-chip">[PRÉNOM]</span>
+            <span class="var-chip">[VOTRE PRÉNOM]</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-cv-4', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-cv-4')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 Toujours proposer quelque chose de gratuit en CTA → le prospect répond pour recevoir la valeur, pas pour acheter</div>
+        </div>
+      </div>
+
+      <!-- TEMPLATE 5 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-relance">Relance J+3</div>
+            <div class="card-name">La relance légère</div>
+            <div class="card-chars">≈ 120 caractères</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-cv-5">Toujours valable [PRÉNOM] — 48h pour transformer votre profil. Vous me dites oui ou non ?</div>
+          <div class="card-variables">
+            <span class="var-chip">[PRÉNOM]</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-cv-5', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-cv-5')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 Le "oui ou non" force une réponse — même un non vous libère du temps. Envoyer J+3 maximum après le 1er message</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL IA PME ═══ -->
+    <div class="panel" id="panel-ia">
+      <div class="main-title">Accompagnement IA PME</div>
+      <div class="main-sub">4 templates pour vendre l'IA à 300-400€/mois · Cible: chefs d'entreprise, gérants PME</div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Court</div>
+            <div class="card-name">Le temps perdu</div>
+            <div class="card-chars">≈ 240 caractères</div>
+          </div>
+          <div class="card-badges"><span class="perf-badge perf-hot">🔥 Top converti</span></div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-ia-1">Bonjour [PRÉNOM], combien d'heures par semaine votre équipe passe sur des tâches répétitives ?
+
+Je les automatise avec l'IA — résultat: 5 à 10h gagnées dès le 1er mois.
+
+Audit gratuit 30 min pour voir ce qu'on peut faire chez vous ?</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-ia-1', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-ia-1')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 L'angle "temps" parle à tous les dirigeants — chiffrer (5-10h) rend concret</div>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Moyen</div>
+            <div class="card-name">Le ROI chiffré</div>
+            <div class="card-chars">≈ 300 caractères</div>
+          </div>
+          <div class="card-badges"><span class="perf-badge perf-good">✓ Efficace</span></div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-ia-2">Bonjour [PRÉNOM], vous payez probablement 1 500-2 000€/mois de salaire pour des tâches qu'une IA ferait en 1h.
+
+Je mets en place l'IA dans votre PME pour 350€/mois. Premier mois : si vous ne voyez pas 5h gagnées, c'est offert.
+
+On en parle ?</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-ia-2', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-ia-2')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 Comparer le coût (350€) à ce qu'ils paient déjà (2000€) = le service semble gratuit relativement</div>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-note">Note de connexion</div>
+            <div class="card-name">L'expertise sectorielle</div>
+            <div class="card-chars">≈ 250 caractères</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-ia-3">Bonjour [PRÉNOM] — j'accompagne les PME de [SECTEUR] à intégrer l'IA dans leur quotidien (devis, relances, onboarding, reporting). Des résultats concrets dès 30 jours. Heureux(se) de connecter !</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span><span class="var-chip">[SECTEUR]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-ia-3', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-ia-3')">Modifier</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-email">Email / InMail</div>
+            <div class="card-name">Le cas concret</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-ia-4">Objet : Ce que l'IA fait déjà pour vos concurrents
+
+Bonjour [PRÉNOM],
+
+Une PME similaire à la vôtre a gagné 8h/semaine en automatisant 3 tâches avec l'IA :
+→ Rédaction des devis (45 min → 5 min)
+→ Relances clients (automatique)
+→ Reporting hebdomadaire (auto-généré)
+
+Investissement : 350€/mois. Économie estimée : 1 200€/mois de temps cadre.
+
+Je propose un audit gratuit de 30 min pour identifier vos 3 gains rapides. Pas de powerpoint, pas de blabla — juste du concret.
+
+Vous avez 30 min cette semaine ou la suivante ?
+
+[VOTRE PRÉNOM] — Stanxay</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span><span class="var-chip">[VOTRE PRÉNOM]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-ia-4', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-ia-4')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 Toujours proposer 2 créneaux (cette semaine OU la suivante) → pas de blanc à remplir, juste choisir</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL LEADS B2B ═══ -->
+    <div class="panel" id="panel-leads">
+      <div class="main-title">Génération Leads B2B</div>
+      <div class="main-sub">4 templates · Cible: agences intérim, directeurs commerciaux, retail</div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Court</div>
+            <div class="card-name">La garantie résultat</div>
+            <div class="card-chars">≈ 260 caractères</div>
+          </div>
+          <div class="card-badges"><span class="perf-badge perf-hot">🔥 Top</span></div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-l-1">Bonjour [PRÉNOM], je génère des leads B2B qualifiés pour les [SECTEUR].
+
+Garantie : 5 leads minimum par mois ou remboursé.
+
+Ça vous intéresse qu'on en parle 15 min ?</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span><span class="var-chip">[SECTEUR]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-l-1', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-l-1')">Modifier</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Agence Intérim</div>
+            <div class="card-name">Le prospect chaud intérim</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-l-2">Bonjour [PRÉNOM], vous cherchez des entreprises en recherche active de personnel pour votre agence ?
+
+Je vous envoie 5 contacts qualifiés chaque semaine — décideurs RH, besoins confirmés.
+
+On teste sur 1 mois sans engagement ?</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-l-2', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-l-2')">Modifier</button>
+          </div>
+          <div class="card-tip">💡 "sans engagement" + "on teste" = invitation à essayer sans risque → frein principal supprimé</div>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-dm">DM Directeur Commercial</div>
+            <div class="card-name">Le pipeline vide</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-l-3">Bonjour [PRÉNOM], votre pipeline commercial est plein pour les 3 prochains mois ?
+
+Si non — je peux vous amener 5 rendez-vous qualifiés ce mois-ci avec des décideurs de [SECTEUR CIBLE].
+
+150€/mois. Remboursé si 0 résultat. On appelle ?</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span><span class="var-chip">[SECTEUR CIBLE]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-l-3', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-l-3')">Modifier</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-meta">
+            <div class="card-tag tag-note">Note de connexion</div>
+            <div class="card-name">La connexion B2B simple</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="template-text" id="t-l-4">Bonjour [PRÉNOM] — je travaille avec des [SECTEUR] pour alimenter leur pipeline commercial. Toujours intéressant d'échanger avec des pros du secteur. À bientôt !</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span><span class="var-chip">[SECTEUR]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-l-4', this)">Copier</button>
+            <button type="button" class="btn-edit" onclick="editTemplate('t-l-4')">Modifier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL RELANCES ═══ -->
+    <div class="panel" id="panel-relances">
+      <div class="main-title">Séquence de Relance</div>
+      <div class="main-sub">3 messages · Règle: J+3, J+7, J+14. Au-delà → archiver sans relancer</div>
+
+      <div class="section-divider">Relance 1 — J+3 (si pas de réponse)</div>
+      <div class="template-card">
+        <div class="card-body">
+          <div class="template-text" id="t-r-1">Toujours valable [PRÉNOM] — je vous laisse 48h pour revenir si ça vous intéresse. Sinon pas de souci !</div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-r-1', this)">Copier</button>
+          </div>
+          <div class="card-tip">💡 Courte + deadline + permission de dire non = taux réponse ×2</div>
+        </div>
+      </div>
+
+      <div class="section-divider">Relance 2 — J+7 (si toujours pas de réponse)</div>
+      <div class="template-card">
+        <div class="card-body">
+          <div class="template-text" id="t-r-2">Bonjour [PRÉNOM], je ferme mon agenda pour ce mois dans 2 jours. Si vous souhaitez qu'on travaille ensemble, c'est maintenant ou en [MOIS SUIVANT].
+
+Vous me confirmez ?</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span><span class="var-chip">[MOIS SUIVANT]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-r-2', this)">Copier</button>
+          </div>
+          <div class="card-tip">💡 La rareté (agenda fermé) crée de l'urgence sans mentir — vous pouvez vraiment limiter vos clients/mois</div>
+        </div>
+      </div>
+
+      <div class="section-divider">Relance 3 — J+14 (dernière tentative)</div>
+      <div class="template-card">
+        <div class="card-body">
+          <div class="template-text" id="t-r-3">[PRÉNOM], je ne reviendrai pas vers vous après ce message.
+
+Si le timing n'est pas bon aujourd'hui, gardez mon contact pour plus tard.
+
+Bonne continuation !</div>
+          <div class="card-variables"><span class="var-chip">[PRÉNOM]</span></div>
+          <div class="card-actions">
+            <button type="button" class="btn-copy" onclick="copyText('t-r-3', this)">Copier</button>
+          </div>
+          <div class="card-tip">💡 Le "break-up message" génère souvent des réponses de prospects qui n'avaient pas répondu aux 2 précédents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL RÈGLES ═══ -->
+    <div class="panel" id="panel-regles">
+      <div class="main-title">Les 7 règles d'or — Prospection LinkedIn</div>
+      <div class="main-sub">Appliquer ces règles = doubler le taux de réponse</div>
+
+      <div class="template-card">
+        <div class="card-body" style="padding: 20px;">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">1</div>
+              <div><strong>Jamais "Je me permets de vous contacter"</strong><br><span style="font-size:13px;color:#6b7280">Cette phrase = spam. Commencer par une observation, un chiffre ou une question.</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">2</div>
+              <div><strong>Un seul CTA par message</strong><br><span style="font-size:13px;color:#6b7280">"Audit gratuit", "Appel 15 min", ou "Oui ou non ?" — jamais deux options à la fois.</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">3</div>
+              <div><strong>DM LinkedIn : max 300 caractères</strong><br><span style="font-size:13px;color:#6b7280">Les messages longs ne sont pas lus sur mobile. Réserver les longs formats pour les emails.</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">4</div>
+              <div><strong>Personnaliser le 1er mot</strong><br><span style="font-size:13px;color:#6b7280">Toujours [PRÉNOM] en premier. Les messages "Bonjour" sans prénom = taux -40%.</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">5</div>
+              <div><strong>Bénéfice avant le prix</strong><br><span style="font-size:13px;color:#6b7280">Toujours mentionner le résultat (5h gagnées, 5 leads) AVANT le tarif. Jamais l'inverse.</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">6</div>
+              <div><strong>Max 3 relances — puis stop</strong><br><span style="font-size:13px;color:#6b7280">J+3 · J+7 · J+14 puis archiver. Harceler abîme la marque et fait bloquer.</span></div>
+            </div>
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:28px;height:28px;background:#0a66c2;color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0">7</div>
+              <div><strong>50 DMs/jour maximum sur LinkedIn</strong><br><span style="font-size:13px;color:#6b7280">Au-delà : risque de restriction du compte. Utiliser Sales Navigator pour aller plus loin.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function copyText(id, btn) {
+    const text = document.getElementById(id).textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copié !';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function editTemplate(id) {
+    const el = document.getElementById(id);
+    el.contentEditable = 'true';
+    el.style.background = '#fff9e6';
+    el.style.borderLeftColor = '#f59e0b';
+    el.focus();
+    el.onblur = () => {
+      el.contentEditable = 'false';
+      el.style.background = '';
+      el.style.borderLeftColor = '';
+    };
+  }
+</script>
+</body>
+</html>

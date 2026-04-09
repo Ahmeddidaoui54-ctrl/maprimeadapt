@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superviseur MaPrimeAdapt IDF</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #1a3d2b;
+    --accent-light: #22c55e;
+    --accent-mid: #16a34a;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding: 1rem; }
+
+  .header {
+    background: linear-gradient(135deg, var(--accent), #0f2d1a);
+    border: 1px solid var(--accent-mid);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+  .header h1::before { content: '🌿'; }
+  .badge {
+    background: rgba(34,197,94,0.15);
+    border: 1px solid var(--accent-light);
+    color: var(--accent-light);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .kpi-item label { display: block; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .kpi-item input[type="number"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent-light);
+  }
+  .kpi-item input[type="number"]:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  .status-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .status-btn {
+    flex: 1; min-width: 80px;
+    padding: 0.5rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .status-btn.active-vert { border-color: #22c55e; background: rgba(34,197,94,0.1); color: #22c55e; }
+  .status-btn.active-orange { border-color: #f97316; background: rgba(249,115,22,0.1); color: #f97316; }
+  .status-btn.active-rouge { border-color: #ef4444; background: rgba(239,68,68,0.1); color: #ef4444; }
+  .status-btn:hover { border-color: var(--accent-light); }
+
+  .progress-wrap { margin-top: 0.75rem; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .progress-track { height: 10px; background: var(--bg); border-radius: 99px; overflow: hidden; border: 1px solid var(--border); }
+  .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent-mid), var(--accent-light)); transition: width 0.5s ease; }
+  .progress-hint { font-size: 0.75rem; color: var(--accent-light); margin-top: 0.4rem; text-align: right; }
+
+  .actions-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent-mid);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-primary:hover { background: var(--accent-mid); color: #fff; }
+
+  textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 90px;
+    font-family: inherit;
+  }
+  textarea:focus { outline: 2px solid var(--accent-light); border-color: transparent; }
+
+  .link-dg {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .link-dg:hover { text-decoration: underline; }
+
+  .timestamp-display {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.5rem;
+    min-height: 1.2em;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #16a34a;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .header { flex-direction: column; align-items: flex-start; }
+    .kpi-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    body { overflow-x: hidden; }
+    .header { padding: .75rem 1rem !important; flex-wrap: wrap; }
+    .header h1 { font-size: 1rem !important; }
+    .header-badge { display: none; }
+    .main, .content, .panel { padding: .75rem !important; }
+    .form-row, .row-2 { grid-template-columns: 1fr !important; }
+    .btn { min-height: 44px !important; font-size: .88rem; }
+    .score-row { flex-direction: column; }
+    .funnel-row { flex-direction: column; gap: .25rem; }
+    input, select, textarea { font-size: 16px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Superviseur MaPrimeAdapt IDF</h1>
+  <span class="badge">Rapporte à : Adjoint DG</span>
+</div>
+
+<div class="grid">
+  <!-- KPIs -->
+  <div class="card">
+    <h3>📊 KPIs du jour</h3>
+    <div class="kpi-grid">
+      <div class="kpi-item">
+        <label>Leads aujourd'hui</label>
+        <input type="number" id="leads_today" value="0" min="0">
+      </div>
+      <div class="kpi-item">
+        <label>Leads semaine</label>
+        <input type="number" id="leads_week" value="0" min="0">
+      </div>
+      <div class="kpi-item">
+        <label>Leads total</label>
+        <input type="number" id="leads_total" value="0" min="0">
+      </div>
+      <div class="kpi-item">
+        <label>Taux conversion (%)</label>
+        <input type="number" id="taux_conversion" value="0" min="0" max="100" step="0.1">
+      </div>
+    </div>
+  </div>
+
+  <!-- Statut -->
+  <div class="card">
+    <h3>🚦 Statut opérationnel</h3>
+    <div class="status-selector">
+      <button type="button" class="status-btn active-vert" data-status="vert" onclick="setStatus('vert')">✅ Vert<br><small>Opérationnel</small></button>
+      <button type="button" class="status-btn" data-status="orange" onclick="setStatus('orange')">⚠️ Orange<br><small>Attention</small></button>
+      <button type="button" class="status-btn" data-status="rouge" onclick="setStatus('rouge')">🔴 Rouge<br><small>Bloqué</small></button>
+    </div>
+  </div>
+
+  <!-- Objectif J30 -->
+  <div class="card">
+    <h3>🎯 Objectif J30 — 2 clients</h3>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progression leads</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-fill" style="width: 0%"></div>
+      </div>
+      <div class="progress-hint" id="prog-hint">0 leads = 0/2 clients estimés</div>
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="card">
+    <h3>⚡ Actions rapides</h3>
+    <div class="actions-grid">
+      <a class="btn" href="../maprimeadapt-idf.html">🌐 Site vitrine</a>
+      <a class="btn" href="../pme/templates/hub.html">📋 Templates</a>
+      <a class="btn" href="https://app.brevo.com" target="_blank" rel="noopener">📧 Brevo CRM</a>
+    </div>
+  </div>
+</div>
+
+<!-- Notes -->
+<div class="card" style="margin-bottom:1rem;">
+  <h3>📝 Notes & observations</h3>
+  <textarea id="notes" placeholder="Saisir vos observations, blocages, prochaines actions..."></textarea>
+</div>
+
+<!-- Envoi rapport -->
+<div class="card">
+  <button type="button" class="btn btn-primary" onclick="envoyerRapport()">📤 Envoyer rapport à l'Adjoint DG</button>
+  <div class="timestamp-display" id="last-ts">Aucun rapport envoyé</div>
+  <a class="link-dg" href="./adjoint-dg.html">🔗 Tableau de bord Adjoint DG</a>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let currentStatus = 'vert';
+
+  function setStatus(s) {
+    currentStatus = s;
+    document.querySelectorAll('.status-btn').forEach(b => {
+      b.className = 'status-btn';
+      if (b.dataset.status === s) b.classList.add('active-' + s);
+    });
+  }
+
+  function updateProgress() {
+    const total = parseInt(document.getElementById('leads_total').value) || 0;
+    const objectif = 10; // 10 leads = 1 client estimé, objectif 2 clients = 20 leads
+    const pct = Math.min(100, Math.round((total / objectif) * 100));
+    const clients = (total / 10).toFixed(1);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-pct').textContent = pct + '%';
+    document.getElementById('prog-hint').textContent = `${total} leads = ${clients}/2 clients estimés`;
+  }
+
+  document.getElementById('leads_total').addEventListener('input', updateProgress);
+
+  function envoyerRapport() {
+    const data = {
+      leads: {
+        today: parseInt(document.getElementById('leads_today').value) || 0,
+        week: parseInt(document.getElementById('leads_week').value) || 0,
+        total: parseInt(document.getElementById('leads_total').value) || 0,
+      },
+      status: currentStatus,
+      notes: document.getElementById('notes').value,
+      ts: new Date().toISOString(),
+      kpis: {
+        leads_today: parseInt(document.getElementById('leads_today').value) || 0,
+        leads_week: parseInt(document.getElementById('leads_week').value) || 0,
+        leads_total: parseInt(document.getElementById('leads_total').value) || 0,
+        taux_conversion: parseFloat(document.getElementById('taux_conversion').value) || 0,
+      }
+    };
+    localStorage.setItem('sup_report_maprimeadapt', JSON.stringify(data));
+    const ts = new Date().toLocaleString('fr-FR');
+    document.getElementById('last-ts').textContent = 'Dernier rapport : ' + ts;
+    showToast('✅ Rapport envoyé à l\'Adjoint DG — ' + ts);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function loadSaved() {
+    const raw = localStorage.getItem('sup_report_maprimeadapt');
+    if (!raw) return;
+    try {
+      const d = JSON.parse(raw);
+      if (d.kpis) {
+        document.getElementById('leads_today').value = d.kpis.leads_today || 0;
+        document.getElementById('leads_week').value = d.kpis.leads_week || 0;
+        document.getElementById('leads_total').value = d.kpis.leads_total || 0;
+        document.getElementById('taux_conversion').value = d.kpis.taux_conversion || 0;
+      }
+      if (d.status) setStatus(d.status);
+      if (d.notes) document.getElementById('notes').value = d.notes;
+      if (d.ts) document.getElementById('last-ts').textContent = 'Dernier rapport : ' + new Date(d.ts).toLocaleString('fr-FR');
+      updateProgress();
+    } catch(e) {}
+  }
+
+  loadSaved();
+  updateProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan d'Action — Adjoint DG</title>
+<style>
+  :root {
+    --green: #1a3d2b; --green-mid: #2d6a4f; --green-light: #3d8b6a;
+    --green-pale: #ecf5ee; --gold: #f59e0b; --emerald: #059669;
+    --white: #fff; --off: #f5f7f5; --text: #111827; --muted: #6b7280;
+    --border: #dce8e1; --radius: 12px; --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+    --red: #ef4444; --orange: #f97316; --blue: #3b82f6; --purple: #8b5cf6;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font); background: #0d1f16; color: var(--text); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header {
+    background: #0a1a10; border-bottom: 1px solid rgba(255,255,255,.06);
+    padding: 18px 32px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo-badge { width: 36px; height: 36px; background: var(--green-light); border-radius: 8px; display: grid; place-items: center; font-size: 14px; font-weight: 800; color: #fff; }
+  .header-title { font-size: 16px; font-weight: 700; color: #fff; }
+  .header-sub { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 1px; }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+  .live-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+  .live-label { font-size: 12px; color: rgba(255,255,255,.5); display: flex; align-items: center; gap: 6px; }
+  #clock { font-size: 13px; color: rgba(255,255,255,.6); font-variant-numeric: tabular-nums; }
+
+  /* ── MAIN ── */
+  .main { padding: 28px 32px; max-width: 1300px; margin: 0 auto; }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 28px;
+  }
+  .status-card {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius); padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .status-card-label { font-size: 11px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .8px; }
+  .status-card-value { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+  .status-card-sub { font-size: 12px; color: rgba(255,255,255,.4); }
+  .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .dot-green { background: #4ade80; }
+  .dot-orange { background: #fb923c; }
+  .dot-red { background: #f87171; }
+  .dot-grey { background: #6b7280; }
+
+  /* ── TIMELINE ── */
+  .timeline-section { margin-bottom: 28px; }
+  .section-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+  .tl-phase {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius); padding: 16px; position: relative; overflow: hidden;
+  }
+  .tl-phase.current { border-color: rgba(134,239,172,.3); background: rgba(134,239,172,.05); }
+  .tl-phase-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+  .tl-phase-target { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .tl-phase-date { font-size: 11px; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+  .tl-items { display: flex; flex-direction: column; gap: 5px; }
+  .tl-item { font-size: 12px; color: rgba(255,255,255,.55); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+  .tl-item::before { content: '·'; color: rgba(255,255,255,.3); flex-shrink: 0; margin-top: 1px; }
+  .tl-progress { position: absolute; bottom: 0; left: 0; height: 2px; background: #4ade80; border-radius: 0 0 0 var(--radius); }
+
+  /* ── PROJETS GRID ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+
+  .project-card {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .project-header {
+    padding: 16px 18px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .project-name { font-size: 14px; font-weight: 700; color: #fff; }
+  .project-status { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 100px; }
+  .status-active { background: rgba(74,222,128,.15); color: #4ade80; }
+  .status-build { background: rgba(251,146,60,.15); color: #fb923c; }
+  .status-prep { background: rgba(156,163,175,.15); color: #9ca3af; }
+  .project-body { padding: 16px 18px; }
+  .project-kpi { margin-bottom: 14px; }
+  .kpi-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .kpi-label { font-size: 11px; color: rgba(255,255,255,.4); }
+  .kpi-val { font-size: 13px; font-weight: 700; color: #fff; }
+  .kpi-val.green { color: #4ade80; }
+  .kpi-val.orange { color: #fb923c; }
+  .kpi-bar { height: 3px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+  .kpi-bar-fill { height: 100%; border-radius: 2px; }
+  .bar-green { background: linear-gradient(90deg, #4ade80, #22d3ee); }
+  .bar-orange { background: linear-gradient(90deg, #fb923c, #fbbf24); }
+  .bar-grey { background: #4b5563; }
+
+  .actions-title { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 8px; }
+  .action-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+    font-size: 12px; color: rgba(255,255,255,.7); line-height: 1.4;
+  }
+  .action-item:last-child { border-bottom: none; }
+  .action-tag {
+    flex-shrink: 0; font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 4px; letter-spacing: .3px; margin-top: 1px;
+  }
+  .tag-urgent { background: rgba(239,68,68,.2); color: #f87171; }
+  .tag-next { background: rgba(59,130,246,.2); color: #93c5fd; }
+  .tag-done { background: rgba(74,222,128,.15); color: #4ade80; }
+  .tag-wait { background: rgba(107,114,128,.2); color: #9ca3af; }
+  .tag-week { background: rgba(139,92,246,.2); color: #c4b5fd; }
+
+  /* ── NEXT ACTIONS ── */
+  .next-section { margin-bottom: 28px; }
+  .next-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .next-card {
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius); padding: 18px;
+  }
+  .next-card-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .next-card-title span { font-size: 16px; }
+  .next-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .next-item:last-child { border-bottom: none; }
+  .next-check {
+    width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0; margin-top: 1px;
+    border: 1.5px solid rgba(255,255,255,.2); display: grid; place-items: center; cursor: pointer;
+    transition: all .2s;
+  }
+  .next-check.done { background: #4ade80; border-color: #4ade80; }
+  .next-check svg { width: 10px; height: 10px; color: #0a1a10; display: none; }
+  .next-check.done svg { display: block; }
+  .next-text { font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.5; flex: 1; }
+  .next-text.done-text { color: rgba(255,255,255,.3); text-decoration: line-through; }
+  .next-meta { font-size: 11px; color: rgba(255,255,255,.3); margin-top: 2px; }
+
+  /* ── LOG HORAIRE ── */
+  .log-section { background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding: 18px; }
+  .log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .log-title { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .8px; }
+  .log-refresh { font-size: 11px; color: rgba(255,255,255,.3); cursor: pointer; }
+  .log-entries { display: flex; flex-direction: column; gap: 4px; max-height: 180px; overflow-y: auto; }
+  .log-entry { font-size: 12px; color: rgba(255,255,255,.45); font-family: "SF Mono", Monaco, monospace; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,.03); }
+  .log-entry .ts { color: rgba(255,255,255,.25); margin-right: 8px; }
+  .log-online { color: #4ade80; }
+  .log-offline { color: #f87171; }
+  .log-opp { color: #fbbf24; }
+
+  @media (max-width: 1024px) { .projects-grid { grid-template-columns: 1fr 1fr; } .status-bar { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } .timeline { grid-template-columns: 1fr 1fr; } .next-grid { grid-template-columns: 1fr; } .main { padding: 16px; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="logo-badge">DG</div>
+    <div>
+      <div class="header-title">Plan d'Action — Adjoint DG</div>
+      <div class="header-sub">MaPrimeAdapt IDF · ArbiBot · PME Services</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-label"><div class="live-dot"></div> Suivi horaire actif</div>
+    <div id="clock">—</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- STATUS BAR -->
+  <div class="status-bar" id="status-bar">
+    <div class="status-card">
+      <div class="status-card-label">ArbiBot</div>
+      <div class="status-card-value" id="sb-arbi">—</div>
+      <div class="status-card-sub" id="sb-arbi-sub">Chargement...</div>
+    </div>
+    <div class="status-card">
+      <div class="status-card-label">Arbs détectées</div>
+      <div class="status-card-value" id="sb-opps">—</div>
+      <div class="status-card-sub">dernière heure</div>
+    </div>
+    <div class="status-card">
+      <div class="status-card-label">Leads aujourd'hui</div>
+      <div class="status-card-value" id="sb-leads">—</div>
+      <div class="status-card-sub">MaPrimeAdapt IDF</div>
+    </div>
+    <div class="status-card">
+      <div class="status-card-label">Site vitrine</div>
+      <div class="status-card-value" id="sb-site">—</div>
+      <div class="status-card-sub" id="sb-site-sub">maprimeadapt-idf.fr</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE J1 → J90 -->
+  <div class="timeline-section">
+    <div class="section-title">Feuille de route — Objectifs</div>
+    <div class="timeline">
+      <div class="tl-phase current">
+        <div class="tl-phase-label">Phase 1 — Maintenant</div>
+        <div class="tl-phase-target">Fondations</div>
+        <div class="tl-phase-date">J1 → J7 · Mars 2026</div>
+        <div class="tl-items">
+          <div class="tl-item">Connecter domaine maprimeadapt-idf.fr</div>
+          <div class="tl-item">Remplir Clarity ID + GSC dans SITE_CONFIG</div>
+          <div class="tl-item">Clé the-odds-api.com valide pour ArbiBot</div>
+          <div class="tl-item">1er devis PME envoyé à prospect pilote</div>
+        </div>
+        <div class="tl-progress" style="width:15%"></div>
+      </div>
+      <div class="tl-phase">
+        <div class="tl-phase-label">Phase 2 — Court terme</div>
+        <div class="tl-phase-target">2 clients · 500€/mois</div>
+        <div class="tl-phase-date">J8 → J30 · Avril 2026</div>
+        <div class="tl-items">
+          <div class="tl-item">Lancer campagne Meta 50€ (leads seniors)</div>
+          <div class="tl-item">ArbiBot DRY_RUN=false (premier pari réel)</div>
+          <div class="tl-item">2 clients PME signés (IA ou leads B2B)</div>
+          <div class="tl-item">LinkedIn : 3 posts/semaine actifs</div>
+        </div>
+        <div class="tl-progress" style="width:0%"></div>
+      </div>
+      <div class="tl-phase">
+        <div class="tl-phase-label">Phase 3 — Moyen terme</div>
+        <div class="tl-phase-target">5 clients · 1 500€/mois</div>
+        <div class="tl-phase-date">J31 → J60 · Mai 2026</div>
+        <div class="tl-items">
+          <div class="tl-item">3 leads/jour MaPrimeAdapt qualifiés</div>
+          <div class="tl-item">ArbiBot : 5 arbs/jour → bankroll +3%</div>
+          <div class="tl-item">5 clients PME actifs (mix 3 services)</div>
+          <div class="tl-item">Réinvestissement pub (ROI × budget)</div>
+        </div>
+        <div class="tl-progress" style="width:0%"></div>
+      </div>
+      <div class="tl-phase">
+        <div class="tl-phase-label">Phase 4 — Objectif</div>
+        <div class="tl-phase-target">10 clients · 3 000€/mois</div>
+        <div class="tl-phase-date">J61 → J90 · Juin 2026</div>
+        <div class="tl-items">
+          <div class="tl-item">ROI × 12 sur budget initial</div>
+          <div class="tl-item">ArbiBot rentable en autonomie</div>
+          <div class="tl-item">MaPrimeAdapt : 10 dossiers/mois</div>
+          <div class="tl-item">PME : équipe exploitation autonome</div>
+        </div>
+        <div class="tl-progress" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJETS -->
+  <div class="section-title" style="margin-bottom:14px">État des projets</div>
+  <div class="projects-grid">
+
+    <!-- MAPRIMEADAPT -->
+    <div class="project-card">
+      <div class="project-header">
+        <div>
+          <div class="project-name">🏠 MaPrimeAdapt IDF</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Site vitrine · Lead gen seniors</div>
+        </div>
+        <div class="project-status status-active">Actif</div>
+      </div>
+      <div class="project-body">
+        <div class="project-kpi">
+          <div class="kpi-row"><span class="kpi-label">Leads objectif J30</span><span class="kpi-val orange">0 / 2</span></div>
+          <div class="kpi-bar"><div class="kpi-bar-fill bar-orange" style="width:0%"></div></div>
+          <div class="kpi-row"><span class="kpi-label">Site en ligne</span><span class="kpi-val green">✓ Cloudflare Pages</span></div>
+          <div class="kpi-bar"><div class="kpi-bar-fill bar-green" style="width:70%"></div></div>
+          <div class="kpi-row"><span class="kpi-label">Mobile corrigé</span><span class="kpi-val green">✓ Fonctionnel</span></div>
+        </div>
+        <div class="actions-title">Prochaines actions</div>
+        <div class="action-item"><span class="action-tag tag-urgent">URGENT</span>Connecter domaine maprimeadapt-idf.fr → Cloudflare Pages (DNS)</div>
+        <div class="action-item"><span class="action-tag tag-urgent">URGENT</span>Remplir CLARITY_ID + GSC_TOKEN dans SITE_CONFIG (lignes 958-960)</div>
+        <div class="action-item"><span class="action-tag tag-next">NEXT</span>Lancer campagne Meta 50€ — ciblage 60+ Île-de-France</div>
+        <div class="action-item"><span class="action-tag tag-next">NEXT</span>Activer Google Search Console + soumettre sitemap</div>
+        <div class="action-item"><span class="action-tag tag-week">S+1</span>Publier 3 posts LinkedIn avec templates hub existants</div>
+        <div class="action-item"><span class="action-tag tag-done">OK</span>Site vitrine mobile-first corrigé, FAQ fonctionnelle</div>
+        <div class="action-item"><span class="action-tag tag-done">OK</span>Formulaire leads → Brevo CRM connecté</div>
+      </div>
+    </div>
+
+    <!-- ARBIBOT -->
+    <div class="project-card">
+      <div class="project-header">
+        <div>
+          <div class="project-name">⚡ ArbiBot</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Arbitrage sportif · DRY_RUN=true</div>
+        </div>
+        <div class="project-status status-build">Test</div>
+      </div>
+      <div class="project-body">
+        <div class="project-kpi">
+          <div class="kpi-row"><span class="kpi-label">Serveur</span><span class="kpi-val green" id="proj-arbi-status">⟳</span></div>
+          <div class="kpi-bar"><div class="kpi-bar-fill bar-green" style="width:100%"></div></div>
+          <div class="kpi-row"><span class="kpi-label">Arbs objectif/jour</span><span class="kpi-val orange">0 / 5</span></div>
+          <div class="kpi-bar"><div class="kpi-bar-fill bar-orange" style="width:0%"></div></div>
+          <div class="kpi-row"><span class="kpi-label">Mode</span><span class="kpi-val" style="color:#fb923c">DRY_RUN (simulation)</span></div>
+        </div>
+        <div class="actions-title">Prochaines actions</div>
+        <div class="action-item"><span class="action-tag tag-urgent">URGENT</span>Obtenir clé the-odds-api.com valide → remplir ODDS_API_KEY dans .env</div>
+        <div class="action-item"><span class="action-tag tag-urgent">URGENT</span>Compléter THERUNDOWN_KEY + APISPORTS_KEY (gratuits, inscription email)</div>
+        <div class="action-item"><span class="action-tag tag-next">NEXT</span>Vérifier flux en temps réel : 5+ arbs/jour → passer DRY_RUN=false</div>
+        <div class="action-item"><span class="action-tag tag-next">NEXT</span>Connecter Betfair Exchange (BETFAIR_APP_KEY + SESSION_TOKEN)</div>
+        <div class="action-item"><span class="action-tag tag-week">S+1</span>Calibrer RISK_FRAC=0.01 si taux réussite > 85% sur 50 simulations</div>
+        <div class="action-item"><span class="action-tag tag-done">OK</span>Serveur Node.js opérationnel (port 3001)</div>
+        <div class="action-item"><span class="action-tag tag-done">OK</span>ODDSAPIIO_KEY actif · Scan 60s · Dashboard superviseur</div>
+      </div>
+    </div>
+
+    <!-- PME SERVICES -->
+    <div class="project-card">
+      <div class="project-header">
+        <div>
+          <div class="project-name">💼 PME Services</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">IA · Seniors · Leads B2B</div>
+        </div>
+        <div class="project-status status-prep">Lancement</div>
+      </div>
+      <div class="project-body">
+        <div class="project-kpi">
+          <div class="kpi-row"><span class="kpi-label">Clients actifs</span><span class="kpi-val orange">0 / 2 (objectif J30)</span></div>
+          <div class="kpi-bar"><div class="kpi-bar-fill bar-grey" style="width:0%"></div></div>
+          <div class="kpi-row"><span class="kpi-label">CA mensuel</span><span class="kpi-val">0€ / objectif 500€</span></div>
+          <div class="kpi-bar"><div class="kpi-bar-fill bar-grey" style="width:0%"></div></div>
+          <div class="kpi-row"><span class="kpi-label">Budget restant</span><span class="kpi-val green">~200€ (réserve intacte)</span></div>
+        </div>
+        <div class="actions-title">Prochaines actions</div>
+        <div class="action-item"><span class="action-tag tag-urgent">URGENT</span>Identifier 5 PME locales (LinkedIn/réseau) → envoyer audit gratuit 30min</div>
+        <div class="action-item"><span class="action-tag tag-urgent">URGENT</span>Bot prospect actif : générer 10 messages personnalisés cette semaine</div>
+        <div class="action-item"><span class="action-tag tag-next">NEXT</span>Envoyer devis IA PME à 2 prospects (devis-ia-pme.html prêt)</div>
+        <div class="action-item"><span class="action-tag tag-next">NEXT</span>Activer offre leads B2B avec garantie 5 leads (devis-leads-b2b.html prêt)</div>
+        <div class="action-item"><span class="action-tag tag-week">S+1</span>Créer page LinkedIn entreprise + 1er post cas d'usage IA</div>
+        <div class="action-item"><span class="action-tag tag-done">OK</span>Outils RH complets : bot-prospect + générateur CV opérationnels</div>
+        <div class="action-item"><span class="action-tag tag-done">OK</span>3 devis templates prêts (IA, leads B2B, seniors)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NEXT ACTIONS PRIORITAIRES -->
+  <div class="next-section">
+    <div class="section-title" style="margin-bottom:14px">Actions immédiates — Cette semaine</div>
+    <div class="next-grid">
+      <div class="next-card">
+        <div class="next-card-title"><span>🔴</span> Bloquants (à faire aujourd'hui)</div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Aller sur Cloudflare Pages → connecter domaine maprimeadapt-idf.fr</div>
+            <div class="next-meta">Nécessite accès DNS chez registrar · Gratuit</div>
+          </div>
+        </div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Inscrire sur the-odds-api.com → coller la clé dans .env (ODDS_API_KEY)</div>
+            <div class="next-meta">Plan gratuit 500 req/mois · Inscription email seul</div>
+          </div>
+        </div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Clarity.microsoft.com → créer projet → coller ID dans maprimeadapt-idf.html ligne 959</div>
+            <div class="next-meta">Gratuit · Enregistrement sessions mobiles</div>
+          </div>
+        </div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Identifier 3 PME dans son réseau → envoyer message bot-prospect</div>
+            <div class="next-meta">Utiliser bot-prospect.html → onglet PME</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="next-card">
+        <div class="next-card-title"><span>🟡</span> Cette semaine (J1 → J7)</div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Créer campagne Meta Ads 50€ — ciblage 60+, Île-de-France, intérêt logement/retraite</div>
+            <div class="next-meta">Utiliser templates hub.html → onglet Meta Ads</div>
+          </div>
+        </div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Inscrire THERUNDOWN_KEY + APISPORTS_KEY (gratuits) → relancer ArbiBot</div>
+            <div class="next-meta">Plus de sources = plus d'arbs détectées</div>
+          </div>
+        </div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">LinkedIn : publier 2 posts IA PME (templates hub.html → onglet LinkedIn)</div>
+            <div class="next-meta">Posts déjà rédigés · Copier-coller</div>
+          </div>
+        </div>
+        <div class="next-item">
+          <div class="next-check" onclick="toggleCheck(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <div class="next-text">Envoyer 2 devis PME à prospects identifiés (devis-ia-pme.html ou devis-leads-b2b.html)</div>
+            <div class="next-meta">Objectif : 1 réponse positive cette semaine</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOG HORAIRE -->
+  <div class="log-section">
+    <div class="log-header">
+      <div class="log-title">Journal horaire automatique</div>
+      <div class="log-refresh" onclick="loadLog()">↺ Actualiser</div>
+    </div>
+    <div class="log-entries" id="log-entries">
+      <div class="log-entry" style="color:rgba(255,255,255,.2)">Chargement du journal...</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ── Horloge ──
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ── Charger rapport horaire JSON ──
+  async function loadRapport() {
+    try {
+      const r = await fetch('logs/rapport-horaire.json?t=' + Date.now());
+      if (!r.ok) throw new Error();
+      const d = await r.json();
+
+      // Status bar
+      const arbiOk = d.arbibot.status === 'online';
+      document.getElementById('sb-arbi').innerHTML = arbiOk
+        ? '<span class="dot-green status-dot"></span>En ligne'
+        : '<span class="dot-red status-dot"></span>Hors ligne';
+      document.getElementById('sb-arbi-sub').textContent = arbiOk ? `Scan actif · ${d.arbibot.last_scan}` : 'Démarrer: node server.js';
+      document.getElementById('sb-opps').textContent = d.arbibot.opportunities;
+      document.getElementById('sb-leads').textContent = d.maprimeadapt.leads_today;
+
+      const siteOk = d.maprimeadapt.site_status === 'online';
+      document.getElementById('sb-site').innerHTML = siteOk
+        ? '<span class="dot-green status-dot"></span>En ligne'
+        : '<span class="dot-orange status-dot"></span>Local seulement';
+
+      // Projet ArbiBot status
+      const el = document.getElementById('proj-arbi-status');
+      if (el) el.textContent = arbiOk ? '✓ Online (port 3001)' : '✗ Offline';
+
+    } catch(e) {
+      document.getElementById('sb-arbi').textContent = '—';
+    }
+  }
+
+  // ── Charger log ──
+  async function loadLog() {
+    try {
+      const r = await fetch('logs/hourly.log?t=' + Date.now());
+      if (!r.ok) throw new Error();
+      const text = await r.text();
+      const lines = text.trim().split('\n').filter(Boolean).reverse().slice(0, 20);
+      const container = document.getElementById('log-entries');
+      if (!lines.length) { container.innerHTML = '<div class="log-entry" style="color:rgba(255,255,255,.2)">Aucune entrée pour l\'instant.</div>'; return; }
+      container.innerHTML = lines.map(line => {
+        const parts = line.split(' | ');
+        const ts = parts[0] || '';
+        const rest = parts.slice(1).join(' | ');
+        const colored = rest
+          .replace(/ArbiBot=online/g, '<span class="log-online">ArbiBot=online</span>')
+          .replace(/ArbiBot=offline/g, '<span class="log-offline">ArbiBot=offline</span>')
+          .replace(/opps=([1-9]\d*)/g, '<span class="log-opp">opps=$1</span>');
+        return `<div class="log-entry"><span class="ts">${ts}</span>${colored}</div>`;
+      }).join('');
+    } catch(e) {
+      document.getElementById('log-entries').innerHTML = '<div class="log-entry" style="color:rgba(255,255,255,.2)">Log non accessible (ouvrir via serveur local).</div>';
+    }
+  }
+
+  // ── Checkboxes actions ──
+  const STORAGE_KEY = 'plan_checks';
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    const txt = el.nextElementSibling?.querySelector('.next-text');
+    if (txt) txt.classList.toggle('done-text');
+    // Sauvegarder état
+    const all = [...document.querySelectorAll('.next-check')];
+    const state = all.map(c => c.classList.contains('done'));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  function restoreChecks() {
+    const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const all = [...document.querySelectorAll('.next-check')];
+    state.forEach((done, i) => {
+      if (done && all[i]) {
+        all[i].classList.add('done');
+        const txt = all[i].nextElementSibling?.querySelector('.next-text');
+        if (txt) txt.classList.add('done-text');
+      }
+    });
+  }
+
+  // ── Init ──
+  restoreChecks();
+  loadRapport();
+  loadLog();
+  setInterval(() => { loadRapport(); loadLog(); }, 60000); // refresh chaque minute
+</script>
+</body>
+</html>

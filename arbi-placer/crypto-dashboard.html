@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArbiBot — Crypto Dashboard</title>
+<style>
+  :root {
+    --bg:       #0a0f1a;
+    --card:     #111827;
+    --border:   #1e2d3d;
+    --green:    #10b981;
+    --green-l:  #6ee7b7;
+    --yellow:   #f59e0b;
+    --red:      #ef4444;
+    --blue:     #3b82f6;
+    --purple:   #8b5cf6;
+    --text:     #e5e7eb;
+    --muted:    #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; }
+
+  header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: #0d1526;
+  }
+  header h1 { font-size: 18px; color: var(--green); letter-spacing: 1px; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); display: inline-block; margin-right: 6px; }
+  .status-dot.off { background: var(--red); box-shadow: 0 0 8px var(--red); }
+
+  .top-bar {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; padding: 16px 24px; border-bottom: 1px solid var(--border);
+  }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .kpi-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: var(--green-l); }
+  .kpi-value.yellow { color: var(--yellow); }
+  .kpi-value.red    { color: var(--red); }
+  .kpi-value.blue   { color: var(--blue); }
+  .kpi-value.purple { color: var(--purple); }
+
+  .main { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 24px; }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .panel-title {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .badge { background: var(--green); color: #000; border-radius: 12px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+  .badge.yellow { background: var(--yellow); }
+  .badge.blue   { background: var(--blue); }
+  .badge.purple { background: var(--purple); }
+
+  .arb-list { max-height: 380px; overflow-y: auto; }
+  .arb-item {
+    padding: 12px 16px; border-bottom: 1px solid #0d1526;
+    display: grid; grid-template-columns: 1fr auto; gap: 6px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .arb-item:hover { background: #152030; }
+  .arb-pair { font-weight: 700; font-size: 14px; color: var(--text); }
+  .arb-route { color: var(--muted); font-size: 11px; margin-top: 2px; }
+  .arb-profit { text-align: right; }
+  .arb-pct { font-size: 16px; font-weight: 700; color: var(--green); }
+  .arb-usdt { color: var(--muted); font-size: 11px; }
+  .arb-type { font-size: 10px; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px; }
+  .type-cex  { background: #1a3a2a; color: var(--green); }
+  .type-tri  { background: #1a1a3a; color: var(--blue); }
+  .type-fund { background: #2a1a3a; color: var(--purple); }
+
+  .funding-item {
+    padding: 10px 16px; border-bottom: 1px solid #0d1526;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .fund-pair   { font-weight: 700; color: var(--text); }
+  .fund-dir    { font-size: 10px; color: var(--purple); margin-top: 2px; }
+  .fund-rate   { text-align: right; }
+  .fund-pct    { color: var(--purple); font-weight: 700; }
+  .fund-apr    { color: var(--muted); font-size: 11px; }
+
+  .log-area {
+    background: #070d17; border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; font-size: 11px; height: 160px; overflow-y: auto;
+    margin: 0 24px 16px; color: var(--muted); line-height: 1.7;
+  }
+  .log-area .log-green { color: var(--green); }
+  .log-area .log-yellow { color: var(--yellow); }
+  .log-area .log-red { color: var(--red); }
+  .log-area .log-blue { color: var(--blue); }
+
+  .empty { padding: 32px; text-align: center; color: var(--muted); }
+
+  footer { padding: 12px 24px; color: var(--muted); font-size: 11px; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="status-dot" id="dotWs"></span>ARBIBOT — CRYPTO SCANNER</h1>
+  <span id="lastScan" style="color:var(--muted); font-size:11px;">Connexion...</span>
+</header>
+
+<div class="top-bar">
+  <div class="kpi"><div class="kpi-label">CEX/CEX Arbs</div><div class="kpi-value" id="kpiCex">—</div></div>
+  <div class="kpi"><div class="kpi-label">Triangulaires</div><div class="kpi-value blue" id="kpiTri">—</div></div>
+  <div class="kpi"><div class="kpi-label">Funding Rate</div><div class="kpi-value purple" id="kpiFund">—</div></div>
+  <div class="kpi"><div class="kpi-label">Meilleure Marge</div><div class="kpi-value yellow" id="kpiBest">—</div></div>
+  <div class="kpi"><div class="kpi-label">Scans Total</div><div class="kpi-value" id="kpiScans">—</div></div>
+  <div class="kpi"><div class="kpi-label">Mode</div><div class="kpi-value" id="kpiMode">—</div></div>
+</div>
+
+<div class="main">
+  <div class="panel">
+    <div class="panel-title">
+      <span>CEX / CEX + Triangulaire</span>
+      <span class="badge" id="badgeCexTri">0</span>
+    </div>
+    <div class="arb-list" id="listSpot">
+      <div class="empty">En attente du scan...</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">
+      <span>Funding Rate (Top 20)</span>
+      <span class="badge purple" id="badgeFund">0</span>
+    </div>
+    <div class="arb-list" id="listFunding">
+      <div class="empty">En attente du scan...</div>
+    </div>
+  </div>
+</div>
+
+<div class="log-area" id="logArea">
+  <span class="log-blue">[ ArbiBot Crypto Dashboard v1.0 ]</span><br>
+</div>
+
+<footer>
+  <span>ArbiBot · Crypto Module · APIs publiques: Binance · Kraken · Bybit</span>
+  <span id="wsStatus">WebSocket: déconnecté</span>
+</footer>
+
+<script>
+const WS_URL  = 'ws://localhost:3002';
+const API_URL = 'http://localhost:3001';
+let ws, scanCount = 0;
+
+function log(msg, cls='') {
+  const area = document.getElementById('logArea');
+  const ts   = new Date().toLocaleTimeString('fr-FR');
+  const line = document.createElement('span');
+  if(cls) line.className = cls;
+  line.textContent = `[${ts}] ${msg}`;
+  area.appendChild(line);
+  area.appendChild(document.createElement('br'));
+  area.scrollTop = area.scrollHeight;
+  // Garder max 200 lignes
+  while(area.childNodes.length > 400) area.removeChild(area.firstChild);
+}
+
+function fmt(n, dec=4) { return parseFloat(n).toFixed(dec); }
+
+function renderSpotArbs(cex, tri) {
+  const all = [
+    ...(cex||[]).map(a => ({...a, _type:'cex'})),
+    ...(tri||[]).map(a => ({...a, _type:'tri'})),
+  ].sort((a,b) => (b.netPct||b.profitPct||0) - (a.netPct||a.profitPct||0));
+
+  const el = document.getElementById('listSpot');
+  document.getElementById('badgeCexTri').textContent = all.length;
+
+  if(!all.length) { el.innerHTML = '<div class="empty">Aucun arb détecté</div>'; return; }
+
+  el.innerHTML = all.map(a => {
+    const pct    = a.netPct || a.profitPct || 0;
+    const profit = a.profitUSDT || '—';
+    const route  = a._type === 'cex'
+      ? `${a.buyOn} → ${a.sellOn} · ask ${fmt(a.askPrice,2)} / bid ${fmt(a.bidPrice,2)}`
+      : a.path;
+    const typeLabel = a._type === 'cex' ? 'CEX/CEX' : 'TRIANGULAIRE';
+    const typeCls   = a._type === 'cex' ? 'type-cex' : 'type-tri';
+    return `
+      <div class="arb-item">
+        <div>
+          <div class="arb-pair">${a.pair || a.path}</div>
+          <div class="arb-route">${route}</div>
+          <div class="arb-type ${typeCls}">${typeLabel}</div>
+        </div>
+        <div class="arb-profit">
+          <div class="arb-pct">+${fmt(pct,3)}%</div>
+          <div class="arb-usdt">${profit} USDT</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderFunding(funding) {
+  const el = document.getElementById('listFunding');
+  document.getElementById('badgeFund').textContent = (funding||[]).length;
+
+  if(!funding?.length) { el.innerHTML = '<div class="empty">Aucun funding détecté</div>'; return; }
+
+  el.innerHTML = funding.map(f => `
+    <div class="funding-item">
+      <div>
+        <div class="fund-pair">${f.pair}</div>
+        <div class="fund-dir">${f.direction}</div>
+      </div>
+      <div class="fund-rate">
+        <div class="fund-pct">${fmt(f.absRatePct,4)}% / 8h</div>
+        <div class="fund-apr">APR ~${fmt(f.aprPct,1)}%</div>
+      </div>
+    </div>`).join('');
+}
+
+function updateKPIs(data) {
+  document.getElementById('kpiCex').textContent   = data.summary?.cex        || 0;
+  document.getElementById('kpiTri').textContent   = data.summary?.triangular  || 0;
+  document.getElementById('kpiFund').textContent  = data.summary?.funding     || 0;
+  const best = data.summary?.bestNetPct || 0;
+  const bestEl = document.getElementById('kpiBest');
+  bestEl.textContent = best > 0 ? `+${fmt(best,3)}%` : '—';
+  bestEl.className   = `kpi-value ${best >= 0.5 ? '' : 'yellow'}`;
+  document.getElementById('kpiScans').textContent = data.scan || '—';
+  document.getElementById('kpiMode').textContent  = 'DRY RUN';
+}
+
+function handleData(data) {
+  if(data.type !== 'crypto_result' && !data.ts) return;
+  const d = data.type === 'crypto_result' ? data : data;
+  scanCount++;
+  updateKPIs(d);
+  renderSpotArbs(d.cex, d.triangular);
+  renderFunding(d.funding);
+  document.getElementById('lastScan').textContent = `Scan #${d.scan} · ${new Date(d.ts).toLocaleTimeString('fr-FR')}`;
+  const total = d.summary?.total || 0;
+  if(total > 0) log(`Scan #${d.scan}: ${total} opportunité(s) | CEX:${d.summary.cex} TRI:${d.summary.triangular} FUND:${d.summary.funding}`, 'log-green');
+  else          log(`Scan #${d.scan}: aucun arb détecté`);
+}
+
+function connectWS() {
+  ws = new WebSocket(WS_URL);
+  ws.onopen = () => {
+    document.getElementById('dotWs').className = 'status-dot';
+    document.getElementById('wsStatus').textContent = 'WebSocket: connecté';
+    log('WebSocket connecté à ArbiBot', 'log-green');
+  };
+  ws.onmessage = e => {
+    try { const d = JSON.parse(e.data); handleData(d); } catch(_) {}
+  };
+  ws.onclose = () => {
+    document.getElementById('dotWs').className = 'status-dot off';
+    document.getElementById('wsStatus').textContent = 'WebSocket: déconnecté';
+    log('WebSocket déconnecté — reconnexion dans 5s...', 'log-red');
+    setTimeout(connectWS, 5000);
+  };
+  ws.onerror = () => { ws.close(); };
+}
+
+// Charge les données initiales via REST (avant que WS arrive)
+async function loadInitial() {
+  try {
+    const r = await fetch(`${API_URL}/crypto/all`);
+    if(!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    if(d.ts) { handleData(d); log('Données initiales chargées via REST', 'log-blue'); }
+  } catch(e) {
+    log('Serveur ArbiBot non disponible — démarrer avec: node server.js', 'log-yellow');
+  }
+}
+
+loadInitial();
+connectWS();
+
+// Auto-refresh REST toutes les 30s (fallback si WS coupé)
+setInterval(loadInitial, 30000);
+</script>
+</body>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adjoint DG — Centre de Commandement</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #162032;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --green: #22c55e;
+    --orange: #f97316;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --c-mpa: #22c55e;
+    --c-arbi: #22d3ee;
+    --c-pme: #fb923c;
+    --c-rh: #a78bfa;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+  /* HEADER */
+  .cmd-header {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .cmd-title { display: flex; flex-direction: column; }
+  .cmd-title h1 { font-size: 1.4rem; font-weight: 700; }
+  .cmd-title .sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .clock { font-size: 1.1rem; font-weight: 600; font-family: monospace; color: var(--blue); background: rgba(59,130,246,0.1); padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); }
+  .global-status { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; border: 1px solid; }
+  .gs-vert { background: rgba(34,197,94,0.1); border-color: var(--green); color: var(--green); }
+  .gs-orange { background: rgba(249,115,22,0.1); border-color: var(--orange); color: var(--orange); }
+  .gs-rouge { background: rgba(239,68,68,0.1); border-color: var(--red); color: var(--red); }
+  .gs-none { background: rgba(148,163,184,0.1); border-color: var(--muted); color: var(--muted); }
+
+  /* MAIN */
+  .main { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+
+  /* SUP CARDS */
+  .sup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .sup-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .sup-card:hover { border-color: #475569; }
+  .sup-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+  .sup-card-title { display: flex; align-items: center; gap: 0.5rem; }
+  .sup-card-title .dot-live {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-fresh { background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s infinite; }
+  .dot-stale { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
+  .dot-old { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .dot-none { background: var(--muted); }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  .sup-name { font-weight: 700; font-size: 0.95rem; }
+  .sup-status-badge { font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 12px; border: 1px solid; white-space: nowrap; }
+  .sb-vert { background: rgba(34,197,94,0.1); border-color: var(--green); color: var(--green); }
+  .sb-orange { background: rgba(249,115,22,0.1); border-color: var(--orange); color: var(--orange); }
+  .sb-rouge { background: rgba(239,68,68,0.1); border-color: var(--red); color: var(--red); }
+  .sb-none { background: rgba(148,163,184,0.1); border-color: var(--muted); color: var(--muted); }
+
+  .sup-kpis { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.75rem; }
+  .sup-kpi-row { display: flex; justify-content: space-between; font-size: 0.82rem; }
+  .sup-kpi-row .lbl { color: var(--muted); }
+  .sup-kpi-row .val { font-weight: 600; }
+
+  .sup-footer { display: flex; align-items: center; justify-content: space-between; }
+  .sup-ts { font-size: 0.72rem; color: var(--muted); }
+  .btn-open {
+    padding: 0.35rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-open:hover { border-color: #64748b; }
+
+  .accent-bar { height: 3px; border-radius: 3px; margin-bottom: 0.85rem; }
+
+  /* CONSOLIDATION */
+  .section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+
+  .consol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
+  .consol-item { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; }
+  .consol-item .c-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .consol-item .c-val { font-size: 1.3rem; font-weight: 700; }
+  .consol-item .c-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+  .c-mpa { color: var(--c-mpa); }
+  .c-arbi { color: var(--c-arbi); }
+  .c-pme { color: var(--c-pme); }
+  .c-rh { color: var(--c-rh); }
+
+  /* AI */
+  .ai-panel { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; min-height: 80px; }
+  .ai-placeholder { color: var(--muted); font-size: 0.9rem; font-style: italic; }
+  .ai-loading { color: var(--blue); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+  .ai-loading::before { content: ''; display: inline-block; width: 14px; height: 14px; border: 2px solid var(--blue); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ai-result ol, .ai-result ul { padding-left: 1.25rem; }
+  .ai-result li { margin-bottom: 0.5rem; font-size: 0.9rem; line-height: 1.5; }
+  .ai-error { color: var(--red); font-size: 0.85rem; }
+
+  .btn-ai {
+    background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+    border: 1px solid #3b5bd1;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: opacity 0.2s;
+  }
+  .btn-ai:hover { opacity: 0.88; }
+  .btn-ai:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; gap: 0.5rem; }
+  .tl-entry {
+    display: flex;
+    gap: 0.75rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    align-items: flex-start;
+    font-size: 0.82rem;
+  }
+  .tl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .tl-time { color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+  .tl-name { font-weight: 600; flex-shrink: 0; }
+  .tl-info { color: var(--muted); }
+  .tl-empty { color: var(--muted); font-style: italic; font-size: 0.85rem; }
+
+  /* FOOTER */
+  .quick-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .quick-footer .lbl { font-size: 0.75rem; color: var(--muted); margin-right: 0.25rem; }
+  .fl-btn {
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .fl-btn:hover { border-color: #475569; color: var(--text); }
+
+  .refresh-indicator { font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 0.3rem; }
+  .refresh-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+
+  @media (max-width: 700px) {
+    .cmd-header { flex-direction: column; }
+    .sup-grid { grid-template-columns: 1fr; }
+    .consol-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    body { overflow-x: hidden; }
+    .main, .content { padding: 1rem !important; }
+    .supervisors-grid, .cards-grid, .grid-2, .grid-4 { grid-template-columns: 1fr !important; }
+    .header { padding: 1rem !important; flex-wrap: wrap; gap: .5rem; }
+    .header h1 { font-size: 1.1rem; }
+    .kpi-row, .stats-row { flex-wrap: wrap; gap: .5rem; }
+    .kpi-card, .stat-card { min-width: calc(50% - .25rem) !important; }
+    .nav-tabs, .tabs { flex-wrap: wrap; }
+    .timeline-item { flex-direction: column; gap: .25rem; }
+  }
+  @media (max-width: 480px) {
+    .header-badge, .header-actions { display: none; }
+    .kpi-card, .stat-card { min-width: 100% !important; }
+    .btn { min-height: 44px; font-size: .85rem; }
+    h1 { font-size: 1rem !important; }
+    .sup-card { padding: 1rem !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="cmd-header">
+  <div class="cmd-title">
+    <h1>🧠 Adjoint DG — Centre de Commandement</h1>
+    <div class="sub">Consolidation en temps réel · 4 superviseurs actifs</div>
+  </div>
+  <div class="header-right">
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="global-status gs-none" id="global-status">⬛ En attente</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 4 SUPERVISOR CARDS -->
+  <div class="section-title">📡 Tableau des superviseurs</div>
+  <div class="sup-grid">
+
+    <div class="sup-card" id="card-mpa">
+      <div class="accent-bar" style="background: var(--c-mpa);"></div>
+      <div class="sup-card-header">
+        <div class="sup-card-title">
+          <div class="dot-live dot-none" id="dot-mpa"></div>
+          <div class="sup-name" style="color:var(--c-mpa);">🌿 MaPrimeAdapt IDF</div>
+        </div>
+        <div class="sup-status-badge sb-none" id="badge-mpa">–</div>
+      </div>
+      <div class="sup-kpis" id="kpis-mpa">
+        <div class="sup-kpi-row"><span class="lbl">Leads aujourd'hui</span><span class="val" id="mpa-k1">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">Leads total</span><span class="val" id="mpa-k2">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">Taux conversion</span><span class="val" id="mpa-k3">–</span></div>
+      </div>
+      <div class="sup-footer">
+        <div class="sup-ts" id="ts-mpa">Aucun rapport</div>
+        <a class="btn-open" href="./sup-maprimeadapt.html">Ouvrir →</a>
+      </div>
+    </div>
+
+    <div class="sup-card" id="card-arbi">
+      <div class="accent-bar" style="background: var(--c-arbi);"></div>
+      <div class="sup-card-header">
+        <div class="sup-card-title">
+          <div class="dot-live dot-none" id="dot-arbi"></div>
+          <div class="sup-name" style="color:var(--c-arbi);">⚡ ArbiBot</div>
+        </div>
+        <div class="sup-status-badge sb-none" id="badge-arbi">–</div>
+      </div>
+      <div class="sup-kpis" id="kpis-arbi">
+        <div class="sup-kpi-row"><span class="lbl">Scans effectués</span><span class="val" id="arbi-k1">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">Arbs détectés</span><span class="val" id="arbi-k2">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">Marge max</span><span class="val" id="arbi-k3">–</span></div>
+      </div>
+      <div class="sup-footer">
+        <div class="sup-ts" id="ts-arbi">Aucun rapport</div>
+        <a class="btn-open" href="./sup-arbibot.html">Ouvrir →</a>
+      </div>
+    </div>
+
+    <div class="sup-card" id="card-pme">
+      <div class="accent-bar" style="background: var(--c-pme);"></div>
+      <div class="sup-card-header">
+        <div class="sup-card-title">
+          <div class="dot-live dot-none" id="dot-pme"></div>
+          <div class="sup-name" style="color:var(--c-pme);">🏢 PME Services</div>
+        </div>
+        <div class="sup-status-badge sb-none" id="badge-pme">–</div>
+      </div>
+      <div class="sup-kpis" id="kpis-pme">
+        <div class="sup-kpi-row"><span class="lbl">Total prospects</span><span class="val" id="pme-k1">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">CA mensuel total</span><span class="val" id="pme-k2">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">Total clients</span><span class="val" id="pme-k3">–</span></div>
+      </div>
+      <div class="sup-footer">
+        <div class="sup-ts" id="ts-pme">Aucun rapport</div>
+        <a class="btn-open" href="./sup-pme.html">Ouvrir →</a>
+      </div>
+    </div>
+
+    <div class="sup-card" id="card-rh">
+      <div class="accent-bar" style="background: var(--c-rh);"></div>
+      <div class="sup-card-header">
+        <div class="sup-card-title">
+          <div class="dot-live dot-none" id="dot-rh"></div>
+          <div class="sup-name" style="color:var(--c-rh);">💼 RH Luxembourg</div>
+        </div>
+        <div class="sup-status-badge sb-none" id="badge-rh">–</div>
+      </div>
+      <div class="sup-kpis" id="kpis-rh">
+        <div class="sup-kpi-row"><span class="lbl">CVs générés</span><span class="val" id="rh-k1">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">Prospects contactés</span><span class="val" id="rh-k2">–</span></div>
+        <div class="sup-kpi-row"><span class="lbl">RDV obtenus</span><span class="val" id="rh-k3">–</span></div>
+      </div>
+      <div class="sup-footer">
+        <div class="sup-ts" id="ts-rh">Aucun rapport</div>
+        <a class="btn-open" href="./sup-rh.html">Ouvrir →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONSOLIDATION -->
+  <div class="card">
+    <div class="section-title">📊 KPIs consolidés</div>
+    <div class="consol-grid">
+      <div class="consol-item">
+        <div class="c-label">MaPrimeAdapt — Leads total</div>
+        <div class="c-val c-mpa" id="c-mpa-leads">–</div>
+        <div class="c-sub" id="c-mpa-obj">Obj. J30 : 20 leads</div>
+      </div>
+      <div class="consol-item">
+        <div class="c-label">ArbiBot — Scans / Arbs</div>
+        <div class="c-val c-arbi" id="c-arbi-scans">–</div>
+        <div class="c-sub" id="c-arbi-sub">Sources actives : –</div>
+      </div>
+      <div class="consol-item">
+        <div class="c-label">PME — CA mensuel vs J90</div>
+        <div class="c-val c-pme" id="c-pme-ca">–</div>
+        <div class="c-sub">Obj. J90 : 3 000 €/mois</div>
+      </div>
+      <div class="consol-item">
+        <div class="c-label">RH — Prospects / RDV ratio</div>
+        <div class="c-val c-rh" id="c-rh-ratio">–</div>
+        <div class="c-sub" id="c-rh-sub">Contactés → RDV</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI ANALYSIS -->
+  <div class="card">
+    <div class="section-title">🤖 Analyse IA — Recommandations</div>
+    <button type="button" class="btn-ai" id="btn-ai" onclick="genererAnalyseIA()">🤖 Générer analyse IA</button>
+    <div class="ai-panel" id="ai-panel">
+      <div class="ai-placeholder">Cliquer sur "Générer analyse IA" pour obtenir des recommandations basées sur les rapports superviseurs.</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="card">
+    <div class="section-title">📋 Journal des rapports</div>
+    <div class="timeline" id="timeline">
+      <div class="tl-empty">Aucun rapport reçu. Demander aux superviseurs d'envoyer leurs rapports.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="quick-footer">
+  <span class="lbl">Accès rapide :</span>
+  <a class="fl-btn" href="./sup-maprimeadapt.html">🌿 MaPrimeAdapt</a>
+  <a class="fl-btn" href="./sup-arbibot.html">⚡ ArbiBot</a>
+  <a class="fl-btn" href="./sup-pme.html">🏢 PME</a>
+  <a class="fl-btn" href="./sup-rh.html">💼 RH</a>
+  <a class="fl-btn" href="../dashboard.html">📊 Dashboard</a>
+  <a class="fl-btn" href="../pme/templates/hub.html">📋 Templates</a>
+  <div class="refresh-indicator" style="margin-left:auto;">
+    <div class="refresh-dot"></div>
+    Auto-refresh 30s · <span id="next-refresh">30</span>s
+  </div>
+</div>
+
+<script>
+  const GEMINI_KEY = 'AIzaSyAKWg3-z0TaCRiOaIQXkZpkEl31l_ekxCw';
+  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+
+  const SUP_CONFIG = {
+    mpa:  { key: 'sup_report_maprimeadapt', color: '#22c55e', label: 'MaPrimeAdapt IDF' },
+    arbi: { key: 'sup_report_arbibot',      color: '#22d3ee', label: 'ArbiBot' },
+    pme:  { key: 'sup_report_pme',          color: '#fb923c', label: 'PME Services' },
+    rh:   { key: 'sup_report_rh',           color: '#a78bfa', label: 'RH Luxembourg' },
+  };
+
+  // Clock
+  function updateClock() {
+    document.getElementById('clock').textContent = new Date().toLocaleTimeString('fr-FR');
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Relative time
+  function relativeTime(isoStr) {
+    if (!isoStr) return 'Aucun rapport';
+    const diff = Date.now() - new Date(isoStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    if (mins < 1) return 'Il y a moins d\'1 min';
+    if (mins < 60) return `Il y a ${mins} min`;
+    if (hours < 24) return `Il y a ${hours}h`;
+    return `Il y a ${days}j`;
+  }
+
+  function freshnessDot(isoStr) {
+    if (!isoStr) return 'dot-none';
+    const diff = Date.now() - new Date(isoStr).getTime();
+    if (diff < 3600000) return 'dot-fresh';
+    if (diff < 86400000) return 'dot-stale';
+    return 'dot-old';
+  }
+
+  function statusBadge(status) {
+    const map = {
+      vert: ['✅ Vert', 'sb-vert'],
+      orange: ['⚠️ Orange', 'sb-orange'],
+      rouge: ['🔴 Rouge', 'sb-rouge'],
+    };
+    return map[status] || ['–', 'sb-none'];
+  }
+
+  function setEl(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
+  function setClass(id, cls) { const el = document.getElementById(id); if (el) el.className = el.className.replace(/\b(dot-fresh|dot-stale|dot-old|dot-none|sb-vert|sb-orange|sb-rouge|sb-none)\b/g, '').trim() + ' ' + cls; }
+
+  let allReports = {};
+
+  function loadAll() {
+    allReports = {};
+    Object.entries(SUP_CONFIG).forEach(([id, cfg]) => {
+      const raw = localStorage.getItem(cfg.key);
+      if (raw) {
+        try { allReports[id] = JSON.parse(raw); } catch(e) {}
+      }
+    });
+    renderCards();
+    renderConsolidation();
+    renderTimeline();
+    renderGlobalStatus();
+  }
+
+  function renderCards() {
+    // MPA
+    const mpa = allReports.mpa;
+    if (mpa) {
+      const [txt, cls] = statusBadge(mpa.status);
+      document.getElementById('badge-mpa').textContent = txt;
+      document.getElementById('badge-mpa').className = 'sup-status-badge ' + cls;
+      setEl('mpa-k1', (mpa.kpis?.leads_today ?? '–') + ' leads');
+      setEl('mpa-k2', (mpa.kpis?.leads_total ?? '–') + ' leads');
+      setEl('mpa-k3', (mpa.kpis?.taux_conversion ?? '–') + '%');
+      setEl('ts-mpa', relativeTime(mpa.ts));
+      document.getElementById('dot-mpa').className = 'dot-live ' + freshnessDot(mpa.ts);
+    }
+
+    // ARBI
+    const arbi = allReports.arbi;
+    if (arbi) {
+      const [txt, cls] = statusBadge(arbi.status);
+      document.getElementById('badge-arbi').textContent = txt;
+      document.getElementById('badge-arbi').className = 'sup-status-badge ' + cls;
+      setEl('arbi-k1', (arbi.kpis?.scans ?? '–') + ' scans');
+      setEl('arbi-k2', (arbi.kpis?.arbs ?? '–') + ' arbs');
+      setEl('arbi-k3', (arbi.kpis?.marge_max ?? '–') + '%');
+      setEl('ts-arbi', relativeTime(arbi.ts));
+      document.getElementById('dot-arbi').className = 'dot-live ' + freshnessDot(arbi.ts);
+    }
+
+    // PME
+    const pme = allReports.pme;
+    if (pme) {
+      const [txt, cls] = statusBadge(pme.status);
+      document.getElementById('badge-pme').textContent = txt;
+      document.getElementById('badge-pme').className = 'sup-status-badge ' + cls;
+      setEl('pme-k1', (pme.kpis?.total_prospects ?? '–') + ' prospects');
+      setEl('pme-k2', (pme.kpis?.total_ca != null ? pme.kpis.total_ca.toLocaleString('fr-FR') + ' €' : '–'));
+      const totalClients = pme.kpis ? (
+        (pme.kpis.ia?.clients || 0) + (pme.kpis.seniors?.clients || 0) + (pme.kpis.leads_b2b?.clients || 0)
+      ) : '–';
+      setEl('pme-k3', totalClients + ' clients');
+      setEl('ts-pme', relativeTime(pme.ts));
+      document.getElementById('dot-pme').className = 'dot-live ' + freshnessDot(pme.ts);
+    }
+
+    // RH
+    const rh = allReports.rh;
+    if (rh) {
+      const [txt, cls] = statusBadge(rh.status);
+      document.getElementById('badge-rh').textContent = txt;
+      document.getElementById('badge-rh').className = 'sup-status-badge ' + cls;
+      setEl('rh-k1', (rh.kpis?.cvs_semaine ?? '–') + ' CVs');
+      setEl('rh-k2', (rh.kpis?.prospects_contactes ?? '–') + ' prospects');
+      setEl('rh-k3', (rh.kpis?.rdv ?? '–') + ' RDV');
+      setEl('ts-rh', relativeTime(rh.ts));
+      document.getElementById('dot-rh').className = 'dot-live ' + freshnessDot(rh.ts);
+    }
+  }
+
+  function renderConsolidation() {
+    const mpa = allReports.mpa;
+    const arbi = allReports.arbi;
+    const pme = allReports.pme;
+    const rh = allReports.rh;
+
+    if (mpa?.kpis) {
+      const lt = mpa.kpis.leads_total || 0;
+      setEl('c-mpa-leads', lt + ' leads');
+      setEl('c-mpa-obj', `Obj. J30 : 20 leads (${Math.min(100,Math.round(lt/20*100))}%)`);
+    }
+
+    if (arbi?.kpis) {
+      setEl('c-arbi-scans', `${arbi.kpis.scans || 0} / ${arbi.kpis.arbs || 0}`);
+      setEl('c-arbi-sub', `Sources actives : ${arbi.kpis.sources_actives || 0}`);
+    }
+
+    if (pme?.kpis) {
+      const ca = pme.kpis.total_ca || 0;
+      setEl('c-pme-ca', ca.toLocaleString('fr-FR') + ' €');
+    }
+
+    if (rh?.kpis) {
+      const c = rh.kpis.prospects_contactes || 0;
+      const r = rh.kpis.rdv || 0;
+      const ratio = c > 0 ? Math.round((r / c) * 100) + '%' : '–';
+      setEl('c-rh-ratio', ratio);
+      setEl('c-rh-sub', `${c} contactés → ${r} RDV`);
+    }
+  }
+
+  function renderGlobalStatus() {
+    const statuses = Object.values(allReports).map(r => r.status).filter(Boolean);
+    let worst = 'none';
+    if (statuses.includes('rouge')) worst = 'rouge';
+    else if (statuses.includes('orange')) worst = 'orange';
+    else if (statuses.includes('vert')) worst = 'vert';
+
+    const el = document.getElementById('global-status');
+    const map = {
+      vert: ['gs-vert', '✅ Opérationnel'],
+      orange: ['gs-orange', '⚠️ Attention requise'],
+      rouge: ['gs-rouge', '🔴 Situation critique'],
+      none: ['gs-none', '⬛ En attente'],
+    };
+    const [cls, txt] = map[worst];
+    el.className = 'global-status ' + cls;
+    el.textContent = txt;
+  }
+
+  function renderTimeline() {
+    const entries = [];
+    const colorMap = { mpa: '#22c55e', arbi: '#22d3ee', pme: '#fb923c', rh: '#a78bfa' };
+    const labelMap = { mpa: 'MaPrimeAdapt', arbi: 'ArbiBot', pme: 'PME Services', rh: 'RH Luxembourg' };
+
+    Object.entries(allReports).forEach(([id, r]) => {
+      if (r.ts) {
+        entries.push({ id, ts: new Date(r.ts), status: r.status, notes: r.notes || '' });
+      }
+    });
+
+    entries.sort((a, b) => b.ts - a.ts);
+    const tl = document.getElementById('timeline');
+
+    if (entries.length === 0) {
+      tl.innerHTML = '<div class="tl-empty">Aucun rapport reçu. Demander aux superviseurs d\'envoyer leurs rapports.</div>';
+      return;
+    }
+
+    const [sb,] = statusBadge;
+    tl.innerHTML = entries.slice(0, 10).map(e => {
+      const statusEmoji = { vert: '✅', orange: '⚠️', rouge: '🔴' }[e.status] || '–';
+      const notePreview = e.notes ? ' — ' + e.notes.slice(0, 60) + (e.notes.length > 60 ? '…' : '') : '';
+      return `<div class="tl-entry">
+        <div class="tl-dot" style="background:${colorMap[e.id]};box-shadow:0 0 6px ${colorMap[e.id]};"></div>
+        <span class="tl-time">${e.ts.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})} ${e.ts.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})}</span>
+        <span class="tl-name" style="color:${colorMap[e.id]}">${labelMap[e.id]}</span>
+        <span class="tl-info">${statusEmoji}${notePreview}</span>
+      </div>`;
+    }).join('');
+  }
+
+  async function genererAnalyseIA() {
+    const btn = document.getElementById('btn-ai');
+    const panel = document.getElementById('ai-panel');
+
+    if (Object.keys(allReports).length === 0) {
+      panel.innerHTML = '<div class="ai-error">⚠️ Aucun rapport disponible. Demander aux superviseurs d\'envoyer leurs rapports en premier.</div>';
+      return;
+    }
+
+    btn.disabled = true;
+    panel.innerHTML = '<div class="ai-loading">Génération de l\'analyse en cours...</div>';
+
+    const dataStr = JSON.stringify(allReports, null, 2);
+    const prompt = `Tu es l'Adjoint DG d'une PME française. Voici les rapports de tes 4 superviseurs (MaPrimeAdapt IDF, ArbiBot, PME Services, RH Luxembourg):\n\n${dataStr}\n\nEn 5 points max, donne tes recommandations prioritaires pour cette semaine. Sois direct et actionnable. Utilise des chiffres quand disponibles. Format: liste numérotée.`;
+
+    try {
+      const resp = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+      const data = await resp.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) {
+        const html = text
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/^(\d+\.)\s/gm, '<br>$1 ')
+          .replace(/\n/g, '<br>');
+        panel.innerHTML = `<div class="ai-result" style="color:var(--text);line-height:1.6;">${html}</div>`;
+      } else {
+        panel.innerHTML = `<div class="ai-error">Réponse inattendue de l'API: ${JSON.stringify(data).slice(0,200)}</div>`;
+      }
+    } catch(e) {
+      panel.innerHTML = `<div class="ai-error">❌ Erreur API Gemini: ${e.message}</div>`;
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // Auto-refresh
+  let countdown = 30;
+  function tick() {
+    countdown--;
+    document.getElementById('next-refresh').textContent = countdown;
+    if (countdown <= 0) {
+      loadAll();
+      countdown = 30;
+    }
+  }
+  setInterval(tick, 1000);
+
+  // Initial load
+  loadAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stratégie Révisée — PME Services IA / Seniors / Leads B2B</title>
+<style>
+  :root {
+    --vert-fonce: #1a3d2b;
+    --vert-moyen: #2d6a4f;
+    --vert-clair: #52b788;
+    --vert-pale: #d8f3dc;
+    --orange: #e76f51;
+    --orange-pale: #fde8d8;
+    --rouge: #c1121f;
+    --rouge-pale: #fce4e4;
+    --jaune: #e9c46a;
+    --jaune-pale: #fef9e7;
+    --bleu: #457b9d;
+    --bleu-pale: #dbeafe;
+    --gris-clair: #f8f9fa;
+    --gris: #6c757d;
+    --bordure: #dee2e6;
+    --texte: #1a1a2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #ffffff;
+    color: var(--texte);
+    line-height: 1.65;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .page-header {
+    background: var(--vert-fonce);
+    color: white;
+    padding: 48px 40px 36px;
+    border-bottom: 4px solid var(--vert-clair);
+  }
+  .page-header .label {
+    display: inline-block;
+    background: var(--vert-clair);
+    color: var(--vert-fonce);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+  }
+  .page-header p {
+    color: #a8c5b5;
+    font-size: 14px;
+    max-width: 700px;
+  }
+  .meta-row {
+    display: flex;
+    gap: 28px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #c8ddd4;
+    font-size: 13px;
+  }
+  .meta-item strong { color: white; }
+
+  /* NAVIGATION */
+  .toc {
+    background: var(--gris-clair);
+    border-bottom: 1px solid var(--bordure);
+    padding: 16px 40px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .toc a {
+    text-decoration: none;
+    color: var(--vert-fonce);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid #c8ddd4;
+    transition: all 0.2s;
+  }
+  .toc a:hover { background: var(--vert-fonce); color: white; }
+
+  /* CONTAINER */
+  .container { max-width: 1040px; margin: 0 auto; padding: 0 40px; }
+
+  /* SECTIONS */
+  .section {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--bordure);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-number {
+    width: 40px;
+    height: 40px;
+    background: var(--vert-fonce);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .section-title h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--vert-fonce);
+    margin-bottom: 4px;
+  }
+  .section-title p {
+    color: var(--gris);
+    font-size: 13px;
+  }
+
+  /* ALERTE */
+  .alert {
+    border-left: 4px solid;
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .alert-rouge { background: var(--rouge-pale); border-color: var(--rouge); }
+  .alert-orange { background: var(--orange-pale); border-color: var(--orange); }
+  .alert-vert { background: var(--vert-pale); border-color: var(--vert-clair); }
+  .alert-bleu { background: var(--bleu-pale); border-color: var(--bleu); }
+  .alert-jaune { background: var(--jaune-pale); border-color: var(--jaune); }
+  .alert strong { display: block; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* TABLEAUX */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px; }
+  th {
+    background: var(--vert-fonce);
+    color: white;
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--bordure);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--gris-clair); }
+  tr:hover td { background: var(--vert-pale); }
+  .table-wrapper { overflow-x: auto; border: 1px solid var(--bordure); border-radius: 8px; overflow: hidden; }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-rouge { background: var(--rouge-pale); color: var(--rouge); }
+  .badge-orange { background: var(--orange-pale); color: #c1440f; }
+  .badge-jaune { background: var(--jaune-pale); color: #8a6100; }
+  .badge-vert { background: var(--vert-pale); color: var(--vert-moyen); }
+  .badge-bleu { background: var(--bleu-pale); color: var(--bleu); }
+  .badge-gris { background: #e9ecef; color: #495057; }
+
+  /* SCORES */
+  .score-block {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 16px 0 24px;
+  }
+  .score-card {
+    background: white;
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+    padding: 16px 20px;
+    min-width: 160px;
+    flex: 1;
+    text-align: center;
+  }
+  .score-card .label-score { font-size: 12px; color: var(--gris); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .score-card .valeur { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+  .score-card .commentaire { font-size: 12px; color: var(--gris); }
+  .score-rouge .valeur { color: var(--rouge); }
+  .score-orange .valeur { color: var(--orange); }
+  .score-vert .valeur { color: var(--vert-moyen); }
+
+  /* GRILLES */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+  /* ===== RESPONSIVE — 768px ===== */
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .container { padding: 0 20px; }
+    .page-header { padding: 32px 20px; }
+    .page-header h1 { font-size: 20px; }
+    .toc { padding: 12px 20px; }
+
+    .meta-row { gap: 12px; }
+    .meta-item { font-size: 12px; }
+
+    .score-block { gap: 10px; }
+    .score-card { min-width: 120px; }
+    .score-card .valeur { font-size: 24px; }
+
+    /* Tableau scroll horizontal */
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { font-size: 13px; min-width: 480px; }
+    th { padding: 9px 10px; font-size: 12px; }
+    td { padding: 8px 10px; }
+
+    /* Risque card : colonne unique */
+    .risque-card { grid-template-columns: 32px 1fr; }
+    .risque-badges { flex-direction: row; align-items: flex-start; min-width: auto; grid-column: 2; }
+
+    .offre-star { padding: 20px; }
+    .offre-star h3 { font-size: 18px; }
+    .offre-star .prix { font-size: 22px; }
+
+    .section { padding: 32px 0 28px; }
+    .page-footer { padding: 18px 20px; font-size: 12px; }
+  }
+
+  /* ===== RESPONSIVE — 480px ===== */
+  @media (max-width: 480px) {
+    .container { padding: 0 14px; }
+    .page-header { padding: 24px 14px; }
+    .page-header h1 { font-size: 17px; letter-spacing: 0; }
+    .page-header p { font-size: 13px; }
+    .toc { padding: 10px 14px; gap: 4px; }
+    .toc a { font-size: 12px; padding: 4px 9px; }
+
+    .section-header { gap: 10px; }
+    .section-number { width: 32px; height: 32px; font-size: 14px; }
+    .section-title h2 { font-size: 16px; }
+
+    .score-block { flex-direction: column; }
+    .score-card { min-width: 0; }
+
+    table { min-width: 400px; font-size: 12px; }
+    th { padding: 8px 8px; font-size: 11px; }
+    td { padding: 7px 8px; font-size: 12px; }
+
+    .risque-card { grid-template-columns: 28px 1fr; gap: 10px; }
+    .risque-num { width: 28px; height: 28px; font-size: 12px; }
+    .risque-badges { display: none; }
+
+    .timeline { padding-left: 20px; }
+    .timeline-item { padding: 12px 14px; }
+    .timeline-item h4 { font-size: 13px; }
+
+    .alert { padding: 12px 14px; font-size: 13px; }
+    .highlight { padding: 12px 14px; font-size: 13px; }
+
+    .offre-star { padding: 16px; }
+    .offre-star h3 { font-size: 15px; }
+    .offre-star .prix { font-size: 18px; }
+
+    h3.sous-titre { font-size: 14px; }
+    ul.liste li { font-size: 13px; }
+
+    .page-footer { padding: 14px 14px; font-size: 11px; }
+  }
+
+  /* CARDS */
+  .card {
+    background: white;
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--vert-fonce);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--vert-pale);
+  }
+  .card-prioritaire {
+    border: 2px solid var(--vert-clair);
+    background: var(--vert-pale);
+  }
+  .card-prioritaire h3 { color: var(--vert-moyen); }
+
+  /* OFFRE PRIORITAIRE */
+  .offre-star {
+    background: var(--vert-fonce);
+    color: white;
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .offre-star::before {
+    content: "★ OFFRE PRIORITAIRE";
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--vert-clair);
+    margin-bottom: 10px;
+  }
+  .offre-star h3 { font-size: 22px; margin-bottom: 10px; }
+  .offre-star p { color: #a8c5b5; font-size: 14px; }
+  .offre-star .prix { font-size: 28px; font-weight: 700; color: var(--vert-clair); margin-top: 14px; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--bordure);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 16px 18px;
+    background: white;
+    border: 1px solid var(--bordure);
+    border-radius: 8px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    background: var(--vert-clair);
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--vert-clair);
+  }
+  .timeline-item .periode {
+    display: inline-block;
+    background: var(--vert-fonce);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .timeline-item h4 { font-size: 15px; color: var(--vert-fonce); margin-bottom: 6px; }
+  .timeline-item ul { padding-left: 16px; font-size: 13px; color: #444; }
+  .timeline-item ul li { margin-bottom: 4px; }
+
+  /* RISQUES */
+  .risque-card {
+    background: white;
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 14px;
+    align-items: start;
+  }
+  .risque-num {
+    width: 32px;
+    height: 32px;
+    background: var(--rouge);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .risque-card h4 { font-size: 14px; font-weight: 700; color: var(--vert-fonce); margin-bottom: 4px; }
+  .risque-card p { font-size: 13px; color: #555; }
+  .risque-badges { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; min-width: 90px; }
+
+  /* BUDGET */
+  .budget-bar-wrapper { margin: 8px 0 4px; }
+  .budget-bar {
+    height: 8px;
+    background: var(--bordure);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .budget-bar-fill { height: 100%; border-radius: 4px; }
+
+  /* FOOTER */
+  .page-footer {
+    background: var(--vert-fonce);
+    color: #a8c5b5;
+    text-align: center;
+    padding: 24px 40px;
+    font-size: 13px;
+    margin-top: 0;
+  }
+  .page-footer strong { color: white; }
+
+  /* MISC */
+  h3.sous-titre {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--vert-fonce);
+    margin: 24px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--vert-pale);
+  }
+  ul.liste { padding-left: 20px; margin-bottom: 16px; }
+  ul.liste li { margin-bottom: 6px; font-size: 14px; }
+  ul.liste li strong { color: var(--vert-fonce); }
+  .highlight {
+    background: var(--vert-pale);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    border-left: 3px solid var(--vert-clair);
+  }
+  .strike { text-decoration: line-through; color: var(--rouge); }
+  .check { color: var(--vert-moyen); font-weight: 700; }
+  .cross { color: var(--rouge); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="label">Analyse Stratégique — Document Confidentiel</div>
+  <h1>Stratégie Révisée — PME Services IA / Conciergerie / Leads B2B</h1>
+  <p>Audit critique du plan initial, coûts réels, stratégie réaliste et plan d'action révisé pour les 12 premiers mois d'activité.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Date :</strong> 29 mars 2026</div>
+    <div class="meta-item"><strong>Phase :</strong> Pré-lancement (0 client)</div>
+    <div class="meta-item"><strong>Budget initial :</strong> 200 €</div>
+    <div class="meta-item"><strong>Zone :</strong> PACA + National</div>
+    <div class="meta-item"><strong>Équipe :</strong> &lt;20 personnes</div>
+  </div>
+</header>
+
+<!-- NAVIGATION -->
+<nav class="toc">
+  <a href="#s1">1 — Audit critique</a>
+  <a href="#s2">2 — Coûts réels Year 1</a>
+  <a href="#s3">3 — Stratégie révisée</a>
+  <a href="#s4">4 — Plan d'action J1–J90</a>
+  <a href="#s5">5 — Utilisation des 200 €</a>
+  <a href="#s6">6 — Risques &amp; mitigations</a>
+</nav>
+
+<main class="container">
+
+<!-- ==================== SECTION 1 ==================== -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <div class="section-title">
+      <h2>Audit critique du plan initial</h2>
+      <p>Comparaison hypothèse initiale vs réalité marché et scores de réalisme</p>
+    </div>
+  </div>
+
+  <div class="alert alert-rouge">
+    <strong>Verdict d'ensemble</strong>
+    Le plan initial repose sur des hypothèses systématiquement optimistes. Les projections J30–J90 ne tiennent pas compte des délais légaux obligatoires, des taux de conversion réels du marché B2B, ni des coûts structurels incompressibles. Ce n'est pas un échec de vision, c'est un problème de calibrage.
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Hypothèse du plan initial</th>
+          <th>Réalité marché</th>
+          <th>Écart</th>
+          <th>Niveau de risque</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Démarrage immédiat possible avec 200 €</td>
+          <td>Obligation légale : statut juridique, déclaration NOVA (SAP), RC Pro avant toute facturation</td>
+          <td>Délai légal : 2–6 semaines minimum selon statut choisi</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td>Taux de conversion cold calling ~25 %</td>
+          <td>Taux réel B2B France : 3–8 % en premier contact, 10–20 % en cycle complet (3–5 touchpoints)</td>
+          <td>Surestimation de 3× à 8×</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td>Premier client B2B en 30 jours</td>
+          <td>Cycle de vente moyen PME B2B : 45–90 jours. Le J30 est statistiquement improbable à froid.</td>
+          <td>Sous-estimation du cycle de 2–3×</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td>Budget Meta 50 € → leads qualifiés</td>
+          <td>CPL (coût par lead) PME locale services : 8–25 €. 50 € = 2 à 6 leads maximum. Taux lead→client : 10–20 % → espérance : 0,2 à 1,2 client</td>
+          <td>Budget insuffisant pour générer un flux fiable</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+        <tr>
+          <td>3 offres lancées simultanément</td>
+          <td>Dispersion des efforts fatal en phase 0. Chaque offre nécessite un positionnement, des outils et une conformité distincts.</td>
+          <td>Risque de n'exceller dans aucune des 3</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+        <tr>
+          <td>Offre conciergerie seniors : démarrage libre</td>
+          <td>SAP : déclaration préalable obligatoire sur Nova (portail DGEFIP). Agrément requis pour certaines prestations. Assurance spécifique obligatoire.</td>
+          <td>Activité illégale sans déclaration → amende + fermeture</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td>Offre IA PME à 300–400 €/mois compétitive</td>
+          <td>Marché saturé : freelances 50–150 €/h, agences 1 500–5 000 €/mois. Positionnement intermédiaire flou sans différenciateur clair.</td>
+          <td>Nécessite un USP béton pour exister</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+        <tr>
+          <td>Offre leads B2B à 150–250 €/mois rentable</td>
+          <td>CPM/CPC Meta + LinkedIn ont augmenté. Marges très faibles à ce prix. Les agences concurrentes facturent 500–2 000 €/mois.</td>
+          <td>Sous-prix qui nuit à la crédibilité</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+        <tr>
+          <td>Aucun coût fixe nécessaire au démarrage</td>
+          <td>RC Pro (300–500 €/an), assurance SAP (400–800 €/an), compte pro (0–20 €/mois), outils incontournables (60–120 €/mois)</td>
+          <td>Coûts fixes non budgétés de 900–1 500 €/an minimum</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td>CA = Revenu disponible</td>
+          <td>Auto-entrepreneur : ~22 % de charges sociales + ~1–3 % CFP. Impôt sur le revenu en sus. Revenu réel = CA × 0,70–0,75 maximum</td>
+          <td>25–30 % de pertes non comptabilisées</td>
+          <td><span class="badge badge-jaune">Modéré</span></td>
+        </tr>
+        <tr>
+          <td>RGPD non mentionné (collecte leads)</td>
+          <td>Toute collecte de données pro/personnelles exige : mentions légales, registre des traitements, politique de confidentialité, opt-in conforme.</td>
+          <td>Risque amende CNIL + litiges clients</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sous-titre">Scores de réalisme des objectifs initiaux</h3>
+
+  <div class="score-block">
+    <div class="score-card score-rouge">
+      <div class="label-score">Objectif J30</div>
+      <div class="valeur">2,5/10</div>
+      <div class="commentaire">2 clients, 500 € CA — Légalement impossible sans statut + cycle de vente B2B incompressible</div>
+    </div>
+    <div class="score-card score-orange">
+      <div class="label-score">Objectif J60</div>
+      <div class="valeur">4/10</div>
+      <div class="commentaire">5 clients, 1 500 € CA — Réalisable uniquement avec réseau préexistant fort et/ou offre SAP déjà déclarée</div>
+    </div>
+    <div class="score-card score-orange">
+      <div class="label-score">Objectif J90</div>
+      <div class="valeur">5/10</div>
+      <div class="commentaire">10 clients, 3 000 € CA — Ambitieux mais pas impossible si 1 seule offre, bien ciblée et avec recommandations</div>
+    </div>
+  </div>
+
+  <div class="alert alert-jaune">
+    <strong>Note méthodologique</strong>
+    Un score de 5/10 ne signifie pas que l'objectif est mauvais, mais qu'il dépend de conditions non encore réunies. La stratégie révisée vise à amener ces conditions à 8/10 de réalisabilité avant J30.
+  </div>
+</section>
+
+<!-- ==================== SECTION 2 ==================== -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <div class="section-title">
+      <h2>Coûts réels Year 1 — Structure financière complète</h2>
+      <p>Tous les coûts fixes, variables, cachés et obligatoires pour exercer légalement</p>
+    </div>
+  </div>
+
+  <div class="alert alert-orange">
+    <strong>Avertissement</strong>
+    Les coûts ci-dessous correspondent à l'exploitation des 3 services. La stratégie recommandée (section 3) permet de démarrer avec une structure de coût réduite en phasant le lancement.
+  </div>
+
+  <h3 class="sous-titre">Coûts fixes obligatoires (structure juridique)</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Poste</th><th>Détail</th><th>Coût estimé / an</th><th>Obligatoire ?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Statut auto-entrepreneur</strong></td>
+          <td>Inscription INPI/Guichet unique (gratuite), CFE dès 2e année. Option : SASU (plus complexe, coût comptable 1 200–2 400 €/an).</td>
+          <td>0 € à l'inscription<br><span class="badge badge-vert">Gratuit Y1</span></td>
+          <td><span class="check">✓ Obligatoire</span></td>
+        </tr>
+        <tr>
+          <td><strong>RC Pro — Consulting IA</strong></td>
+          <td>Assurance responsabilité civile professionnelle (erreurs/omissions conseils). Devis Hiscox, AXA Pro, Generali. Indispensable avant toute mission.</td>
+          <td>300–500 €/an</td>
+          <td><span class="cross">✗ Non prévu</span></td>
+        </tr>
+        <tr>
+          <td><strong>Déclaration NOVA (SAP)</strong></td>
+          <td>Déclaration préalable d'activité services à la personne via nova.travail.emploi.gouv.fr. Délai : 1 mois minimum d'instruction.</td>
+          <td>0 € (gratuit)<br>⚠ Délai incompressible</td>
+          <td><span class="check">✓ Obligatoire SAP</span></td>
+        </tr>
+        <tr>
+          <td><strong>Assurance SAP spécifique</strong></td>
+          <td>RC Pro + garantie accidents au domicile des bénéficiaires. Obligatoire dès la 1re intervention à domicile.</td>
+          <td>400–800 €/an</td>
+          <td><span class="cross">✗ Non prévu</span></td>
+        </tr>
+        <tr>
+          <td><strong>Compte bancaire professionnel</strong></td>
+          <td>Obligatoire légalement dès que CA &gt; 10 000 € (ou recommandé dès J1). Options : Shine, Qonto, Revolut Business (moins cher).</td>
+          <td>0–240 €/an<br><span class="badge badge-vert">Shine gratuit 1 an</span></td>
+          <td><span class="check">✓ Légalement requis</span></td>
+        </tr>
+        <tr>
+          <td><strong>CFP (formation professionnelle)</strong></td>
+          <td>Contribution auto-entrepreneur : 0,1 % du CA (services intellectuels)</td>
+          <td>Variable selon CA</td>
+          <td><span class="check">✓ Obligatoire</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sous-titre">Coûts outils &amp; infrastructure (mensuels)</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Outil</th><th>Usage</th><th>Option gratuite suffisante ?</th><th>Coût/mois</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>CRM</strong></td>
+          <td>Gestion prospects et clients</td>
+          <td><span class="check">✓ HubSpot Free / Notion</span></td>
+          <td>0 €</td>
+        </tr>
+        <tr>
+          <td><strong>Signature électronique</strong></td>
+          <td>Contrats clients</td>
+          <td><span class="check">✓ Docusign free (3/mois) / Yousign free</span></td>
+          <td>0 €</td>
+        </tr>
+        <tr>
+          <td><strong>Facturation / Compta</strong></td>
+          <td>Devis, factures, déclarations URSSAF</td>
+          <td><span class="check">✓ Henrri, Freebe (gratuits)</span></td>
+          <td>0 €</td>
+        </tr>
+        <tr>
+          <td><strong>Site web</strong></td>
+          <td>Crédibilité professionnelle, formulaires</td>
+          <td><span class="check">✓ Systeme.io (gratuit)</span></td>
+          <td>0 €</td>
+        </tr>
+        <tr>
+          <td><strong>Email pro</strong></td>
+          <td>Communication clients</td>
+          <td><span class="badge badge-jaune">Zoho Mail</span> 1 compte gratuit</td>
+          <td>0 €</td>
+        </tr>
+        <tr>
+          <td><strong>Calendrier / Prise RDV</strong></td>
+          <td>Qualification prospects</td>
+          <td><span class="check">✓ Calendly free</span></td>
+          <td>0 €</td>
+        </tr>
+        <tr>
+          <td><strong>Outil IA (ChatGPT, etc.)</strong></td>
+          <td>Production de livrables IA pour clients</td>
+          <td><span class="badge badge-orange">Non</span> — ChatGPT Plus nécessaire</td>
+          <td>20 €/mois</td>
+        </tr>
+        <tr>
+          <td><strong>LinkedIn Premium / Sales Nav</strong></td>
+          <td>Prospection B2B leads</td>
+          <td><span class="badge badge-orange">Non recommandé Y1</span> — coût élevé</td>
+          <td>0 € (différé)</td>
+        </tr>
+        <tr>
+          <td><strong>Budget publicité Meta</strong></td>
+          <td>Acquisition leads SAP / PME locales</td>
+          <td>Variable — minimum 100 €/mois pour données fiables</td>
+          <td>0–100 €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sous-titre">Coûts variables opérationnels</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Poste</th><th>Hypothèse basse</th><th>Hypothèse haute</th><th>Remarque</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Déplacements prospects (PACA)</td>
+          <td>30 €/mois</td>
+          <td>80 €/mois</td>
+          <td>Carburant / train région</td>
+        </tr>
+        <tr>
+          <td>Téléphonie (ligne pro dédiée)</td>
+          <td>0 €</td>
+          <td>15 €/mois</td>
+          <td>Numéro dédié recommandé</td>
+        </tr>
+        <tr>
+          <td>Matériel (impression, supports)</td>
+          <td>10 €/mois</td>
+          <td>30 €/mois</td>
+          <td>Cartes de visite, kakémono</td>
+        </tr>
+        <tr>
+          <td>Charges sociales (auto-entrepreneur)</td>
+          <td colspan="2">22 % du CA HT (services intellectuels) + 0,1 % CFP</td>
+          <td>Prélevées trimestriellement via URSSAF</td>
+        </tr>
+        <tr>
+          <td>Impôt sur le revenu</td>
+          <td colspan="2">Versement libératoire 2,2 % ou barème progressif selon option</td>
+          <td>Hors charges = revenu réel ÷ CA ≈ 70–75 %</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sous-titre">Récapitulatif financier Year 1</h3>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Structure de coûts minimale (phase 1 — IA seul)</h3>
+      <table style="margin:0;">
+        <tr><td>RC Pro consulting</td><td style="text-align:right;"><strong>350 €/an</strong></td></tr>
+        <tr><td>ChatGPT Plus</td><td style="text-align:right;"><strong>240 €/an</strong></td></tr>
+        <tr><td>Compte bancaire</td><td style="text-align:right;"><strong>0 €/an</strong></td></tr>
+        <tr><td>Déplacements (12 mois)</td><td style="text-align:right;"><strong>480 €/an</strong></td></tr>
+        <tr><td>Divers (matériel, tel)</td><td style="text-align:right;"><strong>200 €/an</strong></td></tr>
+        <tr style="background:#d8f3dc;"><td><strong>TOTAL FIXE MINIMAL</strong></td><td style="text-align:right;"><strong>1 270 €/an</strong></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Structure de coûts complète (3 services actifs)</h3>
+      <table style="margin:0;">
+        <tr><td>RC Pro consulting + SAP</td><td style="text-align:right;"><strong>900 €/an</strong></td></tr>
+        <tr><td>ChatGPT Plus + outils</td><td style="text-align:right;"><strong>380 €/an</strong></td></tr>
+        <tr><td>Publicité Meta (6 mois)</td><td style="text-align:right;"><strong>600 €/an</strong></td></tr>
+        <tr><td>Déplacements (12 mois)</td><td style="text-align:right;"><strong>720 €/an</strong></td></tr>
+        <tr><td>Divers + sous-traitance</td><td style="text-align:right;"><strong>400 €/an</strong></td></tr>
+        <tr style="background:#fde8d8;"><td><strong>TOTAL FIXE COMPLET</strong></td><td style="text-align:right;"><strong>3 000 €/an</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="border: 2px solid var(--vert-clair); margin-top: 8px;">
+    <h3>Seuil de rentabilité mensuel réel</h3>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px;">
+      <div style="text-align:center;">
+        <div style="font-size:11px; color:var(--gris); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px;">Phase 1 (IA seul)</div>
+        <div style="font-size:26px; font-weight:700; color:var(--vert-moyen);">480 €</div>
+        <div style="font-size:12px; color:var(--gris);">CA brut minimum/mois<br>(après charges et frais fixes)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:11px; color:var(--gris); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px;">Phase 2 (IA + SAP)</div>
+        <div style="font-size:26px; font-weight:700; color:var(--orange);">900 €</div>
+        <div style="font-size:12px; color:var(--gris);">CA brut minimum/mois<br>(avec assurance SAP activée)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:11px; color:var(--gris); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px;">Phase 3 (3 services)</div>
+        <div style="font-size:26px; font-weight:700; color:var(--rouge);">1 400 €</div>
+        <div style="font-size:12px; color:var(--gris);">CA brut minimum/mois<br>(3 offres + publicité active)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-bleu" style="margin-top: 20px;">
+    <strong>Budget minimal pour démarrer légalement et sereinement (offre IA uniquement)</strong>
+    200 € disponibles + ~150 € supplémentaires pour couvrir la RC Pro en paiement mensuel (certains assureurs proposent le paiement mensuel ~30 €/mois). Total recommandé pour lancer sereinement : <strong>350–500 €</strong> les 3 premiers mois.
+  </div>
+</section>
+
+<!-- ==================== SECTION 3 ==================== -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <div class="section-title">
+      <h2>Stratégie révisée recommandée</h2>
+      <p>Focus, séquencement et positionnement différenciant</p>
+    </div>
+  </div>
+
+  <div class="offre-star">
+    <h3>Offre n°1 — Accompagnement IA pour PMEs (300–400 €/mois)</h3>
+    <p>Offre à lancer en premier, avant les deux autres. Raisons : démarrage légal immédiat (pas d'agrément spécifique), cycle de vente court (1–3 RDV), ROI mesurable pour le client, demande en forte croissance 2025–2026, et différenciateur fort sur le marché local PACA.</p>
+    <div class="prix">Phase 1 exclusive — Mois 1 à 4</div>
+  </div>
+
+  <h3 class="sous-titre">Pourquoi l'offre IA en premier — Justification détaillée</h3>
+  <div class="grid-2">
+    <div class="card card-prioritaire">
+      <h3>Avantages offre IA en premier</h3>
+      <ul class="liste">
+        <li><strong>Démarrage légal immédiat :</strong> Pas de déclaration sectorielle, pas d'agrément, pas d'assurance spécifique autre que RC Pro classique</li>
+        <li><strong>Barrière à l'entrée basse :</strong> 0 investissement matériel, livraison 100 % distancielle possible</li>
+        <li><strong>Cycle de décision court :</strong> Une PME peut signer en 2–4 semaines si la douleur est bien identifiée</li>
+        <li><strong>Preuve de valeur rapide :</strong> Résultats visibles dès M1 (automatisation, gain de temps mesurable)</li>
+        <li><strong>Trésorerie immédiate :</strong> Paiement mensuel récurrent, pas de délai de paiement à 60 jours</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Pourquoi PAS leads B2B en premier</h3>
+      <ul class="liste">
+        <li><span class="cross">✗</span> Budget pub minimal viable : 300 €/mois pour des données exploitables</li>
+        <li><span class="cross">✗</span> Tarif 150–250 €/mois = sous-prix qui nuit à la crédibilité</li>
+        <li><span class="cross">✗</span> Concurrence ultra-établie (agences avec track-record)</li>
+        <li><span class="cross">✗</span> Risque : promettre des leads sans garantir les conversions → litiges</li>
+      </ul>
+      <h3 style="margin-top:16px;">Pourquoi PAS SAP en premier</h3>
+      <ul class="liste">
+        <li><span class="cross">✗</span> Déclaration NOVA : délai 4–8 semaines d'instruction</li>
+        <li><span class="cross">✗</span> Assurance SAP : 400–800 €/an non budgétée</li>
+        <li><span class="cross">✗</span> Recrutement/partenariat intervenants à domicile requis si &gt;5 clients</li>
+        <li><span class="cross">✗</span> Cycle de confiance long avec familles (1–3 mois avant signature)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sous-titre">Séquencement optimal des 3 offres sur 12 mois</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Période</th><th>Offre active</th><th>Objectif</th><th>Action prioritaire</th><th>Investissement requis</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>M1–M4</strong></td>
+          <td><span class="badge badge-vert">IA PME uniquement</span></td>
+          <td>3–5 clients récurrents à 350 €/mois = 1 050–1 750 € CA/mois</td>
+          <td>Obtenir 2 case studies mesurables + activer recommandations</td>
+          <td>RC Pro (~30 €/mois) + ChatGPT Plus (20 €/mois)</td>
+        </tr>
+        <tr>
+          <td><strong>M3–M5</strong> (en parallèle)</td>
+          <td><span class="badge badge-bleu">SAP — préparation</span></td>
+          <td>Déclaration NOVA déposée, assurance contractualisée, réseau d'intervenants identifié</td>
+          <td>Déposer dossier NOVA, obtenir devis assurance SAP, identifier 2 intervenants partenaires</td>
+          <td>400–800 € assurance (à financer depuis revenus IA)</td>
+        </tr>
+        <tr>
+          <td><strong>M5–M8</strong></td>
+          <td><span class="badge badge-vert">IA PME</span> + <span class="badge badge-bleu">SAP actif</span></td>
+          <td>SAP : 3–5 clients seniors à 250 €/mois. IA : 5–8 clients. CA total : 2 500–4 000 €/mois</td>
+          <td>Activer crédit d'impôt SAP comme argument commercial clé</td>
+          <td>Budget déplacements accru (~80 €/mois)</td>
+        </tr>
+        <tr>
+          <td><strong>M8–M12</strong></td>
+          <td><span class="badge badge-vert">IA</span> + <span class="badge badge-bleu">SAP</span> + <span class="badge badge-orange">Leads B2B</span></td>
+          <td>Leads B2B comme produit d'appel pour clients IA : bundle "IA + génération de leads" à 500–600 €/mois</td>
+          <td>Repositionner leads B2B en upsell des clients IA existants (pas en prospection froide)</td>
+          <td>Budget Meta 100–200 €/mois</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sous-titre">Positionnement différenciant vs concurrence</h3>
+  <div class="alert alert-vert">
+    <strong>Insight clé</strong>
+    La différenciation ne peut pas être le prix (vous perdriez toujours contre les freelances à 50 €/h). Elle doit être la <strong>combinaison IA + terrain local PACA + accompagnement humain</strong> — quelque chose qu'une agence nationale ou un freelance isolé ne peut pas répliquer facilement.
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>USP — Offre IA PME</h3>
+      <p style="font-size:13px; margin-bottom:10px;">Positionnement : <strong>"Le consultant IA qui connaît votre secteur en PACA"</strong></p>
+      <ul class="liste">
+        <li>Spécialisation sur 2–3 secteurs (BTP, tourisme, artisanat en PACA)</li>
+        <li>Résultats garantis ou remboursés (premier mois)</li>
+        <li>Disponibilité locale = RDV physique possible</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>USP — Conciergerie seniors</h3>
+      <p style="font-size:13px; margin-bottom:10px;">Positionnement : <strong>"La conciergerie senior qui soulage les familles actives"</strong></p>
+      <ul class="liste">
+        <li>Cible principale : les enfants de 40–60 ans (décideurs d'achat)</li>
+        <li>Argument crédit d'impôt = 50 % du coût réel</li>
+        <li>Coordination avec médecin traitant / CCAS</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>USP — Leads B2B</h3>
+      <p style="font-size:13px; margin-bottom:10px;">Positionnement : <strong>Upsell clients IA existants uniquement</strong></p>
+      <ul class="liste">
+        <li>Proposer uniquement aux clients IA M3+ qui ont confiance</li>
+        <li>Bundle intégré : "on génère vos leads ET on automatise leur suivi avec l'IA"</li>
+        <li>Prix : 450–600 €/mois (bundle, pas seul)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sous-titre">Cibles les plus accessibles en priorité</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Cible</th><th>Offre</th><th>Accessibilité</th><th>Canal d'approche recommandé</th><th>Délai moyen signature</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Artisans / TPE PACA (menuiserie, plomberie, électricité)</td>
+          <td>IA PME</td>
+          <td><span class="badge badge-vert">Très élevée</span></td>
+          <td>Approche directe terrain, chambres de métiers, réseau personnel</td>
+          <td>2–4 semaines</td>
+        </tr>
+        <tr>
+          <td>Professions libérales (kiné, dentiste, avocat)</td>
+          <td>IA PME</td>
+          <td><span class="badge badge-vert">Élevée</span></td>
+          <td>LinkedIn, recommandations, associations professionnelles</td>
+          <td>3–6 semaines</td>
+        </tr>
+        <tr>
+          <td>Familles avec parent de 70+ ans en PACA</td>
+          <td>SAP Senior</td>
+          <td><span class="badge badge-vert">Élevée</span></td>
+          <td>CCAS, médecins traitants, résidences services, bouche à oreille</td>
+          <td>4–8 semaines</td>
+        </tr>
+        <tr>
+          <td>PME e-commerce régionale (3–15 salariés)</td>
+          <td>IA + Leads B2B</td>
+          <td><span class="badge badge-jaune">Modérée</span></td>
+          <td>LinkedIn Sales Nav, Meta Ads locales ciblées</td>
+          <td>6–10 semaines</td>
+        </tr>
+        <tr>
+          <td>Grandes PME / ETI nationales</td>
+          <td>IA PME</td>
+          <td><span class="badge badge-rouge">Faible en phase 0</span></td>
+          <td>Réservé post M6 avec case studies solides</td>
+          <td>3–6 mois</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== SECTION 4 ==================== -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <div class="section-title">
+      <h2>Plan d'action révisé J1–J90</h2>
+      <p>Semaine par semaine, réaliste — objectifs revus à la baisse mais atteignables</p>
+    </div>
+  </div>
+
+  <div class="alert alert-vert">
+    <strong>Principe directeur</strong>
+    La priorité absolue des 4 premières semaines est la mise en conformité légale et la construction d'un pipeline qualifié — pas la signature de clients. Aucune facturation avant statut activé et RC Pro souscrite.
+  </div>
+
+  <h3 class="sous-titre">Phase 1 — Fondations légales et premier pipeline (S1–S4, J1–J28)</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="periode">S1 — J1 à J7</div>
+      <h4>Mise en place légale et outils</h4>
+      <ul>
+        <li>Inscription auto-entrepreneur sur guichet-entreprises.fr (délai : 24–72h pour numéro SIRET)</li>
+        <li>Ouverture compte bancaire pro : Shine ou Qonto (offre gratuite 1 an)</li>
+        <li>Demande de devis RC Pro : Hiscox, Generali, AXA Pro (3 devis comparés)</li>
+        <li>Installation outils gratuits : HubSpot CRM free, Henrri facturation, Calendly, Zoho Mail</li>
+        <li>Création page LinkedIn Entreprise + profil personnel optimisé (photo, titre, résumé)</li>
+        <li>Liste de 50 prospects qualifiés (artisans, TPE PACA) — LinkedIn + Pages Jaunes</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="periode">S2 — J8 à J14</div>
+      <h4>RC Pro signée + Premiers contacts</h4>
+      <ul>
+        <li>Signature RC Pro (mensualisation si possible : ~30 €/mois)</li>
+        <li>Rédaction : CGV, modèle de contrat mission IA, devis type (modèles gratuits disponibles en ligne)</li>
+        <li>Création site vitrine (Systeme.io gratuit) : 3 pages maximum (accueil, offre IA, contact)</li>
+        <li>Début prospection : 10 appels sortants/jour sur liste prospects (objectif : 3–5 RDV qualifiés)</li>
+        <li>Message LinkedIn personnalisé : 20 messages/jour (limite LinkedIn sans Premium)</li>
+        <li>Objectif semaine : 3–5 RDV planifiés pour S3/S4</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="periode">S3 — J15 à J21</div>
+      <h4>Premiers RDV découverte</h4>
+      <ul>
+        <li>Conduite de 3–5 entretiens découverte (45 min, en présentiel si PACA, en visio sinon)</li>
+        <li>Envoi de propositions commerciales sur mesure dans les 24h post-RDV</li>
+        <li>Relances systématiques : J+2, J+5, J+10 après chaque proposition</li>
+        <li>Prospection continue : 10 appels/jour, 20 messages LinkedIn/jour</li>
+        <li>Objectif semaine : 2–3 propositions envoyées, 0–1 signature (réaliste)</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="periode">S4 — J22 à J28</div>
+      <h4>Relances et fermeture premiers clients</h4>
+      <ul>
+        <li>Relances de toutes les propositions en cours</li>
+        <li>Réajustement du discours commercial si taux de refus &gt; 80 %</li>
+        <li>Objectif J30 révisé : <strong>0–1 client signé</strong> (vs 2 dans le plan initial)</li>
+        <li>Pipeline actif : minimum 10 prospects en discussion</li>
+        <li>Dépôt dossier NOVA pour SAP (afin d'être prêt en M3)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sous-titre">Phase 2 — Accélération et premières récurrences (S5–S8, J29–J56)</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="periode">S5–S6 — J29 à J42</div>
+      <h4>Activation clients + production des premiers livrables</h4>
+      <ul>
+        <li>Onboarding client(s) signé(s) : audit IA initial, plan d'action 90 jours</li>
+        <li>Documenter les premiers résultats (pour construire le case study M2)</li>
+        <li>Continuer prospection : 8 appels/jour + 15 messages LinkedIn/jour</li>
+        <li>Objectif : 2–3 clients signés en cumulé</li>
+        <li>Première réception agrément NOVA (si dossier déposé S4)</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="periode">S7–S8 — J43 à J56</div>
+      <h4>Recommandations et accélération bouche-à-oreille</h4>
+      <ul>
+        <li>Demander officiellement 2 témoignages écrits aux clients actifs</li>
+        <li>Programme de référencement : proposer 1 mois offert pour chaque nouveau client apporté</li>
+        <li>Présence réseau local : CCI, BNI, clubs d'entrepreneurs PACA (gratuit ou 20–50 € l'événement)</li>
+        <li>Objectif J60 révisé : <strong>3–4 clients</strong> à ~350 €/mois = <strong>1 050–1 400 € CA/mois</strong> (vs 1 500 € plan initial)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sous-titre">Phase 3 — Montée en charge et lancement SAP (S9–S13, J57–J90)</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="periode">S9–S11 — J57 à J77</div>
+      <h4>Consolidation IA + activation SAP</h4>
+      <ul>
+        <li>Formalisation du case study client n°1 (ROI mesuré, témoignage vidéo ou écrit)</li>
+        <li>Lancement officiel offre SAP (si agrément NOVA reçu + assurance SAP souscrite)</li>
+        <li>Cible SAP : 2–3 familles PACA via CCAS et réseau médical local</li>
+        <li>Objectif : 5–7 clients IA + 1–2 clients SAP</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="periode">S12–S13 — J78 à J90</div>
+      <h4>Bilan et projection M4–M12</h4>
+      <ul>
+        <li>Bilan chiffré : CA, coûts, marge nette réelle, NPS clients</li>
+        <li>Décision : accélérer sur l'offre qui performe le mieux</li>
+        <li>Objectif J90 révisé : <strong>5–8 clients</strong>, CA mensuel <strong>1 750–2 800 €</strong> (vs 3 000 € plan initial)</li>
+        <li>Seuil : si 5+ clients IA, envisager recrutement partiel ou sous-traitance M4</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sous-titre">KPIs réalistes J1–J90</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>KPI</th><th>J30</th><th>J60</th><th>J90</th><th>Méthode de mesure</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nombre de prospects contactés (cumulé)</td>
+          <td>120–150</td>
+          <td>280–350</td>
+          <td>450–600</td>
+          <td>CRM HubSpot</td>
+        </tr>
+        <tr>
+          <td>RDV qualifiés (cumulés)</td>
+          <td>8–12</td>
+          <td>18–28</td>
+          <td>30–50</td>
+          <td>Calendly + CRM</td>
+        </tr>
+        <tr>
+          <td>Propositions envoyées (cumulées)</td>
+          <td>3–6</td>
+          <td>8–15</td>
+          <td>15–25</td>
+          <td>CRM + factures</td>
+        </tr>
+        <tr>
+          <td>Clients signés (cumulés)</td>
+          <td><strong>0–1</strong></td>
+          <td><strong>3–4</strong></td>
+          <td><strong>5–8</strong></td>
+          <td>Contrats signés</td>
+        </tr>
+        <tr>
+          <td>CA mensuel récurrent</td>
+          <td>0–350 €</td>
+          <td>1 050–1 400 €</td>
+          <td>1 750–2 800 €</td>
+          <td>Factures émises</td>
+        </tr>
+        <tr>
+          <td>Taux de conversion RDV → client</td>
+          <td colspan="3" style="text-align:center;">Objectif : 15–25 % (améliore avec le temps)</td>
+          <td>Calcul manuel mensuel</td>
+        </tr>
+        <tr>
+          <td>Témoignages clients</td>
+          <td>0</td>
+          <td>1–2</td>
+          <td>2–4</td>
+          <td>Google, LinkedIn, site</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== SECTION 5 ==================== -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <div class="section-title">
+      <h2>Utilisation optimale des 200 €</h2>
+      <p>Chaque euro compte — ventilation recommandée, gratuités exploitables et dépenses à éviter</p>
+    </div>
+  </div>
+
+  <h3 class="sous-titre">Ventilation recommandée des 200 €</h3>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Dépense</th><th>Montant</th><th>Justification</th><th>Priorité</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RC Pro — 1er mois (mensualisation)</strong></td>
+          <td>30–35 €</td>
+          <td>Obligatoire avant toute prospection ou facturation. Certains assureurs acceptent la mensualisation.</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td><strong>ChatGPT Plus — 1er mois</strong></td>
+          <td>20 €</td>
+          <td>Outil de production pour livrables IA clients. Rentabilité dès le 1er client signé.</td>
+          <td><span class="badge badge-rouge">Critique</span></td>
+        </tr>
+        <tr>
+          <td><strong>Cartes de visite (250 ex.)</strong></td>
+          <td>12–18 €</td>
+          <td>Crédibilité physique lors des RDV. Vistaprint ou Canva Print. Simple, sobre, professionnel.</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+        <tr>
+          <td><strong>Déplacements prospects M1</strong></td>
+          <td>40–60 €</td>
+          <td>Carburant / transport pour les premiers RDV qualifiés en région PACA.</td>
+          <td><span class="badge badge-orange">Élevé</span></td>
+        </tr>
+        <tr>
+          <td><strong>Réserve opérationnelle</strong></td>
+          <td>70–90 €</td>
+          <td>Imprévu : impression de devis, frais de port, accès WiFi fiable, etc.</td>
+          <td><span class="badge badge-jaune">Modéré</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background: var(--vert-fonce); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px;">
+    <div style="color: var(--vert-clair); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">Utilisation des 200 €</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: white; font-size: 13px;">RC Pro (1er mois)</span>
+          <span style="color: var(--vert-clair); font-size: 13px; font-weight: 700;">17 %</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 17%; background: var(--vert-clair);"></div></div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: white; font-size: 13px;">ChatGPT Plus</span>
+          <span style="color: var(--vert-clair); font-size: 13px; font-weight: 700;">10 %</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 10%; background: #52b788;"></div></div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: white; font-size: 13px;">Cartes de visite</span>
+          <span style="color: var(--vert-clair); font-size: 13px; font-weight: 700;">8 %</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 8%; background: #74c69d;"></div></div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: white; font-size: 13px;">Déplacements M1</span>
+          <span style="color: var(--vert-clair); font-size: 13px; font-weight: 700;">25 %</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 25%; background: #95d5b2;"></div></div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: white; font-size: 13px;">Réserve opérationnelle</span>
+          <span style="color: var(--vert-clair); font-size: 13px; font-weight: 700;">40 %</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 40%; background: #b7e4c7;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-prioritaire">
+      <h3>Ce qui est gratuit et SUFFISANT</h3>
+      <ul class="liste">
+        <li><strong>CRM :</strong> HubSpot Free (1 000 contacts, pipeline deals, emails)</li>
+        <li><strong>Facturation :</strong> Henrri ou Freebe (devis + factures conformes)</li>
+        <li><strong>Site web :</strong> Systeme.io (tunnel de vente, page de capture, blog)</li>
+        <li><strong>Signature électronique :</strong> Docusign Free (3 envois/mois) ou Yousign</li>
+        <li><strong>Email pro :</strong> Zoho Mail (1 compte gratuit sur nom de domaine)</li>
+        <li><strong>Nom de domaine :</strong> OVH 6 €/an ou Infomaniak 7 €/an</li>
+        <li><strong>Calendrier RDV :</strong> Calendly Free (1 type de réunion)</li>
+        <li><strong>Création visuelle :</strong> Canva Free (présentations, propositions)</li>
+        <li><strong>Visioconférence :</strong> Google Meet gratuit</li>
+        <li><strong>Veille concurrentielle :</strong> Google Alerts (gratuit)</li>
+        <li><strong>Inscription AE :</strong> Guichet unique entreprises (gratuit)</li>
+        <li><strong>Déclaration NOVA (SAP) :</strong> Portail nova.travail.emploi.gouv.fr (gratuit)</li>
+      </ul>
+    </div>
+    <div class="card" style="border: 2px solid var(--rouge); background: #fff8f8;">
+      <h3 style="color: var(--rouge);">Ce qu'il NE FAUT PAS dépenser au démarrage</h3>
+      <ul class="liste">
+        <li><span class="cross">✗</span> <strong>LinkedIn Premium / Sales Navigator</strong> (~70–100 €/mois) — non rentable sans pipeline établi</li>
+        <li><span class="cross">✗</span> <strong>Comptable / expert-comptable dès M1</strong> — auto-entrepreneur = déclaration simple trimestrielle en ligne</li>
+        <li><span class="cross">✗</span> <strong>Création de logo sur-mesure (agence)</strong> — Canva ou Looka (~20 €) suffisent</li>
+        <li><span class="cross">✗</span> <strong>Hébergement web premium + WordPress</strong> — Systeme.io free ou Carrd.co suffisent</li>
+        <li><span class="cross">✗</span> <strong>Publicité Meta / Google dès M1</strong> — budget 200 € insuffisant pour tester proprement</li>
+        <li><span class="cross">✗</span> <strong>Abonnement CRM payant</strong> — HubSpot Free ou Notion suffisent largement jusqu'à 20 clients</li>
+        <li><span class="cross">✗</span> <strong>Formation en ligne payante (IA, vente...)</strong> — YouTube + documentation officielle suffisent en phase 0</li>
+        <li><span class="cross">✗</span> <strong>SASU / SAS dès le départ</strong> — coût comptable 1 200–2 400 €/an inutile sous le seuil de 30 K€ CA</li>
+        <li><span class="cross">✗</span> <strong>Location bureau / coworking</strong> — télétravail + 1–2 espaces coworking ponctuels (5–10 €/jour) suffit</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>Règle des 200 € :</strong> Dépenser uniquement ce qui rapporte directement des clients dans les 30 jours. RC Pro = permet de facturer. ChatGPT Plus = permet de livrer. Déplacements = permet de signer. Tout le reste attendra les premiers revenus.
+  </div>
+</section>
+
+<!-- ==================== SECTION 6 ==================== -->
+<section class="section" id="s6">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <div class="section-title">
+      <h2>Risques &amp; mitigations</h2>
+      <p>Top 5 risques avec probabilité, impact et plan de mitigation</p>
+    </div>
+  </div>
+
+  <!-- RISQUE 1 -->
+  <div class="risque-card">
+    <div class="risque-num">1</div>
+    <div>
+      <h4>Risque juridique SAP — Exercice sans déclaration NOVA</h4>
+      <p>Démarrer la conciergerie seniors avant obtention de l'agrément NOVA constitue une infraction administrative. Sanction : amende, obligation de remboursement des clients, interdiction d'exercer.</p>
+      <p style="margin-top: 8px; font-size: 13px;"><strong>Mitigation :</strong> Ne lancer AUCUNE prestation SAP avant réception de l'attestation NOVA. Déposer le dossier dès S4 (J22–J28). Prévoir 6–8 semaines d'instruction. Documenter toutes les étapes pour preuve de conformité.</p>
+    </div>
+    <div class="risque-badges">
+      <span class="badge badge-rouge">Proba : Élevée</span>
+      <span class="badge badge-rouge">Impact : Critique</span>
+      <span class="badge badge-vert">Mitigation : Facile</span>
+    </div>
+  </div>
+
+  <!-- RISQUE 2 -->
+  <div class="risque-card">
+    <div class="risque-num">2</div>
+    <div>
+      <h4>Risque financier — Épuisement de trésorerie avant le 1er client</h4>
+      <p>Si le premier client tarde (J60–J90), les 200 € initiaux sont épuisés dès M1–M2 et les coûts fixes (RC Pro, ChatGPT, déplacements) ne peuvent plus être couverts.</p>
+      <p style="margin-top: 8px; font-size: 13px;"><strong>Mitigation :</strong> (1) Maintenir une activité complémentaire (freelance ponctuel, job d'appoint) jusqu'au seuil de 1 500 €/mois. (2) Proposer une mission one-shot d'audit IA à 150–250 € pour générer du cash rapide avant l'abonnement mensuel. (3) Identifier 2–3 prospects "chauds" dans le réseau personnel avant tout cold calling.</p>
+    </div>
+    <div class="risque-badges">
+      <span class="badge badge-orange">Proba : Modérée</span>
+      <span class="badge badge-rouge">Impact : Élevé</span>
+      <span class="badge badge-jaune">Mitigation : Modérée</span>
+    </div>
+  </div>
+
+  <!-- RISQUE 3 -->
+  <div class="risque-card">
+    <div class="risque-num">3</div>
+    <div>
+      <h4>Risque commercial — Absence de différenciation perçue</h4>
+      <p>Sans case study, sans témoignage, sans spécialisation sectorielle claire, la proposition de valeur est indifférenciable de centaines de freelances IA. Le prospect choisit le moins cher ou le plus connu.</p>
+      <p style="margin-top: 8px; font-size: 13px;"><strong>Mitigation :</strong> (1) Choisir 2 secteurs PACA prioritaires (ex. BTP + tourisme) et devenir LA référence locale. (2) Proposer un audit gratuit de 45 min pour créer de la valeur avant signature. (3) Préparer un "résultat garanti" ou "premier mois remboursé si pas de résultat" pour lever l'objection risque.</p>
+    </div>
+    <div class="risque-badges">
+      <span class="badge badge-rouge">Proba : Élevée</span>
+      <span class="badge badge-orange">Impact : Élevé</span>
+      <span class="badge badge-orange">Mitigation : Modérée</span>
+    </div>
+  </div>
+
+  <!-- RISQUE 4 -->
+  <div class="risque-card">
+    <div class="risque-num">4</div>
+    <div>
+      <h4>Risque réglementaire — Non-conformité RGPD sur les leads</h4>
+      <p>La collecte et le traitement de données de prospects (fichiers LinkedIn, leads Meta) sans mentions légales, sans registre de traitement et sans base légale valide expose à des sanctions CNIL (jusqu'à 4 % du CA mondial ou 20 M€).</p>
+      <p style="margin-top: 8px; font-size: 13px;"><strong>Mitigation :</strong> (1) Intégrer une politique de confidentialité sur le site dès S1 (générateurs gratuits : Iubenda, Privacy Policy Generator). (2) Tenir un registre de traitement simple (tableur Excel suffit pour une TPE). (3) Obtenir un consentement explicite pour tout mailing commercial. (4) Utiliser des données LinkedIn dans le cadre de leur CGU (prospection B2B = intérêt légitime si pertinent).</p>
+    </div>
+    <div class="risque-badges">
+      <span class="badge badge-jaune">Proba : Modérée</span>
+      <span class="badge badge-orange">Impact : Élevé</span>
+      <span class="badge badge-vert">Mitigation : Facile</span>
+    </div>
+  </div>
+
+  <!-- RISQUE 5 -->
+  <div class="risque-card">
+    <div class="risque-num">5</div>
+    <div>
+      <h4>Risque opérationnel — Surcharge et qualité dégradée avec dispersion sur 3 offres</h4>
+      <p>Gérer simultanément la prospection, la production de livrables IA, la coordination d'intervenants seniors ET les campagnes publicitaires B2B est physiquement impossible seul. La qualité baisse, les clients churne, la réputation en souffre au pire moment.</p>
+      <p style="margin-top: 8px; font-size: 13px;"><strong>Mitigation :</strong> (1) Appliquer strictement le séquencement recommandé (section 3) : 1 offre à la fois. (2) Ne pas dépasser 8 clients IA sans process documenté et outil de gestion. (3) Identifier dès M2 un sous-traitant ou partenaire pour absorber la croissance. (4) Bloquer 2 créneaux fixes par semaine pour la prospection, même avec des clients actifs.</p>
+    </div>
+    <div class="risque-badges">
+      <span class="badge badge-orange">Proba : Élevée</span>
+      <span class="badge badge-orange">Impact : Élevé</span>
+      <span class="badge badge-vert">Mitigation : Facile</span>
+    </div>
+  </div>
+
+  <div class="alert alert-vert" style="margin-top: 24px;">
+    <strong>Synthèse risques</strong>
+    Les 5 risques sont évitables avec de la discipline procédurale. Les risques n°1 (NOVA) et n°5 (dispersion) sont les plus urgents à adresser dès J1. La stratégie de focus sur 1 offre réduit mécaniquement 3 des 5 risques identifiés.
+  </div>
+</section>
+
+<!-- SYNTHESE FINALE -->
+<section class="section" style="background: var(--gris-clair); margin: 0 -40px; padding: 40px 40px;" id="synthese">
+  <div class="section-header">
+    <div class="section-number" style="background: var(--orange);">★</div>
+    <div class="section-title">
+      <h2>Synthèse exécutive — Les 5 décisions prioritaires</h2>
+      <p>Ce qu'il faut faire maintenant, dans cet ordre</p>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="periode">Décision 1 — Cette semaine</div>
+          <h4>S'inscrire comme auto-entrepreneur</h4>
+          <ul><li>Guichet unique : gratuit, 24–72h</li><li>Code APE 7022Z (conseil pour les affaires) ou 6202A</li></ul>
+        </div>
+        <div class="timeline-item">
+          <div class="periode">Décision 2 — Cette semaine</div>
+          <h4>Souscrire la RC Pro en mensualisation</h4>
+          <ul><li>3 devis comparés : Hiscox, AXA, Generali</li><li>Mensualisation : ~30 €/mois soit 360 €/an</li></ul>
+        </div>
+        <div class="timeline-item">
+          <div class="periode">Décision 3 — Dès J3</div>
+          <h4>Focus total sur l'offre IA PME uniquement</h4>
+          <ul><li>Oublier SAP et leads B2B jusqu'en M3</li><li>Spécialisation sur 2 secteurs PACA identifiés</li></ul>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="periode">Décision 4 — Dès J7</div>
+          <h4>Constituer une liste de 50 prospects qualifiés</h4>
+          <ul><li>Artisans + professions libérales PACA</li><li>LinkedIn + Pages Jaunes + réseau personnel</li></ul>
+        </div>
+        <div class="timeline-item">
+          <div class="periode">Décision 5 — Dès J22</div>
+          <h4>Déposer le dossier NOVA pour SAP</h4>
+          <ul><li>Même si l'activité ne démarre qu'en M3–M4</li><li>Délai d'instruction : 4–8 semaines incompressibles</li></ul>
+        </div>
+        <div class="timeline-item">
+          <div class="periode">Objectif réaliste J90</div>
+          <h4>5–8 clients, 1 750–2 800 € CA/mois</h4>
+          <ul><li>Vs plan initial : 10 clients, 3 000 € CA/mois</li><li>Atteinte à 80 % de probabilité avec la stratégie révisée</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="page-footer">
+  <strong>Stratégie Révisée — PME Services IA / Conciergerie / Leads B2B</strong><br>
+  Document produit le 29 mars 2026 · Usage confidentiel interne · Non destiné à la diffusion publique<br>
+  <span style="font-size: 11px; margin-top: 8px; display: block; color: #7a9d8e;">Les estimations de coûts sont indicatives. Se référer aux tarifs en vigueur au moment du lancement. Consulter un professionnel du droit pour la mise en conformité NOVA et RGPD.</span>
+</footer>
+
+</body>
+</html>

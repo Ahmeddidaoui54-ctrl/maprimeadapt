@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Générateur de CV IA — Luxembourg / France / PACA</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vert: #1a3d2b;
+      --vert-clair: #2d6a4f;
+      --vert-pale: #e8f5e9;
+      --accent: #4caf50;
+      --gris: #f5f5f5;
+      --gris-bord: #ddd;
+      --texte: #222;
+      --texte-sec: #555;
+      --rouge: #c0392b;
+      --blanc: #fff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f0f2f0;
+      color: var(--texte);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--vert);
+      color: var(--blanc);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    header h1 { font-size: 1.4rem; font-weight: 700; }
+    header p { font-size: 0.85rem; opacity: 0.8; }
+    .header-badge {
+      margin-left: auto;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    /* LAYOUT */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 1600px;
+      margin: 0 auto;
+      min-height: calc(100vh - 70px);
+    }
+
+    /* COLONNE FORMULAIRE */
+    .form-col {
+      background: var(--blanc);
+      padding: 28px;
+      overflow-y: auto;
+      height: calc(100vh - 70px);
+      border-right: 1px solid var(--gris-bord);
+    }
+
+    /* COLONNE APERCU */
+    .preview-col {
+      background: var(--gris);
+      padding: 24px;
+      overflow-y: auto;
+      height: calc(100vh - 70px);
+    }
+
+    /* SECTIONS FORMULAIRE */
+    .form-section {
+      margin-bottom: 24px;
+      border: 1px solid var(--gris-bord);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .form-section-title {
+      background: var(--vert);
+      color: var(--blanc);
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .form-section-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+    label { font-size: 0.82rem; font-weight: 600; color: var(--texte-sec); display: block; margin-bottom: 4px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--gris-bord);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--texte);
+      background: var(--blanc);
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--vert-clair);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.12);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+    /* RADIO / CHECKBOX PILLS */
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill input[type="radio"],
+    .pill input[type="checkbox"] { display: none; }
+    .pill label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 2px solid var(--gris-bord);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--texte-sec);
+      transition: all 0.2s;
+      margin: 0;
+    }
+    .pill input:checked + label {
+      background: var(--vert);
+      border-color: var(--vert);
+      color: var(--blanc);
+    }
+
+    /* BOUTONS AJOUTER / SUPPRIMER */
+    .btn-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--vert-pale);
+      color: var(--vert);
+      border: 1px solid var(--vert-clair);
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-add:hover { background: var(--vert); color: var(--blanc); }
+    .btn-remove {
+      background: #fdecea;
+      color: var(--rouge);
+      border: 1px solid #f5c6c2;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-remove:hover { background: var(--rouge); color: var(--blanc); }
+
+    /* CHIPS COMPETENCES */
+    .chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px;
+      border: 1px solid var(--gris-bord);
+      border-radius: 6px;
+      background: var(--blanc);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--vert);
+      color: var(--blanc);
+      border-radius: 14px;
+      padding: 3px 10px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .chip-del {
+      cursor: pointer;
+      opacity: 0.7;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .chip-del:hover { opacity: 1; }
+    .chip-input {
+      border: none;
+      outline: none;
+      font-size: 0.85rem;
+      flex: 1;
+      min-width: 120px;
+      padding: 2px 4px;
+    }
+
+    /* ITEM EXPERIENCE / FORMATION */
+    .exp-item, .form-item, .lang-item {
+      border: 1px solid var(--gris-bord);
+      border-radius: 6px;
+      padding: 12px;
+      background: var(--gris);
+      position: relative;
+    }
+    .exp-item .item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .item-num {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--vert-clair);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* BOUTON IA */
+    .btn-ia {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--vert) 0%, var(--vert-clair) 100%);
+      color: var(--blanc);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 12px rgba(26,61,43,0.3);
+    }
+    .btn-ia:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-ia:active { transform: translateY(0); }
+    .btn-ia:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* SPINNER */
+    .spinner {
+      width: 20px; height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: var(--blanc);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ERREUR */
+    .error-box {
+      background: #fdecea;
+      border: 1px solid #f5c6c2;
+      color: var(--rouge);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    /* ============ APERCU CV ============ */
+    .cv-preview-wrapper {
+      background: var(--blanc);
+      border-radius: 8px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cv-header {
+      background: var(--vert);
+      color: var(--blanc);
+      padding: 28px 32px 22px;
+      position: relative;
+    }
+    .cv-header-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.01em; }
+    .cv-header-title { font-size: 1rem; opacity: 0.85; margin-top: 4px; font-weight: 400; }
+    .cv-header-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 0.82rem;
+      opacity: 0.9;
+    }
+    .cv-header-contacts span { display: flex; align-items: center; gap: 5px; }
+    .cv-market-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 16px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .cv-body { padding: 24px 32px; }
+
+    .cv-section { margin-bottom: 22px; }
+    .cv-section-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--vert);
+      border-bottom: 2px solid var(--vert);
+      padding-bottom: 4px;
+      margin-bottom: 14px;
+    }
+
+    .cv-summary { font-size: 0.9rem; color: var(--texte); line-height: 1.6; }
+
+    .cv-exp-item { margin-bottom: 16px; }
+    .cv-exp-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; }
+    .cv-exp-title { font-weight: 700; font-size: 0.93rem; }
+    .cv-exp-company { color: var(--vert-clair); font-size: 0.88rem; font-weight: 600; }
+    .cv-exp-period { font-size: 0.8rem; color: var(--texte-sec); }
+    .cv-exp-desc { font-size: 0.85rem; color: var(--texte-sec); margin-top: 6px; line-height: 1.55; }
+    .cv-exp-desc ul { padding-left: 18px; }
+    .cv-exp-desc li { margin-bottom: 3px; }
+
+    .cv-skills-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cv-skill-chip {
+      background: var(--vert-pale);
+      color: var(--vert);
+      border: 1px solid #b7dfc5;
+      border-radius: 14px;
+      padding: 3px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .cv-edu-item { margin-bottom: 12px; }
+    .cv-edu-degree { font-weight: 700; font-size: 0.9rem; }
+    .cv-edu-school { font-size: 0.85rem; color: var(--texte-sec); }
+
+    .cv-langs-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+    .cv-lang-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .cv-lang-name { font-size: 0.82rem; font-weight: 700; }
+    .cv-lang-level {
+      font-size: 0.72rem;
+      background: var(--vert);
+      color: var(--blanc);
+      border-radius: 10px;
+      padding: 2px 8px;
+    }
+
+    .cv-visa { font-size: 0.85rem; color: var(--texte-sec); }
+
+    /* BOUTONS EXPORT */
+    .export-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .btn-export {
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-pdf {
+      background: var(--vert);
+      color: var(--blanc);
+    }
+    .btn-pdf:hover { background: var(--vert-clair); }
+    .btn-copy {
+      background: var(--blanc);
+      color: var(--vert);
+      border: 2px solid var(--vert);
+    }
+    .btn-copy:hover { background: var(--vert-pale); }
+
+    /* PLACEHOLDER VIDE */
+    .preview-placeholder {
+      text-align: center;
+      color: var(--texte-sec);
+      padding: 60px 20px;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+    .preview-placeholder svg { display: block; margin: 0 auto 16px; }
+
+    /* ============ PRINT ============ */
+    @media print {
+      body { background: white; }
+      header, .form-col, .export-bar { display: none !important; }
+      .container { display: block; }
+      .preview-col {
+        height: auto;
+        background: white;
+        padding: 0;
+      }
+      .cv-preview-wrapper {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: 100%;
+      }
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 1024px) {
+      .container { grid-template-columns: 1fr; }
+      .form-col, .preview-col { height: auto; }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 14px 16px; }
+      header h1 { font-size: 1.1rem; }
+      .header-badge { display: none; }
+      .form-col, .preview-col { padding: 16px; }
+      .row-2, .row-3 { grid-template-columns: 1fr; }
+      .cv-body { padding: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .cv-header { padding: 20px 16px 16px; }
+      .cv-header-name { font-size: 1.3rem; }
+      .cv-market-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🎯 Générateur de CV IA</h1>
+    <p>Optimisé Luxembourg · France · PACA · Belgique — Propulsé par Gemini</p>
+  </div>
+  <div class="header-badge">✦ Cabinet RH Pro</div>
+</header>
+
+<div class="container">
+
+  <!-- ============ COLONNE FORMULAIRE ============ -->
+  <div class="form-col">
+
+    <!-- Identité -->
+    <div class="form-section">
+      <div class="form-section-title">👤 Identité</div>
+      <div class="form-section-body">
+        <div class="row-2">
+          <div><label>Prénom</label><input type="text" id="prenom" placeholder="Marie" /></div>
+          <div><label>Nom</label><input type="text" id="nom" placeholder="DUPONT" /></div>
+        </div>
+        <div><label>Titre du poste visé</label><input type="text" id="titre" placeholder="Responsable Comptabilité" /></div>
+        <div class="row-2">
+          <div><label>Email</label><input type="email" id="email" placeholder="marie@exemple.com" /></div>
+          <div><label>Téléphone</label><input type="tel" id="tel" placeholder="+352 691 234 567" /></div>
+        </div>
+        <div><label>LinkedIn URL</label><input type="url" id="linkedin" placeholder="https://linkedin.com/in/marie-dupont" /></div>
+        <div><label>Localisation actuelle</label><input type="text" id="localisation" placeholder="Metz, France (frontalier Luxembourg)" /></div>
+      </div>
+    </div>
+
+    <!-- Marché & Langue -->
+    <div class="form-section">
+      <div class="form-section-title">🌍 Marché cible & Langue du CV</div>
+      <div class="form-section-body">
+        <div>
+          <label>Marché cible</label>
+          <div class="pills">
+            <div class="pill"><input type="radio" name="marche" id="m-lu" value="Luxembourg" checked /><label for="m-lu">🇱🇺 Luxembourg</label></div>
+            <div class="pill"><input type="radio" name="marche" id="m-fr" value="France" /><label for="m-fr">🇫🇷 France</label></div>
+            <div class="pill"><input type="radio" name="marche" id="m-paca" value="PACA" /><label for="m-paca">🌊 PACA</label></div>
+            <div class="pill"><input type="radio" name="marche" id="m-be" value="Belgique" /><label for="m-be">🇧🇪 Belgique</label></div>
+          </div>
+        </div>
+        <div>
+          <label>Langue du CV</label>
+          <div class="pills">
+            <div class="pill"><input type="radio" name="langue" id="l-fr" value="Français" checked /><label for="l-fr">🇫🇷 Français</label></div>
+            <div class="pill"><input type="radio" name="langue" id="l-en" value="Anglais" /><label for="l-en">🇬🇧 Anglais</label></div>
+            <div class="pill"><input type="radio" name="langue" id="l-de" value="Allemand" /><label for="l-de">🇩🇪 Allemand</label></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Résumé -->
+    <div class="form-section">
+      <div class="form-section-title">📝 Résumé professionnel</div>
+      <div class="form-section-body">
+        <div>
+          <label>Votre résumé (l'IA l'optimisera)</label>
+          <textarea id="resume" rows="4" placeholder="10 ans d'expérience en comptabilité, spécialisé dans les PME industrielles. Maîtrise des normes IFRS et de la fiscalité franco-luxembourgeoise..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expériences -->
+    <div class="form-section">
+      <div class="form-section-title">💼 Expériences professionnelles</div>
+      <div class="form-section-body">
+        <div id="exp-list"></div>
+        <button type="button" class="btn-add" onclick="addExp()">＋ Ajouter une expérience</button>
+      </div>
+    </div>
+
+    <!-- Compétences -->
+    <div class="form-section">
+      <div class="form-section-title">⚡ Compétences</div>
+      <div class="form-section-body">
+        <label>Tapez une compétence et appuyez sur Entrée</label>
+        <div class="chips-container" id="chips-container" onclick="document.getElementById('chip-input').focus()">
+          <input class="chip-input" id="chip-input" type="text" placeholder="Ex: SAP, IFRS, Gestion de projet..." />
+        </div>
+      </div>
+    </div>
+
+    <!-- Formations -->
+    <div class="form-section">
+      <div class="form-section-title">🎓 Formations</div>
+      <div class="form-section-body">
+        <div id="form-list"></div>
+        <button type="button" class="btn-add" onclick="addFormation()">＋ Ajouter une formation</button>
+      </div>
+    </div>
+
+    <!-- Langues -->
+    <div class="form-section">
+      <div class="form-section-title">🗣️ Langues parlées</div>
+      <div class="form-section-body">
+        <div id="lang-list"></div>
+        <button type="button" class="btn-add" onclick="addLang()">＋ Ajouter une langue</button>
+      </div>
+    </div>
+
+    <!-- Visa / Permis -->
+    <div class="form-section">
+      <div class="form-section-title">📋 Visa / Permis de travail (optionnel)</div>
+      <div class="form-section-body">
+        <div>
+          <label>Statut / Permis</label>
+          <select id="visa">
+            <option value="">— Non précisé —</option>
+            <option value="Citoyen UE — aucune restriction">Citoyen UE — aucune restriction</option>
+            <option value="Frontalier Luxembourg (permis B)">Frontalier Luxembourg (permis B)</option>
+            <option value="Résident luxembourgeois">Résident luxembourgeois</option>
+            <option value="Permis de travail en cours d'obtention">Permis de travail en cours d'obtention</option>
+            <option value="Carte de séjour France">Carte de séjour France</option>
+            <option value="Autre — préciser">Autre — préciser</option>
+          </select>
+        </div>
+        <div><label>Précision (optionnel)</label><input type="text" id="visa-detail" placeholder="Ex: Frontalier depuis 5 ans, réside à Metz" /></div>
+      </div>
+    </div>
+
+    <!-- Bouton IA -->
+    <div style="margin-bottom: 16px;">
+      <div class="error-box" id="error-box"></div>
+    </div>
+    <button type="button" class="btn-ia" id="btn-gen" onclick="genererCV()">
+      <span id="btn-text">✨ Générer avec l'IA Gemini</span>
+      <div class="spinner" id="spinner"></div>
+    </button>
+
+  </div>
+
+  <!-- ============ COLONNE APERCU ============ -->
+  <div class="preview-col">
+
+    <div class="export-bar">
+      <button type="button" class="btn-export btn-pdf" onclick="window.print()">🖨️ Télécharger PDF</button>
+      <button type="button" class="btn-export btn-copy" onclick="copierCV()">📋 Copier texte brut</button>
+    </div>
+
+    <div id="cv-preview">
+      <div class="preview-placeholder">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24">
+          <rect x="3" y="2" width="18" height="20" rx="2" stroke="#aaa" stroke-width="1.5"/>
+          <line x1="7" y1="7" x2="17" y2="7" stroke="#aaa" stroke-width="1.2"/>
+          <line x1="7" y1="10" x2="17" y2="10" stroke="#aaa" stroke-width="1.2"/>
+          <line x1="7" y1="13" x2="13" y2="13" stroke="#aaa" stroke-width="1.2"/>
+        </svg>
+        <p>Remplissez le formulaire et cliquez sur<br/><strong>Générer avec l'IA</strong> pour voir votre CV apparaître ici.</p>
+        <p style="margin-top:8px;font-size:0.78rem;">Ou commencez à saisir vos informations pour un aperçu en temps réel.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ============ CONFIG ============
+  const GEMINI_KEY = 'AIzaSyAKWg3-z0TaCRiOaIQXkZpkEl31l_ekxCw';
+  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+  // ============ STATE ============
+  let skills = [];
+  let exps = [];
+  let formations = [];
+  let langs = [];
+  let cvData = null;
+
+  // ============ INIT ============
+  document.addEventListener('DOMContentLoaded', () => {
+    addExp();
+    addFormation();
+    addLang();
+    setupChipInput();
+    setupLivePreview();
+  });
+
+  // ============ CHIPS COMPETENCES ============
+  function setupChipInput() {
+    const input = document.getElementById('chip-input');
+    input.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ',') && input.value.trim()) {
+        e.preventDefault();
+        addChip(input.value.trim());
+        input.value = '';
+      } else if (e.key === 'Backspace' && !input.value && skills.length) {
+        removeChip(skills.length - 1);
+      }
+    });
+  }
+
+  function addChip(val) {
+    if (!val || skills.includes(val)) return;
+    skills.push(val);
+    renderChips();
+    updatePreview();
+  }
+
+  function removeChip(idx) {
+    skills.splice(idx, 1);
+    renderChips();
+    updatePreview();
+  }
+
+  function renderChips() {
+    const container = document.getElementById('chips-container');
+    const input = document.getElementById('chip-input');
+    container.innerHTML = '';
+    skills.forEach((s, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.innerHTML = `${escHtml(s)}<span class="chip-del" onclick="removeChip(${i})">×</span>`;
+      container.appendChild(chip);
+    });
+    container.appendChild(input);
+  }
+
+  // ============ EXPERIENCES ============
+  function addExp() {
+    const id = Date.now();
+    exps.push({ id, poste: '', entreprise: '', duree: '', description: '' });
+    renderExps();
+  }
+
+  function removeExp(id) {
+    exps = exps.filter(e => e.id !== id);
+    renderExps();
+    updatePreview();
+  }
+
+  function renderExps() {
+    const list = document.getElementById('exp-list');
+    list.innerHTML = '';
+    exps.forEach((exp, i) => {
+      const div = document.createElement('div');
+      div.className = 'exp-item';
+      div.style.marginBottom = '12px';
+      div.innerHTML = `
+        <div class="item-header">
+          <span class="item-num">Expérience ${i + 1}</span>
+          ${exps.length > 1 ? `<button type="button" class="btn-remove" onclick="removeExp(${exp.id})">✕ Supprimer</button>` : ''}
+        </div>
+        <div class="row-2" style="margin-bottom:8px">
+          <div><label>Poste</label><input type="text" value="${escAttr(exp.poste)}" placeholder="Comptable senior" oninput="updateExp(${exp.id},'poste',this.value)" /></div>
+          <div><label>Entreprise</label><input type="text" value="${escAttr(exp.entreprise)}" placeholder="BGL BNP Paribas" oninput="updateExp(${exp.id},'entreprise',this.value)" /></div>
+        </div>
+        <div style="margin-bottom:8px"><label>Durée</label><input type="text" value="${escAttr(exp.duree)}" placeholder="Jan 2020 – Déc 2023" oninput="updateExp(${exp.id},'duree',this.value)" /></div>
+        <div><label>Description des missions</label><textarea rows="3" placeholder="Géré la comptabilité de 15 PME, réduit les délais de clôture de 20%..." oninput="updateExp(${exp.id},'description',this.value)">${escHtml(exp.description)}</textarea></div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function updateExp(id, field, val) {
+    const exp = exps.find(e => e.id === id);
+    if (exp) { exp[field] = val; updatePreview(); }
+  }
+
+  // ============ FORMATIONS ============
+  function addFormation() {
+    const id = Date.now() + 1;
+    formations.push({ id, diplome: '', ecole: '', annee: '' });
+    renderFormations();
+  }
+
+  function removeFormation(id) {
+    formations = formations.filter(f => f.id !== id);
+    renderFormations();
+    updatePreview();
+  }
+
+  function renderFormations() {
+    const list = document.getElementById('form-list');
+    list.innerHTML = '';
+    formations.forEach((f, i) => {
+      const div = document.createElement('div');
+      div.className = 'form-item';
+      div.style.marginBottom = '10px';
+      div.innerHTML = `
+        <div class="item-header">
+          <span class="item-num">Formation ${i + 1}</span>
+          ${formations.length > 1 ? `<button type="button" class="btn-remove" onclick="removeFormation(${f.id})">✕ Supprimer</button>` : ''}
+        </div>
+        <div class="row-3">
+          <div style="grid-column:span 2"><label>Diplôme / Titre</label><input type="text" value="${escAttr(f.diplome)}" placeholder="Master CCA" oninput="updateFormation(${f.id},'diplome',this.value)" /></div>
+          <div><label>Année</label><input type="text" value="${escAttr(f.annee)}" placeholder="2019" oninput="updateFormation(${f.id},'annee',this.value)" /></div>
+        </div>
+        <div style="margin-top:8px"><label>École / Université</label><input type="text" value="${escAttr(f.ecole)}" placeholder="Université de Lorraine" oninput="updateFormation(${f.id},'ecole',this.value)" /></div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function updateFormation(id, field, val) {
+    const f = formations.find(f => f.id === id);
+    if (f) { f[field] = val; updatePreview(); }
+  }
+
+  // ============ LANGUES ============
+  const niveaux = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'Langue maternelle'];
+
+  function addLang() {
+    const id = Date.now() + 2;
+    langs.push({ id, langue: '', niveau: 'B2' });
+    renderLangs();
+  }
+
+  function removeLang(id) {
+    langs = langs.filter(l => l.id !== id);
+    renderLangs();
+    updatePreview();
+  }
+
+  function renderLangs() {
+    const list = document.getElementById('lang-list');
+    list.innerHTML = '';
+    langs.forEach((l, i) => {
+      const niveauOpts = niveaux.map(n => `<option value="${n}" ${n === l.niveau ? 'selected' : ''}>${n}</option>`).join('');
+      const div = document.createElement('div');
+      div.className = 'lang-item';
+      div.style.marginBottom = '8px';
+      div.innerHTML = `
+        <div class="item-header">
+          <span class="item-num">Langue ${i + 1}</span>
+          ${langs.length > 1 ? `<button type="button" class="btn-remove" onclick="removeLang(${l.id})">✕ Supprimer</button>` : ''}
+        </div>
+        <div class="row-2">
+          <div><label>Langue</label><input type="text" value="${escAttr(l.langue)}" placeholder="Français, Anglais, Allemand..." oninput="updateLang(${l.id},'langue',this.value)" /></div>
+          <div><label>Niveau</label><select onchange="updateLang(${l.id},'niveau',this.value)">${niveauOpts}</select></div>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  function updateLang(id, field, val) {
+    const l = langs.find(l => l.id === id);
+    if (l) { l[field] = val; updatePreview(); }
+  }
+
+  // ============ LIVE PREVIEW (saisie) ============
+  function setupLivePreview() {
+    const fields = ['prenom', 'nom', 'titre', 'email', 'tel', 'linkedin', 'localisation', 'resume', 'visa-detail'];
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updatePreview);
+    });
+    document.querySelectorAll('input[name="marche"], input[name="langue"]').forEach(el => {
+      el.addEventListener('change', updatePreview);
+    });
+    document.getElementById('visa').addEventListener('change', updatePreview);
+  }
+
+  function getFormData() {
+    return {
+      prenom: document.getElementById('prenom').value.trim(),
+      nom: document.getElementById('nom').value.trim(),
+      titre: document.getElementById('titre').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      tel: document.getElementById('tel').value.trim(),
+      linkedin: document.getElementById('linkedin').value.trim(),
+      localisation: document.getElementById('localisation').value.trim(),
+      marche: document.querySelector('input[name="marche"]:checked')?.value || 'Luxembourg',
+      langue: document.querySelector('input[name="langue"]:checked')?.value || 'Français',
+      resume: document.getElementById('resume').value.trim(),
+      visa: document.getElementById('visa').value,
+      visaDetail: document.getElementById('visa-detail').value.trim(),
+    };
+  }
+
+  // ============ RENDU APERCU ============
+  function updatePreview(iaData) {
+    const d = getFormData();
+    const hasContent = d.prenom || d.nom || d.titre || d.resume || exps.some(e => e.poste);
+    if (!hasContent && !iaData) {
+      document.getElementById('cv-preview').innerHTML = `
+        <div class="preview-placeholder">
+          <svg width="48" height="48" fill="none" viewBox="0 0 24 24">
+            <rect x="3" y="2" width="18" height="20" rx="2" stroke="#aaa" stroke-width="1.5"/>
+            <line x1="7" y1="7" x2="17" y2="7" stroke="#aaa" stroke-width="1.2"/>
+            <line x1="7" y1="10" x2="17" y2="10" stroke="#aaa" stroke-width="1.2"/>
+            <line x1="7" y1="13" x2="13" y2="13" stroke="#aaa" stroke-width="1.2"/>
+          </svg>
+          <p>Remplissez le formulaire et cliquez sur<br/><strong>Générer avec l'IA</strong> pour voir votre CV apparaître ici.</p>
+        </div>`;
+      return;
+    }
+
+    const marketFlags = { Luxembourg: '🇱🇺', France: '🇫🇷', PACA: '🌊', Belgique: '🇧🇪' };
+    const flag = marketFlags[d.marche] || '';
+
+    const resumeText = iaData?.resume || d.resume;
+    const expsData = iaData?.exps || exps;
+    const skillsData = iaData?.skills || skills;
+
+    // Contacts
+    let contacts = '';
+    if (d.email) contacts += `<span>✉️ ${escHtml(d.email)}</span>`;
+    if (d.tel) contacts += `<span>📞 ${escHtml(d.tel)}</span>`;
+    if (d.localisation) contacts += `<span>📍 ${escHtml(d.localisation)}</span>`;
+    if (d.linkedin) contacts += `<span>🔗 LinkedIn</span>`;
+
+    // Expériences
+    let expsHtml = '';
+    expsData.forEach(exp => {
+      if (!exp.poste && !exp.entreprise) return;
+      const desc = exp.description || '';
+      const descHtml = desc.includes('•') || desc.includes('-')
+        ? `<ul>${desc.split('\n').filter(l => l.trim()).map(l => `<li>${escHtml(l.replace(/^[•\-]\s*/, ''))}</li>`).join('')}</ul>`
+        : `<p>${escHtml(desc).replace(/\n/g, '<br/>')}</p>`;
+      expsHtml += `
+        <div class="cv-exp-item">
+          <div class="cv-exp-header">
+            <div>
+              <div class="cv-exp-title">${escHtml(exp.poste)}</div>
+              <div class="cv-exp-company">${escHtml(exp.entreprise)}</div>
+            </div>
+            <div class="cv-exp-period">${escHtml(exp.duree)}</div>
+          </div>
+          ${desc ? `<div class="cv-exp-desc">${descHtml}</div>` : ''}
+        </div>`;
+    });
+
+    // Compétences
+    let skillsHtml = '';
+    skillsData.forEach(s => {
+      skillsHtml += `<span class="cv-skill-chip">${escHtml(s)}</span>`;
+    });
+
+    // Formations
+    let formsHtml = '';
+    formations.forEach(f => {
+      if (!f.diplome) return;
+      formsHtml += `
+        <div class="cv-edu-item">
+          <div class="cv-edu-degree">${escHtml(f.diplome)} ${f.annee ? `<span style="color:var(--texte-sec);font-weight:400">(${escHtml(f.annee)})</span>` : ''}</div>
+          <div class="cv-edu-school">${escHtml(f.ecole)}</div>
+        </div>`;
+    });
+
+    // Langues
+    let langsHtml = '';
+    langs.forEach(l => {
+      if (!l.langue) return;
+      langsHtml += `
+        <div class="cv-lang-item">
+          <div class="cv-lang-name">${escHtml(l.langue)}</div>
+          <div class="cv-lang-level">${escHtml(l.niveau)}</div>
+        </div>`;
+    });
+
+    // Visa
+    let visaHtml = '';
+    if (d.visa) {
+      visaHtml = `
+        <div class="cv-section">
+          <div class="cv-section-title">Permis / Statut</div>
+          <div class="cv-visa">${escHtml(d.visa)}${d.visaDetail ? ` — ${escHtml(d.visaDetail)}` : ''}</div>
+        </div>`;
+    }
+
+    document.getElementById('cv-preview').innerHTML = `
+      <div class="cv-preview-wrapper">
+        <div class="cv-header">
+          ${d.marche ? `<div class="cv-market-badge">${flag} Marché ${escHtml(d.marche)}</div>` : ''}
+          <div class="cv-header-name">${escHtml(d.prenom)} ${escHtml(d.nom.toUpperCase())}</div>
+          <div class="cv-header-title">${escHtml(d.titre)}</div>
+          <div class="cv-header-contacts">${contacts}</div>
+        </div>
+        <div class="cv-body">
+          ${resumeText ? `
+            <div class="cv-section">
+              <div class="cv-section-title">Résumé Professionnel</div>
+              <div class="cv-summary">${escHtml(resumeText).replace(/\n/g, '<br/>')}</div>
+            </div>` : ''}
+          ${expsHtml ? `
+            <div class="cv-section">
+              <div class="cv-section-title">Expériences Professionnelles</div>
+              ${expsHtml}
+            </div>` : ''}
+          ${skillsHtml ? `
+            <div class="cv-section">
+              <div class="cv-section-title">Compétences</div>
+              <div class="cv-skills-grid">${skillsHtml}</div>
+            </div>` : ''}
+          ${formsHtml ? `
+            <div class="cv-section">
+              <div class="cv-section-title">Formations</div>
+              ${formsHtml}
+            </div>` : ''}
+          ${langsHtml ? `
+            <div class="cv-section">
+              <div class="cv-section-title">Langues</div>
+              <div class="cv-langs-grid">${langsHtml}</div>
+            </div>` : ''}
+          ${visaHtml}
+        </div>
+      </div>`;
+  }
+
+  // ============ GENERATION IA ============
+  async function genererCV() {
+    const d = getFormData();
+
+    if (!d.prenom && !d.nom) {
+      showError('Veuillez renseigner au moins votre nom et prénom.');
+      return;
+    }
+
+    setLoading(true);
+    hideError();
+
+    const expTexte = exps.map((e, i) =>
+      `Expérience ${i+1}: ${e.poste} chez ${e.entreprise} (${e.duree})\n${e.description}`
+    ).join('\n\n');
+
+    const formTexte = formations.map(f => `${f.diplome} — ${f.ecole} (${f.annee})`).join('\n');
+    const langTexte = langs.map(l => `${l.langue}: ${l.niveau}`).join(', ');
+    const skillsTexte = skills.join(', ');
+
+    const luxembourgInstructions = d.marche === 'Luxembourg' ? `
+SPÉCIFICITÉS LUXEMBOURG OBLIGATOIRES :
+- Mettre en avant le multilinguisme (valoriser FR/EN/DE comme atout majeur)
+- Si la personne est frontalière : le mentionner comme atout (57% de la main d'oeuvre au Luxembourg est frontalière, c'est normal et valorisé)
+- Utiliser la terminologie RH luxembourgeoise (ex: "CCT" au lieu de "convention collective", "travailleur frontalier", "permis B")
+- Valoriser toute expérience dans le secteur financier, le BTP ou la tech qui sont les piliers de l'économie luxembourgeoise
+- Mentionner la connaissance du droit luxembourgeois si applicable
+- Adapter le format de dates au standard européen (JJ/MM/AAAA)
+- Pour les contacts : mentionner le code pays +352 pour Luxembourg` : '';
+
+    const prompt = `Tu es un expert RH spécialisé dans la rédaction de CV pour le marché ${d.marche}.
+Langue du CV : ${d.langue}.
+
+PROFIL :
+Nom : ${d.prenom} ${d.nom}
+Poste visé : ${d.titre}
+Localisation : ${d.localisation}
+Marché cible : ${d.marche}
+Permis/Visa : ${d.visa} ${d.visaDetail}
+
+RÉSUMÉ BRUT :
+${d.resume}
+
+EXPÉRIENCES :
+${expTexte}
+
+COMPÉTENCES : ${skillsTexte}
+FORMATIONS : ${formTexte}
+LANGUES : ${langTexte}
+
+${luxembourgInstructions}
+
+INSTRUCTIONS :
+1. Réécris le RÉSUMÉ PROFESSIONNEL (max 4 phrases) : percutant, avec mots-clés ATS pour le poste "${d.titre}", adapté au marché ${d.marche}. Commence par la durée d'expérience ou une compétence clé.
+
+2. Pour chaque EXPÉRIENCE, reformule la description en 3-5 bullet points impactants avec :
+   - Des verbes d'action forts (piloté, optimisé, déployé, réduit, augmenté...)
+   - Des chiffres/résultats quand possible (même approximatifs basés sur le contexte)
+   - La valeur ajoutée concrète
+
+3. Suggère 5 COMPÉTENCES supplémentaires pertinentes pour le poste "${d.titre}" sur le marché ${d.marche} (en plus des compétences existantes).
+
+RÉPONDS UNIQUEMENT EN JSON valide avec cette structure exacte :
+{
+  "resume": "texte du résumé optimisé",
+  "exps": [
+    { "id": null, "poste": "...", "entreprise": "...", "duree": "...", "description": "• Point 1\n• Point 2\n• Point 3" }
+  ],
+  "skills": ["compétence1", "compétence2", "compétence3", "compétence4", "compétence5"],
+  "ats_keywords": ["mot-clé1", "mot-clé2"]
+}
+
+Pour les exps, reprends les mêmes postes/entreprises/durées mais avec les descriptions optimisées.
+Les skills doivent être les 5 NOUVELLES compétences suggérées (pas les existantes).`;
+
+    try {
+      const resp = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 2048 }
+        })
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json();
+        throw new Error(err.error?.message || `Erreur HTTP ${resp.status}`);
+      }
+
+      const data = await resp.json();
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+      // Extraire le JSON de la réponse
+      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('Réponse invalide de l\'IA (format JSON attendu).');
+
+      const iaResult = JSON.parse(jsonMatch[0]);
+
+      // Fusionner les exps avec les ids existants
+      if (iaResult.exps && iaResult.exps.length > 0) {
+        iaResult.exps = iaResult.exps.map((e, i) => ({
+          ...e,
+          id: exps[i]?.id || Date.now() + i
+        }));
+      }
+
+      // Ajouter les nouvelles compétences
+      if (iaResult.skills) {
+        iaResult.skills.forEach(s => {
+          if (!skills.includes(s)) skills.push(s);
+        });
+        renderChips();
+        iaResult.skills = [...skills];
+      }
+
+      cvData = iaResult;
+      updatePreview(iaResult);
+
+    } catch (err) {
+      console.error(err);
+      let msg = err.message || 'Erreur inconnue.';
+      if (msg.includes('API_KEY') || msg.includes('key')) msg = 'Clé API Gemini invalide ou expirée.';
+      if (msg.includes('QUOTA') || msg.includes('quota')) msg = 'Quota API dépassé. Réessayez dans quelques minutes.';
+      if (msg.includes('NETWORK') || msg.includes('fetch')) msg = 'Erreur réseau. Vérifiez votre connexion internet.';
+      showError('Erreur IA : ' + msg);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // ============ EXPORT ============
+  function copierCV() {
+    const d = getFormData();
+    const lines = [];
+    lines.push(`${d.prenom} ${d.nom.toUpperCase()}`);
+    lines.push(d.titre);
+    lines.push('');
+    if (d.email) lines.push(`Email : ${d.email}`);
+    if (d.tel) lines.push(`Tél : ${d.tel}`);
+    if (d.localisation) lines.push(`Localisation : ${d.localisation}`);
+    lines.push('');
+    if (d.resume) { lines.push('RÉSUMÉ PROFESSIONNEL'); lines.push(d.resume); lines.push(''); }
+    if (exps.some(e => e.poste)) {
+      lines.push('EXPÉRIENCES');
+      exps.forEach(e => {
+        if (e.poste) {
+          lines.push(`${e.poste} — ${e.entreprise} (${e.duree})`);
+          lines.push(e.description);
+          lines.push('');
+        }
+      });
+    }
+    if (skills.length) { lines.push('COMPÉTENCES'); lines.push(skills.join(' | ')); lines.push(''); }
+    if (formations.some(f => f.diplome)) {
+      lines.push('FORMATIONS');
+      formations.forEach(f => { if (f.diplome) lines.push(`${f.diplome} — ${f.ecole} (${f.annee})`); });
+      lines.push('');
+    }
+    if (langs.some(l => l.langue)) {
+      lines.push('LANGUES');
+      lines.push(langs.filter(l => l.langue).map(l => `${l.langue} (${l.niveau})`).join(' | '));
+    }
+
+    navigator.clipboard.writeText(lines.join('\n')).then(() => {
+      const btn = document.querySelector('.btn-copy');
+      const orig = btn.textContent;
+      btn.textContent = '✅ Copié !';
+      btn.style.background = 'var(--vert-pale)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+    }).catch(() => showError('Impossible de copier. Utilisez Ctrl+A puis Ctrl+C sur l\'aperçu.'));
+  }
+
+  // ============ UTILS ============
+  function setLoading(on) {
+    const btn = document.getElementById('btn-gen');
+    const text = document.getElementById('btn-text');
+    const spinner = document.getElementById('spinner');
+    btn.disabled = on;
+    text.textContent = on ? 'Génération en cours...' : '✨ Générer avec l\'IA Gemini';
+    spinner.style.display = on ? 'block' : 'none';
+  }
+
+  function showError(msg) {
+    const box = document.getElementById('error-box');
+    box.textContent = '⚠️ ' + msg;
+    box.style.display = 'block';
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function hideError() {
+    document.getElementById('error-box').style.display = 'none';
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function escAttr(s) {
+    if (!s) return '';
+    return String(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+</script>
+</body>
+</html>

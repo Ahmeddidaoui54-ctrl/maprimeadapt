@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dashboard DG — Assistant Claude</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+
+:root{
+  --g1:#0d1f15; --g2:#1a3d2b; --g3:#2d6a4f; --g4:#3d8b6a;
+  --gl:#e8f0ec; --gold:#f59e0b; --gold2:#fbbf24;
+  --red:#ef4444; --blue:#3b82f6; --emerald:#10b981; --purple:#8b5cf6;
+  --surface:#f0f4f1; --card:#ffffff;
+  --border:#dde8e2; --text:#0f1f18; --muted:#6b7c72;
+  --r:16px;
+}
+
+html{font-size:15px;-webkit-font-smoothing:antialiased;}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);min-height:100vh;padding-bottom:80px;}
+
+/* ── HEADER ── */
+.app-header{
+  background:var(--g1); padding:52px 20px 20px;
+  position:sticky; top:0; z-index:100;
+}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.header-user{display:flex;align-items:center;gap:10px;}
+.avatar{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--g3),var(--gold));
+  display:grid;place-items:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff;
+}
+.header-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;}
+.header-role{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.3px;}
+.header-date{font-size:11px;color:rgba(255,255,255,.35);text-align:right;line-height:1.5;}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{
+  flex-shrink:0;padding:7px 14px;border-radius:20px;
+  font-size:12px;font-weight:600;cursor:pointer;
+  border:none;transition:all .2s;white-space:nowrap;
+}
+.tab.active{background:var(--gold);color:#000;}
+.tab:not(.active){background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+
+/* ── CONTENT ── */
+.content{padding:16px;display:flex;flex-direction:column;gap:14px;}
+
+/* ── SECTION ── */
+.section-label{
+  font-size:10px;font-weight:700;color:var(--muted);
+  letter-spacing:.8px;text-transform:uppercase;
+  margin-bottom:8px;padding-left:2px;
+}
+
+/* ── KPI SCROLL ── */
+.kpi-scroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;}
+.kpi-scroll::-webkit-scrollbar{display:none;}
+.kpi-pill{
+  flex-shrink:0;background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:14px 16px;min-width:140px;
+  position:relative;overflow:hidden;
+}
+.kpi-pill::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kp1::before{background:var(--g3);}
+.kp2::before{background:var(--gold);}
+.kp3::before{background:var(--red);}
+.kp4::before{background:var(--purple);}
+.kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;}
+.kpi-val{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--text);line-height:1;}
+.kpi-sub{font-size:10px;margin-top:4px;font-weight:600;}
+.sub-green{color:var(--emerald);} .sub-gold{color:var(--gold);} .sub-red{color:var(--red);}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--border);
+}
+.card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
+.card-count{font-size:11px;color:var(--muted);}
+
+/* ── PROJET ITEMS ── */
+.proj-item{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .15s;
+  text-decoration:none;color:inherit;
+}
+.proj-item:last-child{border-bottom:none;}
+.proj-item:active{background:var(--gl);}
+.proj-emoji{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;flex-shrink:0;}
+.proj-body{flex:1;min-width:0;}
+.proj-name{font-size:13px;font-weight:600;}
+.proj-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.proj-tags{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;}
+.tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;}
+.t-live{background:rgba(16,185,129,.12);color:#059669;}
+.t-build{background:rgba(245,158,11,.12);color:#d97706;}
+.t-idea{background:rgba(139,92,246,.12);color:#7c3aed;}
+.t-red{background:rgba(239,68,68,.12);color:#dc2626;}
+.proj-ring{position:relative;width:40px;height:40px;flex-shrink:0;}
+.proj-ring svg{transform:rotate(-90deg);}
+.ring-pct{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;font-weight:700;}
+
+/* ── ACTIONS ── */
+.action-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
+.action-item:last-child{border-bottom:none;}
+.action-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.action-body{flex:1;}
+.action-text{font-size:13px;line-height:1.4;}
+.action-proj{font-size:10px;color:var(--muted);margin-top:2px;}
+.prio{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;}
+.p1{background:rgba(239,68,68,.1);color:var(--red);}
+.p2{background:rgba(245,158,11,.1);color:#d97706;}
+.p3{background:rgba(16,185,129,.1);color:#059669;}
+
+/* ── LITIGE ── */
+.litige-header{
+  background:linear-gradient(135deg,#fef2f2,#fff);
+  border-bottom:1px solid rgba(239,68,68,.15);
+  padding:14px 16px;display:flex;align-items:center;gap:8px;
+}
+.litige-blink{width:8px;height:8px;background:var(--red);border-radius:50%;animation:blink 1.5s infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.litige-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--red);}
+.litige-row{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid rgba(239,68,68,.08);}
+.litige-row:last-child{border-bottom:none;}
+.lk{font-size:12px;color:var(--muted);}
+.lv{font-size:12px;font-weight:600;}
+.ls{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+.ls-go{background:rgba(245,158,11,.12);color:#d97706;}
+.ls-ok{background:rgba(16,185,129,.12);color:#059669;}
+.ls-wait{background:rgba(107,124,114,.12);color:#6b7c72;}
+
+/* ── SITE STATUS ── */
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);}
+.status-row:last-child{border-bottom:none;}
+.sk{font-size:12.5px;}
+.sv{font-size:11px;font-weight:700;}
+.sv-ok{color:#059669;} .sv-warn{color:#d97706;} .sv-id{font-size:10px;color:var(--text);font-family:monospace;}
+
+/* ── AFFILIATION ── */
+.affil-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border);}
+.affil-row:last-child{border-bottom:none;}
+.affil-ico{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-size:10px;font-weight:800;flex-shrink:0;color:#fff;}
+.affil-name{flex:1;font-size:13px;font-weight:500;}
+.affil-right{text-align:right;}
+.affil-rate{font-size:12px;font-weight:700;color:var(--emerald);}
+.affil-type{font-size:10px;color:var(--muted);}
+
+/* ── TABS CONTENT ── */
+.tab-content{display:none;}
+.tab-content.active{display:flex;flex-direction:column;gap:14px;}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:var(--g1);border-top:1px solid rgba(255,255,255,.08);
+  display:flex;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.bnav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:10px 4px;cursor:pointer;border:none;background:none;
+  color:rgba(255,255,255,.4);font-size:9px;font-weight:600;
+  letter-spacing:.3px;transition:color .15s;
+}
+.bnav-item.active{color:var(--gold);}
+.bnav-item svg{width:20px;height:20px;}
+.bnav-dot{
+  position:absolute;top:8px;right:calc(50% - 14px);
+  width:7px;height:7px;background:var(--red);border-radius:50%;
+  border:2px solid var(--g1);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.kpi-pill{animation:fadeUp .3s ease both;}
+.kpi-pill:nth-child(1){animation-delay:.05s}
+.kpi-pill:nth-child(2){animation-delay:.1s}
+.kpi-pill:nth-child(3){animation-delay:.15s}
+.kpi-pill:nth-child(4){animation-delay:.2s}
+.card{animation:fadeUp .35s ease both;animation-delay:.2s;}
+
+/* ══════════════════════════════════════════
+   CHAT CLAUDE — OVERLAY
+   ══════════════════════════════════════════ */
+
+/* FAB Button */
+.chat-fab{
+  position:fixed;bottom:90px;right:16px;z-index:300;
+  width:56px;height:56px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,var(--g3),var(--gold));
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+  cursor:pointer;display:grid;place-items:center;
+  transition:transform .2s,box-shadow .2s;
+}
+.chat-fab:active{transform:scale(.92);}
+.chat-fab svg{width:26px;height:26px;color:#fff;}
+.chat-fab .fab-badge{
+  position:absolute;top:-2px;right:-2px;
+  width:14px;height:14px;background:var(--red);border-radius:50%;
+  border:2px solid var(--surface);display:none;
+}
+
+/* Chat Panel */
+.chat-panel{
+  position:fixed;bottom:0;left:0;right:0;z-index:400;
+  height:85vh;max-height:85vh;
+  background:var(--card);
+  border-radius:20px 20px 0 0;
+  box-shadow:0 -8px 40px rgba(0,0,0,.2);
+  display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.chat-panel.open{transform:translateY(0);}
+
+/* Chat Header */
+.chat-header{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.chat-handle{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:36px;height:4px;background:var(--border);border-radius:2px;
+}
+.chat-avatar{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--g2),var(--g4));
+  display:grid;place-items:center;flex-shrink:0;
+}
+.chat-avatar svg{width:20px;height:20px;color:#fff;}
+.chat-htext{flex:1;}
+.chat-hname{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
+.chat-hstatus{font-size:10px;color:var(--emerald);font-weight:600;}
+.chat-close{
+  width:32px;height:32px;border-radius:8px;border:none;
+  background:var(--gl);cursor:pointer;display:grid;place-items:center;
+}
+.chat-close svg{width:16px;height:16px;color:var(--muted);}
+
+/* Chat Messages */
+.chat-messages{
+  flex:1;overflow-y:auto;padding:16px 16px 8px;
+  display:flex;flex-direction:column;gap:12px;
+  scroll-behavior:smooth;
+}
+.chat-messages::-webkit-scrollbar{width:4px;}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+.msg{max-width:85%;animation:fadeUp .25s ease;}
+.msg-bot{align-self:flex-start;}
+.msg-user{align-self:flex-end;}
+
+.msg-bubble{
+  padding:10px 14px;border-radius:16px;
+  font-size:13px;line-height:1.55;word-break:break-word;
+}
+.msg-bot .msg-bubble{
+  background:var(--gl);color:var(--text);
+  border-bottom-left-radius:4px;
+}
+.msg-user .msg-bubble{
+  background:var(--g2);color:#fff;
+  border-bottom-right-radius:4px;
+}
+.msg-time{font-size:9px;color:var(--muted);margin-top:3px;padding:0 4px;}
+.msg-bot .msg-time{text-align:left;}
+.msg-user .msg-time{text-align:right;}
+
+/* Typing indicator */
+.typing{display:flex;gap:4px;padding:10px 14px;align-self:flex-start;}
+.typing span{
+  width:7px;height:7px;background:var(--muted);border-radius:50%;
+  animation:typingDot 1.2s infinite;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+
+/* Quick Actions */
+.quick-actions{
+  display:flex;gap:6px;overflow-x:auto;padding:8px 16px;
+  scrollbar-width:none;flex-shrink:0;
+}
+.quick-actions::-webkit-scrollbar{display:none;}
+.quick-btn{
+  flex-shrink:0;padding:6px 12px;border-radius:20px;
+  font-size:11px;font-weight:600;cursor:pointer;
+  border:1px solid var(--border);background:var(--card);
+  color:var(--text);transition:all .15s;white-space:nowrap;
+}
+.quick-btn:active{background:var(--gl);border-color:var(--g3);}
+
+/* Chat Input */
+.chat-input-wrap{
+  display:flex;align-items:flex-end;gap:8px;
+  padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--border);flex-shrink:0;
+  background:var(--card);
+}
+.chat-input{
+  flex:1;resize:none;border:1px solid var(--border);
+  border-radius:20px;padding:10px 16px;font-size:14px;
+  font-family:'DM Sans',sans-serif;
+  background:var(--surface);color:var(--text);
+  min-height:42px;max-height:120px;
+  outline:none;transition:border-color .15s;
+  line-height:1.4;
+}
+.chat-input:focus{border-color:var(--g3);}
+.chat-input::placeholder{color:var(--muted);}
+.chat-send{
+  width:42px;height:42px;border-radius:50%;border:none;
+  background:var(--g3);cursor:pointer;display:grid;place-items:center;
+  flex-shrink:0;transition:background .15s,transform .1s;
+}
+.chat-send:disabled{background:var(--border);cursor:default;}
+.chat-send:not(:disabled):active{transform:scale(.9);background:var(--g2);}
+.chat-send svg{width:18px;height:18px;color:#fff;}
+
+/* Backdrop */
+.chat-backdrop{
+  position:fixed;inset:0;z-index:350;
+  background:rgba(0,0,0,.4);opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.chat-backdrop.open{opacity:1;pointer-events:auto;}
+
+/* API Key Modal */
+.api-modal{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.5);display:grid;place-items:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.api-modal.open{opacity:1;pointer-events:auto;}
+.api-modal-box{
+  background:var(--card);border-radius:20px;padding:28px 24px;
+  width:min(90vw,360px);text-align:center;
+}
+.api-modal-box h3{font-family:'Syne',sans-serif;font-size:16px;margin-bottom:6px;}
+.api-modal-box p{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.api-input{
+  width:100%;padding:12px 16px;border:1px solid var(--border);
+  border-radius:12px;font-size:13px;font-family:'DM Sans',sans-serif;
+  outline:none;margin-bottom:12px;
+}
+.api-input:focus{border-color:var(--g3);}
+.api-save{
+  width:100%;padding:12px;border:none;border-radius:12px;
+  background:var(--g3);color:#fff;font-size:14px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  transition:background .15s;
+}
+.api-save:active{background:var(--g2);}
+.api-skip{
+  display:block;margin-top:10px;font-size:11px;color:var(--muted);
+  cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="app-header">
+  <div class="header-top">
+    <div class="header-user">
+      <div class="avatar">JB</div>
+      <div>
+        <div class="header-name">Jeremy Berthaud</div>
+        <div class="header-role">Directeur General &middot; IDF</div>
+      </div>
+    </div>
+    <div class="header-date" id="headerDate"></div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" onclick="showTab('overview',this)">Vue globale</button>
+    <button class="tab" onclick="showTab('actions',this)">Actions P1/P2</button>
+    <button class="tab" onclick="showTab('site',this)">Site & Ads</button>
+    <button class="tab" onclick="showTab('litige',this)">Litige</button>
+    <button class="tab" onclick="showTab('affil',this)">Affiliation</button>
+  </div>
+</header>
+
+<div class="content">
+
+  <!-- TAB : OVERVIEW -->
+  <div class="tab-content active" id="tab-overview">
+    <div>
+      <div class="section-label">Tableau de bord</div>
+      <div class="kpi-scroll">
+        <div class="kpi-pill kp1"><div class="kpi-label">Projets actifs</div><div class="kpi-val">4</div><div class="kpi-sub sub-green">1 live &middot; 3 en build</div></div>
+        <div class="kpi-pill kp2"><div class="kpi-label">Budget</div><div class="kpi-val">100&euro;</div><div class="kpi-sub sub-gold">0&euro; depense</div></div>
+        <div class="kpi-pill kp3"><div class="kpi-label">Litige LUX</div><div class="kpi-val">6 m.</div><div class="kpi-sub sub-red">3 recours actifs</div></div>
+        <div class="kpi-pill kp4"><div class="kpi-label">Taches urgentes</div><div class="kpi-val">3</div><div class="kpi-sub sub-red">A traiter ce jour</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">Projets</div>
+      <div class="card">
+        <div class="proj-item">
+          <div class="proj-emoji" style="background:#e8f0ec">&#127968;</div>
+          <div class="proj-body">
+            <div class="proj-name">MaPrimeAdapt IDF</div>
+            <div class="proj-sub">maprimeadapt-idf.fr &middot; GTM + GA4 + Ads</div>
+            <div class="proj-tags"><span class="tag t-live">&#9679; Live</span><span class="tag" style="background:#eff6ff;color:#1d4ed8">Ads actifs</span></div>
+          </div>
+          <div class="proj-ring"><svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#e2ebe5" stroke-width="3.5"/><circle cx="20" cy="20" r="15" fill="none" stroke="#2d6a4f" stroke-width="3.5" stroke-dasharray="94" stroke-dashoffset="23" stroke-linecap="round"/></svg><div class="ring-pct">75%</div></div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-emoji" style="background:#fef3c7">&#128722;</div>
+          <div class="proj-body">
+            <div class="proj-name">E-commerce</div>
+            <div class="proj-sub">Stack en definition &middot; Next.js / Shopify</div>
+            <div class="proj-tags"><span class="tag t-build">&#9881; En construction</span></div>
+          </div>
+          <div class="proj-ring"><svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#e2ebe5" stroke-width="3.5"/><circle cx="20" cy="20" r="15" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-dasharray="94" stroke-dashoffset="75" stroke-linecap="round"/></svg><div class="ring-pct">20%</div></div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-emoji" style="background:#f0fdf4">&#128218;</div>
+          <div class="proj-body">
+            <div class="proj-name">App Scolaire IA</div>
+            <div class="proj-sub">Pitch Pronote &middot; Index Education</div>
+            <div class="proj-tags"><span class="tag t-build">&#9881; Pitch en cours</span></div>
+          </div>
+          <div class="proj-ring"><svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#e2ebe5" stroke-width="3.5"/><circle cx="20" cy="20" r="15" fill="none" stroke="#10b981" stroke-width="3.5" stroke-dasharray="94" stroke-dashoffset="66" stroke-linecap="round"/></svg><div class="ring-pct">30%</div></div>
+        </div>
+        <div class="proj-item">
+          <div class="proj-emoji" style="background:#f5f3ff">&#128184;</div>
+          <div class="proj-body">
+            <div class="proj-name">Affiliation SaaS</div>
+            <div class="proj-sub">Shopify &middot; Canva &middot; NordVPN &middot; Systeme.io</div>
+            <div class="proj-tags"><span class="tag t-idea">&#9678; Distribution</span></div>
+          </div>
+          <div class="proj-ring"><svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#e2ebe5" stroke-width="3.5"/><circle cx="20" cy="20" r="15" fill="none" stroke="#8b5cf6" stroke-width="3.5" stroke-dasharray="94" stroke-dashoffset="85" stroke-linecap="round"/></svg><div class="ring-pct">10%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB : ACTIONS -->
+  <div class="tab-content" id="tab-actions">
+    <div>
+      <div class="section-label">Priorite 1 &mdash; Immediat</div>
+      <div class="card">
+        <div class="action-item"><div class="action-dot" style="background:var(--red)"></div><div class="action-body"><div class="action-text">Tester l'email jeremy@maprimeadapt-idf.fr &mdash; envoyer un mail test</div><div class="action-proj">MaPrimeAdapt IDF</div></div><span class="prio p1">P1</span></div>
+        <div class="action-item"><div class="action-dot" style="background:var(--red)"></div><div class="action-body"><div class="action-text">Tester menu hamburger + barre CTA bas sur iPhone</div><div class="action-proj">MaPrimeAdapt IDF</div></div><span class="prio p1">P1</span></div>
+        <div class="action-item"><div class="action-dot" style="background:var(--red)"></div><div class="action-body"><div class="action-text">Relancer ITM Luxembourg &mdash; suivi dossier en attente</div><div class="action-proj">Litige Luxembourg</div></div><span class="prio p1">P1</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Priorite 2 &mdash; Cette semaine</div>
+      <div class="card">
+        <div class="action-item"><div class="action-dot" style="background:var(--gold)"></div><div class="action-body"><div class="action-text">Creer les pages departementales 77, 78, 91, 92, 93, 94, 95</div><div class="action-proj">MaPrimeAdapt IDF &middot; SEO</div></div><span class="prio p2">P2</span></div>
+        <div class="action-item"><div class="action-dot" style="background:var(--gold)"></div><div class="action-body"><div class="action-text">Choisir la stack e-commerce definitive</div><div class="action-proj">E-commerce</div></div><span class="prio p2">P2</span></div>
+        <div class="action-item"><div class="action-dot" style="background:var(--gold)"></div><div class="action-body"><div class="action-text">Finaliser les 5 slides pitch App scolaire</div><div class="action-proj">App Scolaire IA</div></div><span class="prio p2">P2</span></div>
+        <div class="action-item"><div class="action-dot" style="background:var(--gold)"></div><div class="action-body"><div class="action-text">Configurer conversion tracking Google Ads dans GTM</div><div class="action-proj">MaPrimeAdapt IDF &middot; Ads</div></div><span class="prio p2">P2</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Priorite 3 &mdash; Cette semaine si possible</div>
+      <div class="card">
+        <div class="action-item"><div class="action-dot" style="background:var(--emerald)"></div><div class="action-body"><div class="action-text">Poster 3 scripts Facebook affiliation SaaS</div><div class="action-proj">Affiliation SaaS</div></div><span class="prio p3">P3</span></div>
+        <div class="action-item"><div class="action-dot" style="background:var(--emerald)"></div><div class="action-body"><div class="action-text">Ouvrir compte Systeme.io affiliation</div><div class="action-proj">Affiliation SaaS</div></div><span class="prio p3">P3</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB : SITE -->
+  <div class="tab-content" id="tab-site">
+    <div>
+      <div class="section-label">Infrastructure</div>
+      <div class="card">
+        <div class="status-row"><span class="sk">Domaine</span><span class="sv sv-ok">maprimeadapt-idf.fr &#10003;</span></div>
+        <div class="status-row"><span class="sk">Hebergement</span><span class="sv sv-ok">Hostinger &#10003;</span></div>
+        <div class="status-row"><span class="sk">CDN secondaire</span><span class="sv sv-ok">Cloudflare Pages &#10003;</span></div>
+        <div class="status-row"><span class="sk">SSL / HTTPS</span><span class="sv sv-ok">Actif &#10003;</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Tracking & Analytics</div>
+      <div class="card">
+        <div class="status-row"><span class="sk">GA4</span><span class="sv sv-id">G-LNC21XL03M &#10003;</span></div>
+        <div class="status-row"><span class="sk">GTM</span><span class="sv sv-id">GT-WF37DW69 &#10003;</span></div>
+        <div class="status-row"><span class="sk">Google Ads</span><span class="sv sv-id">AW-18047934864 &#10003;</span></div>
+        <div class="status-row"><span class="sk">Conversion tracking</span><span class="sv sv-warn">&#9888; A configurer GTM</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Contenu & UX</div>
+      <div class="card">
+        <div class="status-row"><span class="sk">Email jeremy@</span><span class="sv sv-ok">Visible &#10003;</span></div>
+        <div class="status-row"><span class="sk">Email contact@</span><span class="sv sv-ok">Visible &#10003;</span></div>
+        <div class="status-row"><span class="sk">Photos temoignages</span><span class="sv sv-ok">Avatars M/P/S &#10003;</span></div>
+        <div class="status-row"><span class="sk">Menu mobile</span><span class="sv sv-ok">Hamburger pro &#10003;</span></div>
+        <div class="status-row"><span class="sk">Barre CTA sticky</span><span class="sv sv-ok">Appeler + CTA &#10003;</span></div>
+        <div class="status-row"><span class="sk">Social proof toast</span><span class="sv sv-ok">Actif &#10003;</span></div>
+        <div class="status-row"><span class="sk">Chatbot Sophie</span><span class="sv sv-ok">Operationnel &#10003;</span></div>
+        <div class="status-row"><span class="sk">WhatsApp</span><span class="sv sv-ok">06 04 43 34 20 &#10003;</span></div>
+        <div class="status-row"><span class="sk">Pages depart. IDF</span><span class="sv sv-warn">&#9888; A creer (75-95)</span></div>
+        <div class="status-row"><span class="sk">SIRET affiche</span><span class="sv sv-warn">&#9888; Fictif a remplacer</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB : LITIGE -->
+  <div class="tab-content" id="tab-litige">
+    <div>
+      <div class="section-label">Situation</div>
+      <div class="card" style="border-color:rgba(239,68,68,.25)">
+        <div class="litige-header"><div class="litige-blink"></div><div class="litige-title">&#9878; Litige Luxembourg &mdash; Actif</div></div>
+        <div class="litige-row"><span class="lk">Salaires impayes depuis</span><span class="lv">Octobre 2025</span></div>
+        <div class="litige-row"><span class="lk">Type de licenciement</span><span class="lv">Conteste</span></div>
+        <div class="litige-row"><span class="lk">Conge parental</span><span class="lv"><span class="ls ls-wait">Litigieux</span></span></div>
+        <div class="litige-row"><span class="lk">Solde tout compte</span><span class="lv"><span class="ls ls-wait">Conteste</span></span></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Recours engages</div>
+      <div class="card" style="border-color:rgba(239,68,68,.2)">
+        <div class="litige-row"><span class="lk">CAE &mdash; Chambre des Employes</span><span class="lv"><span class="ls ls-go">En cours</span></span></div>
+        <div class="litige-row"><span class="lk">ITM &mdash; Inspection du Travail</span><span class="lv"><span class="ls ls-go">En cours &#9888;</span></span></div>
+        <div class="litige-row"><span class="lk">Pole Emploi France</span><span class="lv"><span class="ls ls-ok">Engage &#10003;</span></span></div>
+        <div class="litige-row"><span class="lk">Dossier constitue</span><span class="lv"><span class="ls ls-ok">Oui &#10003;</span></span></div>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:14px;padding:14px 16px;">
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:6px;">&#9889; Action requise cette semaine</div>
+      <div style="font-size:12.5px;line-height:1.5;color:var(--text);">Relancer l'ITM Luxembourg par ecrit. Demander un etat d'avancement officiel du dossier et un delai de reponse.</div>
+    </div>
+  </div>
+
+  <!-- TAB : AFFILIATION -->
+  <div class="tab-content" id="tab-affil">
+    <div>
+      <div class="section-label">Programmes cibles</div>
+      <div class="card">
+        <div class="affil-row"><div class="affil-ico" style="background:#96bf48">SH</div><div class="affil-name">Shopify</div><div class="affil-right"><div class="affil-rate">200 $/vente</div><div class="affil-type">High ticket</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:#00c4cc">CV</div><div class="affil-name">Canva Pro</div><div class="affil-right"><div class="affil-rate">36 %/an</div><div class="affil-type">Recurrent</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:#4687ff">NV</div><div class="affil-name">NordVPN</div><div class="affil-right"><div class="affil-rate">40 %/vente</div><div class="affil-type">Volume</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:var(--gold)">SI</div><div class="affil-name">Systeme.io</div><div class="affil-right"><div class="affil-rate">40 % recurrent</div><div class="affil-type">Francophone</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:var(--purple)">GR</div><div class="affil-name">GetResponse</div><div class="affil-right"><div class="affil-rate">33 %/mois</div><div class="affil-type">Email mktg</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:#111827">NT</div><div class="affil-name">Notion</div><div class="affil-right"><div class="affil-rate">Variable</div><div class="affil-type">B2B fort</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:var(--red)">SE</div><div class="affil-name">Semrush</div><div class="affil-right"><div class="affil-rate">200 $/vente</div><div class="affil-type">SEO niche</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:var(--blue)">MN</div><div class="affil-name">Monday.com</div><div class="affil-right"><div class="affil-rate">Variable</div><div class="affil-type">B2B</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Canaux de distribution</div>
+      <div class="card">
+        <div class="affil-row"><div class="affil-ico" style="background:#1877f2">FB</div><div class="affil-name">Groupes Facebook</div><div class="affil-right"><div class="affil-rate" style="color:var(--emerald)">Immediat</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:#000">TK</div><div class="affil-name">TikTok / Reels</div><div class="affil-right"><div class="affil-rate" style="color:var(--emerald)">Immediat</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:#ff4500">RD</div><div class="affil-name">Reddit / Quora</div><div class="affil-right"><div class="affil-rate" style="color:var(--gold)">1 semaine</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:var(--g2)">NL</div><div class="affil-name">Newsletter email</div><div class="affil-right"><div class="affil-rate" style="color:var(--gold)">1 semaine</div></div></div>
+        <div class="affil-row"><div class="affil-ico" style="background:var(--muted)">SE</div><div class="affil-name">Articles SEO</div><div class="affil-right"><div class="affil-rate" style="color:var(--muted)">Long terme</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <button class="bnav-item active" onclick="showTab('overview',null);setNav(this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Accueil
+  </button>
+  <button class="bnav-item" onclick="showTab('actions',null);setNav(this)" style="position:relative">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <div class="bnav-dot"></div>
+    Actions
+  </button>
+  <button class="bnav-item" onclick="showTab('site',null);setNav(this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+    Site
+  </button>
+  <button class="bnav-item" onclick="showTab('litige',null);setNav(this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Litige
+  </button>
+  <button class="bnav-item" onclick="showTab('affil',null);setNav(this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    Affiliation
+  </button>
+</nav>
+
+<!-- ══ CHAT FAB ══ -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
+
+<!-- ══ CHAT BACKDROP ══ -->
+<div class="chat-backdrop" id="chatBackdrop" onclick="toggleChat()"></div>
+
+<!-- ══ CHAT PANEL ══ -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-handle"></div>
+  <div class="chat-header">
+    <div class="chat-avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="chat-htext">
+      <div class="chat-hname">Assistant DG</div>
+      <div class="chat-hstatus" id="chatStatus">En ligne</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="chat-messages" id="chatMessages"></div>
+
+  <div class="quick-actions" id="quickActions">
+    <button class="quick-btn" onclick="sendQuick('Resume-moi la situation globale')">Situation globale</button>
+    <button class="quick-btn" onclick="sendQuick('Quelles sont mes priorites du jour ?')">Priorites du jour</button>
+    <button class="quick-btn" onclick="sendQuick('Ou en est le litige Luxembourg ?')">Litige LUX</button>
+    <button class="quick-btn" onclick="sendQuick('Quel projet peut generer du revenu le plus vite ?')">Revenu rapide</button>
+    <button class="quick-btn" onclick="sendQuick('Redige un email de relance pour l ITM Luxembourg')">Email ITM</button>
+    <button class="quick-btn" onclick="sendQuick('Conseille-moi sur la strategie affiliation')">Strategie affil</button>
+  </div>
+
+  <div class="chat-input-wrap">
+    <textarea class="chat-input" id="chatInput" placeholder="Pose ta question..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="chat-send" id="chatSend" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══ API KEY MODAL ══ -->
+<div class="api-modal" id="apiModal">
+  <div class="api-modal-box">
+    <h3>Cle API Anthropic</h3>
+    <p>Pour activer l'assistant Claude, entre ta cle API.<br>Elle reste stockee localement sur ton appareil.</p>
+    <input class="api-input" id="apiKeyInput" type="password" placeholder="sk-ant-api03-...">
+    <button class="api-save" onclick="saveApiKey()">Activer l'assistant</button>
+    <button class="api-skip" onclick="closeApiModal()">Utiliser sans IA (mode demo)</button>
+  </div>
+</div>
+
+<script>
+// ── Dashboard Tabs ──
+function showTab(id, tabBtn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  const tabMap = {overview:0, actions:1, site:2, litige:3, affil:4};
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  if (tabBtn) { tabBtn.classList.add('active'); }
+  else { tabs[tabMap[id]].classList.add('active'); tabs[tabMap[id]].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setNav(btn) {
+  document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Date ──
+(function(){
+  const d = new Date();
+  const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+  const mois = ['janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre'];
+  const sem = Math.ceil(((d - new Date(d.getFullYear(),0,1))/86400000 + new Date(d.getFullYear(),0,1).getDay()+1)/7);
+  const q = Math.ceil((d.getMonth()+1)/3);
+  document.getElementById('headerDate').innerHTML = jours[d.getDay()]+'. '+d.getDate()+' '+mois[d.getMonth()]+' '+d.getFullYear()+'<br>Q'+q+' &middot; Semaine '+sem;
+})();
+
+// ── Animate rings ──
+window.addEventListener('load', () => {
+  document.querySelectorAll('.proj-ring svg circle:last-child').forEach(c => {
+    const target = c.getAttribute('stroke-dashoffset');
+    c.setAttribute('stroke-dashoffset', '94');
+    setTimeout(() => { c.style.transition = 'stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)'; c.setAttribute('stroke-dashoffset', target); }, 400);
+  });
+});
+
+// ══════════════════════════════════════
+// CHAT CLAUDE — LOGIC
+// ══════════════════════════════════════
+
+const DASHBOARD_CONTEXT = `Tu es l'assistant personnel de Jeremy Berthaud, Directeur General base en Ile-de-France.
+Tu as acces a tout le contexte de son dashboard de gestion. Reponds toujours en francais, de maniere concise et actionnable.
+Tu es un conseiller strategique pragmatique. Tu donnes des reponses courtes et directes.
+
+=== PROJETS ACTIFS ===
+
+1. MaPrimeAdapt IDF (75% - LIVE)
+   - Site: maprimeadapt-idf.fr — aide les seniors a obtenir des subventions ANAH pour adapter leur logement
+   - Financement jusqu'a 70% des travaux, 5000-15400EUR par dossier
+   - Infrastructure: Hostinger + Cloudflare Pages, SSL actif
+   - Tracking: GA4 (G-LNC21XL03M), GTM (GT-WF37DW69), Google Ads (AW-18047934864)
+   - Conversion tracking: A CONFIGURER dans GTM (priorite)
+   - Contact: WhatsApp 06 04 43 34 20, jeremy@maprimeadapt-idf.fr
+   - Chatbot Sophie operationnel
+   - SIRET affiche est fictif — a remplacer
+   - Pages departementales IDF a creer (75, 77, 78, 91, 92, 93, 94, 95)
+   - Commission estimee: 10-15% du montant aide = ~1540EUR/dossier
+
+2. E-commerce (20% - En construction)
+   - Stack en definition: Next.js ou Shopify
+   - Phase de choix technologique
+
+3. App Scolaire IA (30% - Pitch en cours)
+   - Pitch vers Pronote / Index Education
+   - 5 slides a finaliser
+
+4. Affiliation SaaS (10% - Distribution)
+   - Programmes: Shopify (200$/vente), Canva Pro (36%/an), NordVPN (40%/vente), Systeme.io (40% recurrent), GetResponse (33%/mois), Semrush (200$/vente), Monday.com, Notion
+   - Canaux: Groupes Facebook (immediat), TikTok/Reels (immediat), Reddit/Quora (1 sem), Newsletter (1 sem), Articles SEO (long terme)
+
+=== LITIGE LUXEMBOURG ===
+- Salaires impayes depuis octobre 2025 (6 mois)
+- Licenciement conteste
+- Conge parental: litigieux
+- Solde tout compte: conteste
+- 3 recours actifs:
+  * CAE (Chambre des Employes): en cours
+  * ITM (Inspection du Travail): en cours — A RELANCER cette semaine
+  * Pole Emploi France: engage
+- Dossier constitue: oui
+- ACTION URGENTE: Relancer ITM par ecrit, demander etat avancement + delai
+
+=== ACTIONS PRIORITAIRES ===
+P1 (Immediat):
+- Tester email jeremy@maprimeadapt-idf.fr
+- Tester menu hamburger + CTA sur iPhone
+- Relancer ITM Luxembourg
+
+P2 (Cette semaine):
+- Creer pages departementales 77-95
+- Choisir stack e-commerce
+- Finaliser 5 slides pitch App scolaire
+- Configurer conversion tracking GTM
+
+P3 (Si possible):
+- Poster 3 scripts Facebook affiliation SaaS
+- Ouvrir compte Systeme.io affiliation
+
+=== BUDGET ===
+- Budget operationnel: 100EUR/mois
+- Depense actuelle: 0EUR
+- ArbiBot (systeme d'arbitrage sport+crypto) en parallele
+
+=== SYSTEME BOT (ArbiBot) ===
+- Architecture 4 bots: Veille, Trader, Client, Contenu
+- Scanner arbitrage sport (Betclic, Winamax, Unibet) + crypto (Binance, Kraken, Bybit)
+- Actuellement en mode DRY_RUN (simulation)
+- Scanner fonctionne, placement pas encore operationnel`;
+
+let conversationHistory = [];
+let apiKey = localStorage.getItem('claude_api_key') || '';
+let isTyping = false;
+
+// ── Chat UI ──
+function toggleChat() {
+  const panel = document.getElementById('chatPanel');
+  const backdrop = document.getElementById('chatBackdrop');
+  const isOpen = panel.classList.contains('open');
+
+  if (!isOpen) {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    if (!apiKey && conversationHistory.length === 0) {
+      document.getElementById('apiModal').classList.add('open');
+    }
+    if (conversationHistory.length === 0) {
+      addBotMessage("Salut Jeremy. Je suis ton assistant DG. Je connais tous tes projets, tes priorites et ton litige. Pose-moi n'importe quelle question ou utilise les raccourcis ci-dessous.");
+    }
+    setTimeout(() => document.getElementById('chatInput').focus(), 400);
+  } else {
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+  }
+}
+
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (key) {
+    apiKey = key;
+    localStorage.setItem('claude_api_key', key);
+  }
+  closeApiModal();
+}
+
+function closeApiModal() {
+  document.getElementById('apiModal').classList.remove('open');
+}
+
+function addBotMessage(text) {
+  const el = document.createElement('div');
+  el.className = 'msg msg-bot';
+  el.innerHTML = `<div class="msg-bubble">${formatText(text)}</div><div class="msg-time">${timeNow()}</div>`;
+  document.getElementById('chatMessages').appendChild(el);
+  scrollChat();
+}
+
+function addUserMessage(text) {
+  const el = document.createElement('div');
+  el.className = 'msg msg-user';
+  el.innerHTML = `<div class="msg-bubble">${escapeHtml(text)}</div><div class="msg-time">${timeNow()}</div>`;
+  document.getElementById('chatMessages').appendChild(el);
+  scrollChat();
+}
+
+function showTyping() {
+  const el = document.createElement('div');
+  el.className = 'typing';
+  el.id = 'typingIndicator';
+  el.innerHTML = '<span></span><span></span><span></span>';
+  document.getElementById('chatMessages').appendChild(el);
+  scrollChat();
+}
+
+function hideTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+function scrollChat() {
+  const c = document.getElementById('chatMessages');
+  setTimeout(() => c.scrollTop = c.scrollHeight, 50);
+}
+
+function timeNow() {
+  const d = new Date();
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatText(text) {
+  // Bold
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  // Bullets
+  text = text.replace(/^[-•] (.+)$/gm, '<span style="display:block;padding-left:12px;text-indent:-12px;">&#8226; $1</span>');
+  // Numbered
+  text = text.replace(/^(\d+)\. (.+)$/gm, '<span style="display:block;padding-left:16px;text-indent:-16px;">$1. $2</span>');
+  // Line breaks
+  text = text.replace(/\n/g, '<br>');
+  return text;
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function sendQuick(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || isTyping) return;
+
+  addUserMessage(text);
+  input.value = '';
+  input.style.height = 'auto';
+  isTyping = true;
+  document.getElementById('chatSend').disabled = true;
+  document.getElementById('chatStatus').textContent = 'Reflechit...';
+
+  conversationHistory.push({ role: 'user', content: text });
+
+  showTyping();
+
+  if (!apiKey) {
+    // Mode demo — reponses locales intelligentes
+    setTimeout(() => {
+      hideTyping();
+      const response = getDemoResponse(text);
+      addBotMessage(response);
+      conversationHistory.push({ role: 'assistant', content: response });
+      isTyping = false;
+      document.getElementById('chatSend').disabled = false;
+      document.getElementById('chatStatus').textContent = 'En ligne';
+    }, 800 + Math.random() * 1200);
+    return;
+  }
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1024,
+        system: DASHBOARD_CONTEXT,
+        messages: conversationHistory.slice(-10)
+      })
+    });
+
+    hideTyping();
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        addBotMessage("Cle API invalide. Clique sur le bouton chat pour reconfigurer.");
+        apiKey = '';
+        localStorage.removeItem('claude_api_key');
+      } else {
+        addBotMessage("Erreur API (" + response.status + "). " + (err.error?.message || 'Reessaie.'));
+      }
+      conversationHistory.pop();
+    } else {
+      const data = await response.json();
+      const reply = data.content[0].text;
+      addBotMessage(reply);
+      conversationHistory.push({ role: 'assistant', content: reply });
+    }
+  } catch (e) {
+    hideTyping();
+    addBotMessage("Erreur de connexion. Verifie ta connexion internet.");
+    conversationHistory.pop();
+  }
+
+  isTyping = false;
+  document.getElementById('chatSend').disabled = false;
+  document.getElementById('chatStatus').textContent = 'En ligne';
+}
+
+// ── Mode demo (sans API) ──
+function getDemoResponse(q) {
+  const lower = q.toLowerCase();
+
+  if (lower.includes('situation') || lower.includes('globale') || lower.includes('resume'))
+    return "**Situation au " + new Date().toLocaleDateString('fr-FR') + "**\n\n**MaPrimeAdapt IDF** (75%) est ton projet le plus avance. Le site est live, le tracking GA4+GTM en place, Google Ads actifs. Il manque le conversion tracking GTM et les pages departementales.\n\n**Litige Luxembourg** reste ta priorite defensive — 6 mois d'impayes, relance ITM urgente.\n\n**Budget**: 100EUR dispo, 0EUR depense.\n\n3 actions P1 a traiter aujourd'hui.";
+
+  if (lower.includes('priorite') || lower.includes('jour') || lower.includes('urgent'))
+    return "**3 priorites immediates :**\n\n1. **Tester l'email** jeremy@maprimeadapt-idf.fr — envoie-toi un test\n2. **Tester le mobile** — menu hamburger + CTA sticky sur iPhone\n3. **Relancer ITM Luxembourg** — courrier ecrit demandant etat d'avancement\n\nJe te recommande de commencer par l'ITM pendant que tu es frais, puis les tests techniques.";
+
+  if (lower.includes('litige') || lower.includes('luxembourg') || lower.includes('itm'))
+    return "**Litige Luxembourg — Etat des lieux**\n\n- Salaires impayes depuis **octobre 2025** (6 mois)\n- Licenciement **conteste**\n- Conge parental et solde tout compte **litigieux**\n\n**3 recours actifs :**\n- CAE : en cours\n- ITM : en cours — **A RELANCER cette semaine**\n- Pole Emploi : engage\n\n**Action immediate** : Envoyer un courrier recommande a l'ITM demandant un etat d'avancement officiel et un delai de traitement. Veux-tu que je te redige ce courrier ?";
+
+  if (lower.includes('revenu') || lower.includes('argent') || lower.includes('rapide') || lower.includes('generer'))
+    return "**Classement par rapidite de revenu :**\n\n1. **MaPrimeAdapt IDF** — le plus immediat. Chaque dossier = ~1540EUR de commission. Il te faut des leads. Priorite: configurer le conversion tracking GTM pour optimiser tes Ads.\n\n2. **Affiliation SaaS** — 0EUR d'investissement. Commence par Systeme.io (40% recurrent, marche francophone) + posts Facebook cette semaine.\n\n3. **ArbiBot** — potentiel mais encore en mode simulation.\n\nMon conseil : concentre 80% de ton energie sur MaPrimeAdapt cette semaine.";
+
+  if (lower.includes('email') || lower.includes('relance') || lower.includes('courrier'))
+    return "**Modele de relance ITM Luxembourg**\n\nObjet : Demande d'etat d'avancement — Dossier [Ref]\n\nMadame, Monsieur,\n\nPar la presente, je me permets de vous relancer concernant mon dossier depose aupres de vos services relatif au non-paiement de salaires depuis octobre 2025 et a la contestation de mon licenciement.\n\nJe souhaiterais obtenir :\n- Un etat d'avancement officiel du traitement de ma plainte\n- Un delai indicatif de resolution\n\nJe reste a votre entiere disposition pour tout document complementaire.\n\nCordialement,\nJeremy Berthaud\n\n*Adapte les references et envoie en recommande avec AR.*";
+
+  if (lower.includes('affiliation') || lower.includes('strategie') || lower.includes('affil'))
+    return "**Strategie affiliation recommandee :**\n\n**Semaine 1 (immediat) :**\n- Ouvrir compte Systeme.io affiliate (40% recurrent = revenus passifs)\n- Poster 3 scripts dans des groupes Facebook entrepreneurs francophones\n- Creer 2 Reels TikTok comparatifs (Systeme.io vs concurrents)\n\n**Semaine 2 :**\n- Lancer affiliation Canva Pro (36%/an, produit que tu utilises deja)\n- Tester Reddit/Quora avec du contenu SEO-friendly\n\n**Mois 2 :**\n- Newsletter email (collecter des mails via les contenus)\n- Ajouter NordVPN + Shopify (high ticket 200$/vente)\n\n**Cible** : 500EUR/mois en 3 mois avec cette approche.";
+
+  if (lower.includes('ecommerce') || lower.includes('e-commerce') || lower.includes('shopify') || lower.includes('next'))
+    return "**Choix stack e-commerce :**\n\n**Shopify** — si tu veux lancer vite avec peu de technique. ~29EUR/mois. App store enorme, paiements integres.\n\n**Next.js + Headless** — si tu veux le controle total et que tu as le temps de dev. Plus puissant mais 2-3x plus de temps de setup.\n\n**Mon conseil** : vu que tu as 4 projets en parallele et un budget serre, **Shopify** est le choix pragmatique. Tu peux lancer en 1 semaine au lieu de 1 mois. Concentre ton energie dev sur MaPrimeAdapt.";
+
+  return "Je suis en mode demo (sans cle API). Pour des reponses personnalisees et detaillees, ajoute ta cle API Anthropic.\n\nEn attendant, essaie les raccourcis rapides ci-dessus ou pose-moi des questions sur tes projets, ton litige, ou ta strategie.";
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  if (apiKey) {
+    // Cle deja configuree, pas besoin du modal
+  }
+});
+</script>
+</body>
+</html>

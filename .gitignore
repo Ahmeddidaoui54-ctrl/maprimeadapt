@@ -1,0 +1,10 @@
+node_modules/
+.env
+.DS_Store
+*.log
+.wrangler/
+.wallet.enc
+bot-system/.env
+arbi-placer/.env
+bot-system/sessions/
+logs/

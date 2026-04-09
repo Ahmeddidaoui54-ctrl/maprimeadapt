@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Semaine 1 · Adjoint DG</title>
+<style>
+  :root {
+    --vert: #1a4d35;
+    --vert-light: #2d6b4a;
+    --vert-pale: #e8f5ee;
+    --gris: #f7f7f7;
+    --border: #e0e0e0;
+    --text: #1a1a1a;
+    --text-muted: #777;
+    --white: #ffffff;
+    --orange: #e67e22;
+    --rouge: #c0392b;
+    --bleu: #2980b9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; color: var(--text); font-size: 14px; }
+
+  /* HEADER */
+  .topbar { background: var(--vert); color: #fff; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
+  .topbar h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.3px; }
+  .topbar .meta { font-size: 12px; opacity: 0.8; text-align: right; line-height: 1.6; }
+  .topbar .week-badge { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* KPI CARDS */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+  .kpi-card { background: var(--white); border-radius: 8px; padding: 20px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--vert); }
+  .kpi-card.warn::before { background: var(--orange); }
+  .kpi-card.done::before { background: #27ae60; }
+  .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 10px; }
+  .kpi-value { font-size: 28px; font-weight: 700; line-height: 1; }
+  .kpi-target { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+  .kpi-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+  .kpi-bar-fill { height: 100%; background: var(--vert); border-radius: 2px; transition: width 0.5s; }
+
+  /* SECTIONS */
+  .section { background: var(--white); border-radius: 8px; border: 1px solid var(--border); margin-bottom: 24px; overflow: hidden; }
+  .section-header { background: var(--vert); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .section-header h2 { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+  .section-header .badge { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 10px; font-size: 11px; }
+  .section-body { padding: 0; }
+
+  /* TABLEAU TÂCHES */
+  .tasks-table { width: 100%; border-collapse: collapse; }
+  .tasks-table thead th { background: var(--gris); padding: 10px 16px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); border-bottom: 1px solid var(--border); font-weight: 600; }
+  .tasks-table tbody td { padding: 11px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .tasks-table tbody tr:last-child td { border-bottom: none; }
+  .tasks-table tbody tr:hover { background: #fafafa; }
+  .tasks-table tbody tr.done-row { opacity: 0.6; }
+  .tasks-table tbody tr.done-row td:first-child { text-decoration: line-through; color: var(--text-muted); }
+
+  .status-btn {
+    border: none; background: none; cursor: pointer; font-size: 17px;
+    padding: 4px 8px; border-radius: 6px; transition: background 0.15s;
+    white-space: nowrap; display: flex; align-items: center; gap: 6px;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+  }
+  .status-btn:hover { background: var(--gris); }
+  .status-btn.todo { color: #888; }
+  .status-btn.inprogress { color: var(--orange); }
+  .status-btn.done { color: #27ae60; }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .tag-you { background: var(--vert-pale); color: var(--vert); }
+  .tag-ext { background: #eef4fb; color: var(--bleu); }
+  .tag-co { background: #fff3e0; color: var(--orange); }
+
+  .delai-urgent { color: var(--rouge); font-weight: 600; }
+  .delai-normal { color: var(--text-muted); }
+  .delai-today { color: var(--orange); font-weight: 600; }
+
+  /* PIPELINE */
+  .pipeline-table { width: 100%; border-collapse: collapse; }
+  .pipeline-table thead th { background: var(--gris); padding: 10px 16px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); border-bottom: 1px solid var(--border); font-weight: 600; }
+  .pipeline-table tbody td { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .pipeline-table tbody td[contenteditable="true"] { outline: none; border-radius: 4px; }
+  .pipeline-table tbody td[contenteditable="true"]:focus { background: #fffde7; box-shadow: inset 0 0 0 1px #f9c826; }
+  .pipeline-table tbody tr:last-child td { border-bottom: none; }
+  .add-row-btn { padding: 10px 20px; background: var(--vert-pale); color: var(--vert); border: 1px dashed var(--vert); font-size: 13px; cursor: pointer; width: 100%; font-family: inherit; transition: background 0.15s; font-weight: 600; }
+  .add-row-btn:hover { background: #d0ead9; }
+
+  .statut-select { border: 1px solid var(--border); background: var(--white); padding: 3px 8px; border-radius: 4px; font-size: 12px; font-family: inherit; color: var(--text); cursor: pointer; }
+
+  /* LOG */
+  .log-area { padding: 16px 20px; }
+  .log-input-row { display: flex; gap: 10px; margin-bottom: 16px; }
+  .log-input { flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: inherit; font-size: 13px; color: var(--text); outline: none; }
+  .log-input:focus { border-color: var(--vert); }
+  .log-add-btn { background: var(--vert); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; transition: background 0.15s; }
+  .log-add-btn:hover { background: var(--vert-light); }
+  .log-list { list-style: none; }
+  .log-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .log-item:last-child { border-bottom: none; }
+  .log-time { font-size: 11px; color: var(--text-muted); white-space: nowrap; min-width: 130px; }
+  .log-text { font-size: 13px; line-height: 1.4; flex: 1; }
+  .log-del { color: #ccc; cursor: pointer; font-size: 16px; line-height: 1; padding: 0 4px; }
+  .log-del:hover { color: var(--rouge); }
+  .log-empty { color: var(--text-muted); font-size: 13px; font-style: italic; padding: 12px 0; }
+
+  /* FOOTER */
+  .footer { background: var(--vert); color: rgba(255,255,255,0.8); text-align: center; padding: 14px 32px; font-size: 12px; letter-spacing: 0.5px; }
+  .footer strong { color: #fff; }
+
+  /* PROGRESS GLOBAL */
+  .progress-summary { display: flex; gap: 16px; align-items: center; padding: 12px 20px; background: var(--gris); font-size: 13px; }
+  .prog-label { color: var(--text-muted); }
+  .prog-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 100%; background: var(--vert); border-radius: 4px; transition: width 0.4s; }
+  .prog-pct { font-weight: 700; color: var(--vert); min-width: 35px; text-align: right; }
+
+  /* ===== RESPONSIVE — 768px ===== */
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    .topbar { flex-direction: column; gap: 10px; text-align: center; padding: 14px 16px; }
+    .topbar h1 { font-size: 15px; }
+    .topbar .meta { text-align: center; }
+
+    .container { padding: 16px 12px; }
+
+    .tasks-table, .pipeline-table { font-size: 12px; }
+    .tasks-table thead th, .pipeline-table thead th { padding: 8px 10px; }
+    .tasks-table tbody td, .pipeline-table tbody td { padding: 8px 10px; }
+
+    /* Tables : scroll horizontal */
+    .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tasks-table { min-width: 520px; }
+    .pipeline-table { min-width: 560px; }
+
+    .log-input-row { flex-direction: column; gap: 8px; }
+    .log-add-btn { width: 100%; }
+
+    .progress-summary { flex-wrap: wrap; gap: 8px; }
+
+    .section-header { padding: 12px 14px; }
+    .section-header h2 { font-size: 13px; }
+
+    .kpi-value { font-size: 22px; }
+  }
+
+  /* ===== RESPONSIVE — 480px ===== */
+  @media (max-width: 480px) {
+    .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kpi-card { padding: 14px; }
+    .kpi-label { font-size: 10px; }
+    .kpi-value { font-size: 20px; }
+    .kpi-target { font-size: 11px; }
+
+    .topbar h1 { font-size: 13px; }
+
+    .status-btn { font-size: 11px; padding: 3px 6px; }
+
+    .log-time { min-width: 90px; font-size: 10px; }
+    .log-text { font-size: 12px; }
+
+    .footer { padding: 12px 14px; font-size: 11px; }
+
+    .add-row-btn { font-size: 12px; padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+      <span class="week-badge">SEMAINE 1</span>
+    </div>
+    <h1>Tableau de bord — Semaine 1 · Adjoint DG</h1>
+  </div>
+  <div class="meta">
+    Semaine du <span id="weekRange"></span><br>
+    Dernière mise à jour : <span id="lastUpdate"></span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card" id="kpi-clients">
+      <div class="kpi-label">Clients actifs</div>
+      <div class="kpi-value" id="val-clients">0</div>
+      <div class="kpi-target">Objectif : 2 clients</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-clients" style="width:0%"></div></div>
+    </div>
+    <div class="kpi-card" id="kpi-ca">
+      <div class="kpi-label">CA mensuel</div>
+      <div class="kpi-value" id="val-ca">0 €</div>
+      <div class="kpi-target">Objectif : 500 €</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-ca" style="width:0%"></div></div>
+    </div>
+    <div class="kpi-card" id="kpi-prospects">
+      <div class="kpi-label">Prospects contactés</div>
+      <div class="kpi-value" id="val-prospects">0</div>
+      <div class="kpi-target">Objectif : 15 contacts</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-prospects" style="width:0%"></div></div>
+    </div>
+    <div class="kpi-card done" id="kpi-budget">
+      <div class="kpi-label">Budget restant</div>
+      <div class="kpi-value" id="val-budget">200 €</div>
+      <div class="kpi-target">Budget initial : 200 €</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" id="bar-budget" style="width:100%;background:#27ae60;"></div></div>
+    </div>
+  </div>
+
+  <!-- TÂCHES S1 -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Tâches Semaine 1 — Plan J1 à J7</h2>
+      <span class="badge" id="tasks-count">0 / 0 complétées</span>
+    </div>
+    <div class="progress-summary">
+      <span class="prog-label">Avancement global</span>
+      <div class="prog-bar"><div class="prog-fill" id="tasks-progress" style="width:0%"></div></div>
+      <span class="prog-pct" id="tasks-pct">0%</span>
+    </div>
+    <div class="section-body">
+      <div class="table-scroll-wrap">
+      <table class="tasks-table">
+        <thead>
+          <tr>
+            <th style="width:35%">Tâche</th>
+            <th style="width:15%">Responsable</th>
+            <th style="width:15%">Délai</th>
+            <th style="width:35%">Statut</th>
+          </tr>
+        </thead>
+        <tbody id="tasks-body">
+          <!-- Injecté par JS -->
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE PROSPECTS -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Pipeline Prospects</h2>
+      <span class="badge" id="pipeline-count">0 prospect(s)</span>
+    </div>
+    <div class="section-body">
+      <div class="table-scroll-wrap">
+      <table class="pipeline-table">
+        <thead>
+          <tr>
+            <th>Nom / Société</th>
+            <th>Secteur</th>
+            <th>Offre visée</th>
+            <th>Statut</th>
+            <th>Prochain contact</th>
+            <th style="width:40px;"></th>
+          </tr>
+        </thead>
+        <tbody id="pipeline-body">
+          <!-- Injecté par JS -->
+        </tbody>
+      </table>
+      </div>
+      <button type="button" class="add-row-btn" onclick="addPipelineRow()">+ Ajouter un prospect</button>
+    </div>
+  </div>
+
+  <!-- LOG ACTIVITÉ -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Log d'activité</h2>
+      <span class="badge" id="log-count">0 entrée(s)</span>
+    </div>
+    <div class="log-area">
+      <div class="log-input-row">
+        <input type="text" class="log-input" id="log-input" placeholder="Ajouter une action (ex: Appel client Dupont, envoi devis...)" maxlength="200" />
+        <button type="button" class="log-add-btn" onclick="addLog()">+ Ajouter</button>
+      </div>
+      <ul class="log-list" id="log-list">
+        <li class="log-empty" id="log-empty">Aucune action enregistrée — commencez à logger vos actions.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Compte-rendu DG</strong> · Prochain point lundi matin — Semaine 2 &nbsp;|&nbsp;
+  Dashboard auto-sauvegardé en local
+</div>
+
+<script>
+// ============================================================
+// DATA INITIALE — Tâches S1
+// ============================================================
+const INITIAL_TASKS = [
+  { id: 't1',  task: 'Créer les comptes plateformes (Meta Business, LinkedIn, Make.com)', resp: 'Adjoint', delai: 'J1', urgency: 'today' },
+  { id: 't2',  task: 'Ouvrir compte bancaire professionnel ou compte dédié', resp: 'Adjoint', delai: 'J1', urgency: 'today' },
+  { id: 't3',  task: 'Rédiger les 3 offres et les documents de vente (devis/plaquettes)', resp: 'Adjoint', delai: 'J2', urgency: 'urgent' },
+  { id: 't4',  task: 'Créer un email pro dédié (ex: contact@pme-services.fr)', resp: 'Adjoint', delai: 'J1', urgency: 'today' },
+  { id: 't5',  task: 'Identifier 15 prospects cibles (PME locales, artisans, seniors)', resp: 'Adjoint', delai: 'J2', urgency: 'urgent' },
+  { id: 't6',  task: 'Préparer le script d\'appel / message de prise de contact', resp: 'Adjoint', delai: 'J2', urgency: 'urgent' },
+  { id: 't7',  task: 'Lancer les 15 premiers contacts (appels + messages LinkedIn)', resp: 'Adjoint', delai: 'J3-J5', urgency: 'normal' },
+  { id: 't8',  task: 'Créer la page Facebook Pro + LinkedIn entreprise', resp: 'Adjoint', delai: 'J2', urgency: 'urgent' },
+  { id: 't9',  task: 'Publier 1 post de lancement sur chaque réseau social', resp: 'Adjoint', delai: 'J3', urgency: 'normal' },
+  { id: 't10', task: 'Mettre en place le CRM / suivi prospects (Notion ou tableau)', resp: 'Adjoint', delai: 'J2', urgency: 'urgent' },
+  { id: 't11', task: 'Lancer 1ère campagne Meta Ads (offre lancement 50€ budget)', resp: 'Adjoint', delai: 'J4', urgency: 'normal' },
+  { id: 't12', task: 'Configurer Make.com — 1er scénario d\'automatisation démo', resp: 'Adjoint', delai: 'J4', urgency: 'normal' },
+  { id: 't13', task: 'Préparer présentation PowerPoint / démo IA pour prospects PME', resp: 'Adjoint', delai: 'J3', urgency: 'normal' },
+  { id: 't14', task: 'Obtenir 2 RDV de présentation confirmés', resp: 'Adjoint', delai: 'J5-J7', urgency: 'normal' },
+  { id: 't15', task: 'Compte-rendu semaine 1 au DG + bilan chiffré', resp: 'Adjoint', delai: 'J7', urgency: 'normal' },
+  { id: 't16', task: 'Préparer plan d\'action Semaine 2 (objectifs, tâches, budget)', resp: 'Adjoint', delai: 'J7', urgency: 'normal' },
+];
+
+const STATUS_CYCLE = ['todo', 'inprogress', 'done'];
+const STATUS_LABELS = {
+  todo: { icon: '⬜', label: 'À faire', cls: 'todo' },
+  inprogress: { icon: '🔄', label: 'En cours', cls: 'inprogress' },
+  done: { icon: '✅', label: 'Fait', cls: 'done' },
+};
+
+// ============================================================
+// ÉTAT — localStorage
+// ============================================================
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('dashboard_s1_state') || '{}'); } catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem('dashboard_s1_state', JSON.stringify(state));
+  localStorage.setItem('dashboard_s1_updated', new Date().toISOString());
+}
+function getState() {
+  return window._state || (window._state = loadState());
+}
+
+// ============================================================
+// TÂCHES
+// ============================================================
+function renderTasks() {
+  const state = getState();
+  const tbody = document.getElementById('tasks-body');
+  if (!state.tasks) state.tasks = {};
+
+  let done = 0;
+  tbody.innerHTML = '';
+
+  INITIAL_TASKS.forEach(t => {
+    const status = state.tasks[t.id] || 'todo';
+    if (status === 'done') done++;
+    const s = STATUS_LABELS[status];
+    const tr = document.createElement('tr');
+    if (status === 'done') tr.classList.add('done-row');
+
+    const delaiClass = t.urgency === 'today' ? 'delai-today' : t.urgency === 'urgent' ? 'delai-urgent' : 'delai-normal';
+
+    tr.innerHTML = `
+      <td>${t.task}</td>
+      <td><span class="tag tag-you">${t.resp}</span></td>
+      <td><span class="${delaiClass}">${t.delai}</span></td>
+      <td>
+        <button type="button" class="status-btn ${s.cls}" onclick="cycleStatus('${t.id}', this)">
+          ${s.icon} ${s.label}
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const total = INITIAL_TASKS.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('tasks-count').textContent = `${done} / ${total} complétées`;
+  document.getElementById('tasks-progress').style.width = pct + '%';
+  document.getElementById('tasks-pct').textContent = pct + '%';
+}
+
+function cycleStatus(id, btn) {
+  const state = getState();
+  if (!state.tasks) state.tasks = {};
+  const current = state.tasks[id] || 'todo';
+  const idx = STATUS_CYCLE.indexOf(current);
+  const next = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+  state.tasks[id] = next;
+  saveState(state);
+  renderTasks();
+  updateKPIs();
+}
+
+// ============================================================
+// PIPELINE
+// ============================================================
+const STATUTS_PIPE = ['À contacter', 'Contacté', 'RDV planifié', 'Devis envoyé', 'En négociation', 'Client', 'Perdu'];
+
+function renderPipeline() {
+  const state = getState();
+  const tbody = document.getElementById('pipeline-body');
+  tbody.innerHTML = '';
+  (state.pipeline || []).forEach((row, i) => {
+    addPipelineRowFromData(row, i);
+  });
+  document.getElementById('pipeline-count').textContent = (state.pipeline || []).length + ' prospect(s)';
+}
+
+function addPipelineRow() {
+  const state = getState();
+  if (!state.pipeline) state.pipeline = [];
+  state.pipeline.push({ nom: '', secteur: '', offre: '', statut: 'À contacter', prochain: '' });
+  saveState(state);
+  renderPipeline();
+  // focus first cell of last row
+  const rows = document.getElementById('pipeline-body').querySelectorAll('tr');
+  if (rows.length) rows[rows.length - 1].querySelector('td[contenteditable]').focus();
+}
+
+function addPipelineRowFromData(data, idx) {
+  const tbody = document.getElementById('pipeline-body');
+  const tr = document.createElement('tr');
+
+  const statut = data.statut || 'À contacter';
+  const opts = STATUTS_PIPE.map(s => `<option value="${s}" ${s === statut ? 'selected' : ''}>${s}</option>`).join('');
+
+  tr.innerHTML = `
+    <td contenteditable="true" data-field="nom" data-idx="${idx}">${data.nom || ''}</td>
+    <td contenteditable="true" data-field="secteur" data-idx="${idx}">${data.secteur || ''}</td>
+    <td contenteditable="true" data-field="offre" data-idx="${idx}">${data.offre || ''}</td>
+    <td><select class="statut-select" data-idx="${idx}" onchange="pipeUpdate(${idx},'statut',this.value)">${opts}</select></td>
+    <td contenteditable="true" data-field="prochain" data-idx="${idx}">${data.prochain || ''}</td>
+    <td><span style="cursor:pointer;color:#ccc;font-size:16px;" onclick="deletePipelineRow(${idx})" title="Supprimer">✕</span></td>
+  `;
+
+  // Save on blur for contenteditable cells
+  tr.querySelectorAll('[contenteditable]').forEach(cell => {
+    cell.addEventListener('blur', () => {
+      const i = parseInt(cell.dataset.idx);
+      const field = cell.dataset.field;
+      pipeUpdate(i, field, cell.innerText.trim());
+    });
+  });
+
+  tbody.appendChild(tr);
+}
+
+function pipeUpdate(idx, field, value) {
+  const state = getState();
+  if (state.pipeline && state.pipeline[idx]) {
+    state.pipeline[idx][field] = value;
+    saveState(state);
+    document.getElementById('pipeline-count').textContent = (state.pipeline || []).length + ' prospect(s)';
+    updateKPIs();
+  }
+}
+
+function deletePipelineRow(idx) {
+  if (!confirm('Supprimer ce prospect ?')) return;
+  const state = getState();
+  state.pipeline.splice(idx, 1);
+  saveState(state);
+  renderPipeline();
+  updateKPIs();
+}
+
+// ============================================================
+// LOG
+// ============================================================
+function renderLog() {
+  const state = getState();
+  const ul = document.getElementById('log-list');
+  const empty = document.getElementById('log-empty');
+  const logs = state.logs || [];
+  ul.innerHTML = '';
+  if (logs.length === 0) {
+    ul.innerHTML = '<li class="log-empty" id="log-empty">Aucune action enregistrée — commencez à logger vos actions.</li>';
+    document.getElementById('log-count').textContent = '0 entrée(s)';
+    return;
+  }
+  document.getElementById('log-count').textContent = logs.length + ' entrée(s)';
+  [...logs].reverse().forEach((entry, ri) => {
+    const i = logs.length - 1 - ri;
+    const li = document.createElement('li');
+    li.className = 'log-item';
+    li.innerHTML = `
+      <span class="log-time">${entry.time}</span>
+      <span class="log-text">${escHtml(entry.text)}</span>
+      <span class="log-del" onclick="deleteLog(${i})" title="Supprimer">✕</span>
+    `;
+    ul.appendChild(li);
+  });
+}
+
+function addLog() {
+  const input = document.getElementById('log-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const state = getState();
+  if (!state.logs) state.logs = [];
+  const now = new Date();
+  const time = now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  state.logs.push({ time, text });
+  saveState(state);
+  input.value = '';
+  renderLog();
+}
+
+function deleteLog(idx) {
+  const state = getState();
+  state.logs.splice(idx, 1);
+  saveState(state);
+  renderLog();
+}
+
+document.getElementById('log-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addLog();
+});
+
+// ============================================================
+// KPIs (mise à jour dynamique)
+// ============================================================
+function updateKPIs() {
+  const state = getState();
+
+  // Clients actifs = prospects avec statut "Client"
+  const pipeline = state.pipeline || [];
+  const clients = pipeline.filter(p => p.statut === 'Client').length;
+  document.getElementById('val-clients').textContent = clients;
+  const clientPct = Math.min(100, Math.round((clients / 2) * 100));
+  document.getElementById('bar-clients').style.width = clientPct + '%';
+  document.getElementById('kpi-clients').className = 'kpi-card' + (clients >= 2 ? ' done' : clients > 0 ? ' warn' : '');
+
+  // CA mensuel (250€ par client IA, 120€ par client senior, 150€ par client leads)
+  // On estime 350€ * clients pour simplifier
+  const ca = clients * 350;
+  document.getElementById('val-ca').textContent = ca + ' €';
+  const caPct = Math.min(100, Math.round((ca / 500) * 100));
+  document.getElementById('bar-ca').style.width = caPct + '%';
+  document.getElementById('kpi-ca').className = 'kpi-card' + (ca >= 500 ? ' done' : ca > 0 ? ' warn' : '');
+
+  // Prospects contactés = tous sauf "À contacter"
+  const contactes = pipeline.filter(p => p.statut !== 'À contacter').length;
+  document.getElementById('val-prospects').textContent = contactes;
+  const prospPct = Math.min(100, Math.round((contactes / 15) * 100));
+  document.getElementById('bar-prospects').style.width = prospPct + '%';
+  document.getElementById('kpi-prospects').className = 'kpi-card' + (contactes >= 15 ? ' done' : contactes > 0 ? ' warn' : '');
+}
+
+// ============================================================
+// DATES
+// ============================================================
+function setDates() {
+  const now = new Date();
+  // Début de semaine (lundi)
+  const day = now.getDay();
+  const diffToMon = (day === 0 ? -6 : 1 - day);
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + diffToMon);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  const fmt = d => d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long' });
+  document.getElementById('weekRange').textContent = fmt(monday) + ' → ' + fmt(sunday) + ' ' + sunday.getFullYear();
+
+  const upd = localStorage.getItem('dashboard_s1_updated');
+  if (upd) {
+    const d = new Date(upd);
+    document.getElementById('lastUpdate').textContent = d.toLocaleDateString('fr-FR') + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  } else {
+    document.getElementById('lastUpdate').textContent = 'Jamais';
+  }
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+setDates();
+renderTasks();
+renderPipeline();
+renderLog();
+updateKPIs();
+
+// Mise à jour de l'heure affiché périodiquement
+setInterval(setDates, 60000);
+</script>
+</body>
+</html>

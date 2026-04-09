@@ -1,0 +1,6 @@
+# www → apex
+https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
+
+# Page d'accueil
+/index  /maprimeadapt-idf.html  200
+/       /maprimeadapt-idf.html  200
