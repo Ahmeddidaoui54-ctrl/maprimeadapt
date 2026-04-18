@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Devis - ChatBot Pro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #1a1a2e; font-size: 14px; line-height: 1.5; padding: 40px; max-width: 800px; margin: 0 auto; }
+        @media print { body { padding: 20px; } .no-print { display: none; } }
+
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid #6C5CE7; }
+        .company h1 { font-size: 24px; color: #6C5CE7; margin-bottom: 4px; }
+        .company p { font-size: 12px; color: #666; }
+        .doc-info { text-align: right; }
+        .doc-info h2 { font-size: 20px; color: #1a1a2e; margin-bottom: 8px; }
+        .doc-info p { font-size: 12px; color: #666; }
+
+        .parties { display: flex; justify-content: space-between; margin-bottom: 36px; }
+        .party { width: 45%; }
+        .party h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6C5CE7; margin-bottom: 8px; }
+        .party p { font-size: 13px; }
+
+        .intro { margin-bottom: 28px; font-size: 13px; color: #444; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+        thead { background: #6C5CE7; color: white; }
+        th { padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 600; }
+        td { padding: 10px 14px; border-bottom: 1px solid #eee; font-size: 13px; }
+        .text-right { text-align: right; }
+        .total-row { background: #f8f7ff; font-weight: 700; }
+        .total-row td { border-bottom: 2px solid #6C5CE7; font-size: 14px; }
+
+        .details { margin-bottom: 28px; }
+        .details h3 { font-size: 14px; margin-bottom: 8px; color: #1a1a2e; }
+        .details ul { padding-left: 20px; font-size: 13px; color: #444; }
+        .details li { margin-bottom: 4px; }
+
+        .conditions { background: #f8f7ff; padding: 20px; border-radius: 8px; margin-bottom: 36px; font-size: 12px; color: #555; }
+        .conditions h3 { font-size: 13px; margin-bottom: 8px; color: #1a1a2e; }
+
+        .signatures { display: flex; justify-content: space-between; margin-top: 50px; }
+        .sig-block { width: 45%; }
+        .sig-block h4 { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .sig-line { border-bottom: 1px solid #ccc; height: 80px; margin-bottom: 8px; }
+        .sig-block p { font-size: 11px; color: #888; }
+
+        .footer { text-align: center; font-size: 11px; color: #999; margin-top: 40px; padding-top: 16px; border-top: 1px solid #eee; }
+
+        .btn-print { display: block; width: 200px; margin: 30px auto; padding: 12px; background: #6C5CE7; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; text-align: center; }
+        .btn-print:hover { background: #5a4bd1; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="company">
+        <h1>ChatBot Pro</h1>
+        <p>Jeremy Berthaud</p>
+        <p>jeremyberthaud4@gmail.com</p>
+        <p>SIRET : _______________</p>
+        <p>Adresse : _______________</p>
+    </div>
+    <div class="doc-info">
+        <h2>DEVIS</h2>
+        <p><strong>N&deg;</strong> : D-2026-____</p>
+        <p><strong>Date</strong> : __/__/2026</p>
+        <p><strong>Valide jusqu'au</strong> : __/__/2026</p>
+    </div>
+</div>
+
+<div class="parties">
+    <div class="party">
+        <h3>Prestataire</h3>
+        <p><strong>ChatBot Pro</strong></p>
+        <p>Jeremy Berthaud</p>
+        <p>jeremyberthaud4@gmail.com</p>
+    </div>
+    <div class="party">
+        <h3>Client</h3>
+        <p><strong>_______________</strong></p>
+        <p>_______________</p>
+        <p>_______________</p>
+        <p>SIRET : _______________</p>
+    </div>
+</div>
+
+<p class="intro">Suite a notre echange, veuillez trouver ci-dessous notre proposition pour la mise en place d'un chatbot intelligent sur votre site internet.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Quantite</th>
+            <th class="text-right">Prix unitaire HT</th>
+            <th class="text-right">Total HT</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <strong>Offre __________ (Starter / Business / Premium)</strong><br>
+                <span style="font-size:12px;color:#666;">Mise en place et configuration initiale du chatbot</span>
+            </td>
+            <td>1</td>
+            <td class="text-right">___ &euro;</td>
+            <td class="text-right">___ &euro;</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Abonnement mensuel</strong><br>
+                <span style="font-size:12px;color:#666;">Hebergement, maintenance, support, mises a jour</span>
+            </td>
+            <td>12 mois</td>
+            <td class="text-right">___ &euro;/mois</td>
+            <td class="text-right">___ &euro;</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Option : Integration IA (GPT)</strong><br>
+                <span style="font-size:12px;color:#666;">Reponses conversationnelles intelligentes</span>
+            </td>
+            <td>1</td>
+            <td class="text-right">___ &euro;</td>
+            <td class="text-right">___ &euro;</td>
+        </tr>
+        <tr class="total-row">
+            <td colspan="3">TOTAL HT</td>
+            <td class="text-right">___ &euro;</td>
+        </tr>
+        <tr class="total-row">
+            <td colspan="3">TVA (20%)</td>
+            <td class="text-right">___ &euro;</td>
+        </tr>
+        <tr class="total-row" style="font-size:16px;">
+            <td colspan="3">TOTAL TTC</td>
+            <td class="text-right">___ &euro;</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="details">
+    <h3>Details de l'offre selectionnee</h3>
+    <ul>
+        <li>Chatbot conversationnel personnalise pour votre activite</li>
+        <li>Widget integrable sur votre site (une ligne de code)</li>
+        <li>Collecte et envoi des leads par email en temps reel</li>
+        <li>Tableau de bord de suivi des conversations</li>
+        <li>Configuration initiale avec votre contenu (FAQ, horaires, services)</li>
+        <li>Deploiement sous 48 heures ouvrees</li>
+        <li>Support technique par email</li>
+        <li>Mises a jour incluses pendant toute la duree de l'abonnement</li>
+    </ul>
+</div>
+
+<div class="conditions">
+    <h3>Conditions</h3>
+    <ul style="padding-left: 16px;">
+        <li>Frais de mise en place : paiement a la commande</li>
+        <li>Abonnement mensuel : prelevement le 1er de chaque mois</li>
+        <li>Sans engagement : resiliable a tout moment avec un preavis de 30 jours</li>
+        <li>Delai de livraison : 48 heures ouvrees apres reception du paiement</li>
+        <li>Ce devis est valable 30 jours a compter de sa date d'emission</li>
+        <li>TVA non applicable, art. 293 B du CGI (si auto-entrepreneur)</li>
+    </ul>
+</div>
+
+<div class="signatures">
+    <div class="sig-block">
+        <h4>Le prestataire</h4>
+        <div class="sig-line"></div>
+        <p>Jeremy Berthaud - ChatBot Pro</p>
+        <p>Date : __/__/2026</p>
+    </div>
+    <div class="sig-block">
+        <h4>Le client (bon pour accord)</h4>
+        <div class="sig-line"></div>
+        <p>Nom et signature :</p>
+        <p>Date : __/__/2026</p>
+    </div>
+</div>
+
+<div class="footer">
+    ChatBot Pro - Jeremy Berthaud | SIRET : _______________ | jeremyberthaud4@gmail.com
+</div>
+
+<button class="btn-print no-print" onclick="window.print()">Imprimer / Sauvegarder en PDF</button>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+============================================================
+EMAILS DE PROSPECTION - RESTAURANTS
+============================================================
+3 variantes a envoyer en sequence (J+0, J+3, J+7)
+Personnaliser : [Prenom], [NomRestaurant], [Ville], [LienDemo]
+============================================================
+
+
+--- VARIANTE 1 : Premier contact ---
+
+Objet : [NomRestaurant] - fini les reservations ratees
+
+Bonjour [Prenom],
+
+Petite question : combien de reservations vous perdez chaque semaine parce que personne ne decroche pendant le service ?
+
+On a cree un chatbot specialise pour les restaurants qui permet a vos clients de :
+- Reserver une table 24h/24 (sans appeler)
+- Consulter votre menu et vos horaires
+- Commander a emporter directement depuis votre site
+- Signaler leurs allergies avant d'arriver
+
+Un de nos clients restaurateur a augmente ses reservations de 25% en un mois, simplement parce que les gens peuvent reserver a 23h.
+
+Testez-le en 30 secondes : [LienDemo]
+
+On en parle autour d'un cafe ?
+
+Jeremy Berthaud
+ChatBot Pro
+jeremyberthaud4@gmail.com
+
+
+--- VARIANTE 2 : Relance douce ---
+
+Objet : Re: [NomRestaurant] - suite
+
+Bonjour [Prenom],
+
+Je vous ai contacte recemment au sujet d'un chatbot de reservation pour [NomRestaurant]. Je sais que le quotidien en restauration laisse peu de temps pour les mails.
+
+L'idee en 1 phrase : un assistant sur votre site qui prend les reservations pendant que vous etes en cuisine.
+
+La demo est ici si vous avez 30 secondes : [LienDemo]
+
+Si vous preferez qu'on en parle directement, je suis dispo par telephone.
+
+A bientot,
+Jeremy
+
+
+--- VARIANTE 3 : Derniere relance ---
+
+Objet : Derniere question pour [NomRestaurant]
+
+Bonjour [Prenom],
+
+Dernier message de ma part. Je voulais juste savoir si vous souhaitez proposer la reservation en ligne a vos clients.
+
+On s'occupe de tout (installation, personnalisation avec votre carte et vos horaires). Vous n'avez rien a faire.
+
+Offre de lancement : mise en place gratuite (149 EUR offerts) pour les 5 prochains restaurants partenaires.
+
+Un simple "oui" en reponse et je vous envoie les details.
+
+Jeremy Berthaud
+ChatBot Pro

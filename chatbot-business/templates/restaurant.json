@@ -1,0 +1,101 @@
+{
+  "name": "Template Restaurant / Traiteur",
+  "version": "1.0",
+  "sector": "restaurant",
+  "price": "business",
+  "setup_time": "1-2h",
+  "description": "Chatbot restaurant : réservation auto, menu du jour, commandes, horaires, avis",
+
+  "flow": [
+    {
+      "id": "welcome",
+      "type": "message",
+      "content": "Bienvenue chez {{NOM_RESTAURANT}} ! 🍽️ Que puis-je faire pour vous ?",
+      "buttons": [
+        {"label": "📅 Réserver une table", "target": "reservation"},
+        {"label": "📋 Voir le menu", "target": "menu"},
+        {"label": "🛵 Commander à emporter", "target": "takeaway"},
+        {"label": "ℹ️ Infos pratiques", "target": "infos"}
+      ]
+    },
+    {
+      "id": "reservation",
+      "type": "form",
+      "content": "Avec plaisir ! Réservons votre table 🍷",
+      "fields": [
+        {"name": "date_resa", "label": "Quelle date ?", "type": "date"},
+        {"name": "heure", "label": "À quelle heure ?", "type": "choice", "options": ["12h00", "12h30", "13h00", "19h00", "19h30", "20h00", "20h30", "21h00"]},
+        {"name": "nb_personnes", "label": "Combien de personnes ?", "type": "choice", "options": ["1", "2", "3", "4", "5", "6", "7", "8+"]},
+        {"name": "interieur_terrasse", "label": "Préférence ?", "type": "choice", "options": ["Intérieur", "Terrasse", "Peu importe"]},
+        {"name": "occasion", "label": "Occasion spéciale ?", "type": "choice", "options": ["Non", "Anniversaire 🎂", "Dîner romantique 💕", "Repas d'affaires 💼", "Autre"]}
+      ],
+      "target": "resa_contact"
+    },
+    {
+      "id": "resa_contact",
+      "type": "form",
+      "content": "Parfait ! Pour confirmer votre réservation :",
+      "fields": [
+        {"name": "prenom", "label": "Votre prénom ?", "type": "text"},
+        {"name": "telephone", "label": "Votre téléphone ?", "type": "phone"},
+        {"name": "allergies", "label": "Allergies ou régime particulier ?", "type": "text", "placeholder": "Ex: sans gluten, végétarien, allergie noix..."}
+      ],
+      "target": "resa_confirm"
+    },
+    {
+      "id": "resa_confirm",
+      "type": "message",
+      "content": "✅ Réservation enregistrée !\n\n📅 {{date_resa}} à {{heure}}\n👥 {{nb_personnes}} personne(s)\n📍 {{interieur_terrasse}}\n👤 Au nom de {{prenom}}\n\nVous recevrez un SMS de confirmation.\nÀ bientôt chez {{NOM_RESTAURANT}} ! 🍽️",
+      "actions": [
+        {"type": "send_email", "to": "{{EMAIL_RESTAURANT}}", "subject": "Réservation : {{prenom}} {{date_resa}} {{heure}} ({{nb_personnes}} pers.)", "body": "Nouvelle réservation :\n\nDate: {{date_resa}} à {{heure}}\nPersonnes: {{nb_personnes}}\nNom: {{prenom}}\nTél: {{telephone}}\nPréférence: {{interieur_terrasse}}\nOccasion: {{occasion}}\nAllergies: {{allergies}}"}
+      ]
+    },
+    {
+      "id": "menu",
+      "type": "message",
+      "content": "📋 Notre carte :\n\n🥗 **Entrées** : à partir de {{PRIX_ENTREE}}€\n🥩 **Plats** : à partir de {{PRIX_PLAT}}€\n🍰 **Desserts** : à partir de {{PRIX_DESSERT}}€\n\n🍷 **Menu du jour** : {{PRIX_MENU}}€ (entrée + plat + dessert)\n\n📸 Voir la carte complète : {{LIEN_MENU}}",
+      "buttons": [
+        {"label": "📅 Réserver", "target": "reservation"},
+        {"label": "🛵 Commander", "target": "takeaway"},
+        {"label": "⬅️ Retour", "target": "welcome"}
+      ]
+    },
+    {
+      "id": "takeaway",
+      "type": "message",
+      "content": "🛵 Commande à emporter !\n\nVous pouvez commander :\n📞 Par téléphone : {{TELEPHONE}}\n🌐 En ligne : {{LIEN_COMMANDE}}\n\nOu dites-moi ce que vous souhaitez et je transmets à la cuisine !",
+      "buttons": [
+        {"label": "📞 Appeler", "target": "call"},
+        {"label": "⬅️ Retour", "target": "welcome"}
+      ]
+    },
+    {
+      "id": "infos",
+      "type": "message",
+      "content": "ℹ️ **{{NOM_RESTAURANT}}**\n\n📍 {{ADRESSE}}\n📞 {{TELEPHONE}}\n\n🕐 **Horaires** :\nLundi - Samedi : {{HORAIRES_SEMAINE}}\nDimanche : {{HORAIRES_DIMANCHE}}\n\n🅿️ Parking : {{PARKING}}\n♿ Accès PMR : {{ACCES_PMR}}\n\n⭐ Note Google : {{NOTE_GOOGLE}}/5",
+      "buttons": [
+        {"label": "📅 Réserver", "target": "reservation"},
+        {"label": "🗺️ Itinéraire", "target": "maps"},
+        {"label": "⬅️ Retour", "target": "welcome"}
+      ]
+    }
+  ],
+
+  "variables_client": {
+    "NOM_RESTAURANT": "Nom du restaurant",
+    "ADRESSE": "Adresse complète",
+    "TELEPHONE": "Numéro de téléphone",
+    "EMAIL_RESTAURANT": "Email pour recevoir les réservations",
+    "HORAIRES_SEMAINE": "Ex: 12h-14h / 19h-22h",
+    "HORAIRES_DIMANCHE": "Ex: Fermé ou 12h-14h",
+    "PRIX_ENTREE": "Prix entrée (ex: 8)",
+    "PRIX_PLAT": "Prix plat (ex: 16)",
+    "PRIX_DESSERT": "Prix dessert (ex: 7)",
+    "PRIX_MENU": "Prix menu du jour (ex: 22)",
+    "LIEN_MENU": "Lien vers la carte en ligne",
+    "LIEN_COMMANDE": "Lien commande en ligne (UberEats, etc.)",
+    "PARKING": "Oui / Non / Proche",
+    "ACCES_PMR": "Oui / Non",
+    "NOTE_GOOGLE": "Note Google (ex: 4.5)"
+  }
+}

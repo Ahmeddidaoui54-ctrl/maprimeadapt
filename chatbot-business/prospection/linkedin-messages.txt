@@ -1,0 +1,61 @@
+============================================================
+MESSAGES LINKEDIN - TEMPLATES
+============================================================
+5 messages : 3 demandes de connexion + 2 follow-up
+Personnaliser : [Prenom], [Poste], [Entreprise], [Secteur]
+============================================================
+
+
+--- MESSAGE 1 : Demande de connexion (generique) ---
+
+Bonjour [Prenom],
+
+Je travaille avec des [Poste]s dans le secteur [Secteur] sur l'automatisation de la relation client via chatbot IA. J'aimerais echanger avec vous sur le sujet.
+
+Au plaisir,
+Jeremy
+
+
+--- MESSAGE 2 : Demande de connexion (avec accroche) ---
+
+Bonjour [Prenom],
+
+J'ai vu que vous dirigez [Entreprise] a [Ville]. On aide les professionnels du [Secteur] a capter plus de leads sur leur site web avec un chatbot intelligent. Ca vous parle ?
+
+Jeremy
+
+
+--- MESSAGE 3 : Demande de connexion (court et direct) ---
+
+Bonjour [Prenom],
+
+On developpe des chatbots IA sur mesure pour les PME. Je me permets de vous ajouter car votre profil correspond exactement a nos clients. Bonne journee !
+
+
+--- MESSAGE 4 : Follow-up apres connexion acceptee ---
+
+Merci d'avoir accepte [Prenom] !
+
+Pour aller droit au but : on installe des chatbots IA sur les sites de PME pour automatiser la prise de RDV et la qualification de prospects.
+
+Concretement, votre site accueille les visiteurs 24h/24, repond a leurs questions et vous envoie les contacts qualifies par email.
+
+On a une demo interactive pour le secteur [Secteur] si vous voulez voir a quoi ca ressemble en 30 secondes : [LienDemo]
+
+Est-ce que c'est un sujet pour vous en ce moment ?
+
+
+--- MESSAGE 5 : Follow-up si pas de reponse (J+5) ---
+
+Bonjour [Prenom],
+
+Je me permets de revenir vers vous. Je sais que LinkedIn, c'est beaucoup de messages.
+
+En 1 phrase : un chatbot sur votre site qui prend les RDV et qualifie vos prospects pendant que vous travaillez.
+
+Mise en place en 48h, sans engagement mensuel.
+
+Si ca vous interesse, on peut en discuter 10 min par telephone. Sinon, pas de souci du tout.
+
+Bonne semaine,
+Jeremy

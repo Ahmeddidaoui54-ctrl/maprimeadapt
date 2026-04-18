@@ -1,0 +1,68 @@
+============================================================
+EMAILS DE PROSPECTION - AGENCES IMMOBILIERES
+============================================================
+3 variantes a envoyer en sequence (J+0, J+3, J+7)
+Personnaliser : [Prenom], [NomAgence], [Ville], [LienDemo]
+============================================================
+
+
+--- VARIANTE 1 : Premier contact ---
+
+Objet : [NomAgence] - captez les prospects le soir et le weekend
+
+Bonjour [Prenom],
+
+60% des recherches immobilieres se font apres 19h et le weekend, quand votre agence est fermee. Chaque visiteur qui repart sans laisser ses coordonnees est un mandat potentiel perdu.
+
+On a developpe un chatbot IA specialise immobilier qui se place sur votre site et :
+- Qualifie les prospects (acheteur, vendeur, budget, secteur)
+- Prend des RDV de visite automatiquement
+- Propose une estimation gratuite pour capter les vendeurs
+- Collecte les coordonnees meme a 23h
+
+Un de nos clients agence a signe 3 mandats supplementaires des le premier mois.
+
+Testez-le en 30 secondes : [LienDemo]
+
+Est-ce qu'on peut en discuter 10 minutes ?
+
+Jeremy Berthaud
+ChatBot Pro
+jeremyberthaud4@gmail.com
+
+
+--- VARIANTE 2 : Relance avec angle different ---
+
+Objet : Re: [NomAgence] - estimation en ligne automatisee
+
+Bonjour [Prenom],
+
+Suite a mon premier message, je voulais vous parler d'une fonctionnalite qui plait beaucoup a nos clients agences : l'estimation automatique.
+
+Le chatbot propose au visiteur une estimation de son bien. Pour obtenir le resultat, il laisse ses coordonnees. Vous recevez un lead vendeur qualifie avec l'adresse du bien, la surface et le contact.
+
+C'est un aimant a mandats qui fonctionne 24h/24.
+
+Demo disponible ici : [LienDemo]
+
+Dites-moi si vous avez 10 min cette semaine.
+
+Jeremy
+
+
+--- VARIANTE 3 : Derniere relance ---
+
+Objet : [Prenom], derniere question
+
+Bonjour [Prenom],
+
+Dernier message, je ne veux pas etre insistant. Je voulais savoir si la captation de leads en ligne est un enjeu pour [NomAgence] en ce moment.
+
+Si oui, on peut installer un chatbot de qualification sur votre site en 48h. On s'occupe de tout.
+
+Offre de lancement : mise en place offerte (299 EUR economises) pour les 5 prochaines agences partenaires.
+
+Repondez simplement "oui" et je vous envoie les details.
+
+Jeremy Berthaud
+ChatBot Pro

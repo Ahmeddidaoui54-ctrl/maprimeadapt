@@ -1,0 +1,141 @@
+============================================================
+CONDITIONS GENERALES DE VENTE ET DE SERVICE
+ChatBot Pro - Jeremy Berthaud
+============================================================
+Derniere mise a jour : avril 2026
+============================================================
+
+
+ARTICLE 1 - OBJET
+
+Les presentes conditions generales regissent les relations entre ChatBot Pro (ci-apres "le Prestataire"), represente par Jeremy Berthaud, et tout professionnel (ci-apres "le Client") souscrivant a un service de creation, configuration, hebergement et maintenance de chatbot conversationnel.
+
+
+ARTICLE 2 - SERVICES PROPOSES
+
+Le Prestataire propose les services suivants :
+- Creation et configuration d'un chatbot conversationnel personnalise
+- Integration du chatbot sur le site internet du Client (widget)
+- Hebergement et maintenance technique du chatbot
+- Collecte et transmission des leads (contacts) par email
+- Support technique par email
+- Mises a jour logicielles incluses
+
+Les fonctionnalites specifiques dependent de l'offre choisie (Starter, Business ou Premium) telle que decrite dans le devis signe par le Client.
+
+
+ARTICLE 3 - TARIFS ET MODALITES DE PAIEMENT
+
+3.1. Les tarifs sont indiques en euros hors taxes (HT) dans le devis.
+
+3.2. La prestation comprend :
+- Des frais de mise en place (paiement unique a la commande)
+- Un abonnement mensuel (prelevement le 1er de chaque mois)
+
+3.3. Les moyens de paiement acceptes sont : virement bancaire, Stripe.
+
+3.4. En cas de retard de paiement, des penalites de retard seront appliquees au taux de 3 fois le taux d'interet legal en vigueur. Une indemnite forfaitaire de 40 EUR pour frais de recouvrement sera egalement due (art. L.441-10 du Code de commerce).
+
+3.5. En cas de non-paiement pendant plus de 15 jours, le Prestataire se reserve le droit de suspendre le service sans preavis.
+
+
+ARTICLE 4 - DUREE ET RESILIATION
+
+4.1. L'abonnement est sans engagement de duree minimale.
+
+4.2. Le Client peut resilier l'abonnement a tout moment avec un preavis de 30 jours avant la date de renouvellement mensuel.
+
+4.3. La resiliation prend effet a la fin du mois en cours. L'abonnement du mois entame reste du.
+
+4.4. Les frais de mise en place ne sont pas remboursables.
+
+4.5. Le Prestataire peut resilier le contrat en cas de :
+- Non-paiement de l'abonnement
+- Utilisation du chatbot a des fins illicites
+- Non-respect des presentes CGV
+
+4.6. A la resiliation, le chatbot est desactive et les donnees du Client sont supprimees sous 30 jours, sauf demande contraire.
+
+
+ARTICLE 5 - OBLIGATIONS DU PRESTATAIRE
+
+5.1. Le Prestataire s'engage a :
+- Livrer le chatbot configure dans un delai de 48 heures ouvrees apres reception du paiement et des contenus necessaires
+- Assurer la disponibilite du service (objectif : 99% de disponibilite mensuelle)
+- Corriger les dysfonctionnements dans un delai raisonnable
+- Assurer le support par email dans un delai de 24 heures ouvrees
+
+5.2. Le Prestataire est soumis a une obligation de moyens, non de resultat. Il ne garantit pas un nombre minimum de leads generes par le chatbot.
+
+
+ARTICLE 6 - OBLIGATIONS DU CLIENT
+
+6.1. Le Client s'engage a :
+- Fournir les contenus necessaires a la configuration du chatbot (FAQ, horaires, informations)
+- Integrer le code du widget sur son site internet (ou autoriser le Prestataire a le faire)
+- Regler les factures dans les delais convenus
+- Ne pas utiliser le chatbot a des fins illicites, trompeuses ou contraires a l'ordre public
+
+
+ARTICLE 7 - PROPRIETE INTELLECTUELLE
+
+7.1. Le Prestataire reste proprietaire de l'infrastructure technique, du code source et des templates de chatbot.
+
+7.2. Le Client dispose d'un droit d'usage du chatbot pendant la duree de l'abonnement.
+
+7.3. Les contenus fournis par le Client (textes, logo, images) restent la propriete du Client.
+
+
+ARTICLE 8 - PROTECTION DES DONNEES (RGPD)
+
+8.1. Le Prestataire agit en qualite de sous-traitant au sens du RGPD (Reglement UE 2016/679) pour le traitement des donnees collectees via le chatbot.
+
+8.2. Le Client est responsable de traitement. Il s'engage a :
+- Informer les utilisateurs de la collecte de donnees (politique de confidentialite)
+- Recueillir le consentement des utilisateurs si necessaire
+- Repondre aux demandes d'exercice de droits (acces, rectification, suppression)
+
+8.3. Le Prestataire s'engage a :
+- Ne traiter les donnees que sur instruction du Client
+- Heberger les donnees sur des serveurs situes en Union Europeenne
+- Mettre en oeuvre les mesures de securite appropriees
+- Notifier le Client en cas de violation de donnees sous 72 heures
+- Supprimer les donnees a la fin du contrat
+
+8.4. Le chatbot informe les utilisateurs qu'ils echangent avec un assistant automatise.
+
+
+ARTICLE 9 - RESPONSABILITE ET LIMITATION
+
+9.1. Le Prestataire ne saurait etre tenu responsable de :
+- Dommages indirects (perte de chiffre d'affaires, perte de donnees)
+- Dysfonctionnements lies a l'hebergement du site du Client
+- Contenus errones fournis par le Client et integres au chatbot
+- Interruptions dues a des tiers (hebergeur, fournisseur d'API)
+
+9.2. La responsabilite totale du Prestataire est limitee au montant total paye par le Client au cours des 12 derniers mois.
+
+
+ARTICLE 10 - FORCE MAJEURE
+
+Le Prestataire ne saurait etre tenu responsable en cas de force majeure telle que definie par l'article 1218 du Code civil.
+
+
+ARTICLE 11 - DROIT APPLICABLE ET LITIGES
+
+11.1. Les presentes CGV sont soumises au droit francais.
+
+11.2. En cas de litige, les parties s'engagent a rechercher une solution amiable.
+
+11.3. A defaut, le litige sera soumis aux tribunaux competents du siege du Prestataire.
+
+
+ARTICLE 12 - ACCEPTATION
+
+Le fait de signer le devis ou de proceder au paiement vaut acceptation pleine et entiere des presentes conditions generales de vente et de service.
+
+
+============================================================
+ChatBot Pro - Jeremy Berthaud
+jeremyberthaud4@gmail.com
+============================================================

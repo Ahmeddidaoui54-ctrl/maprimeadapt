@@ -1,0 +1,88 @@
+============================================================
+SCRIPT TELEPHONIQUE - APPEL A FROID
+============================================================
+Duree cible : 3-5 minutes
+Ton : professionnel mais decontracte
+============================================================
+
+
+1. ACCROCHE (10 secondes)
+---
+
+"Bonjour [Prenom], c'est Jeremy de ChatBot Pro. Je vous derange 30 secondes ?"
+
+Si OUI (continuer) :
+"Merci. Je vous appelle parce que j'ai vu votre site internet et j'ai une question rapide."
+
+Si NON / mauvais moment :
+"Pas de souci, quel serait le meilleur moment pour vous rappeler ? Ca prendra 2 minutes max."
+
+
+2. QUESTION D'OUVERTURE (20 secondes)
+---
+
+"Est-ce que vous avez un systeme pour repondre aux visiteurs de votre site quand vous n'etes pas disponible ? Par exemple le soir, le weekend ?"
+
+[Laisser repondre - noter la reponse]
+
+
+3. PITCH (30 secondes)
+---
+
+"C'est justement pour ca que je vous appelle. On a developpe un chatbot IA specialise pour [secteur] qui se place sur votre site et fait le travail d'un assistant 24h/24.
+
+Concretement, il repond aux questions de vos [clients/patients/prospects], prend les rendez-vous automatiquement, et vous envoie les contacts par email en temps reel.
+
+Un de nos clients dans le [secteur] a [benefice concret : ex. gagne 3 mandats, reduit ses appels de 40%, augmente ses reservations de 25%] des le premier mois."
+
+
+4. PROPOSITION
+---
+
+"Ce que je vous propose : je vous envoie un lien vers une demo que vous pouvez tester en 30 secondes sur votre telephone. Comme ca, vous voyez exactement ce que ca donne. Ca vous va ?"
+
+
+5. GESTION DES OBJECTIONS
+---
+
+OBJECTION : "Ca coute combien ?"
+-> "L'abonnement demarre a 49 EUR par mois. Mais le plus simple, c'est de voir la demo d'abord pour savoir si ca correspond a votre besoin. Je vous envoie le lien ?"
+
+OBJECTION : "J'ai deja un site / un formulaire de contact"
+-> "Justement, le chatbot vient en complement. Le probleme du formulaire, c'est que seulement 2-3% des visiteurs le remplissent. Le chatbot, lui, engage la conversation et le taux monte a 15-20%. On ne remplace pas votre site, on le rend plus efficace."
+
+OBJECTION : "Je n'ai pas le temps"
+-> "C'est exactement pour ca que le chatbot est utile : il travaille pendant que vous etes occupe. Et pour la mise en place, on fait tout. Vous n'avez rien a faire. Ca prend 48h."
+
+OBJECTION : "Je vais reflechir"
+-> "Bien sur. Est-ce que je peux vous envoyer la demo par email ? Comme ca vous pouvez la tester quand vous avez 2 minutes. Quel est votre email ?"
+
+OBJECTION : "C'est trop cher"
+-> "Je comprends. Posez-vous une question : combien vous coute un client perdu ? Si le chatbot vous ramene ne serait-ce qu'un client par mois, il est rembourse 3 fois. Et il n'y a aucun engagement."
+
+OBJECTION : "Les chatbots, ca ne marche pas / c'est nul"
+-> "Vous avez raison, les vieux chatbots etaient frustrants. La nouvelle generation utilise l'IA, c'est une vraie conversation. Testez la demo, vous verrez la difference. Si ca ne vous convainc pas, on en reste la."
+
+OBJECTION : "Envoyez-moi un email"
+-> "Avec plaisir. Je vous envoie le lien demo + un recapitulatif. C'est quoi votre email ? Et je me permets de vous rappeler en fin de semaine pour avoir votre retour."
+
+
+6. CONCLUSION
+---
+
+Si interesse :
+"Parfait, je vous envoie la demo par email dans les 5 minutes. On se fixe un appel de 15 min [jour] pour que je vous montre les possibilites pour [Entreprise] specifiquement ?"
+
+Si pas interesse :
+"Pas de probleme, merci pour votre temps [Prenom]. Si jamais le sujet revient, vous avez mes coordonnees. Bonne journee !"
+
+
+7. NOTES POST-APPEL
+---
+A remplir apres chaque appel :
+- Nom / entreprise / secteur :
+- Reponse (interesse / rappeler / pas interesse) :
+- Objection principale :
+- Email obtenu : oui / non
+- Prochaine action :
+- Date de relance :

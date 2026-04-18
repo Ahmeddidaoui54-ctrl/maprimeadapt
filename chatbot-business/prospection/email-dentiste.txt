@@ -1,0 +1,67 @@
+============================================================
+EMAILS DE PROSPECTION - CABINETS DENTAIRES
+============================================================
+3 variantes a envoyer en sequence (J+0, J+3, J+7)
+Personnaliser : [Prenom], [NomCabinet], [Ville], [LienDemo]
+============================================================
+
+
+--- VARIANTE 1 : Premier contact ---
+
+Objet : [NomCabinet] - une idee pour reduire les appels
+
+Bonjour [Prenom],
+
+Je me permets de vous ecrire car j'ai remarque que votre cabinet n'a pas de systeme de prise de RDV en ligne sur votre site.
+
+On a developpe un chatbot specialise pour les cabinets dentaires qui permet a vos patients de :
+- Prendre RDV 24h/24 (meme le dimanche soir)
+- Poser leurs questions frequentes (tarifs, mutuelles, urgences)
+- Signaler une urgence avec un systeme de tri automatique
+
+Resultat : votre secretaire gagne 1 a 2h par jour, et vous ne perdez plus les patients qui ne rappellent jamais.
+
+Vous pouvez le tester ici (30 secondes) : [LienDemo]
+
+Est-ce qu'on peut en discuter 10 minutes cette semaine ?
+
+Cordialement,
+Jeremy Berthaud
+ChatBot Pro
+jeremyberthaud4@gmail.com
+
+
+--- VARIANTE 2 : Relance douce ---
+
+Objet : Re: [NomCabinet] - suite a mon message
+
+Bonjour [Prenom],
+
+Je vous ai ecrit il y a quelques jours au sujet d'un chatbot pour votre cabinet. Je ne sais pas si vous avez eu le temps de regarder, c'est normal avec un planning charge.
+
+En resume : un assistant virtuel sur votre site qui gere les RDV et les questions patients. Un de nos clients dentiste a reduit ses appels entrants de 40%.
+
+La demo est toujours dispo ici : [LienDemo]
+
+Si ce n'est pas le bon moment, pas de souci. Je reviendrai vers vous plus tard.
+
+Bonne journee,
+Jeremy
+
+
+--- VARIANTE 3 : Derniere relance + urgence douce ---
+
+Objet : Derniere question pour [NomCabinet]
+
+Bonjour [Prenom],
+
+Dernier message, promis. Je voulais juste savoir si la prise de RDV en ligne est un sujet pour vous en ce moment.
+
+Si oui, je peux vous montrer comment ca fonctionne en 10 min par telephone. On installe tout, vous n'avez rien a faire.
+
+Offre de lancement : mise en place offerte (149 EUR economises) pour les 5 prochains cabinets.
+
+Interessé(e) ? Repondez simplement "oui" et je vous propose un creneau.
+
+Jeremy Berthaud
+ChatBot Pro

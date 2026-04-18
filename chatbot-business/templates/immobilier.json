@@ -1,0 +1,132 @@
+{
+  "name": "Template Agence Immobilière",
+  "version": "1.0",
+  "sector": "immobilier",
+  "price": "premium",
+  "setup_time": "2-3h",
+  "description": "Chatbot complet pour agence immobilière : qualification leads, estimation, prise de RDV visites",
+
+  "flow": [
+    {
+      "id": "welcome",
+      "type": "message",
+      "content": "Bonjour ! 👋 Bienvenue chez {{NOM_AGENCE}}. Comment puis-je vous aider ?",
+      "buttons": [
+        {"label": "🏠 Je cherche un bien", "target": "search_property"},
+        {"label": "💰 Estimer mon bien", "target": "estimate"},
+        {"label": "📅 Prendre rendez-vous", "target": "book_visit"},
+        {"label": "❓ Autre question", "target": "faq"}
+      ]
+    },
+    {
+      "id": "search_property",
+      "type": "form",
+      "content": "Super ! Aidez-moi à trouver le bien idéal pour vous.",
+      "fields": [
+        {"name": "type_bien", "label": "Type de bien ?", "type": "choice", "options": ["Appartement", "Maison", "Studio", "Terrain", "Local commercial"]},
+        {"name": "budget_max", "label": "Budget maximum ?", "type": "choice", "options": ["Moins de 100 000€", "100 000 - 200 000€", "200 000 - 400 000€", "Plus de 400 000€"]},
+        {"name": "surface_min", "label": "Surface minimum ?", "type": "choice", "options": ["20-40 m²", "40-60 m²", "60-100 m²", "Plus de 100 m²"]},
+        {"name": "localisation", "label": "Secteur souhaité ?", "type": "text", "placeholder": "Ex: Centre-ville, Quartier Nord..."},
+        {"name": "nb_chambres", "label": "Nombre de chambres ?", "type": "choice", "options": ["1", "2", "3", "4+"]}
+      ],
+      "target": "search_result"
+    },
+    {
+      "id": "search_result",
+      "type": "message",
+      "content": "Merci ! J'ai noté vos critères :\n\n🏠 {{type_bien}}\n💰 {{budget_max}}\n📐 {{surface_min}}\n📍 {{localisation}}\n🛏️ {{nb_chambres}} chambre(s)\n\nUn conseiller va vous envoyer les biens correspondants sous 24h. Puis-je avoir vos coordonnées ?",
+      "target": "collect_contact"
+    },
+    {
+      "id": "estimate",
+      "type": "form",
+      "content": "Estimons la valeur de votre bien ! Quelques informations :",
+      "fields": [
+        {"name": "type_bien_estim", "label": "Type de bien ?", "type": "choice", "options": ["Appartement", "Maison", "Studio", "Terrain"]},
+        {"name": "surface", "label": "Surface en m² ?", "type": "number"},
+        {"name": "nb_pieces", "label": "Nombre de pièces ?", "type": "choice", "options": ["1", "2", "3", "4", "5+"]},
+        {"name": "adresse", "label": "Adresse ou code postal ?", "type": "text"},
+        {"name": "etat", "label": "État général ?", "type": "choice", "options": ["Neuf / récent", "Bon état", "À rafraîchir", "À rénover"]},
+        {"name": "exterieur", "label": "Extérieur ?", "type": "choice", "options": ["Balcon", "Terrasse", "Jardin", "Rien"]}
+      ],
+      "target": "estimate_result"
+    },
+    {
+      "id": "estimate_result",
+      "type": "message",
+      "content": "Merci pour ces informations ! Pour vous fournir une estimation précise, un de nos experts va analyser votre bien et vous recontacter sous 48h avec une estimation gratuite et sans engagement.\n\nPuis-je avoir vos coordonnées ?",
+      "target": "collect_contact"
+    },
+    {
+      "id": "book_visit",
+      "type": "form",
+      "content": "Avec plaisir ! Pour organiser votre rendez-vous :",
+      "fields": [
+        {"name": "motif", "label": "Motif du rendez-vous ?", "type": "choice", "options": ["Visite d'un bien", "Mise en vente de mon bien", "Conseil investissement", "Autre"]},
+        {"name": "disponibilite", "label": "Quand êtes-vous disponible ?", "type": "choice", "options": ["Cette semaine", "Semaine prochaine", "Dans 2 semaines", "Flexible"]},
+        {"name": "creneau", "label": "Créneau préféré ?", "type": "choice", "options": ["Matin (9h-12h)", "Après-midi (14h-18h)", "Soirée (18h-20h)", "Samedi matin"]}
+      ],
+      "target": "collect_contact"
+    },
+    {
+      "id": "faq",
+      "type": "message",
+      "content": "Que souhaitez-vous savoir ?",
+      "buttons": [
+        {"label": "📍 Nos agences", "target": "faq_agences"},
+        {"label": "🕐 Horaires", "target": "faq_horaires"},
+        {"label": "💼 Nos services", "target": "faq_services"},
+        {"label": "📞 Nous contacter", "target": "collect_contact"}
+      ]
+    },
+    {
+      "id": "faq_agences",
+      "type": "message",
+      "content": "📍 Notre agence principale :\n{{ADRESSE_AGENCE}}\n\n📞 {{TELEPHONE}}\n📧 {{EMAIL}}\n\n🗺️ {{LIEN_GOOGLE_MAPS}}",
+      "target": "welcome"
+    },
+    {
+      "id": "faq_horaires",
+      "type": "message",
+      "content": "🕐 Nos horaires :\n\nLundi - Vendredi : 9h - 19h\nSamedi : 9h - 12h30\nDimanche : Sur rendez-vous\n\nLe chatbot, lui, est disponible 24h/24 ! 😊",
+      "target": "welcome"
+    },
+    {
+      "id": "faq_services",
+      "type": "message",
+      "content": "💼 Nos services :\n\n✅ Achat / Vente\n✅ Location / Gestion locative\n✅ Estimation gratuite\n✅ Conseil investissement\n✅ Accompagnement financement",
+      "target": "welcome"
+    },
+    {
+      "id": "collect_contact",
+      "type": "form",
+      "content": "Pour vous recontacter rapidement :",
+      "fields": [
+        {"name": "prenom", "label": "Votre prénom ?", "type": "text"},
+        {"name": "nom", "label": "Votre nom ?", "type": "text"},
+        {"name": "telephone", "label": "Votre téléphone ?", "type": "phone"},
+        {"name": "email", "label": "Votre email ?", "type": "email"}
+      ],
+      "target": "confirm"
+    },
+    {
+      "id": "confirm",
+      "type": "message",
+      "content": "Merci {{prenom}} ! ✅\n\nUn conseiller de {{NOM_AGENCE}} vous recontactera très rapidement.\n\nBonne journée ! 😊",
+      "actions": [
+        {"type": "send_email", "to": "{{EMAIL_AGENCE}}", "subject": "Nouveau lead chatbot : {{prenom}} {{nom}}", "body": "Nouveau prospect :\n\nNom: {{prenom}} {{nom}}\nTéléphone: {{telephone}}\nEmail: {{email}}\nMotif: {{motif}}\nBudget: {{budget_max}}\nType: {{type_bien}}"},
+        {"type": "webhook", "url": "{{WEBHOOK_URL}}", "method": "POST"}
+      ]
+    }
+  ],
+
+  "variables_client": {
+    "NOM_AGENCE": "Nom de l'agence",
+    "ADRESSE_AGENCE": "Adresse complète",
+    "TELEPHONE": "Numéro de téléphone",
+    "EMAIL": "Email de l'agence",
+    "EMAIL_AGENCE": "Email pour recevoir les leads",
+    "LIEN_GOOGLE_MAPS": "Lien Google Maps",
+    "WEBHOOK_URL": "URL webhook CRM (optionnel)"
+  }
+}

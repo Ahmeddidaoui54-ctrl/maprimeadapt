@@ -1,0 +1,128 @@
+{
+  "name": "Template Cabinet Dentaire / Médical",
+  "version": "1.0",
+  "sector": "medical",
+  "price": "business",
+  "setup_time": "2-3h",
+  "description": "Chatbot cabinet médical : prise de RDV auto, rappels, FAQ patients, urgences",
+
+  "flow": [
+    {
+      "id": "welcome",
+      "type": "message",
+      "content": "Bonjour ! Bienvenue au cabinet {{NOM_CABINET}} 🏥\nComment puis-je vous aider ?",
+      "buttons": [
+        {"label": "📅 Prendre rendez-vous", "target": "rdv"},
+        {"label": "🚨 Urgence dentaire", "target": "urgence"},
+        {"label": "❓ Questions fréquentes", "target": "faq"},
+        {"label": "📍 Accès et horaires", "target": "infos"}
+      ]
+    },
+    {
+      "id": "rdv",
+      "type": "form",
+      "content": "Prenons rendez-vous ! 📅",
+      "fields": [
+        {"name": "patient_type", "label": "Vous êtes ?", "type": "choice", "options": ["Nouveau patient", "Patient du cabinet"]},
+        {"name": "motif", "label": "Motif de la consultation ?", "type": "choice", "options": ["Contrôle / Détartrage", "Douleur / Carie", "Prothèse / Couronne", "Orthodontie", "Blanchiment", "Autre"]},
+        {"name": "urgence_level", "label": "C'est urgent ?", "type": "choice", "options": ["Non, rdv classique", "Assez urgent (cette semaine)", "Très urgent (aujourd'hui/demain)"]},
+        {"name": "disponibilite", "label": "Quand êtes-vous disponible ?", "type": "choice", "options": ["Matin (8h-12h)", "Après-midi (14h-18h)", "Fin de journée (18h-20h)", "Mercredi", "Samedi matin"]},
+        {"name": "semaine", "label": "Quelle semaine ?", "type": "choice", "options": ["Cette semaine", "Semaine prochaine", "Dans 2 semaines", "Le plus tôt possible"]}
+      ],
+      "target": "rdv_contact"
+    },
+    {
+      "id": "rdv_contact",
+      "type": "form",
+      "content": "Parfait. Vos coordonnées pour confirmer le RDV :",
+      "fields": [
+        {"name": "nom_patient", "label": "Nom et prénom ?", "type": "text"},
+        {"name": "date_naissance", "label": "Date de naissance ?", "type": "date"},
+        {"name": "telephone", "label": "Téléphone ?", "type": "phone"},
+        {"name": "email", "label": "Email ?", "type": "email"},
+        {"name": "mutuelle", "label": "Votre mutuelle ?", "type": "text", "placeholder": "Ex: MGEN, Harmonie, Aucune..."}
+      ],
+      "target": "rdv_confirm"
+    },
+    {
+      "id": "rdv_confirm",
+      "type": "message",
+      "content": "✅ Demande de RDV enregistrée !\n\n👤 {{nom_patient}}\n📋 {{motif}}\n📅 {{disponibilite}} — {{semaine}}\n\nLe secrétariat vous recontactera sous 24h pour confirmer le créneau exact.\n\n📞 En cas d'urgence : {{TELEPHONE_URGENCE}}",
+      "actions": [
+        {"type": "send_email", "to": "{{EMAIL_CABINET}}", "subject": "Nouveau RDV chatbot : {{nom_patient}} — {{motif}}", "body": "Nouveau rendez-vous :\n\nPatient: {{nom_patient}}\nNé(e) le: {{date_naissance}}\nTél: {{telephone}}\nEmail: {{email}}\nMutuelle: {{mutuelle}}\nMotif: {{motif}}\nUrgence: {{urgence_level}}\nDisponibilité: {{disponibilite}} — {{semaine}}\nNouveau patient: {{patient_type}}"}
+      ]
+    },
+    {
+      "id": "urgence",
+      "type": "message",
+      "content": "🚨 **Urgence dentaire**\n\nSi vous avez une douleur intense, un traumatisme ou un saignement :\n\n📞 **Appelez immédiatement** : {{TELEPHONE_URGENCE}}\n\n🕐 En dehors des heures d'ouverture :\n📞 SOS Dentaire : 01 43 37 51 00\n📞 SAMU : 15\n\n⚠️ En attendant votre RDV :\n- Prenez un antidouleur (paracétamol, PAS d'aspirine)\n- Appliquez du froid sur la joue\n- Ne touchez pas la zone douloureuse",
+      "buttons": [
+        {"label": "📞 Appeler le cabinet", "target": "call"},
+        {"label": "📅 RDV urgent", "target": "rdv"},
+        {"label": "⬅️ Retour", "target": "welcome"}
+      ]
+    },
+    {
+      "id": "faq",
+      "type": "message",
+      "content": "❓ Questions fréquentes :",
+      "buttons": [
+        {"label": "💳 Tarifs et remboursements", "target": "faq_tarifs"},
+        {"label": "📄 Documents à apporter", "target": "faq_documents"},
+        {"label": "😰 J'ai peur du dentiste", "target": "faq_peur"},
+        {"label": "🦷 Soins proposés", "target": "faq_soins"},
+        {"label": "📅 Prendre RDV", "target": "rdv"}
+      ]
+    },
+    {
+      "id": "faq_tarifs",
+      "type": "message",
+      "content": "💳 **Tarifs et remboursements** :\n\n- Consultation : {{PRIX_CONSULT}}€ (remboursé {{REMB_CONSULT}}% par la Sécu)\n- Détartrage : {{PRIX_DETARTRAGE}}€\n- Couronne céramique : à partir de {{PRIX_COURONNE}}€\n\n✅ Nous pratiquons le tiers payant avec la plupart des mutuelles.\n✅ Devis détaillé fourni avant tout soin important.\n\nN'hésitez pas à apporter votre carte de mutuelle lors de votre visite.",
+      "target": "faq"
+    },
+    {
+      "id": "faq_documents",
+      "type": "message",
+      "content": "📄 **Documents à apporter** :\n\n✅ Carte Vitale\n✅ Carte de mutuelle\n✅ Ordonnance (si envoyé par votre médecin)\n✅ Radiographies récentes (si vous en avez)\n\n⏰ Merci d'arriver 10 minutes avant votre RDV pour les formalités administratives.",
+      "target": "faq"
+    },
+    {
+      "id": "faq_peur",
+      "type": "message",
+      "content": "😰 **Vous avez peur du dentiste ?**\n\nC'est très fréquent et nous comprenons parfaitement !\n\nChez {{NOM_CABINET}} :\n✅ Approche douce et progressive\n✅ Anesthésie locale efficace (vous ne sentez rien)\n✅ Explications à chaque étape\n✅ Pauses dès que vous le souhaitez\n✅ Sédation consciente possible (MEOPA)\n\nN'hésitez pas à en parler lors de votre RDV, nous nous adapterons.",
+      "target": "faq"
+    },
+    {
+      "id": "faq_soins",
+      "type": "message",
+      "content": "🦷 **Nos soins** :\n\n✅ Soins conservateurs (caries, dévitalisations)\n✅ Prothèses (couronnes, bridges, inlays)\n✅ Implantologie\n✅ Orthodontie (bagues, gouttières)\n✅ Parodontologie (gencives)\n✅ Blanchiment dentaire\n✅ Chirurgie (extractions, dents de sagesse)\n✅ Pédodontie (soins enfants)",
+      "target": "faq"
+    },
+    {
+      "id": "infos",
+      "type": "message",
+      "content": "📍 **{{NOM_CABINET}}**\n\n🏠 {{ADRESSE}}\n📞 {{TELEPHONE}}\n📧 {{EMAIL_CABINET}}\n\n🕐 **Horaires** :\nLundi - Vendredi : {{HORAIRES}}\nSamedi : {{HORAIRES_SAMEDI}}\n\n🅿️ Parking : {{PARKING}}\n♿ Accès PMR : Oui\n🚇 Transports : {{TRANSPORTS}}",
+      "buttons": [
+        {"label": "📅 Prendre RDV", "target": "rdv"},
+        {"label": "🗺️ Itinéraire", "target": "maps"},
+        {"label": "⬅️ Retour", "target": "welcome"}
+      ]
+    }
+  ],
+
+  "variables_client": {
+    "NOM_CABINET": "Nom du cabinet",
+    "ADRESSE": "Adresse complète",
+    "TELEPHONE": "Téléphone principal",
+    "TELEPHONE_URGENCE": "Téléphone urgences",
+    "EMAIL_CABINET": "Email du cabinet",
+    "HORAIRES": "Ex: 8h30 - 19h00",
+    "HORAIRES_SAMEDI": "Ex: 9h - 12h ou Fermé",
+    "PRIX_CONSULT": "Prix consultation (ex: 30)",
+    "REMB_CONSULT": "% remboursement sécu (ex: 70)",
+    "PRIX_DETARTRAGE": "Prix détartrage (ex: 50)",
+    "PRIX_COURONNE": "Prix couronne (ex: 500)",
+    "PARKING": "Description parking",
+    "TRANSPORTS": "Métro, bus, tram à proximité"
+  }
+}

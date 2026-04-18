@@ -1,0 +1,55 @@
+version: '3.3'
+
+# TYPEBOT · Chatbot Business · Prêt à déployer
+# Commande : docker compose up -d
+# Accès : http://localhost:3000 (builder) + http://localhost:3001 (viewer)
+
+services:
+  typebot-db:
+    image: postgres:14-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=typebot
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-typebot}
+
+  typebot-builder:
+    image: baptistearno/typebot-builder:latest
+    restart: always
+    depends_on:
+      - typebot-db
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-typebot}@typebot-db:5432/typebot
+      - NEXTAUTH_URL=${BUILDER_URL:-http://localhost:3000}
+      - NEXT_PUBLIC_VIEWER_URL=${VIEWER_URL:-http://localhost:3001}
+      - ENCRYPTION_SECRET=${ENCRYPTION_SECRET:-supersecretencryptionkey123456}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-jeremyberthaud4@gmail.com}
+      # Auth (Google OAuth recommandé en prod)
+      - NEXTAUTH_URL_INTERNAL=http://localhost:3000
+      # SMTP pour envoyer des emails
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - NEXT_PUBLIC_SMTP_FROM=${SMTP_FROM:-noreply@votredomaine.fr}
+      # OpenAI pour les chatbots IA
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+
+  typebot-viewer:
+    image: baptistearno/typebot-viewer:latest
+    restart: always
+    depends_on:
+      - typebot-db
+    ports:
+      - '3001:3000'
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-typebot}@typebot-db:5432/typebot
+      - NEXTAUTH_URL=${BUILDER_URL:-http://localhost:3000}
+      - NEXT_PUBLIC_VIEWER_URL=${VIEWER_URL:-http://localhost:3001}
+      - ENCRYPTION_SECRET=${ENCRYPTION_SECRET:-supersecretencryptionkey123456}
+
+volumes:
+  db-data:
