@@ -7,6 +7,13 @@
 <meta name="robots" content="index, follow">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="canonical" href="https://www.maprimeadapt-idf.fr/">
+
+<!-- Performance : preconnect et dns-prefetch -->
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.google-analytics.com">
+<link rel="dns-prefetch" href="https://formspree.io">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop" fetchpriority="high">
 <title>MaPrimeAdapt | Adaptation logement senior partout en France — jusqu'à 70% financé</title>
 
 <!-- ─── OPEN GRAPH ─── -->
@@ -2560,7 +2567,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     // GA4 conversion tracking
     try { if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category:'form', event_label: situation || 'non_renseigné' }); } catch(_) {}
+    // Meta Pixel Lead
+    try { if (typeof fbq !== 'undefined') fbq('track', 'Lead'); } catch(_) {}
 
+    // Redirect vers page merci pour conversion tracking propre
+    setTimeout(function(){ window.location.href = '/merci.html'; }, 800);
     _showConfirm();
   }
   function _showConfirm() {

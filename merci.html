@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Merci — MaPrimeAdapt IDF</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--text:#0f1f18;--muted:#6b7280}
+  body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:linear-gradient(160deg,#e8f0ec 0%,#fff 100%);min-height:100vh;display:grid;place-items:center;padding:40px 20px;color:var(--text);font-size:17px;line-height:1.6}
+  .card{background:#fff;border-radius:24px;padding:60px 40px;max-width:560px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(26,61,43,.15)}
+  .check{width:96px;height:96px;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;margin:0 auto 24px;display:grid;place-items:center;animation:pop .4s cubic-bezier(.4,0,.2,1) .2s both}
+  .check svg{width:48px;height:48px;color:#fff;stroke-width:3}
+  @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+  h1{font-size:32px;font-weight:800;letter-spacing:-1px;color:var(--green);margin-bottom:12px}
+  .lead{color:var(--muted);font-size:18px;margin-bottom:32px}
+  .info{background:var(--green-pale);border:1px solid #c8dfcf;border-radius:12px;padding:20px 24px;margin-bottom:24px;text-align:left}
+  .info-title{font-size:14px;font-weight:700;color:var(--green);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+  .info-step{display:flex;gap:12px;align-items:flex-start;margin:10px 0}
+  .info-num{width:24px;height:24px;background:var(--green);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
+  .info-text{font-size:15px}
+  .urgency{background:rgba(245,158,11,.1);border-left:4px solid var(--gold);padding:14px 18px;border-radius:4px;margin-bottom:24px;text-align:left}
+  .urgency-title{font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px}
+  .urgency-text{font-size:14px;color:var(--text)}
+  .phone{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#fff;padding:16px 28px;border-radius:12px;font-size:17px;font-weight:600;text-decoration:none;transition:transform .15s}
+  .phone:hover{transform:translateY(-2px)}
+  .phone svg{width:18px;height:18px}
+  .back{display:block;margin-top:20px;font-size:14px;color:var(--muted);text-decoration:none}
+  .back:hover{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="check">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h1>Merci, votre demande est bien enregistree</h1>
+  <p class="lead">Jeremy vous rappelle dans les plus brefs delais.</p>
+
+  <div class="info">
+    <div class="info-title">Prochaines etapes</div>
+    <div class="info-step"><div class="info-num">1</div><div class="info-text">Jeremy vous rappelle sous <strong>24h ouvrees</strong> au numero indique</div></div>
+    <div class="info-step"><div class="info-num">2</div><div class="info-text">Premier echange gratuit et sans engagement (15 min)</div></div>
+    <div class="info-step"><div class="info-num">3</div><div class="info-text">Si vous etes eligible, constitution du dossier ensemble</div></div>
+  </div>
+
+  <div class="urgency">
+    <div class="urgency-title">Besoin immediat ?</div>
+    <div class="urgency-text">Appelez directement Jeremy, il repond en priorite.</div>
+  </div>
+
+  <a href="tel:+33604433420" class="phone">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    +33 6 04 43 34 20
+  </a>
+
+  <a href="/" class="back">&larr; Retour a l'accueil</a>
+</div>
+
+<!-- Conversion tracking -->
+<script>
+  // GA4 conversion
+  if(typeof gtag !== 'undefined'){
+    gtag('event','conversion',{'send_to':'AW-18047934864/lead'});
+    gtag('event','generate_lead',{'event_category':'conversion','event_label':'lead_form'});
+  }
+  // Meta Pixel Lead event
+  if(typeof fbq !== 'undefined'){
+    fbq('track','Lead');
+  }
+</script>
+</body>
+</html>
