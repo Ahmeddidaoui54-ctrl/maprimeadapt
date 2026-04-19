@@ -1,6 +1,11 @@
 # www → apex
 https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 
-# Page d'accueil
-/index  /maprimeadapt-idf.html  200
-/       /maprimeadapt-idf.html  200
+# Pages departementales (jolies URLs)
+/77-seine-et-marne /departements/77-seine-et-marne.html 200
+/78-yvelines /departements/78-yvelines.html 200
+/91-essonne /departements/91-essonne.html 200
+/92-hauts-de-seine /departements/92-hauts-de-seine.html 200
+/93-seine-saint-denis /departements/93-seine-saint-denis.html 200
+/94-val-de-marne /departements/94-val-de-marne.html 200
+/95-val-d-oise /departements/95-val-d-oise.html 200
