@@ -1,6 +1,8 @@
-name = "maprimeadapt-idf"
+# Cloudflare Pages configuration
+# Le projet Pages actif est maprimeadapt-idf-git (auto-deploy depuis GitHub)
+# Build command: (vide)
+# Build output directory: .
+
+name = "maprimeadapt-idf-git"
 compatibility_date = "2026-01-01"
 pages_build_output_dir = "."
-
-[env.production]
-name = "maprimeadapt-idf"
