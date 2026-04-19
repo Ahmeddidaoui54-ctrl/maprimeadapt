@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Visuels reseaux sociaux — MaPrimeAdapt IDF</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#1a3d2b;--green-mid:#2d6a4f;--gold:#f59e0b;--cream:#fef3c7;--white:#fff;--text:#0f1f18}
+body{font-family:'DM Sans',sans-serif;background:#f3f4f6;padding:40px;min-height:100vh}
+h1{font-family:'Syne',sans-serif;margin-bottom:8px;font-size:24px}
+.intro{color:#6b7280;margin-bottom:32px;max-width:720px;line-height:1.6}
+.intro b{color:#111}
+.section{margin-bottom:48px}
+.section-title{font-family:'Syne',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin-bottom:16px}
+.grid{display:grid;gap:24px}
+.grid-1200{grid-template-columns:1200px}
+.grid-1080{grid-template-columns:1080px}
+.grid-1200-630{grid-template-columns:1200px}
+
+/* ——— Base card ——— */
+.card{
+  border-radius:20px;overflow:hidden;position:relative;
+  box-shadow:0 10px 40px rgba(0,0,0,.12);
+  background:#fff;
+}
+
+/* ═══ LINKEDIN 1200x627 — Angle "enfants" ═══ */
+.li-1{width:1200px;height:627px;background:linear-gradient(135deg,#1a3d2b 0%,#2d6a4f 100%);color:#fff;padding:80px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.li-1::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(245,158,11,.25),transparent 70%);border-radius:50%}
+.li-1::after{content:'';position:absolute;bottom:-50px;left:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);border-radius:50%}
+.li-1 .tag{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.4);padding:8px 16px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;width:fit-content}
+.li-1 .tag-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+.li-1 h2{font-family:'Syne',sans-serif;font-size:62px;font-weight:800;line-height:1.05;letter-spacing:-2px;margin:24px 0;max-width:900px;position:relative;z-index:1}
+.li-1 h2 em{font-style:normal;color:var(--gold)}
+.li-1 .price{font-family:'Syne',sans-serif;font-size:104px;font-weight:800;color:var(--gold);line-height:1;position:relative;z-index:1}
+.li-1 .price sub{font-size:24px;color:rgba(255,255,255,.7);font-weight:500;letter-spacing:.5px;vertical-align:super;margin-left:6px}
+.li-1 .footer{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1}
+.li-1 .brand{font-family:'Syne',sans-serif;font-weight:800;font-size:20px}
+.li-1 .brand small{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:12px;opacity:.6;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.li-1 .cta{background:var(--gold);color:#000;padding:16px 28px;border-radius:100px;font-weight:700;font-size:16px}
+
+/* ═══ FACEBOOK 1200x630 — Angle "probleme" ═══ */
+.fb-1{width:1200px;height:630px;background:#fef3c7;padding:70px 80px;display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:center;position:relative}
+.fb-1 h2{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:20px}
+.fb-1 h2 em{font-style:normal;background:var(--green);color:#fff;padding:2px 16px;border-radius:8px}
+.fb-1 p{font-size:20px;color:#4b5563;line-height:1.5;margin-bottom:28px}
+.fb-1 .cta{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#fff;padding:16px 28px;border-radius:12px;font-weight:700;font-size:16px}
+.fb-1 .visual{display:flex;flex-direction:column;gap:14px}
+.fb-1 .row{display:flex;align-items:center;gap:14px;background:#fff;padding:18px 20px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.fb-1 .row-before{border-left:4px solid #ef4444}
+.fb-1 .row-after{border-left:4px solid #059669}
+.fb-1 .row-icon{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.fb-1 .row-before .row-icon{background:#fee2e2}
+.fb-1 .row-after .row-icon{background:#dcfce7}
+.fb-1 .row-text{flex:1}
+.fb-1 .row-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.fb-1 .row-before .row-label{color:#dc2626}
+.fb-1 .row-after .row-label{color:#059669}
+.fb-1 .row-desc{font-size:15px;color:var(--text);font-weight:500}
+
+/* ═══ INSTAGRAM / FB Square 1080x1080 — Chiffre cle ═══ */
+.sq-1{width:1080px;height:1080px;background:linear-gradient(160deg,#1a3d2b 0%,#0d2d1f 60%,#0a1f14 100%);padding:80px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;position:relative;overflow:hidden}
+.sq-1::before{content:'';position:absolute;top:-200px;left:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(245,158,11,.15),transparent 70%);border-radius:50%}
+.sq-1::after{content:'';position:absolute;bottom:-150px;right:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(16,185,129,.15),transparent 70%);border-radius:50%}
+.sq-1 .top{position:relative;z-index:1}
+.sq-1 .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;backdrop-filter:blur(8px)}
+.sq-1 .badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.5}}
+.sq-1 .center{text-align:center;position:relative;z-index:1;margin:auto 0}
+.sq-1 .kicker{font-size:22px;color:rgba(255,255,255,.7);margin-bottom:20px;font-weight:500}
+.sq-1 .big{font-family:'Syne',sans-serif;font-size:180px;font-weight:800;line-height:.9;letter-spacing:-6px;background:linear-gradient(135deg,#fff 40%,#fde68a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+.sq-1 .unit{font-family:'Syne',sans-serif;font-size:40px;color:var(--gold);font-weight:700;margin-bottom:24px}
+.sq-1 .sub{font-size:28px;color:rgba(255,255,255,.85);font-weight:500;max-width:800px;margin:0 auto;line-height:1.4}
+.sq-1 .bottom{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.sq-1 .brand{font-family:'Syne',sans-serif;font-weight:800;font-size:28px}
+.sq-1 .brand small{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;opacity:.5;text-transform:uppercase;letter-spacing:2px;margin-top:6px}
+.sq-1 .website{font-size:16px;color:rgba(255,255,255,.6);font-weight:500}
+
+/* ═══ STORY 1080x1920 — Alerte urgence ═══ */
+.st-1{width:1080px;height:1920px;background:#1a3d2b;padding:80px 60px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;position:relative;overflow:hidden}
+.st-1::before{content:'';position:absolute;top:0;left:0;right:0;height:500px;background:linear-gradient(180deg,rgba(245,158,11,.15),transparent)}
+.st-1 .top{text-align:center;position:relative;z-index:1}
+.st-1 .warning{display:inline-block;background:#dc2626;color:#fff;padding:10px 24px;border-radius:100px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:40px;animation:blink 1.5s infinite}
+@keyframes blink{50%{opacity:.6}}
+.st-1 h1{font-family:'Syne',sans-serif;font-size:110px;font-weight:800;line-height:1;letter-spacing:-3px;margin-bottom:40px}
+.st-1 h1 em{font-style:normal;color:var(--gold);display:block}
+.st-1 .sub{font-size:30px;color:rgba(255,255,255,.8);line-height:1.4;margin-bottom:30px}
+.st-1 .middle{position:relative;z-index:1;margin:auto 0}
+.st-1 .box{background:rgba(255,255,255,.08);border:2px solid rgba(245,158,11,.4);border-radius:30px;padding:50px;text-align:center;backdrop-filter:blur(12px)}
+.st-1 .box-num{font-family:'Syne',sans-serif;font-size:120px;font-weight:800;color:var(--gold);line-height:1;margin-bottom:10px}
+.st-1 .box-label{font-size:26px;color:#fff;font-weight:600;text-transform:uppercase;letter-spacing:3px}
+.st-1 .bottom{text-align:center;position:relative;z-index:1}
+.st-1 .cta-box{background:var(--gold);color:#000;padding:28px;border-radius:20px;margin-bottom:24px}
+.st-1 .cta-box .cta-title{font-family:'Syne',sans-serif;font-weight:800;font-size:32px;margin-bottom:6px}
+.st-1 .cta-box .cta-sub{font-size:18px;opacity:.7;font-weight:500}
+.st-1 .swipe{font-size:20px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase}
+
+/* ═══ LINKEDIN Carousel — Slide chiffre ═══ */
+.li-c{width:1080px;height:1080px;background:#fff;padding:80px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.li-c::before{content:'';position:absolute;top:0;left:0;width:200px;height:6px;background:var(--gold)}
+.li-c .nb{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--green);letter-spacing:4px;text-transform:uppercase}
+.li-c h2{font-family:'Syne',sans-serif;font-size:72px;font-weight:800;line-height:1.05;letter-spacing:-2px;color:var(--text);margin:60px 0 40px}
+.li-c h2 em{font-style:normal;color:var(--green)}
+.li-c .body{font-size:26px;color:#4b5563;line-height:1.6;flex:1}
+.li-c .body b{color:var(--text);font-weight:700}
+.li-c .footer{display:flex;justify-content:space-between;align-items:center;padding-top:30px;border-top:1px solid #e5e7eb}
+.li-c .brand{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--green)}
+.li-c .pagination{font-size:14px;color:#9ca3af;letter-spacing:1px}
+
+/* Print-friendly */
+@media print{
+  body{background:#fff;padding:0}
+  .card{page-break-inside:avoid;margin-bottom:40px}
+}
+</style>
+</head>
+<body>
+
+<h1>Visuels reseaux sociaux — MaPrimeAdapt IDF</h1>
+<p class="intro">
+<b>Comment utiliser :</b> Fais une capture d'ecran de chaque visuel (Maj + Cmd + 4 sur Mac, puis selectionne la carte).
+Les dimensions sont optimisees pour chaque plateforme. <b>Jamais rien a installer</b>, tout se fait dans ton navigateur.
+</p>
+
+<div class="section">
+  <div class="section-title">1. LinkedIn feed — 1200x627</div>
+  <div class="grid grid-1200-630">
+    <div class="card li-1">
+      <div class="tag"><span class="tag-dot"></span>Dispositif officiel ANAH</div>
+      <h2>Jusqu'a <em>15 400 €</em><br>pour adapter le logement<br>de vos parents</h2>
+      <div>
+        <div class="price">70%<sub>finance</sub></div>
+      </div>
+      <div class="footer">
+        <div class="brand">MaPrimeAdapt IDF<br><small>Specialiste Ile-de-France</small></div>
+        <div class="cta">Simulation gratuite &rsaquo;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">2. Facebook post — 1200x630 (angle probleme/solution)</div>
+  <div class="grid grid-1200-630">
+    <div class="card fb-1">
+      <div>
+        <h2>Adapter le logement<br>pour <em>70% finance</em></h2>
+        <p>L'Etat peut prendre en charge jusqu'a 15 400 € pour rendre le domicile des seniors plus sur.</p>
+        <div class="cta">Verifier mon eligibilite &rsaquo;</div>
+      </div>
+      <div class="visual">
+        <div class="row row-before">
+          <div class="row-icon">&#128703;</div>
+          <div class="row-text">
+            <div class="row-label">AVANT</div>
+            <div class="row-desc">Baignoire, chutes frequentes</div>
+          </div>
+        </div>
+        <div class="row row-after">
+          <div class="row-icon">&#128703;</div>
+          <div class="row-text">
+            <div class="row-label">APRES</div>
+            <div class="row-desc">Douche PMR, autonomie preservee</div>
+          </div>
+        </div>
+        <div class="row row-after">
+          <div class="row-icon">&#128339;</div>
+          <div class="row-text">
+            <div class="row-label">DELAI</div>
+            <div class="row-desc">3 a 6 mois, cles en main</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">3. Instagram / Facebook square — 1080x1080 (chiffre cle)</div>
+  <div class="grid grid-1080">
+    <div class="card sq-1">
+      <div class="top">
+        <div class="badge"><span class="badge-dot"></span>Dispositif officiel 2025-2026</div>
+      </div>
+      <div class="center">
+        <div class="kicker">Jusqu'a</div>
+        <div class="big">15 400</div>
+        <div class="unit">EUROS</div>
+        <div class="sub">pour adapter votre logement<br>ou celui de vos parents</div>
+      </div>
+      <div class="bottom">
+        <div class="brand">MaPrimeAdapt<br><small>Ile-de-France</small></div>
+        <div class="website">maprimeadapt-idf.fr</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">4. Story Instagram / Facebook — 1080x1920 (urgence)</div>
+  <div class="grid grid-1080">
+    <div class="card st-1">
+      <div class="top">
+        <div class="warning">Budget 2026 en cours</div>
+        <h1>Douche PMR<em>Monte-escalier<br>Rampes d'acces</em></h1>
+        <p class="sub">L'Etat peut financer jusqu'a 70% de vos travaux d'adaptation</p>
+      </div>
+      <div class="middle">
+        <div class="box">
+          <div class="box-num">15 400 &euro;</div>
+          <div class="box-label">Max aide 2026</div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="cta-box">
+          <div class="cta-title">Simulation gratuite</div>
+          <div class="cta-sub">3 minutes, sans engagement</div>
+        </div>
+        <div class="swipe">&uarr; Swipe up &uarr;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">5. LinkedIn carousel — slides 1080x1080 (a decliner en 5)</div>
+  <div class="grid grid-1080">
+
+    <div class="card li-c">
+      <div class="nb">01 / 05</div>
+      <h2>Vos parents<br>sont <em>eligibles</em> ?</h2>
+      <div class="body">
+        L'adaptation du logement est souvent repoussee.<br><br>Pourtant, <b>des 60 ans</b> avec perte d'autonomie,
+        l'Etat finance jusqu'a <b>70% des travaux</b>.<br><br>Verifiez en 3 minutes.
+      </div>
+      <div class="footer">
+        <div class="brand">MaPrimeAdapt IDF</div>
+        <div class="pagination">Slide 1 / 5 &rsaquo;</div>
+      </div>
+    </div>
+
+    <div class="card li-c">
+      <div class="nb">02 / 05</div>
+      <h2>Qui est<br><em>concerne</em> ?</h2>
+      <div class="body">
+        &bull; Proprietaires ou locataires<br>
+        &bull; <b>70 ans et plus</b> sans condition<br>
+        &bull; <b>60 ans</b> avec perte d'autonomie (GIR)<br>
+        &bull; Revenus sous plafonds ANAH<br><br>
+        <b>Vous accompagnez un parent ?</b> C'est le moment d'agir.
+      </div>
+      <div class="footer">
+        <div class="brand">MaPrimeAdapt IDF</div>
+        <div class="pagination">Slide 2 / 5 &rsaquo;</div>
+      </div>
+    </div>
+
+    <div class="card li-c">
+      <div class="nb">03 / 05</div>
+      <h2>Quels<br><em>travaux</em> ?</h2>
+      <div class="body">
+        &bull; <b>Douche PMR</b> (remplace la baignoire)<br>
+        &bull; <b>Monte-escalier</b> ou ascenseur<br>
+        &bull; <b>Rampes d'acces</b><br>
+        &bull; <b>Elargissement des portes</b><br>
+        &bull; Volets automatises, domotique, WC sureleves...
+      </div>
+      <div class="footer">
+        <div class="brand">MaPrimeAdapt IDF</div>
+        <div class="pagination">Slide 3 / 5 &rsaquo;</div>
+      </div>
+    </div>
+
+    <div class="card li-c">
+      <div class="nb">04 / 05</div>
+      <h2>Combien<br>ca <em>rapporte</em> ?</h2>
+      <div class="body">
+        <b>Profil Bleu</b> (revenus tres modestes) : <b>70%</b> finance, jusqu'a <b>15 400 €</b><br><br>
+        <b>Profil Jaune</b> (revenus modestes) : <b>50%</b> finance, jusqu'a <b>11 000 €</b><br><br>
+        Cumulable avec d'autres aides : caisses de retraite, Action Logement, departement.
+      </div>
+      <div class="footer">
+        <div class="brand">MaPrimeAdapt IDF</div>
+        <div class="pagination">Slide 4 / 5 &rsaquo;</div>
+      </div>
+    </div>
+
+    <div class="card li-c">
+      <div class="nb">05 / 05</div>
+      <h2>Comment<br>on vous <em>aide</em> ?</h2>
+      <div class="body">
+        &check; Simulation gratuite en 3 min<br>
+        &check; Constitution du dossier de A a Z<br>
+        &check; Mise en relation artisans certifies<br>
+        &check; Suivi jusqu'au versement<br><br>
+        <b>100% gratuit pour vous</b>. Appelez Jeremy : <b>+33 6 04 43 34 20</b>
+      </div>
+      <div class="footer">
+        <div class="brand">MaPrimeAdapt IDF</div>
+        <div class="pagination">maprimeadapt-idf.fr</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
