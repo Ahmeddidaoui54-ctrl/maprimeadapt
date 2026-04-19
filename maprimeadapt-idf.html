@@ -110,7 +110,13 @@
   /* ─── RESET ─── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { font-family: var(--font); color: var(--text); background: var(--white); line-height: 1.6; }
+  body { font-family: var(--font); color: var(--text); background: var(--white); line-height: 1.65; font-size: 17px; }
+  /* Accessibilité seniors — focus visible, contrastes renforcés, cibles tactiles >=44px */
+  :focus-visible { outline: 3px solid var(--gold) !important; outline-offset: 2px !important; border-radius: 4px; }
+  button, a.btn-primary, a.btn-header, .quick-btn, .mobile-nav-link { min-height: 44px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
   img { display: block; max-width: 100%; }
   a { color: inherit; text-decoration: none; }
   button { cursor: pointer; font-family: inherit; border: none; background: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
@@ -1302,6 +1308,7 @@
     GA4_ID:      'G-LNC21XL03M',   // analytics.google.com > Admin > Flux de données
     CLARITY_ID:  '',   // ex: abc12def       — clarity.microsoft.com > Settings
     GSC_TOKEN:   'XVcBjKu8dMX9pbqaCzoa3gaDucrXzGxp9r-Yb96Eojs',
+    META_PIXEL:  '',   // ex: 1234567890 — business.facebook.com > Event Manager
   };
 </script>
 
@@ -1329,6 +1336,19 @@
     t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)
     })(window,document,"clarity","script",SITE_CONFIG.CLARITY_ID);
+  }
+</script>
+
+<!-- Meta Pixel (Facebook Ads — chargé uniquement si META_PIXEL renseigné) -->
+<script>
+  if(window.SITE_CONFIG.META_PIXEL){
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', SITE_CONFIG.META_PIXEL);
+    fbq('track', 'PageView');
   }
 </script>
 
@@ -2028,6 +2048,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ═══ ANTI-ARNAQUE ═══ -->
+<section class="section section-alt" id="anti-arnaque">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow" style="color:#dc2626">Sécurité</span>
+      <h2>Comment reconnaître une arnaque à MaPrimeAdapt</h2>
+      <p class="section-lead">Des escrocs profitent de la notoriété du dispositif. Voici les règles à connaître pour vous protéger, vous ou vos proches.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto" class="reveal">
+
+      <div style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius);padding:24px;position:relative">
+        <div style="position:absolute;top:-10px;left:20px;background:#fee2e2;color:#dc2626;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.5px">DANGER</div>
+        <div style="font-size:24px;margin:8px 0 10px">&#128222;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#991b1b">Démarchage téléphonique agressif</div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6;margin:0">L'ANAH ne démarche JAMAIS par téléphone. Si on vous presse de décider en 5 minutes, raccrochez. Un vrai conseiller prend le temps et vous envoie un écrit.</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius);padding:24px;position:relative">
+        <div style="position:absolute;top:-10px;left:20px;background:#fee2e2;color:#dc2626;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.5px">DANGER</div>
+        <div style="font-size:24px;margin:8px 0 10px">&#128176;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#991b1b">Demande d'argent à l'avance</div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6;margin:0">Aucun organisme officiel ne demande de virement ou de chèque avant les travaux. L'aide ANAH est versée APRÈS. Notre accompagnement est gratuit.</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid #fecaca;border-radius:var(--radius);padding:24px;position:relative">
+        <div style="position:absolute;top:-10px;left:20px;background:#fee2e2;color:#dc2626;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.5px">DANGER</div>
+        <div style="font-size:24px;margin:8px 0 10px">&#128100;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#991b1b">Faux agents ANAH</div>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6;margin:0">Personne ne sonne à votre porte en prétendant être mandaté par l'ANAH. Si c'est le cas, refusez d'ouvrir et appelez la mairie ou le 3977 (lutte contre la maltraitance).</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid #bbf7d0;border-radius:var(--radius);padding:24px;position:relative">
+        <div style="position:absolute;top:-10px;left:20px;background:#dcfce7;color:#16a34a;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.5px">NOS GARANTIES</div>
+        <div style="font-size:24px;margin:8px 0 10px">&#10003;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:#166534">Ce que nous vous promettons</div>
+        <ul style="font-size:13px;color:var(--muted);line-height:1.8;list-style:none;padding:0;margin:0">
+          <li>&#10003; Premier échange téléphonique gratuit et sans engagement</li>
+          <li>&#10003; Accompagnement 100% gratuit pour le bénéficiaire</li>
+          <li>&#10003; Devis des artisans partenaires transparents</li>
+          <li>&#10003; Droit de rétractation de 14 jours</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="background:rgba(26,61,43,.04);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-top:32px;max-width:900px;margin-left:auto;margin-right:auto;text-align:center" class="reveal">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px">En cas de doute, contactez directement :</div>
+      <div style="font-size:14px;color:var(--text);font-weight:600">ANAH : <a href="tel:0806706803" style="color:var(--green)">0 806 70 68 03</a> &middot; Info Escroqueries : <a href="tel:0805805817" style="color:var(--green)">0 805 805 817</a></div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ FAQ ═══ -->
 <section class="section" id="faq">
   <div class="container">
@@ -2183,8 +2255,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <div class="footer-bottom">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px;font-size:13px">
+        <a href="/mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a>
+        <a href="/cgv.html" style="color:rgba(255,255,255,.7)">Conditions générales</a>
+        <a href="/politique-confidentialite.html" style="color:rgba(255,255,255,.7)">Politique de confidentialité</a>
+        <a href="mailto:jeremy@maprimeadapt-idf.fr" style="color:rgba(255,255,255,.7)">Contact</a>
+      </div>
       <p class="footer-legal">
-        MaPrimeAdapt IDF est un service d'accompagnement indépendant, non affilié à l'ANAH ni à l'État. Nous accompagnons les démarches administratives de nos clients. Les montants d'aide indiqués sont des estimations à titre indicatif ; le montant définitif est déterminé par l'ANAH après instruction du dossier. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de portabilité et de suppression de vos données. Pour exercer ces droits : <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a> · Conseiller : <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a>. SIRET : 123 456 789 00010 · TVA : FR12 123456789.
+        MaPrimeAdapt IDF est un service d'accompagnement indépendant, <strong>non affilié à l'ANAH ni à l'État</strong>. MaPrimeAdapt peut être demandé gratuitement sans intermédiaire sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>. Les montants indiqués sont des estimations à titre indicatif ; le montant définitif est déterminé par l'ANAH. Vos données sont protégées (RGPD) — voir notre <a href="/politique-confidentialite.html">politique de confidentialité</a>.
       </p>
       <div class="footer-rgpd">
         <div class="rgpd-badge">RGPD</div>
@@ -2256,35 +2334,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </button>
     </div>
     <div class="modal-body" id="modal-body">
-      <div class="form-row">
-        <div class="form-field">
-          <label class="form-label" for="f-prenom">Prénom</label>
-          <input id="f-prenom" class="form-input" type="text" placeholder="Marie" autocomplete="given-name" inputmode="text">
-        </div>
-        <div class="form-field">
-          <label class="form-label" for="f-nom">Nom</label>
-          <input id="f-nom" class="form-input" type="text" placeholder="Dupont" autocomplete="family-name" inputmode="text">
-        </div>
+      <div class="form-field">
+        <label class="form-label" for="f-prenom">Votre prénom</label>
+        <input id="f-prenom" class="form-input" type="text" placeholder="Marie" autocomplete="given-name" inputmode="text" style="font-size:17px;padding:14px 16px">
       </div>
       <div class="form-field">
-        <label class="form-label" for="f-tel">Téléphone <span style="color:#ef4444">*</span></label>
-        <input id="f-tel" class="form-input" type="tel" placeholder="06 xx xx xx xx" autocomplete="tel" inputmode="numeric" pattern="[0-9\s\+\-\.]{9,15}" oninput="this.value=this.value.replace(/[^0-9\s\+\-\.]/g,'')">
+        <label class="form-label" for="f-tel">Votre téléphone <span style="color:#ef4444">*</span></label>
+        <input id="f-tel" class="form-input" type="tel" placeholder="+33 6 xx xx xx xx" autocomplete="tel" inputmode="tel" pattern="[0-9\s\+\-\.]{9,15}" oninput="this.value=this.value.replace(/[^0-9\s\+\-\.]/g,'')" style="font-size:17px;padding:14px 16px">
       </div>
-      <div class="form-field">
-        <label class="form-label" for="f-cp">Code postal</label>
-        <input id="f-cp" class="form-input" type="text" placeholder="75001" maxlength="5" autocomplete="postal-code" inputmode="numeric">
+      <!-- Honeypot anti-spam (invisible aux humains) -->
+      <div style="position:absolute;left:-9999px" aria-hidden="true">
+        <label for="f-website">Ne pas remplir</label>
+        <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
       </div>
-      <div class="form-field">
-        <label class="form-label" for="f-situation">Votre situation</label>
-        <select id="f-situation" class="form-input" autocomplete="off">
-          <option value="">Sélectionner</option>
-          <option value="beneficiaire">Je suis le bénéficiaire (senior)</option>
-          <option value="proche">J'aide un proche</option>
-          <option value="professionnel">Je suis un professionnel</option>
-        </select>
-      </div>
-      <p class="form-consent">En soumettant ce formulaire, vous acceptez d'être recontacté par notre équipe concernant MaPrimeAdapt. Vos données sont traitées conformément à notre <a href="#">politique de confidentialité</a> et ne sont jamais transmises à des tiers. Vous pouvez retirer votre consentement à tout moment.</p>
-      <button type="button" class="btn-submit" onclick="submitForm()">Être rappelé gratuitement</button>
+      <p class="form-consent">Appel gratuit, sans engagement. Vos données sont protégées (RGPD) et ne sont jamais cédées à des tiers. Voir la <a href="/politique-confidentialite.html">politique de confidentialité</a>.</p>
+      <button type="button" class="btn-submit" onclick="submitForm()" style="font-size:17px;padding:16px">Être rappelé gratuitement</button>
+      <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px">Ou appelez directement Jérémy au <a href="tel:+33604433420" style="color:var(--green);font-weight:600">+33 6 04 43 34 20</a></p>
     </div>
   </div>
 </div>
