@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vous achetez un bien à rénover ? Récupérez jusqu'à 70 000 € d'aides (MaPrimeRénov, PTZ, Action Logement, TVA 5,5%). Audit de financement gratuit avant signature notaire.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/renovation">
+<title>Primo-rénovateurs : jusqu'à 70 000 € d'aides cumulées — Mon Projet Habitat</title>
+<meta property="og:title" content="Acheteurs : récupérez 70 000 € d'aides avant la signature">
+<meta property="og:description" content="MaPrimeRénov + PTZ + Action Logement + aides locales. Audit financement gratuit.">
+<meta property="og:type" content="website">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Puis-je demander MaPrimeRénov avant d'acheter ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Vous devez juste prouver que vous êtes propriétaire au moment des travaux. Nous pouvons préparer le dossier pour qu'il soit déposé dès la signature."}},
+{"@type":"Question","name":"Quel est le montant du PTZ rénovation ?","acceptedAnswer":{"@type":"Answer","text":"Jusqu'à 50 000 euros pour les travaux de rénovation énergétique, remboursables sur 20 ans sans intérêts."}},
+{"@type":"Question","name":"Combien coûte votre accompagnement ?","acceptedAnswer":{"@type":"Answer","text":"Notre service est gratuit pour vous. Nous sommes rémunérés par les artisans partenaires via une commission après travaux."}}
+]}
+</script>
+
+<style>
+:root{
+  --green:#1a3d2b;--green-mid:#2d6a4f;--green-light:#3d8b6a;--green-pale:#e8f0ec;
+  --gold:#f59e0b;--gold-light:#fde68a;--emerald:#059669;--blue:#2563eb;
+  --white:#ffffff;--off-white:#ecf5ee;--text:#0f1f18;--muted:#6b7c72;--border:#dce8e1;
+  --shadow-md:0 4px 16px rgba(26,61,43,.12);--shadow-lg:0 20px 60px rgba(26,61,43,.18);
+  --radius:12px;--radius-lg:20px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,"Segoe UI",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.65;font-size:17px}
+:focus-visible{outline:3px solid var(--gold)!important;outline-offset:2px}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+
+.container{max-width:1160px;margin:0 auto;padding:0 24px}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(26,61,43,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:12px;color:#fff}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px;letter-spacing:-.3px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+.header-nav{display:flex;align-items:center;gap:20px}
+.header-nav a{color:rgba(255,255,255,.85);font-size:14px;font-weight:500}
+.header-nav a:hover{color:#fff}
+.btn-header{background:var(--gold);color:#000;padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px}
+@media(max-width:768px){.header-nav a{display:none}}
+
+.hero{position:relative;padding:80px 0 100px;background:linear-gradient(135deg,#1a3d2b 0%,#2d6a4f 50%,#1e3a8a 100%);color:#fff;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,158,11,.2),transparent 70%);border-radius:50%}
+.hero-content{position:relative;z-index:1;max-width:720px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.4);padding:8px 16px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:24px}
+.hero-badge-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.5}}
+.hero h1{font-size:clamp(32px,5vw,54px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:19px;color:rgba(255,255,255,.85);line-height:1.5;margin-bottom:32px;max-width:620px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#000;padding:16px 28px;border-radius:10px;font-size:16px;font-weight:700;transition:transform .15s}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-secondary{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;padding:16px 28px;border-radius:10px;font-weight:600}
+
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:800px;margin-top:50px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;overflow:hidden}
+.hero-stat{padding:18px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+.hero-stat:last-child{border-right:none}
+.stat-num{font-size:24px;font-weight:800;color:var(--gold)}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.6);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+@media(max-width:640px){.hero-stats{grid-template-columns:repeat(2,1fr)}.hero-stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}}
+
+.section{padding:72px 0}
+.section-alt{background:var(--off-white)}
+.section-header{text-align:center;margin-bottom:44px}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green-mid);margin-bottom:10px}
+h2{font-size:clamp(26px,3.5vw,38px);font-weight:800;letter-spacing:-1px;line-height:1.15;color:var(--text)}
+.section-lead{font-size:17px;color:var(--muted);margin-top:12px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.55}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.grid-3,.grid-2{grid-template-columns:1fr}}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:28px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.card-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.card-icon{font-size:28px;margin-bottom:14px}
+.card-title{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.card-desc{font-size:14px;color:var(--muted);line-height:1.55}
+
+.aides-table{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-md)}
+.aides-row{display:grid;grid-template-columns:1.5fr 1fr 2fr;gap:20px;padding:18px 24px;border-bottom:1px solid var(--border);align-items:center}
+.aides-row:last-child{border-bottom:none}
+.aides-row-head{background:var(--green);color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.aides-row-total{background:var(--gold);color:#000;font-weight:800;font-size:17px}
+.aides-name{font-weight:700;font-size:15px}
+.aides-amount{font-weight:800;color:var(--green);font-size:16px}
+.aides-total .aides-amount{color:#000}
+.aides-cond{font-size:13px;color:var(--muted)}
+@media(max-width:640px){.aides-row{grid-template-columns:1fr;gap:8px;padding:16px}}
+
+.example{background:linear-gradient(135deg,var(--green) 0%,var(--green-mid) 100%);color:#fff;border-radius:var(--radius-lg);padding:40px;box-shadow:var(--shadow-lg)}
+.example-title{font-size:14px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.example-house{font-size:26px;font-weight:800;margin-bottom:30px;line-height:1.3}
+.example-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+.example-item{background:rgba(255,255,255,.08);border-radius:10px;padding:18px;text-align:center}
+.example-item-lbl{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.example-item-val{font-size:20px;font-weight:800}
+.example-item.highlight .example-item-val{color:var(--gold)}
+.example-cta{text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,.15)}
+@media(max-width:640px){.example{padding:28px 22px}.example-grid{grid-template-columns:repeat(2,1fr)}.example-house{font-size:20px}}
+
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;position:relative}
+.steps::before{content:'';position:absolute;top:30px;left:8%;right:8%;height:2px;background:var(--border);z-index:0}
+.step{text-align:center;position:relative;z-index:1}
+.step-num{width:60px;height:60px;margin:0 auto 14px;background:var(--green);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;border:4px solid var(--off-white)}
+.step-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.step-desc{font-size:11px;color:var(--muted);line-height:1.4}
+@media(max-width:768px){.steps{grid-template-columns:1fr;gap:24px}.steps::before{display:none}}
+
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
+.faq-q{padding:18px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:600;font-size:16px}
+.faq-q:hover{background:var(--off-white)}
+.faq-icon{width:24px;height:24px;display:grid;place-items:center;background:var(--green-pale);color:var(--green);border-radius:50%;font-weight:800;flex-shrink:0;transition:transform .3s}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--green);color:#fff}
+.faq-a{display:none;padding:0 24px 20px;color:var(--muted);line-height:1.6;font-size:15px}
+.faq-item.open .faq-a{display:block}
+
+.cta-section{background:linear-gradient(135deg,var(--green) 0%,#0d2e1e 100%);color:#fff;text-align:center;padding:72px 24px}
+.cta-section h2{color:#fff;margin-bottom:14px}
+.cta-section p{color:rgba(255,255,255,.75);font-size:17px;margin-bottom:30px}
+
+.footer{background:var(--green);color:rgba(255,255,255,.75);padding:48px 0 24px;font-size:14px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:32px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr}}
+.footer-col h4{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.footer-col a{display:block;color:rgba(255,255,255,.6);margin-bottom:8px;font-size:13px}
+.footer-col a:hover{color:#fff}
+.footer-legal{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;font-size:12px;opacity:.6;line-height:1.6}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center;line-height:1.4}
+.disclaimer-top strong{color:#7c2d12}
+
+.chatbot-trigger{position:fixed;bottom:24px;right:24px;z-index:200;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--green-mid),var(--green));color:#fff;display:grid;place-items:center;box-shadow:0 8px 32px rgba(26,61,43,.4);cursor:pointer;transition:transform .2s}
+.chatbot-trigger:hover{transform:scale(1.08)}
+.chatbot-trigger svg{width:26px;height:26px}
+
+.mobile-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:150;background:rgba(26,61,43,.97);backdrop-filter:blur(12px);padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.1);gap:8px}
+.mobile-cta a{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;font-size:14px;font-weight:600;border-radius:8px}
+.mobile-cta-call{background:rgba(255,255,255,.12);color:#fff;flex:0 0 auto}
+.mobile-cta-sim{flex:1;background:linear-gradient(135deg,var(--gold),#f97316);color:#000}
+@media(max-width:768px){.mobile-cta{display:flex}body{padding-bottom:72px}.chatbot-trigger{bottom:80px;right:16px;width:52px;height:52px}}
+
+/* Trap alert box */
+.trap{background:#fef2f2;border:1px solid #fecaca;border-radius:var(--radius);padding:28px;position:relative}
+.trap-label{display:inline-block;background:#dc2626;color:#fff;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.trap h3{font-size:17px;font-weight:700;margin-bottom:8px;color:#7f1d1d}
+.trap p{font-size:14px;color:#991b1b;line-height:1.55}
+
+/* Timing highlight */
+.timing-box{background:var(--gold);color:#000;border-radius:var(--radius);padding:24px;text-align:center;margin-top:32px}
+.timing-box strong{font-size:19px}
+
+@media(prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Mon Projet Habitat n'est pas affilié à l'ANAH ni à l'État. Démarches possibles gratuitement sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener" style="color:#7c2d12;text-decoration:underline">monprojet.anah.gouv.fr</a>
+</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div>
+        <div class="logo-name">Mon Projet Habitat</div>
+        <div class="logo-sub">Énergie &middot; Adaptation &middot; Rénovation</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Seniors</a>
+      <a href="/energie">Énergie</a>
+      <a href="tel:+33604433420">+33 6 04 43 34 20</a>
+      <a href="#audit" class="btn-header">Audit gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span>Avant la signature notaire</div>
+    <h1>Vous achetez un bien à rénover ? Récupérez <em>70 000 €</em> d'aides.</h1>
+    <p class="hero-sub">MaPrimeRénov + PTZ + Action Logement + aides locales + TVA 5,5%. Anticipez votre plan de financement AVANT la signature. Gratuit.</p>
+    <div class="hero-ctas">
+      <a href="#audit" class="btn-primary">Audit financement gratuit &rsaquo;</a>
+      <a href="tel:+33604433420" class="btn-secondary">+33 6 04 43 34 20</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="stat-num">70 000 €</div><div class="stat-lbl">Aides max</div></div>
+      <div class="hero-stat"><div class="stat-num">50 000 €</div><div class="stat-lbl">PTZ rénovation</div></div>
+      <div class="hero-stat"><div class="stat-num">5</div><div class="stat-lbl">Aides cumulées</div></div>
+      <div class="hero-stat"><div class="stat-num">0 €</div><div class="stat-lbl">De frais</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Le piege -->
+<section class="section" id="piege">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">À savoir absolument</span>
+      <h2>Le piège des primo-rénovateurs</h2>
+      <p class="section-lead">90% des acheteurs découvrent les aides trop tard et laissent des milliers d'euros sur la table.</p>
+    </div>
+    <div class="grid-3">
+      <div class="trap reveal">
+        <div class="trap-label">Erreur n°1</div>
+        <h3>Travaux démarrés avant dépôt du dossier</h3>
+        <p>Dès le premier devis signé, vous êtes exclu de MaPrimeRénov. Il faut déposer <strong>avant</strong> tout engagement.</p>
+      </div>
+      <div class="trap reveal">
+        <div class="trap-label">Erreur n°2</div>
+        <h3>Mauvais artisan</h3>
+        <p>Seuls les artisans <strong>RGE</strong> (Reconnus Garants de l'Environnement) rendent éligible. 60% des artisans ne le sont pas.</p>
+      </div>
+      <div class="trap reveal">
+        <div class="trap-label">Erreur n°3</div>
+        <h3>Financement bancaire figé</h3>
+        <p>Sans anticipation, votre banque ne propose pas le PTZ rénovation. À intégrer dans l'offre de prêt principal dès l'achat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Les 5 aides -->
+<section class="section section-alt" id="aides">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Aides 2026 cumulables</span>
+      <h2>Les 5 leviers de financement</h2>
+      <p class="section-lead">Exemple pour un couple primo-accédant, 2 enfants, achat en IDF, travaux 50 000 €.</p>
+    </div>
+    <div class="aides-table reveal">
+      <div class="aides-row aides-row-head">
+        <div>Aide</div><div>Montant max</div><div>Conditions</div>
+      </div>
+      <div class="aides-row">
+        <div class="aides-name">MaPrimeRénov' Rénovation globale</div>
+        <div class="aides-amount">40 000 €</div>
+        <div class="aides-cond">Gain énergétique &gt;= 2 classes DPE, artisan RGE</div>
+      </div>
+      <div class="aides-row">
+        <div class="aides-name">PTZ Rénovation (prêt à taux zéro)</div>
+        <div class="aides-amount">50 000 €</div>
+        <div class="aides-cond">Prêt remboursable sur 20 ans. Sans intérêts.</div>
+      </div>
+      <div class="aides-row">
+        <div class="aides-name">Action Logement (salariés privé)</div>
+        <div class="aides-amount">20 000 €</div>
+        <div class="aides-cond">Subvention + prêt à 1% pour rénovation</div>
+      </div>
+      <div class="aides-row">
+        <div class="aides-name">Aides locales IDF</div>
+        <div class="aides-amount">5 000 €</div>
+        <div class="aides-cond">Variable selon département et commune (Paris, 92, 94)</div>
+      </div>
+      <div class="aides-row">
+        <div class="aides-name">TVA réduite 5,5%</div>
+        <div class="aides-amount">&minus;14,5%</div>
+        <div class="aides-cond">Automatique sur travaux énergétiques</div>
+      </div>
+      <div class="aides-row aides-row-total">
+        <div>Cumul subventions + prêts</div>
+        <div class="aides-amount">115 000 €</div>
+        <div>Dont 65 000 € non remboursables</div>
+      </div>
+    </div>
+    <div class="timing-box reveal">
+      <strong>Timing critique :</strong> l'audit énergétique doit être réalisé <strong>AVANT la signature</strong> chez le notaire pour optimiser le PTZ et négocier le prix.
+    </div>
+  </div>
+</section>
+
+<!-- Exemple concret -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Cas concret</span>
+      <h2>Exemple : achat d'une maison à rénover en Val-de-Marne</h2>
+    </div>
+    <div class="example reveal">
+      <div class="example-title">Primo-accédants, couple avec 2 enfants</div>
+      <div class="example-house">Maison de 1965, 120 m², classée F (DPE), prix 300 000 €, travaux estimés 50 000 €.</div>
+      <div class="example-grid">
+        <div class="example-item"><div class="example-item-lbl">Coût travaux</div><div class="example-item-val">50 000 €</div></div>
+        <div class="example-item highlight"><div class="example-item-lbl">Aides cumulées</div><div class="example-item-val">42 000 €</div></div>
+        <div class="example-item"><div class="example-item-lbl">PTZ</div><div class="example-item-val">45 000 €</div></div>
+        <div class="example-item highlight"><div class="example-item-lbl">Reste à charge</div><div class="example-item-val">8 000 €</div></div>
+      </div>
+      <p style="text-align:center;font-size:15px;line-height:1.6;margin-bottom:20px;opacity:.9">Après travaux : classement DPE passe de F à B, valeur du bien <strong>+50 000 €</strong>, facture énergie divisée par 3.</p>
+      <div class="example-cta">
+        <a href="#audit" class="btn-primary">Mon audit financement</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pourquoi avant signature -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Timing</span>
+      <h2>Pourquoi agir AVANT la signature</h2>
+      <p class="section-lead">3 raisons stratégiques pour lancer l'audit avant l'acte notarié.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-accent" style="background:var(--gold)"></div>
+        <div class="card-icon">&#128200;</div>
+        <div class="card-title">Négocier le prix d'achat</div>
+        <p class="card-desc">Avec le coût de rénovation en main, vous pouvez <strong>négocier -10 à -15%</strong> sur le prix du bien. Le vendeur le sait et cède souvent.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-accent" style="background:var(--gold)"></div>
+        <div class="card-icon">&#128176;</div>
+        <div class="card-title">Optimiser le plan bancaire</div>
+        <p class="card-desc">Le PTZ rénovation s'intègre au prêt principal. Votre banque refuse de le monter après signature = vous perdez 50 000 € de levier.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-accent" style="background:var(--gold)"></div>
+        <div class="card-icon">&#128203;</div>
+        <div class="card-title">Sécuriser le dossier ANAH</div>
+        <p class="card-desc">Les pièces peuvent être préparées en parallèle du compromis. Le dossier est prêt à être déposé dès la signature.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Processus -->
+<section class="section" id="processus">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Votre parcours</span>
+      <h2>Le processus en 6 étapes</h2>
+      <p class="section-lead">Un accompagnement complet, de la visite du bien jusqu'au versement des aides.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">1</div><div class="step-title">Visite du bien</div><div class="step-desc">Estimation travaux</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Audit énergétique</div><div class="step-desc">Scénarios aides</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Négociation prix</div><div class="step-desc">Rabais argumenté</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">Signature notaire</div><div class="step-desc">PTZ intégré</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-title">Dépôt ANAH</div><div class="step-desc">Dossier complet</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-title">Chantier</div><div class="step-desc">Artisans RGE</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt" id="faq">
+  <div class="container" style="max-width:800px">
+    <div class="section-header reveal">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Ce que vous voulez savoir</h2>
+    </div>
+    <div class="reveal">
+      <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Puis-je demander MaPrimeRénov avant d'acheter ?<div class="faq-icon">+</div></div><div class="faq-a">Le dépôt du dossier se fait après signature. Mais nous préparons tout en amont pour que le dossier soit déposé dans les jours qui suivent l'acte. Les travaux ne doivent jamais démarrer avant la notification de l'ANAH.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Le PTZ est-il vraiment gratuit ?<div class="faq-icon">+</div></div><div class="faq-a">Le PTZ rénovation est un prêt à taux zéro : vous remboursez le capital emprunté, mais sans aucun intérêt. Sur 20 ans, c'est l'équivalent d'une économie de 20-30 000 € vs un prêt classique.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Je ne suis pas salarié du privé. Action Logement me concerne ?<div class="faq-icon">+</div></div><div class="faq-a">Action Logement s'adresse aux salariés du secteur privé (entreprises de 10+ salariés). Si vous êtes indépendant, fonctionnaire ou salarié TPE, les 4 autres aides (MaPrimeRénov, PTZ, locales, TVA) restent cumulables.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Combien coûte votre accompagnement ?<div class="faq-icon">+</div></div><div class="faq-a">0 €. Notre service est 100% gratuit pour vous. Nous sommes rémunérés par l'artisan partenaire via une commission après travaux réalisés. Pas de frais cachés, pas de conditions.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Combien de temps prend le processus complet ?<div class="faq-icon">+</div></div><div class="faq-a">4 à 8 mois selon les travaux. Audit + dépôt : 1 mois. Instruction ANAH : 2-3 mois. Travaux : 2-4 mois. Versement : 1 mois après fin de chantier.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Et si mon dossier est refusé ?<div class="faq-icon">+</div></div><div class="faq-a">Les refus sont rares (&lt;10%) et viennent principalement d'erreurs de dossier. Nous sécurisons la conformité en amont. Si refus, nous montons un recours gratuitement.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="audit">
+  <div class="container">
+    <h2>Audit financement gratuit</h2>
+    <p>Appel de 15 minutes avec Jérémy. Simulation personnalisée selon votre projet d'achat.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="tel:+33604433420" class="btn-primary">+33 6 04 43 34 20</a>
+      <a href="mailto:jeremy@maprimeadapt-idf.fr" class="btn-secondary" style="color:#fff">jeremy@maprimeadapt-idf.fr</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom:14px">
+          <div class="logo-badge">MPH</div>
+          <div><div class="logo-name" style="color:#fff">Mon Projet Habitat</div><div class="logo-sub">Énergie &middot; Adaptation &middot; Rénovation</div></div>
+        </div>
+        <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.6)">Service indépendant d'accompagnement administratif pour MaPrimeRénov, MaPrimeAdapt et les aides à la rénovation. Île-de-France.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="/">Adaptation senior</a>
+        <a href="/energie">Rénovation énergétique</a>
+        <a href="/renovation">Primo-rénovation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+33604433420">+33 6 04 43 34 20</a>
+        <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a>
+        <a href="/mentions-legales.html">Mentions légales</a>
+        <a href="/politique-confidentialite.html">Confidentialité</a>
+        <a href="/cgv.html">CGV</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Mon Projet Habitat est un service indépendant. <strong>Non affilié à l'ANAH, France Rénov' ou l'État.</strong> Les démarches sont accessibles gratuitement sans intermédiaire sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener" style="color:rgba(255,255,255,.8)">monprojet.anah.gouv.fr</a>. Les montants indiqués sont des estimations.
+    </p>
+  </div>
+</footer>
+
+<nav class="mobile-cta">
+  <a href="tel:+33604433420" class="mobile-cta-call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Appeler</a>
+  <a href="#audit" class="mobile-cta-sim">Audit gratuit</a>
+</nav>
+
+<button class="chatbot-trigger" onclick="alert('Chatbot Sophie disponible sur la page d accueil. Pour une question immédiate : +33 6 04 43 34 20')" aria-label="Ouvrir le chat">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
