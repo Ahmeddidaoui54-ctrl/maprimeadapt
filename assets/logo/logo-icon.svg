@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mon Projet Habitat - Icon/Favicon - 64x64 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mon Projet Habitat">
+  <defs>
+    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#1a3d2b"/>
+    </linearGradient>
+    <linearGradient id="lg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#e8f0ec"/>
+  <g transform="translate(8,10)">
+    <path d="M 4 44 L 4 22 L 24 4 L 44 22 L 44 44 Z" fill="url(#rg)"/>
+    <rect x="18" y="26" width="12" height="14" rx="1" fill="#ecf5ee" opacity="0.9"/>
+    <path d="M 36 16 Q 42 10 46 2 Q 42 12 38 16 Z" fill="url(#lg)"/>
+    <circle cx="44" cy="8" r="2.5" fill="#fbbf24"/>
+  </g>
+</svg>

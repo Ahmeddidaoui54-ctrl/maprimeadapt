@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mon Projet Habitat - Logo horizontal - 240x60 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" role="img" aria-label="Mon Projet Habitat">
+  <title>Mon Projet Habitat</title>
+  <defs>
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#1a3d2b"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon: abstract house with rising arc (evolution/improvement) -->
+  <g transform="translate(4,6)">
+    <!-- Main house body -->
+    <path d="M 6 48 L 6 26 L 26 8 L 46 26 L 46 48 Z" fill="url(#roofGrad)"/>
+    <!-- Inner window suggesting warmth/home -->
+    <rect x="20" y="30" width="12" height="14" rx="1" fill="#ecf5ee" opacity="0.9"/>
+    <!-- Gold accent: rising leaf (symbolize improvement, energy, life) -->
+    <path d="M 38 20 Q 44 14 48 6 Q 44 16 40 20 Z" fill="url(#leafGrad)"/>
+    <circle cx="46" cy="12" r="2.2" fill="#fbbf24"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(66,0)">
+    <text x="0" y="26" font-family="'Syne', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="800" font-size="19" fill="#0f1f18" letter-spacing="-0.5">Mon Projet</text>
+    <text x="0" y="47" font-family="'Syne', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="800" font-size="19" fill="#2d6a4f" letter-spacing="-0.5">Habitat</text>
+    <!-- Tagline -->
+    <text x="0" y="59" font-family="'DM Sans', 'Helvetica Neue', sans-serif" font-weight="500" font-size="8" fill="#6b7c72" letter-spacing="1">ADAPTATION &middot; ENERGIE &middot; RENOVATION</text>
+  </g>
+</svg>
