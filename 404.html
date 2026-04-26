@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Page introuvable — Mon Projet Habitat</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--text:#0f1f18;--muted:#4b5563}
+  body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:linear-gradient(160deg,#e8f0ec 0%,#fff 100%);min-height:100vh;display:grid;place-items:center;padding:40px 20px;color:var(--text);font-size:17px;line-height:1.6}
+  .card{background:#fff;border-radius:24px;padding:60px 40px;max-width:560px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(26,61,43,.15)}
+  .num{font-size:96px;font-weight:800;letter-spacing:-3px;background:linear-gradient(135deg,var(--green),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:8px}
+  h1{font-size:28px;font-weight:800;letter-spacing:-1px;color:var(--green);margin-bottom:14px}
+  p{color:var(--muted);font-size:17px;margin-bottom:32px;line-height:1.6}
+  .links{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+  @media(max-width:520px){.links{grid-template-columns:1fr}}
+  .link-card{background:var(--green-pale);border:1px solid #c8dfcf;border-radius:12px;padding:18px 14px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;display:block}
+  .link-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(26,61,43,.1)}
+  .link-icon{font-size:28px;margin-bottom:8px;display:block}
+  .link-title{font-weight:700;color:var(--green);font-size:14px;margin-bottom:4px}
+  .link-desc{font-size:12px;color:var(--muted);line-height:1.4}
+  .phone{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#fff;padding:14px 24px;border-radius:12px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .15s}
+  .phone:hover{transform:translateY(-2px)}
+  .home-link{display:block;margin-top:18px;font-size:13px;color:var(--muted);text-decoration:none}
+  .home-link:hover{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="num">404</div>
+  <h1>Cette page n'existe pas</h1>
+  <p>La page que vous cherchez a peut-etre ete deplacee ou n'existe plus. Voici nos services principaux :</p>
+
+  <div class="links">
+    <a href="/" class="link-card">
+      <span class="link-icon">&#127968;</span>
+      <div class="link-title">Adaptation senior</div>
+      <div class="link-desc">MaPrimeAdapt jusqu'a 15 400 EUR</div>
+    </a>
+    <a href="/energie" class="link-card">
+      <span class="link-icon">&#9889;</span>
+      <div class="link-title">Renovation energetique</div>
+      <div class="link-desc">Passoires F/G, jusqu'a 63 000 EUR</div>
+    </a>
+    <a href="/renovation" class="link-card">
+      <span class="link-icon">&#127969;</span>
+      <div class="link-title">Achat a renover</div>
+      <div class="link-desc">Primo-acheteurs, jusqu'a 70 000 EUR</div>
+    </a>
+  </div>
+
+  <a href="tel:+33604433420" class="phone">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    +33 6 04 43 34 20
+  </a>
+
+  <a href="/" class="home-link">&larr; Retour a l'accueil</a>
+</div>
+</body>
+</html>

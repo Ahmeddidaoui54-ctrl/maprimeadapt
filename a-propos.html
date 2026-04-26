@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mon Projet Habitat : un service indépendant en Île-de-France pour vous accompagner dans vos démarches MaPrimeAdapt, MaPrimeRénov et toutes les aides à la rénovation. Découvrez notre approche et nos engagements.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/a-propos">
+<title>À propos — Mon Projet Habitat | Service indépendant en Île-de-France</title>
+
+<style>
+:root{
+  --green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;
+  --gold:#f59e0b;--white:#ffffff;--off-white:#ecf5ee;
+  --text:#0f1f18;--muted:#4b5563;--border:#dce8e1;
+  --shadow-md:0 4px 16px rgba(26,61,43,.12);--radius:12px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.65;font-size:17px}
+:focus-visible{outline:3px solid var(--gold)!important;outline-offset:2px}
+a{color:var(--green-mid)}
+.container{max-width:900px;margin:0 auto;padding:0 24px}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center;line-height:1.4}
+.disclaimer-top strong{color:#7c2d12}
+.disclaimer-top a{color:#7c2d12;text-decoration:underline}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(26,61,43,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px;letter-spacing:-.3px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+.header-nav{display:flex;align-items:center;gap:20px}
+.header-nav a{color:rgba(255,255,255,.85);font-size:14px;font-weight:500;text-decoration:none}
+.header-nav a:hover{color:#fff}
+.btn-header{background:var(--gold);color:#000;padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none}
+@media(max-width:768px){.header-nav a{display:none}}
+
+.hero-page{padding:60px 0 30px;text-align:center}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green-mid);margin-bottom:12px}
+h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.2px;line-height:1.15;color:var(--green);margin-bottom:14px}
+.lead{font-size:19px;color:var(--muted);max-width:680px;margin:0 auto;line-height:1.55}
+
+.section{padding:48px 0}
+h2{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.8px;line-height:1.2;color:var(--text);margin-bottom:20px}
+p{margin-bottom:16px;color:var(--text);line-height:1.7}
+
+.profile-card{background:linear-gradient(135deg,var(--green-pale) 0%,#fff 100%);border:1px solid var(--border);border-radius:20px;padding:40px;margin:32px 0;display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:center}
+@media(max-width:640px){.profile-card{grid-template-columns:1fr;text-align:center;padding:32px 22px}}
+.avatar-big{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-mid));color:#fff;display:grid;place-items:center;font-size:48px;font-weight:800;font-family:var(--font);justify-self:center}
+.profile-name{font-size:22px;font-weight:800;color:var(--green);margin-bottom:4px}
+.profile-role{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.profile-bio{font-size:15px;line-height:1.7;color:var(--text)}
+
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+@media(max-width:768px){.values{grid-template-columns:1fr}}
+.value-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.value-icon{font-size:30px;margin-bottom:10px}
+.value-title{font-size:15px;font-weight:700;margin-bottom:6px;color:var(--green)}
+.value-desc{font-size:14px;color:var(--muted);line-height:1.55}
+
+.engagements{background:var(--green-pale);border-left:4px solid var(--green);padding:24px 28px;border-radius:8px;margin:24px 0}
+.engagements h3{font-size:17px;font-weight:700;color:var(--green);margin-bottom:14px}
+.engagements ul{list-style:none;padding:0}
+.engagements li{padding:6px 0 6px 28px;position:relative;font-size:15px;line-height:1.6}
+.engagements li::before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:800;font-size:18px}
+
+.contact-block{background:linear-gradient(135deg,var(--green) 0%,#0d2e1e 100%);color:#fff;border-radius:20px;padding:40px;text-align:center;margin:40px 0}
+.contact-block h2{color:#fff}
+.contact-block p{color:rgba(255,255,255,.8)}
+.contact-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;padding:16px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px;transition:transform .15s}
+.btn-cta-gold{background:var(--gold);color:#000}
+.btn-cta-gold:hover{transform:translateY(-2px)}
+.btn-cta-ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff}
+
+.footer{background:var(--green);color:rgba(255,255,255,.75);padding:48px 0 24px;font-size:14px;margin-top:60px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:32px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr}}
+.footer-col h4{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.footer-col a{display:block;color:rgba(255,255,255,.6);margin-bottom:8px;font-size:13px;text-decoration:none}
+.footer-col a:hover{color:#fff}
+.footer-legal{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;font-size:12px;opacity:.6;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Mon Projet Habitat n'est pas affilié à l'ANAH, France Rénov' ni à l'État. Les démarches sont accessibles gratuitement sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>
+</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div>
+        <div class="logo-name">Mon Projet Habitat</div>
+        <div class="logo-sub">Adaptation &middot; Énergie &middot; Rénovation</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Seniors</a>
+      <a href="/energie">Énergie</a>
+      <a href="/renovation">Rénovation</a>
+      <a href="tel:+33604433420">+33 6 04 43 34 20</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero-page">
+  <div class="container">
+    <span class="eyebrow">Notre approche</span>
+    <h1>Une promesse simple : vous accompagner pour de vrai</h1>
+    <p class="lead">Mon Projet Habitat est un service de proximité en Île-de-France. Pas de plateau d'appels, pas de démarchage agressif, pas de signatures forcées. Un seul interlocuteur qui prend le temps de comprendre votre situation.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Votre conseiller dédié</h2>
+
+    <div class="profile-card">
+      <div class="avatar-big">JB</div>
+      <div>
+        <div class="profile-name">Jérémy Berthaud</div>
+        <div class="profile-role">Conseiller habitat &middot; Île-de-France</div>
+        <p class="profile-bio">Originaire de l'Île-de-France, je me suis spécialisé dans l'accompagnement des particuliers pour les aides à l'habitat (MaPrimeAdapt, MaPrimeRénov, PTZ rénovation). Ma philosophie est simple : prendre le temps qu'il faut, expliquer chaque étape, et ne jamais laisser un dossier en plan. Quand vous m'appelez, c'est moi que vous avez au bout du fil — pas un standard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--off-white)">
+  <div class="container">
+    <h2>Trois valeurs qui guident tout</h2>
+    <div class="values">
+      <div class="value-card">
+        <div class="value-icon">&#129309;</div>
+        <div class="value-title">Transparence totale</div>
+        <p class="value-desc">Notre rémunération vient des artisans partenaires. Vous ne payez rien à Mon Projet Habitat. C'est écrit dans notre contrat, signé avant tout engagement.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">&#128105;&#8205;&#9877;&#65039;</div>
+        <div class="value-title">Patience et humanité</div>
+        <p class="value-desc">Nos clients ont 60, 75, parfois 85 ans. Nous prenons le temps. Pas de pression. Pas de jargon. Et nous expliquons autant de fois que nécessaire.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">&#128209;</div>
+        <div class="value-title">Compétence vérifiable</div>
+        <p class="value-desc">Tous nos artisans partenaires sont certifiés (Handibat, Silverbat, Qualibat, RGE). Nous vérifions à chaque chantier. Nous engageons notre nom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Nos engagements concrets</h2>
+    <div class="engagements">
+      <h3>Ce que nous vous garantissons</h3>
+      <ul>
+        <li>Premier échange téléphonique gratuit, sans engagement, sans pression</li>
+        <li>Aucun déplacement à votre domicile sans rendez-vous explicitement validé</li>
+        <li>Aucune signature demandée lors du premier rendez-vous</li>
+        <li>Devis écrits et délais clairs avant tout engagement</li>
+        <li>Délai de rétractation légal de 14 jours rappelé sur tous nos contrats</li>
+        <li>Vos données protégées (RGPD), jamais cédées ni revendues</li>
+        <li>Numéro direct du conseiller : pas de standard, pas de chatbot &laquo;&nbsp;magique&nbsp;&raquo;</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--off-white)">
+  <div class="container">
+    <h2>Pourquoi pas l'ANAH directement&nbsp;?</h2>
+    <p>Vous pouvez faire vos démarches gratuitement sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>. C'est votre droit, et nous le rappelons partout sur notre site.</p>
+    <p>Notre rôle est différent : nous prenons en charge le temps administratif (entre 12 et 25 heures de travail par dossier), nous trouvons le bon AMO, le bon artisan certifié, et nous suivons l'instruction jusqu'au versement. Pour beaucoup de seniors et de familles aidantes, c'est ce gain de temps et cette tranquillité qui font la différence.</p>
+    <p>Si vous êtes à l'aise avec les démarches en ligne, n'hésitez pas à le faire vous-même. Si vous préférez un humain qui s'en occupe, nous sommes là.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-block">
+      <h2>Un projet en tête ?</h2>
+      <p>15 minutes au téléphone suffisent pour faire le tour. Sans engagement, sans frais.</p>
+      <div class="contact-row">
+        <a href="tel:+33604433420" class="btn-cta btn-cta-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +33 6 04 43 34 20
+        </a>
+        <a href="mailto:jeremy@maprimeadapt-idf.fr" class="btn-cta btn-cta-ghost">jeremy@maprimeadapt-idf.fr</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="/" class="logo" style="margin-bottom:14px;display:inline-flex">
+          <div class="logo-badge">MPH</div>
+          <div><div class="logo-name" style="color:#fff">Mon Projet Habitat</div><div class="logo-sub">Adaptation &middot; Énergie &middot; Rénovation</div></div>
+        </a>
+        <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.6);margin-top:14px">Service indépendant d'accompagnement administratif. Île-de-France.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="/">Adaptation senior</a>
+        <a href="/energie">Rénovation énergétique</a>
+        <a href="/renovation">Primo-rénovation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+33604433420">+33 6 04 43 34 20</a>
+        <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a>
+        <a href="/mentions-legales.html">Mentions légales</a>
+        <a href="/politique-confidentialite.html">Confidentialité</a>
+        <a href="/cgv.html">CGV</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Mon Projet Habitat est un service indépendant. <strong>Non affilié à l'ANAH, France Rénov' ou l'État.</strong> Les démarches sont accessibles gratuitement sans intermédiaire sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener" style="color:rgba(255,255,255,.8)">monprojet.anah.gouv.fr</a>.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

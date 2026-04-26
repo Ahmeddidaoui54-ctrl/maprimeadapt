@@ -1,10 +1,11 @@
 # www → apex
 https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 
-# Jolies URLs pilers
+# Jolies URLs piliers
 /seniors /index.html 200
 /energie /energie.html 200
 /renovation /renovation.html 200
+/a-propos /a-propos.html 200
 
 # Pages departementales (jolies URLs)
 /77-seine-et-marne /departements/77-seine-et-marne.html 200
