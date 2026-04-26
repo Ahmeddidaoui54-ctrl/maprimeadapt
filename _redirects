@@ -9,6 +9,7 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /guide /guide-2026.html 200
 /guide-2026 /guide-2026.html 200
 /blog /blog/index.html 200
+/contact /contact.html 200
 
 # 404 page
 /* /404.html 404
