@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calcul réel des pertes en valeur de bien et factures énergétiques sur 5 ans pour les passoires thermiques classées F et G en France. Solutions et aides 2026.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/blog/passoire-thermique-cout-inaction.html">
+<title>Passoire thermique F ou G : combien vous coûte vraiment l'inaction en 2026</title>
+<meta property="og:title" content="Passoire thermique F ou G : le vrai coût de l'inaction en 2026">
+<meta property="og:description" content="Factures, perte de valeur, manque à gagner locatif : le calcul brutal sur 5 ans pour les logements F et G en France.">
+<meta property="og:type" content="article">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Passoire thermique F ou G : combien vous coûte vraiment l'inaction en 2026","description":"Calcul réel des pertes en valeur de bien et factures énergétiques sur 5 ans pour les passoires thermiques classées F et G en France. Solutions et aides 2026.","author":{"@type":"Person","name":"Jérémy Berthaud"},"publisher":{"@type":"Organization","name":"Mon Projet Habitat","logo":{"@type":"ImageObject","url":"https://www.maprimeadapt-idf.fr/assets/logo/logo-icon.svg"}},"datePublished":"2026-04-20","dateModified":"2026-04-20","mainEntityOfPage":"https://www.maprimeadapt-idf.fr/blog/passoire-thermique-cout-inaction.html"}
+</script>
+
+<style>
+:root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--white:#fff;--off-white:#ecf5ee;--text:#0f1f18;--muted:#4b5563;--border:#dce8e1;--radius:12px;--font:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.7;font-size:18px;-webkit-font-smoothing:antialiased}
+a{color:var(--green-mid)}
+.container{max-width:760px;margin:0 auto;padding:0 24px}
+.container-wide{max-width:960px;margin:0 auto;padding:0 24px}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center}
+.disclaimer-top a{color:#7c2d12;text-decoration:underline}
+
+.header{background:var(--green);padding:18px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+
+.breadcrumb{background:var(--off-white);padding:14px 0;font-size:14px;color:var(--muted)}
+.breadcrumb a{color:var(--green-mid);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+
+.article-header{padding:50px 0 30px;text-align:center;background:linear-gradient(160deg,var(--green-pale),#fff)}
+.article-tag{display:inline-block;background:linear-gradient(135deg,#1e3a8a,#1a3d2b);color:#fff;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.2px;line-height:1.2;color:var(--text);max-width:780px;margin:0 auto 16px}
+.article-meta{font-size:14px;color:var(--muted);margin-top:18px}
+.article-meta strong{color:var(--green)}
+
+article{padding:50px 0}
+article h2{font-size:26px;font-weight:800;letter-spacing:-.5px;color:var(--green);margin:40px 0 14px;line-height:1.3}
+article h3{font-size:20px;font-weight:700;color:var(--text);margin:28px 0 10px;line-height:1.3}
+article p{margin-bottom:18px}
+article ul,article ol{margin:0 0 18px 24px}
+article li{margin-bottom:8px;line-height:1.7}
+article strong{color:var(--green);font-weight:700}
+
+.callout{background:var(--green-pale);border-left:4px solid var(--green);padding:20px 24px;border-radius:6px;margin:24px 0}
+.callout-title{font-size:14px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+
+.warn{background:#fef2f2;border-left:4px solid #dc2626;padding:20px 24px;border-radius:6px;margin:24px 0}
+.warn-title{font-size:14px;font-weight:800;color:#991b1b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--green);color:#fff;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+tr:last-child td{border-bottom:none}
+td:nth-child(2),td:nth-child(3),td:nth-child(4){font-weight:700;color:var(--green)}
+
+.cta-box{background:linear-gradient(135deg,var(--green),#0d2e1e);color:#fff;border-radius:16px;padding:36px;text-align:center;margin:40px 0}
+.cta-box h3{color:var(--gold);font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.cta-box .cta-h{font-size:24px;color:#fff;font-weight:800;margin-bottom:14px}
+.cta-box p{color:rgba(255,255,255,.8);margin-bottom:20px}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#000;padding:14px 24px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px}
+
+.footer{background:var(--green);color:rgba(255,255,255,.7);padding:32px 0;font-size:13px;text-align:center;line-height:1.6;margin-top:50px}
+.footer a{color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Démarches officielles sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>
+</div>
+
+<header class="header">
+  <div class="container-wide header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div><div class="logo-name">Mon Projet Habitat</div><div class="logo-sub">Le blog</div></div>
+    </a>
+  </div>
+</header>
+
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+  <div class="container-wide"><a href="/">Accueil</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Passoire thermique : le coût de l'inaction</div>
+</nav>
+
+<header class="article-header">
+  <div class="container">
+    <span class="article-tag">Énergie</span>
+    <h1>Passoire thermique F ou G : combien vous coûte vraiment l'inaction en 2026</h1>
+    <p style="font-size:18px;color:var(--muted);max-width:680px;margin:18px auto 0;line-height:1.5">Factures qui s'envolent, valeur du bien qui s'effondre, locataires partants. Le vrai calcul pour un logement classé <strong style="color:var(--green)">F ou G</strong> sur 5 ans.</p>
+    <div class="article-meta">Par <strong>Jérémy Berthaud</strong> &middot; Publié le 20 avril 2026 &middot; 9 min de lecture</div>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+
+    <p>Vous avez un logement classé <strong>F ou G</strong> au DPE. Vous repoussez les travaux depuis deux ans, parce que c'est cher, parce que vous n'avez pas le temps, parce que vous espérez que la loi va s'assouplir. <strong>Elle ne le fera pas.</strong></p>
+
+    <p>Et pendant que vous attendez, votre bien perd de la valeur, vos factures explosent et vos locataires préparent leur départ. Voici le calcul brutal de l'inaction sur 5 ans, et la manière la plus rationnelle de réagir en 2026.</p>
+
+    <div class="callout">
+      <div class="callout-title">À retenir en 1 phrase</div>
+      Une passoire thermique en région parisienne coûte en moyenne <strong>38 000 €</strong> sur 5 ans en cumulant surcoût énergétique, perte de valeur et manque à gagner locatif — soit largement plus que le reste à charge des travaux après aides MaPrimeRénov'.
+    </div>
+
+    <h2>Que dit la loi en 2026</h2>
+
+    <p>La loi Climat et Résilience d'août 2021 a posé un calendrier irréversible. Trois dates clés à retenir :</p>
+
+    <ul>
+      <li><strong>1er janvier 2025</strong> : interdiction de mise en location des logements classés <strong>G</strong> (déjà en vigueur).</li>
+      <li><strong>1er janvier 2028</strong> : interdiction de mise en location des logements classés <strong>F</strong>.</li>
+      <li><strong>1er janvier 2034</strong> : interdiction de mise en location des logements classés <strong>E</strong>.</li>
+    </ul>
+
+    <p>Concrètement, dès qu'un bail prend fin (ou pour toute nouvelle location), le bailleur d'un logement G doit avoir réalisé les travaux nécessaires pour passer au moins en classe F en 2025, puis E en 2028. Le locataire en place peut, lui, exiger des travaux de mise aux normes en saisissant le juge.</p>
+
+    <p>Pour les <strong>propriétaires occupants</strong>, pas d'obligation directe. Mais à la revente, l'audit énergétique est obligatoire depuis 2023 pour les biens F et G : l'acheteur sait <strong>exactement</strong> combien lui coûteront les travaux.</p>
+
+    <h2>Le calcul brutal sur 5 ans</h2>
+
+    <p>Prenons un cas réel : maison de 100 m² classée <strong>F</strong> en grande couronne francilienne. Voici ce que coûte l'inaction de 2026 à 2031 :</p>
+
+    <table>
+      <thead>
+        <tr><th>Poste de coût</th><th>Année</th><th>Montant cumulé</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Surcoût facture énergie (vs classe C)</td><td>5 ans</td><td>9 500 €</td></tr>
+        <tr><td>Perte de valeur à la revente (-15%)</td><td>5 ans</td><td>22 000 €</td></tr>
+        <tr><td>Manque à gagner locatif (vacance + décote)</td><td>5 ans</td><td>6 500 €</td></tr>
+        <tr><td>Total inaction</td><td>5 ans</td><td>38 000 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>À titre de comparaison, le même logement avec un bouquet de travaux (isolation + PAC + ventilation) coûte environ <strong>35 000 € TTC</strong>, dont <strong>28 000 € d'aides cumulées</strong> pour un foyer aux revenus modestes. Reste à charge réel : <strong>7 000 €</strong>.</p>
+
+    <p>Autrement dit : ne rien faire revient à <strong>brûler 5 fois plus d'argent</strong> que d'agir.</p>
+
+    <h3>Le détail de la facture énergie</h3>
+
+    <p>Une maison de 100 m² classée F consomme typiquement 380 kWh/m²/an, soit 38 000 kWh annuels. Avec un mix gaz + électricité au prix moyen 2026 :</p>
+
+    <ul>
+      <li>Facture annuelle moyenne classe F : <strong>3 200 € à 3 800 €</strong></li>
+      <li>Facture annuelle moyenne classe C : <strong>1 200 € à 1 500 €</strong></li>
+      <li><strong>Surcoût annuel : 1 900 € minimum</strong></li>
+    </ul>
+
+    <h2>Les 4 risques cachés</h2>
+
+    <p>Au-delà de la facture, l'inaction expose à 4 risques que les propriétaires sous-estiment systématiquement.</p>
+
+    <h3>1. La décote brutale à la revente</h3>
+
+    <p>Les notaires parlent désormais de <strong>« moins-value verte »</strong>. Selon l'observatoire des notaires de France 2026, un logement F se vend en moyenne <strong>15% moins cher</strong> qu'un logement D équivalent. Pour un G, la décote atteint <strong>22%</strong>. Et l'écart se creuse chaque année.</p>
+
+    <h3>2. Les locataires qui partent</h3>
+
+    <p>Un locataire qui paie 200 € de chauffage par mois cherche systématiquement à déménager dès qu'un logement plus performant se libère dans le quartier au même loyer. Résultat : <strong>turnover x2</strong> dans les passoires thermiques, soit un mois de loyer perdu en moyenne par an.</p>
+
+    <h3>3. La vétusté accélérée du bâti</h3>
+
+    <p>Une mauvaise isolation génère condensation, humidité, moisissures. Les murs s'abîment, les peintures cloquent, les huisseries pourrissent. Sur 5 ans, un propriétaire de passoire thermique dépense en moyenne <strong>2 500 € de plus</strong> en travaux de remise en état entre deux locations.</p>
+
+    <h3>4. L'usure des équipements</h3>
+
+    <p>Une chaudière qui tourne en surrégime pour compenser une mauvaise isolation s'use 30% plus vite. Vos radiateurs entartrent, votre ballon d'eau chaude lâche prématurément. Le coût caché de la non-rénovation, c'est aussi celui des remplacements anticipés.</p>
+
+    <div class="warn">
+      <div class="warn-title">Attention</div>
+      Beaucoup de propriétaires bailleurs pensent pouvoir « tenir » jusqu'à la revente sans faire de travaux. Mais les acheteurs négocient désormais le prix sur la base du devis travaux + 20% de marge de sécurité. Vous payez la rénovation <strong>de toute façon</strong>, soit en travaux, soit en décote.
+    </div>
+
+    <h2>Que finance MaPrimeRénov' en 2026</h2>
+
+    <p>Le dispositif MaPrimeRénov' couvre les principaux travaux de sortie de passoire thermique. Les 4 grandes familles de travaux finançables :</p>
+
+    <h3>Pompe à chaleur (PAC air/eau ou géothermique)</h3>
+    <ul>
+      <li>Aide jusqu'à <strong>11 000 €</strong> pour les ménages très modestes</li>
+      <li>Bonification possible en cas de remplacement d'une chaudière fioul</li>
+      <li>Cumul avec la prime CEE (jusqu'à 5 000 € supplémentaires)</li>
+    </ul>
+
+    <h3>Isolation thermique</h3>
+    <ul>
+      <li>Murs par l'extérieur (ITE) : jusqu'à <strong>75 €/m²</strong></li>
+      <li>Combles et toiture : jusqu'à <strong>25 €/m²</strong></li>
+      <li>Planchers bas : jusqu'à <strong>30 €/m²</strong></li>
+    </ul>
+
+    <h3>Fenêtres et menuiseries</h3>
+    <ul>
+      <li>Remplacement par double vitrage performant : <strong>100 €/équipement</strong> (plus 80 € de CEE)</li>
+      <li>Triple vitrage : prime majorée selon zone climatique</li>
+    </ul>
+
+    <h3>Ventilation</h3>
+    <ul>
+      <li>VMC double flux : aide jusqu'à <strong>2 500 €</strong></li>
+      <li>Indispensable après isolation pour éviter les problèmes d'humidité</li>
+    </ul>
+
+    <h2>Cumul d'aides : exemple chiffré</h2>
+
+    <p>Maison de 100 m² classée F en Île-de-France, propriétaire occupant aux revenus modestes (couple, 38 000 € de RFR). Bouquet de travaux complet :</p>
+
+    <table>
+      <thead>
+        <tr><th>Poste</th><th>Coût HT</th><th>Aides</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ITE 80 m² façade</td><td>16 000 €</td><td>10 500 €</td></tr>
+        <tr><td>Isolation combles 100 m²</td><td>4 500 €</td><td>3 000 €</td></tr>
+        <tr><td>PAC air/eau 12 kW</td><td>11 500 €</td><td>9 500 €</td></tr>
+        <tr><td>VMC double flux</td><td>3 000 €</td><td>2 500 €</td></tr>
+        <tr><td>Audit + MAR + études</td><td>2 000 €</td><td>1 500 €</td></tr>
+        <tr><td>Total travaux</td><td>37 000 €</td><td>27 000 €</td></tr>
+      </tbody>
+    </table>
+
+    <p>Reste à charge net : <strong>10 000 €</strong>, finançable par éco-PTZ à taux zéro sur 15 ans, soit environ <strong>55 €/mois</strong>. Pendant ce temps, la facture énergie passe de 3 500 €/an à 1 200 €/an : <strong>économie nette mensuelle de 135 €</strong>.</p>
+
+    <div class="callout">
+      <div class="callout-title">Bonne nouvelle</div>
+      Pour un propriétaire <strong>bailleur</strong> aux revenus intermédiaires, l'État finance encore 50% à 60% du coût des travaux via MaPrimeRénov' Parcours Accompagné, à condition de viser un saut de 2 classes minimum (par exemple G → D).
+    </div>
+
+    <h2>Calendrier idéal pour les bailleurs</h2>
+
+    <p>Si vous êtes propriétaire bailleur, voici l'ordre logique pour 2026-2027 :</p>
+
+    <ol>
+      <li><strong>Mois 1</strong> : commande d'un audit énergétique réglementaire (550 € à 1 200 €, finançable à 80%)</li>
+      <li><strong>Mois 2</strong> : prise de contact avec un Mon Accompagnateur Rénov' (MAR) — étape obligatoire pour le Parcours Accompagné</li>
+      <li><strong>Mois 3-4</strong> : élaboration du scénario travaux, devis artisans RGE, plan de financement</li>
+      <li><strong>Mois 5</strong> : dépôt du dossier sur monprojet.anah.gouv.fr</li>
+      <li><strong>Mois 6-8</strong> : instruction ANAH et notification</li>
+      <li><strong>Mois 9-12</strong> : réalisation des travaux</li>
+      <li><strong>Mois 12</strong> : nouveau DPE, réédition du bail si nécessaire</li>
+    </ol>
+
+    <p>Pour respecter l'échéance F → E du 1er janvier 2028, il faut donc <strong>démarrer les démarches au plus tard fin 2026</strong>. Au-delà, le risque de blocage administratif et de saturation des artisans devient réel.</p>
+
+    <h2>Comment bien choisir son artisan RGE</h2>
+
+    <p>Le label RGE (Reconnu Garant de l'Environnement) est <strong>obligatoire</strong> pour bénéficier des aides. Mais tous les RGE ne se valent pas. 5 vérifications systématiques :</p>
+
+    <ul>
+      <li><strong>Vérifier le RGE en ligne</strong> sur france-renov.gouv.fr (annuaire officiel)</li>
+      <li><strong>Demander 3 devis détaillés</strong> avec marque, modèle et puissance des équipements</li>
+      <li><strong>Exiger une visite technique préalable</strong> (un devis sans visite est suspect)</li>
+      <li><strong>Refuser le démarchage à domicile</strong> et les remises « valables aujourd'hui seulement »</li>
+      <li><strong>Vérifier l'attestation d'assurance décennale</strong> (en cours de validité)</li>
+    </ul>
+
+    <div class="warn">
+      <div class="warn-title">À éviter absolument</div>
+      Les sociétés qui vous proposent <strong>« 1 € symbolique »</strong> ou « la rénovation gratuite grâce aux aides » sont presque toujours des intermédiaires qui surfacturent les travaux pour empocher la différence. Les aides ne sont jamais versées directement à l'entreprise sans audit ni contrôle. Si quelqu'un vous dit le contraire, c'est une arnaque.
+    </div>
+
+    <div class="cta-box">
+      <h3>Mon Projet Habitat</h3>
+      <div class="cta-h">Un appel de 15 minutes pour faire le tour</div>
+      <p>Si vous voulez qu'on regarde votre situation ensemble : DPE actuel, scénarios travaux, montant des aides, reste à charge, calendrier. Gratuit, sans engagement, sans démarchage.</p>
+      <a href="tel:+33604433420" class="cta-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +33 6 04 43 34 20
+      </a>
+      <p style="font-size:12px;margin-top:18px;opacity:.6">Service indépendant. Vous pouvez aussi déposer votre dossier vous-même, gratuitement, sur monprojet.anah.gouv.fr.</p>
+    </div>
+
+    <h2>Pour aller plus loin</h2>
+
+    <ul>
+      <li><a href="/blog/comment-obtenir-maprimeadapt-2026.html">Comment obtenir MaPrimeAdapt en 2026 : guide complet</a></li>
+      <li><a href="/blog/arnaques-maprimeadapt-2026.html">Les 7 arnaques rénovation à reconnaître en 2026</a></li>
+      <li><a href="/renovation">Voir les barèmes rénovation pour mon département</a></li>
+      <li><a href="https://france-renov.gouv.fr" target="_blank" rel="noopener">Site officiel France Rénov' (gouv.fr)</a></li>
+    </ul>
+
+  </div>
+</article>
+
+<footer class="footer">
+  <div class="container-wide">
+    <p>Mon Projet Habitat &middot; Service indépendant en Île-de-France &middot; <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+    <p style="margin-top:8px;font-size:11px;opacity:.7">Non affilié à l'ANAH. <a href="/mentions-legales.html">Mentions légales</a> &middot; <a href="/politique-confidentialite.html">Confidentialité</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
