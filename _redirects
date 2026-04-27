@@ -19,6 +19,8 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /partenaires /partenaires.html 200
 /presse /presse.html 200
 /transparence /transparence.html 200
+/premier-rdv /premier-rdv.html 200
+/rdv /premier-rdv.html 200
 
 # Carte IDF + Comparatif aides
 /carte-idf /carte-idf.html 200

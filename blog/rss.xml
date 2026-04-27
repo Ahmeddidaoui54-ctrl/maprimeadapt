@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mon Projet Habitat — Blog MaPrimeAdapt'</title>
+    <link>https://www.maprimeadapt-idf.fr/blog/</link>
+    <atom:link href="https://www.maprimeadapt-idf.fr/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Aides à l'adaptation du logement, MaPrimeAdapt', MaPrimeRénov' et rénovation énergétique en Île-de-France. Guides pratiques, calendriers, mises en garde et retours de terrain.</description>
+    <language>fr-FR</language>
+    <copyright>Mon Projet Habitat — Tous droits réservés</copyright>
+    <managingEditor>jeremy@maprimeadapt-idf.fr (Jérémy Berthaud)</managingEditor>
+    <webMaster>jeremy@maprimeadapt-idf.fr (Jérémy Berthaud)</webMaster>
+    <lastBuildDate>Sun, 26 Apr 2026 10:00:00 +0200</lastBuildDate>
+    <pubDate>Mon, 20 Apr 2026 09:00:00 +0200</pubDate>
+    <ttl>1440</ttl>
+    <image>
+      <url>https://www.maprimeadapt-idf.fr/assets/logo/logo-icon.svg</url>
+      <title>Mon Projet Habitat — Blog MaPrimeAdapt'</title>
+      <link>https://www.maprimeadapt-idf.fr/blog/</link>
+    </image>
+
+    <item>
+      <title>Comment obtenir MaPrimeAdapt' en 2026 : guide complet (Île-de-France)</title>
+      <link>https://www.maprimeadapt-idf.fr/blog/comment-obtenir-maprimeadapt-2026.html</link>
+      <description>Guide MaPrimeAdapt' 2026 : plafonds officiels par foyer en Île-de-France, pièces à fournir, calendrier d'un dossier, jusqu'à 15 400 euros pour les seniors. Mis à jour avril 2026.</description>
+      <author>jeremy@maprimeadapt-idf.fr (Jérémy Berthaud)</author>
+      <category>Guide</category>
+      <pubDate>Mon, 20 Apr 2026 09:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.maprimeadapt-idf.fr/blog/comment-obtenir-maprimeadapt-2026.html</guid>
+    </item>
+
+    <item>
+      <title>Passoire thermique F ou G : combien vous coûte vraiment l'inaction en 2026</title>
+      <link>https://www.maprimeadapt-idf.fr/blog/passoire-thermique-cout-inaction.html</link>
+      <description>Calcul réel des pertes en valeur de bien et factures énergétiques sur 5 ans pour les passoires thermiques classées F et G en France. Solutions et aides 2026.</description>
+      <author>jeremy@maprimeadapt-idf.fr (Jérémy Berthaud)</author>
+      <category>Énergie</category>
+      <pubDate>Mon, 20 Apr 2026 10:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.maprimeadapt-idf.fr/blog/passoire-thermique-cout-inaction.html</guid>
+    </item>
+
+    <item>
+      <title>Les 7 arnaques MaPrimeAdapt' à reconnaître en 2026</title>
+      <link>https://www.maprimeadapt-idf.fr/blog/arnaques-maprimeadapt-2026.html</link>
+      <description>Démarchage, faux agents, signatures forcées, devis gonflés. Guide complet pour protéger vos parents seniors des escroqueries autour de MaPrimeAdapt'.</description>
+      <author>jeremy@maprimeadapt-idf.fr (Jérémy Berthaud)</author>
+      <category>Prévention</category>
+      <pubDate>Mon, 20 Apr 2026 11:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.maprimeadapt-idf.fr/blog/arnaques-maprimeadapt-2026.html</guid>
+    </item>
+
+    <item>
+      <title>Aider mes parents à rester chez eux : la checklist en 10 points</title>
+      <link>https://www.maprimeadapt-idf.fr/blog/aider-mes-parents-rester-chez-eux.html</link>
+      <description>De la chute potentielle à la salle de bain dangereuse, tous les aménagements à anticiper et les aides pour les financer en 2026 pour les seniors.</description>
+      <author>jeremy@maprimeadapt-idf.fr (Jérémy Berthaud)</author>
+      <category>Famille</category>
+      <pubDate>Mon, 20 Apr 2026 12:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.maprimeadapt-idf.fr/blog/aider-mes-parents-rester-chez-eux.html</guid>
+    </item>
+
+  </channel>
+</rss>
