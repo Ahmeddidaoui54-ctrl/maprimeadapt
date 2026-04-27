@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Combien je gagne avec MaPrimeRénov' ? Calculateur 2026 : MaPrimeRénov + CEE + Coup de pouce + Eco-PTZ + TVA 5,5%. Estimation immédiate du reste à charge.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/calculateur-renov">
+<title>Calculateur MaPrimeRénov' 2026 | Estimez vos aides cumulées | Mon Projet Habitat</title>
+<meta property="og:title" content="Combien je gagne avec MaPrimeRénov' ? Calculateur 2026">
+<meta property="og:description" content="Estimez en direct vos aides cumulées : MaPrimeRénov + CEE + Coup de pouce + Eco-PTZ + TVA 5,5%.">
+<meta property="og:type" content="website">
+
+<style>
+:root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--white:#fff;--off-white:#ecf5ee;--text:#0f1f18;--muted:#4b5563;--border:#dce8e1;--radius:12px;--red:#dc2626;--blue:#2563eb;--font:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--gold)!important;outline-offset:2px}
+a{color:var(--green-mid);text-decoration:none}
+button{font-family:inherit;border:none;cursor:pointer}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center}
+.disclaimer-top a{color:#7c2d12;text-decoration:underline}
+
+.header{background:var(--green);padding:18px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+.header-nav{display:flex;gap:18px}
+.header-nav a{color:rgba(255,255,255,.85);font-size:14px;font-weight:500}
+@media(max-width:640px){.header-nav{display:none}}
+
+.hero{padding:50px 0 30px;text-align:center;background:linear-gradient(160deg,var(--green-pale),#fff)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green-mid);margin-bottom:12px}
+h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.2px;line-height:1.15;color:var(--green);margin-bottom:14px}
+.lead{font-size:18px;color:var(--muted);max-width:680px;margin:0 auto;line-height:1.55}
+
+.calc-section{padding:30px 0 60px}
+.calc-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:start}
+@media(max-width:900px){.calc-grid{grid-template-columns:1fr}}
+
+.inputs-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(26,61,43,.06)}
+.inputs-card h2{font-size:20px;font-weight:800;color:var(--green);margin-bottom:6px}
+.inputs-card p.sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+
+.field{margin-bottom:22px}
+.field-label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text)}
+.field-value{display:inline-block;background:var(--green-pale);color:var(--green);padding:2px 10px;border-radius:100px;font-weight:700;font-size:13px;margin-left:8px}
+.field-help{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+.range{width:100%;-webkit-appearance:none;height:8px;background:var(--border);border-radius:5px;outline:none;cursor:pointer}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.range::-moz-range-thumb{width:24px;height:24px;background:var(--gold);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2);border:none}
+
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.options.col4{grid-template-columns:1fr 1fr 1fr 1fr}
+@media(max-width:520px){.options.col4{grid-template-columns:1fr 1fr}}
+.opt-btn{padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--off-white);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;min-height:44px}
+.opt-btn.selected,.opt-btn:hover{border-color:var(--green-mid);background:var(--green-pale);color:var(--green)}
+.opt-btn.selected{box-shadow:inset 0 0 0 1px var(--green-mid)}
+
+.dpe-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.dpe-row{grid-template-columns:1fr}}
+.dpe-select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--off-white);font-family:inherit;font-size:15px;font-weight:600;color:var(--text);cursor:pointer}
+.dpe-select:focus{outline:none;border-color:var(--gold)}
+
+.results-card{background:linear-gradient(145deg,var(--green) 0%,#0d2e1e 100%);color:#fff;border-radius:20px;padding:32px;box-shadow:0 20px 60px rgba(26,61,43,.25);position:sticky;top:20px}
+.results-tag{display:inline-block;background:rgba(245,158,11,.2);color:var(--gold);padding:5px 14px;border-radius:100px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.results-title{font-size:18px;font-weight:700;margin-bottom:6px;color:rgba(255,255,255,.9)}
+.results-sub{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:22px}
+
+.aid-line{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;gap:12px}
+.aid-line:last-of-type{border-bottom:none}
+.aid-line .name{color:rgba(255,255,255,.78)}
+.aid-line .amt{color:#fff;font-weight:700;font-size:15px;white-space:nowrap}
+.aid-line.hidden{display:none}
+.aid-line.bonus .amt{color:var(--gold)}
+
+.totals{background:var(--gold);color:#000;border-radius:14px;padding:22px;text-align:center;margin:22px 0;animation:gold-pulse 3s ease-in-out infinite}
+@keyframes gold-pulse{50%{box-shadow:0 0 30px rgba(245,158,11,.6)}}
+.totals-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.totals-amount{font-size:38px;font-weight:800;line-height:1;letter-spacing:-1px}
+.totals-help{font-size:13px;font-weight:600;margin-top:6px;opacity:.8}
+
+.sub-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:520px){.sub-stats{grid-template-columns:1fr}}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;text-align:center}
+.stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.6);margin-bottom:4px}
+.stat-value{font-size:18px;font-weight:800;color:#fff;line-height:1.1}
+.stat-value .unit{font-size:12px;font-weight:600;color:rgba(255,255,255,.6)}
+
+.cta-after{margin-top:22px;text-align:center}
+.btn-cta{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#000;padding:14px 26px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px;transition:transform .15s}
+.btn-cta:hover{transform:translateY(-2px)}
+
+.note-section{padding:40px 0;background:var(--off-white)}
+.note-section h2{font-size:24px;font-weight:800;color:var(--green);text-align:center;margin-bottom:24px}
+.note-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto}
+@media(max-width:768px){.note-grid{grid-template-columns:1fr}}
+.note-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+.note-icon{font-size:30px;margin-bottom:8px}
+.note-title{font-size:15px;font-weight:700;color:var(--green);margin-bottom:6px}
+.note-desc{font-size:14px;color:var(--muted);line-height:1.5}
+
+.footer{background:var(--green);color:rgba(255,255,255,.7);padding:32px 0;font-size:13px;text-align:center}
+.footer a{color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Démarches officielles sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>
+</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div><div class="logo-name">Mon Projet Habitat</div><div class="logo-sub">Calculateur Rénov'</div></div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Accueil</a>
+      <a href="/energie">Rénovation</a>
+      <a href="/blog/">Blog</a>
+      <a href="tel:+33604433420">+33 6 04 43 34 20</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Simulation 2026</span>
+    <h1>Combien je gagne avec MaPrimeRénov' ?</h1>
+    <p class="lead">Calculez en direct le total de vos aides cumulées (MaPrimeRénov + CEE + Coup de pouce + Eco-PTZ + TVA réduite) et votre reste à charge réel.</p>
+  </div>
+</section>
+
+<section class="calc-section">
+  <div class="container">
+    <div class="calc-grid">
+
+      <!-- Inputs -->
+      <div class="inputs-card">
+        <h2>Vos paramètres</h2>
+        <p class="sub">Ajustez selon votre projet. Le calcul se met à jour en direct.</p>
+
+        <div class="field">
+          <label class="field-label">Type de travaux</label>
+          <div class="options">
+            <button type="button" class="opt-btn selected" data-travaux="isolation">Isolation</button>
+            <button type="button" class="opt-btn" data-travaux="pac">Pompe à chaleur</button>
+            <button type="button" class="opt-btn" data-travaux="globale">Rénovation globale</button>
+            <button type="button" class="opt-btn" data-travaux="multiple">Multi-travaux</button>
+          </div>
+          <div class="field-help">La rénovation globale (Parcours Accompagné) impose un MAR' et un gain ≥ 2 classes DPE.</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Surface du logement <span class="field-value" id="v-surface">100 m²</span></label>
+          <input type="range" class="range" id="surface" min="50" max="200" step="5" value="100">
+          <div class="field-help">Plus la surface est grande, plus les CEE et certains forfaits MaPrimeRénov' sont importants.</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Profil de revenus (MaPrimeRénov')</label>
+          <div class="options col4">
+            <button type="button" class="opt-btn selected" data-profil="bleu" data-pct="0.7">Très modestes (70%)</button>
+            <button type="button" class="opt-btn" data-profil="jaune" data-pct="0.5">Modestes (50%)</button>
+            <button type="button" class="opt-btn" data-profil="violet" data-pct="0.35">Intermédiaires (35%)</button>
+            <button type="button" class="opt-btn" data-profil="rose" data-pct="0">Supérieurs (0%)</button>
+          </div>
+          <div class="field-help">Plafonds 2026. Les "supérieurs" n'ont plus accès à MaPrimeRénov' geste mais bénéficient des CEE et de l'Eco-PTZ.</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Coût estimé des travaux <span class="field-value" id="v-cout">15 000 €</span></label>
+          <input type="range" class="range" id="cout" min="5000" max="50000" step="500" value="15000">
+          <div class="field-help">Devis HT estimé. La TVA 5,5 % s'applique automatiquement aux travaux énergétiques en logement &gt; 2 ans.</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">DPE actuel et DPE cible</label>
+          <div class="dpe-row">
+            <select class="dpe-select" id="dpe-actuel">
+              <option value="A">A — Très performant</option>
+              <option value="B">B — Performant</option>
+              <option value="C">C — Correct</option>
+              <option value="D">D — Moyen</option>
+              <option value="E" selected>E — Énergivore</option>
+              <option value="F">F — Passoire</option>
+              <option value="G">G — Passoire sévère</option>
+            </select>
+            <select class="dpe-select" id="dpe-cible">
+              <option value="A">A — Très performant</option>
+              <option value="B" selected>B — Performant</option>
+              <option value="C">C — Correct</option>
+              <option value="D">D — Moyen</option>
+              <option value="E">E — Énergivore</option>
+              <option value="F">F — Passoire</option>
+            </select>
+          </div>
+          <div class="field-help">Sortie de passoire (F/G &rarr; D ou mieux) = +1 500 € de Coup de pouce CEE.</div>
+        </div>
+      </div>
+
+      <!-- Results sticky -->
+      <div class="results-card">
+        <span class="results-tag">Estimation 2026</span>
+        <div class="results-title">Détail de vos aides cumulées</div>
+        <div class="results-sub">Indicatif. Montants définitifs après instruction ANAH.</div>
+
+        <div class="aid-line">
+          <div class="name">MaPrimeRénov'</div>
+          <div class="amt" id="r-mpr">0 €</div>
+        </div>
+        <div class="aid-line">
+          <div class="name">CEE (Certificats d'Économies)</div>
+          <div class="amt" id="r-cee">0 €</div>
+        </div>
+        <div class="aid-line bonus" id="line-coupdepouce">
+          <div class="name">Coup de pouce sortie passoire</div>
+          <div class="amt" id="r-cdp">0 €</div>
+        </div>
+        <div class="aid-line">
+          <div class="name">TVA 5,5 % (économie)</div>
+          <div class="amt" id="r-tva">0 €</div>
+        </div>
+
+        <div class="totals">
+          <div class="totals-label">Total aides cumulées</div>
+          <div class="totals-amount" id="r-total">0 €</div>
+          <div class="totals-help">Subventions et économies fiscales</div>
+        </div>
+
+        <div class="sub-stats">
+          <div class="stat">
+            <div class="stat-label">Reste à charge</div>
+            <div class="stat-value" id="r-reste">0 €</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Eco-PTZ disponible</div>
+            <div class="stat-value" id="r-ecoptz">0 €</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Économies énergie</div>
+            <div class="stat-value"><span id="r-eco-eur">0 €</span> <span class="unit">/an</span></div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Retour sur investis.</div>
+            <div class="stat-value" id="r-roi">— ans</div>
+          </div>
+        </div>
+
+        <div class="cta-after">
+          <a href="tel:+33604433420" class="btn-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Confirmer mes aides exactes
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="note-section">
+  <div class="container">
+    <h2>Comment fonctionne le calcul</h2>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="note-icon">&#128176;</div>
+        <div class="note-title">MaPrimeRénov' modulée</div>
+        <p class="note-desc">Le pourcentage d'aide dépend du profil (très modeste 70 %, modeste 50 %, intermédiaire 35 %, supérieur 0 %) et du plafond du geste de travaux.</p>
+      </div>
+      <div class="note-card">
+        <div class="note-icon">&#9889;</div>
+        <div class="note-title">CEE cumulables</div>
+        <p class="note-desc">Les Certificats d'Économies d'Énergie (CEE) sont versés en plus par les fournisseurs d'énergie. Bonus +1 500 € si sortie de passoire (F/G &rarr; D+).</p>
+      </div>
+      <div class="note-card">
+        <div class="note-icon">&#127974;</div>
+        <div class="note-title">Eco-PTZ pour le solde</div>
+        <p class="note-desc">Pour financer le reste à charge, jusqu'à 50 000 € à taux zéro sur 20 ans, distribué par toutes les banques partenaires de l'État.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Mon Projet Habitat &middot; Service indépendant en Île-de-France &middot; <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+    <p style="margin-top:8px;font-size:11px;opacity:.7">Calcul indicatif basé sur les barèmes 2026. Le montant final est déterminé par l'ANAH et les obligés CEE après instruction du dossier. <a href="/mentions-legales.html">Mentions légales</a></p>
+  </div>
+</footer>
+
+<script>
+const DPE_ORDER = ['A','B','C','D','E','F','G'];
+let state = {
+  travaux: 'isolation',
+  pct: 0.7,
+  surface: 100,
+  cout: 15000,
+  dpeActuel: 'E',
+  dpeCible: 'B'
+};
+
+function fmt(n){return Math.round(n).toLocaleString('fr-FR') + ' €'}
+
+// Plafonds MaPrimeRenov par geste (simplifie 2026)
+function calculMpr(){
+  if(state.pct === 0) return 0;
+  let plafond = 0;
+  if(state.travaux === 'isolation'){
+    // Isolation murs/combles : forfait par m2 et plafond
+    plafond = Math.min(state.surface * 75, 12000); // ~75 EUR/m2 plafond
+  } else if(state.travaux === 'pac'){
+    plafond = 12000; // PAC air-eau : forfait selon revenus
+  } else if(state.travaux === 'globale'){
+    // Parcours Accompagne : plafond 70 000 EUR avec gain 4+ classes (tres modestes)
+    const gain = DPE_ORDER.indexOf(state.dpeActuel) - DPE_ORDER.indexOf(state.dpeCible);
+    if(gain >= 4) plafond = state.pct === 0.7 ? 70000 : state.pct === 0.5 ? 55000 : 28000;
+    else if(gain >= 3) plafond = state.pct === 0.7 ? 55000 : state.pct === 0.5 ? 45000 : 23000;
+    else if(gain >= 2) plafond = state.pct === 0.7 ? 40000 : state.pct === 0.5 ? 35000 : 18000;
+    else plafond = 0;
+  } else { // multiple
+    plafond = Math.min(state.cout * 0.9, 20000);
+  }
+  const eligible = Math.min(state.cout, plafond);
+  return Math.round(eligible * state.pct);
+}
+
+function calculCee(){
+  // CEE selon travaux, modeste/superieur (les modestes ont CEE bonifies)
+  const bonifie = state.pct >= 0.5;
+  if(state.travaux === 'isolation'){
+    return Math.round(state.surface * (bonifie ? 18 : 10));
+  } else if(state.travaux === 'pac'){
+    return bonifie ? 4000 : 2500;
+  } else if(state.travaux === 'globale'){
+    return bonifie ? 5000 : 3500;
+  } else {
+    return bonifie ? 3000 : 1800;
+  }
+}
+
+function calculCoupDePouce(){
+  // Sortie passoire F/G vers D ou mieux
+  const idxA = DPE_ORDER.indexOf(state.dpeActuel);
+  const idxC = DPE_ORDER.indexOf(state.dpeCible);
+  const sortiePassoire = (state.dpeActuel === 'F' || state.dpeActuel === 'G') && idxC <= 3;
+  return sortiePassoire ? 1500 : 0;
+}
+
+function calculTva(){
+  // Economie TVA 5,5 % vs 20 % : 14,5 % du HT
+  return Math.round(state.cout * 0.145);
+}
+
+function calculEcoPtz(){
+  // Plafond Eco-PTZ 50 000 EUR rénovation globale, 30 000 sinon
+  if(state.travaux === 'globale') return 50000;
+  if(state.travaux === 'multiple') return 30000;
+  return 15000;
+}
+
+function calculEconomies(){
+  // Economies annuelles approximatives selon DPE source
+  const baseFacture = {A:600,B:900,C:1300,D:1900,E:2700,F:3700,G:4800};
+  const reduction = {isolation:0.30,pac:0.45,globale:0.65,multiple:0.50};
+  const facture = (baseFacture[state.dpeActuel] || 2000) * (state.surface/100);
+  return Math.round(facture * (reduction[state.travaux] || 0.30));
+}
+
+function update(){
+  document.getElementById('v-surface').textContent = state.surface + ' m²';
+  document.getElementById('v-cout').textContent = fmt(state.cout);
+
+  const mpr = calculMpr();
+  const cee = calculCee();
+  const cdp = calculCoupDePouce();
+  const tva = calculTva();
+  const total = mpr + cee + cdp + tva;
+  const reste = Math.max(0, state.cout - mpr - cee - cdp);
+  const ecoptz = calculEcoPtz();
+  const ecoEur = calculEconomies();
+  const roi = ecoEur > 0 ? Math.max(1, Math.round(reste / ecoEur)) : 0;
+
+  document.getElementById('r-mpr').textContent = fmt(mpr);
+  document.getElementById('r-cee').textContent = fmt(cee);
+  document.getElementById('r-cdp').textContent = fmt(cdp);
+  document.getElementById('r-tva').textContent = fmt(tva);
+  document.getElementById('r-total').textContent = fmt(total);
+  document.getElementById('r-reste').textContent = fmt(reste);
+  document.getElementById('r-ecoptz').textContent = fmt(Math.min(ecoptz, reste));
+  document.getElementById('r-eco-eur').textContent = fmt(ecoEur);
+  document.getElementById('r-roi').textContent = roi > 0 ? roi + ' ans' : '—';
+
+  document.getElementById('line-coupdepouce').classList.toggle('hidden', cdp === 0);
+}
+
+document.querySelectorAll('[data-travaux]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-travaux]').forEach(x=>x.classList.remove('selected'));
+    b.classList.add('selected');
+    state.travaux = b.dataset.travaux;
+    update();
+  });
+});
+document.querySelectorAll('[data-profil]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-profil]').forEach(x=>x.classList.remove('selected'));
+    b.classList.add('selected');
+    state.pct = parseFloat(b.dataset.pct);
+    update();
+  });
+});
+document.getElementById('surface').addEventListener('input', e=>{state.surface = parseInt(e.target.value); update();});
+document.getElementById('cout').addEventListener('input', e=>{state.cout = parseInt(e.target.value); update();});
+document.getElementById('dpe-actuel').addEventListener('change', e=>{state.dpeActuel = e.target.value; update();});
+document.getElementById('dpe-cible').addEventListener('change', e=>{state.dpeCible = e.target.value; update();});
+
+update();
+</script>
+</body>
+</html>

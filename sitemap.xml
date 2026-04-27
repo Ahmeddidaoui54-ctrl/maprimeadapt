@@ -73,6 +73,36 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.maprimeadapt-idf.fr/etude-de-cas</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/blog/rss.xml</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/glossaire</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/quiz-energie</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/calculateur-renov</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.maprimeadapt-idf.fr/blog/</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>

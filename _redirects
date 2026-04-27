@@ -14,8 +14,12 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /contact /contact.html 200
 /calculateur /calculateur-ehpad.html 200
 /calculateur-ehpad /calculateur-ehpad.html 200
+/calculateur-renov /calculateur-renov.html 200
 /quiz /quiz-autonomie.html 200
 /quiz-autonomie /quiz-autonomie.html 200
+/quiz-energie /quiz-energie.html 200
+/glossaire /glossaire.html 200
+/lexique /glossaire.html 200
 /partenaires /partenaires.html 200
 /presse /presse.html 200
 /transparence /transparence.html 200
@@ -27,6 +31,14 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /carte /carte-idf.html 200
 /comparatif-aides-2026 /comparatif-aides-2026.html 200
 /comparatif /comparatif-aides-2026.html 200
+
+# Étude de cas
+/etude-de-cas /etude-de-cas.html 200
+/cas-concret /etude-de-cas.html 200
+
+# Flux RSS
+/rss /blog/rss.xml 200
+/feed /blog/rss.xml 200
 
 # 404 page
 /* /404.html 404

@@ -1,0 +1,54 @@
+{
+  "name": "Mon Projet Habitat",
+  "short_name": "MPH",
+  "description": "Aides habitat IDF — MaPrimeAdapt', MaPrimeRénov' et rénovation. Accompagnement administratif indépendant en Île-de-France.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1a3d2b",
+  "background_color": "#ffffff",
+  "lang": "fr",
+  "dir": "ltr",
+  "categories": ["finance", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/assets/logo/logo-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/logo/logo-icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/logo/logo-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Simulation gratuite",
+      "short_name": "Simuler",
+      "description": "Lancer la simulation MaPrimeAdapt' en 3 minutes",
+      "url": "/?utm_source=pwa#simulateur"
+    },
+    {
+      "name": "Appeler un conseiller",
+      "short_name": "Appel",
+      "description": "Joindre un conseiller IDF",
+      "url": "/contact?utm_source=pwa"
+    },
+    {
+      "name": "Blog",
+      "short_name": "Blog",
+      "description": "Articles et guides",
+      "url": "/blog/?utm_source=pwa"
+    }
+  ]
+}

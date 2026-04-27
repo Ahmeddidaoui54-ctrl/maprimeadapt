@@ -277,6 +277,76 @@ td:nth-child(2),td:nth-child(3),td:nth-child(4){font-weight:700;color:var(--gree
       <p style="font-size:12px;margin-top:18px;opacity:.6">Service indépendant. Vous pouvez aussi déposer votre dossier vous-même, gratuitement, sur monprojet.anah.gouv.fr.</p>
     </div>
 
+    <!-- ═══ PARTAGE ARTICLE ═══ -->
+    <section class="share-block" aria-label="Partager cet article">
+      <style>
+        .share-block{margin:40px 0 30px;padding:24px;background:linear-gradient(135deg,var(--green-pale),#fff);border:1.5px solid var(--border);border-radius:12px}
+        .share-title{font-size:13px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .share-title svg{width:16px;height:16px}
+        .share-buttons{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+        .share-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;font-size:13.5px;font-weight:700;text-decoration:none;border:1.5px solid var(--green);color:var(--green);background:#fff;transition:all .15s;cursor:pointer;font-family:inherit}
+        .share-btn:hover{background:var(--green);color:#fff;transform:translateY(-1px);box-shadow:0 4px 10px rgba(26,61,43,.15)}
+        .share-btn svg{width:15px;height:15px;flex-shrink:0}
+        .share-btn.gold{background:var(--gold);border-color:var(--gold);color:#000}
+        .share-btn.gold:hover{background:#d97706;border-color:#d97706;color:#fff}
+        .share-feedback{font-size:12.5px;color:var(--green-mid);margin-left:8px;font-weight:700;opacity:0;transition:opacity .25s}
+        .share-feedback.show{opacity:1}
+        @media(max-width:520px){.share-buttons{gap:8px}.share-btn{font-size:12.5px;padding:8px 13px}}
+      </style>
+      <div class="share-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Partager cet article
+      </div>
+      <div class="share-buttons">
+        <a class="share-btn" data-share="facebook" href="#" target="_blank" rel="noopener" aria-label="Partager sur Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.91h-2.33V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg>
+          Facebook
+        </a>
+        <a class="share-btn" data-share="linkedin" href="#" target="_blank" rel="noopener" aria-label="Partager sur LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.34 18.34V9.67H5.67v8.67h2.67zM7 8.5a1.55 1.55 0 100-3.1 1.55 1.55 0 000 3.1zm11.34 9.84v-4.74c0-2.48-1.32-3.63-3.09-3.63-1.43 0-2.07.79-2.42 1.34V9.67h-2.68v8.67h2.68v-4.83c0-1.27.94-1.5 1.4-1.5.46 0 1.43.32 1.43 1.5v4.83h2.68z"/></svg>
+          LinkedIn
+        </a>
+        <a class="share-btn" data-share="whatsapp" href="#" target="_blank" rel="noopener" aria-label="Partager sur WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12 22a9.91 9.91 0 01-5.04-1.39L2 22l1.43-4.84A10 10 0 1112 22zm0-18a8 8 0 00-6.84 12.13l.21.34-.85 3.1 3.18-.83.32.19A8 8 0 1012 4z"/></svg>
+          WhatsApp
+        </a>
+        <a class="share-btn" data-share="email" href="#" aria-label="Partager par email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+          Email
+        </a>
+        <button type="button" class="share-btn gold" data-share="copy" aria-label="Copier le lien">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copier le lien
+        </button>
+        <span class="share-feedback" data-share-feedback>Lien copié !</span>
+      </div>
+      <script>
+      (function(){
+        var url=encodeURIComponent(location.href.split('#')[0]);
+        var title=encodeURIComponent(document.title);
+        var text=encodeURIComponent(document.title+' — '+location.href.split('#')[0]);
+        var map={
+          facebook:'https://www.facebook.com/sharer/sharer.php?u='+url,
+          linkedin:'https://www.linkedin.com/sharing/share-offsite/?url='+url,
+          whatsapp:'https://api.whatsapp.com/send?text='+text,
+          email:'mailto:?subject='+title+'&body='+text
+        };
+        document.querySelectorAll('.share-block [data-share]').forEach(function(el){
+          var k=el.getAttribute('data-share');
+          if(map[k]) el.setAttribute('href',map[k]);
+          if(k==='copy') el.addEventListener('click',function(e){
+            e.preventDefault();
+            var u=location.href.split('#')[0];
+            var fb=document.querySelector('.share-block [data-share-feedback]');
+            var done=function(){if(fb){fb.classList.add('show');setTimeout(function(){fb.classList.remove('show')},2000)}};
+            if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done).catch(function(){window.prompt('Copiez le lien :',u)})}
+            else{window.prompt('Copiez le lien :',u)}
+          });
+        });
+      })();
+      </script>
+    </section>
+
     <h2>Pour aller plus loin</h2>
 
     <ul>
