@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Carte interactive des aides à l'adaptation et la rénovation en Île-de-France. Choisissez votre département (75, 77, 78, 91, 92, 93, 94, 95) pour découvrir les aides locales et nationales cumulables.">
+<meta name="robots" content="index, follow">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/carte-idf">
+<title>Carte interactive Île-de-France | Aides MaPrimeAdapt par département — Mon Projet Habitat</title>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.maprimeadapt-idf.fr/carte-idf">
+<meta property="og:title" content="Carte interactive IDF — Aides MaPrimeAdapt par département">
+<meta property="og:description" content="Cliquez sur votre département IDF pour découvrir les aides locales cumulables avec MaPrimeAdapt 2026.">
+<meta property="og:locale" content="fr_FR">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Carte interactive Île-de-France des aides à l'adaptation logement",
+  "url": "https://www.maprimeadapt-idf.fr/carte-idf",
+  "description": "Carte cliquable des 8 départements d'Île-de-France pour accéder aux aides locales MaPrimeAdapt, MaPrimeRénov' et aides départementales.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mon Projet Habitat",
+    "url": "https://www.maprimeadapt-idf.fr/"
+  }
+}
+</script>
+
+<style>
+  :root {
+    --green:       #1a3d2b;
+    --green-mid:   #2d6a4f;
+    --green-light: #3d8b6a;
+    --green-pale:  #e8f0ec;
+    --gold:        #f59e0b;
+    --gold-light:  #fde68a;
+    --emerald:     #059669;
+    --white:       #ffffff;
+    --off-white:   #ecf5ee;
+    --text:        #111827;
+    --muted:       #4b5563;
+    --border:      #dce8e1;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    --shadow-md:   0 4px 16px rgba(26,61,43,.12);
+    --shadow-lg:   0 20px 60px rgba(26,61,43,.18);
+    --radius:      12px;
+    --radius-lg:   20px;
+    --font:        -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, "Segoe UI", sans-serif;
+    --max:         1160px;
+    --ease:        cubic-bezier(.4,0,.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--font); color: var(--text); background: var(--white); line-height: 1.65; font-size: 17px; }
+  :focus-visible { outline: 3px solid var(--gold) !important; outline-offset: 2px !important; border-radius: 4px; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; font-family: inherit; border: none; background: none; }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  /* DISCLAIMER TOP */
+  .top-disclaimer {
+    background: var(--green); color: rgba(255,255,255,.85);
+    text-align: center; font-size: 13px; padding: 9px 16px; font-weight: 500;
+  }
+  .top-disclaimer strong { color: var(--gold-light); }
+
+  /* HEADER */
+  .header {
+    background: var(--green);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge {
+    width: 38px; height: 38px; background: var(--white);
+    border-radius: 8px; display: grid; place-items: center;
+    font-size: 14px; font-weight: 800; color: var(--green); letter-spacing: -.5px;
+  }
+  .logo-name { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .logo-sub { font-size: 11px; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .5px; }
+  .header-right { display: flex; align-items: center; gap: 18px; }
+  .header-nav a { color: rgba(255,255,255,.85); font-size: 13px; font-weight: 500; margin-right: 14px; }
+  .header-nav a:hover { color: var(--gold-light); }
+  .header-phone { color: #fff; font-size: 14px; font-weight: 600; opacity: .9; display: flex; align-items: center; gap: 8px; }
+  .btn-header {
+    background: var(--white); color: var(--green);
+    padding: 10px 18px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    transition: transform .15s var(--ease), box-shadow .15s var(--ease);
+  }
+  .btn-header:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,255,255,.25); }
+  @media (max-width: 768px) {
+    .header-nav, .header-phone { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, var(--green) 0%, var(--green-mid) 100%);
+    color: #fff;
+    padding: 80px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -100px; right: -80px;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-block; background: rgba(245,158,11,.18); color: var(--gold-light);
+    padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    letter-spacing: .5px; text-transform: uppercase; margin-bottom: 20px;
+    border: 1px solid rgba(245,158,11,.3);
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px); font-weight: 800;
+    line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--gold-light); }
+  .hero-lead {
+    font-size: 19px; line-height: 1.55; max-width: 720px;
+    color: rgba(255,255,255,.88); margin-bottom: 28px;
+  }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 28px; }
+  .hero-stat strong { display: block; font-size: 28px; color: var(--gold-light); font-weight: 800; line-height: 1; }
+  .hero-stat span { font-size: 13px; opacity: .75; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* MAP SECTION */
+  .map-section { padding: 80px 0 60px; background: var(--off-white); }
+  .map-wrapper {
+    background: #fff; border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); padding: 40px;
+    position: relative;
+  }
+  .map-title {
+    text-align: center; font-size: 28px; font-weight: 800;
+    color: var(--green); margin-bottom: 8px; letter-spacing: -.5px;
+  }
+  .map-subtitle { text-align: center; color: var(--muted); margin-bottom: 36px; font-size: 15px; }
+
+  .idf-svg {
+    width: 100%; max-width: 760px; height: auto; margin: 0 auto; display: block;
+  }
+  .dep-shape {
+    fill: var(--green-pale); stroke: var(--green-mid); stroke-width: 2;
+    cursor: pointer;
+    transition: fill .25s var(--ease), transform .25s var(--ease), filter .25s var(--ease);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .dep-shape:hover, .dep-shape:focus {
+    fill: var(--gold); stroke: var(--green);
+    filter: drop-shadow(0 8px 20px rgba(245,158,11,.4));
+    transform: translateY(-2px) scale(1.02);
+  }
+  .dep-label {
+    font-family: var(--font); font-weight: 700; font-size: 14px; fill: var(--green);
+    pointer-events: none; text-anchor: middle;
+  }
+  .dep-num {
+    font-family: var(--font); font-weight: 800; font-size: 20px; fill: var(--green);
+    pointer-events: none; text-anchor: middle;
+  }
+  .dep-shape:hover + .dep-num, .dep-shape:hover + .dep-num + .dep-label,
+  .dep-shape:focus + .dep-num, .dep-shape:focus + .dep-num + .dep-label { fill: var(--white); }
+
+  .tooltip {
+    position: absolute; background: var(--green); color: #fff;
+    padding: 14px 18px; border-radius: 12px;
+    font-size: 13px; line-height: 1.5;
+    box-shadow: var(--shadow-lg);
+    min-width: 220px; pointer-events: none;
+    opacity: 0; transform: translate(-50%, -110%) scale(.95);
+    transition: opacity .2s var(--ease), transform .2s var(--ease);
+    z-index: 10; left: 0; top: 0;
+  }
+  .tooltip.active { opacity: 1; transform: translate(-50%, -110%) scale(1); pointer-events: auto; }
+  .tooltip strong { color: var(--gold-light); display: block; font-size: 15px; margin-bottom: 4px; }
+  .tooltip-pop { font-size: 12px; opacity: .85; margin: 4px 0 10px; }
+  .tooltip-btn {
+    display: inline-block; background: var(--gold); color: var(--green);
+    padding: 7px 14px; border-radius: 7px;
+    font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .3px;
+  }
+  .tooltip::after {
+    content: ''; position: absolute; bottom: -8px; left: 50%;
+    transform: translateX(-50%); width: 0; height: 0;
+    border-left: 8px solid transparent; border-right: 8px solid transparent;
+    border-top: 8px solid var(--green);
+  }
+
+  /* MOBILE FALLBACK GRID */
+  .mobile-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
+  .dep-card {
+    background: #fff; border: 2px solid var(--border); border-radius: var(--radius);
+    padding: 18px 16px; text-align: left; transition: all .2s var(--ease);
+    text-decoration: none; color: inherit; display: block;
+  }
+  .dep-card:hover, .dep-card:focus {
+    border-color: var(--gold); transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .dep-card-num {
+    font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -1px; line-height: 1;
+  }
+  .dep-card-name { font-size: 14px; color: var(--green-mid); font-weight: 600; margin-top: 4px; }
+  .dep-card-pop { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  @media (max-width: 760px) {
+    .map-wrapper { padding: 24px; }
+    .idf-svg { display: none; }
+    .mobile-grid { display: grid; }
+  }
+
+  /* TABLE COMPARATIVE */
+  .compare-section { padding: 80px 0; background: #fff; }
+  .compare-section h2 {
+    font-size: clamp(26px, 4vw, 38px); font-weight: 800; color: var(--green);
+    text-align: center; letter-spacing: -.5px; margin-bottom: 12px;
+  }
+  .compare-section .lead { text-align: center; color: var(--muted); max-width: 720px; margin: 0 auto 40px; }
+  .table-wrapper {
+    overflow-x: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+  }
+  .compare-table {
+    width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px;
+  }
+  .compare-table thead { background: var(--green); color: #fff; }
+  .compare-table th {
+    padding: 14px 18px; text-align: left; font-weight: 600; font-size: 13px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .compare-table td { padding: 14px 18px; border-top: 1px solid var(--border); }
+  .compare-table tbody tr:hover { background: var(--green-pale); }
+  .compare-table .dep-tag {
+    display: inline-block; background: var(--green); color: #fff;
+    padding: 3px 9px; border-radius: 6px; font-weight: 700; font-size: 13px; margin-right: 8px;
+  }
+  .compare-table a {
+    color: var(--green); font-weight: 600; text-decoration: underline;
+    text-decoration-color: var(--gold); text-underline-offset: 2px;
+  }
+  .compare-table a:hover { color: var(--gold); }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(160deg, var(--green) 0%, var(--green-mid) 100%);
+    color: #fff; padding: 80px 0; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; bottom: -80px; left: -80px;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,.18) 0%, transparent 70%);
+  }
+  .cta-section h2 {
+    font-size: clamp(28px, 4vw, 40px); font-weight: 800;
+    letter-spacing: -.5px; margin-bottom: 18px;
+  }
+  .cta-section p { font-size: 17px; opacity: .9; max-width: 600px; margin: 0 auto 32px; }
+  .cta-phone {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--gold); color: var(--green);
+    padding: 18px 36px; border-radius: 999px;
+    font-size: 22px; font-weight: 800; letter-spacing: -.3px;
+    box-shadow: 0 12px 36px rgba(245,158,11,.4);
+    transition: transform .2s var(--ease);
+  }
+  .cta-phone:hover { transform: translateY(-2px) scale(1.02); }
+  .cta-hours { font-size: 13px; opacity: .7; margin-top: 16px; }
+
+  /* FOOTER */
+  .site-footer { background: #0d2018; color: rgba(255,255,255,.75); padding: 48px 0 24px; font-size: 14px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+  .footer-col h4 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+  .footer-col a { display: block; color: rgba(255,255,255,.7); margin-bottom: 8px; font-size: 13px; }
+  .footer-col a:hover { color: var(--gold-light); }
+  .footer-legal {
+    border-top: 1px solid rgba(255,255,255,.12); padding-top: 20px;
+    font-size: 12px; opacity: .65; line-height: 1.6;
+  }
+  .footer-legal strong { color: rgba(255,255,255,.95); }
+  .footer-legal a { color: rgba(255,255,255,.85); text-decoration: underline; }
+  @media (max-width: 960px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; gap: 28px; } }
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER TOP -->
+<div class="top-disclaimer">
+  Service indépendant d'accompagnement administratif. <strong>Non affilié à l'ANAH</strong> ni à l'État.
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container">
+    <div class="header-inner">
+      <a class="logo" href="/">
+        <div class="logo-badge">MPH</div>
+        <div>
+          <div class="logo-name">Mon Projet Habitat</div>
+          <div class="logo-sub">Adaptation · Énergie · Rénovation</div>
+        </div>
+      </a>
+      <div class="header-right">
+        <nav class="header-nav">
+          <a href="/energie">Énergie</a>
+          <a href="/renovation">Rénovation</a>
+          <a href="/comparatif-aides-2026">Comparatif aides</a>
+          <a href="/a-propos">À propos</a>
+        </nav>
+        <a href="tel:+33604433420" class="header-phone">+33 6 04 43 34 20</a>
+        <a href="/#simulator" class="btn-header">Vérifier mon éligibilité</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-eyebrow">Île-de-France · 8 départements</span>
+    <h1>Choisissez <span>votre département</span></h1>
+    <p class="hero-lead">
+      Cliquez sur votre département pour découvrir les aides locales spécifiques, cumulables avec
+      <strong>MaPrimeAdapt</strong> et <strong>MaPrimeRénov'</strong> 2026. Conseil personnalisé selon votre commune.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>8</strong><span>Départements couverts</span></div>
+      <div class="hero-stat"><strong>1 240</strong><span>Communes éligibles</span></div>
+      <div class="hero-stat"><strong>+4 200</strong><span>Dossiers traités</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="container">
+    <div class="map-wrapper" id="map-wrapper">
+      <h2 class="map-title">Carte interactive Île-de-France</h2>
+      <p class="map-subtitle">Survolez ou cliquez sur un département pour voir les détails</p>
+
+      <!-- SVG schematic IDF map (8 departements) -->
+      <svg class="idf-svg" viewBox="0 0 760 560" role="img" aria-label="Carte interactive des 8 départements d'Île-de-France">
+        <!-- 95 Val d'Oise (Nord) -->
+        <g class="dep-group" data-dep="95">
+          <rect class="dep-shape" x="220" y="40" width="320" height="100" rx="14" data-dep="95" data-name="Val-d'Oise" data-pop="195 000" data-href="/95-val-d-oise" tabindex="0" role="button" aria-label="Val-d'Oise — voir la page"/>
+          <text class="dep-num" x="380" y="85">95</text>
+          <text class="dep-label" x="380" y="115">Val-d'Oise</text>
+        </g>
+        <!-- 78 Yvelines (Ouest) -->
+        <g class="dep-group" data-dep="78">
+          <rect class="dep-shape" x="40" y="160" width="180" height="220" rx="14" data-dep="78" data-name="Yvelines" data-pop="298 000" data-href="/78-yvelines" tabindex="0" role="button" aria-label="Yvelines — voir la page"/>
+          <text class="dep-num" x="130" y="255">78</text>
+          <text class="dep-label" x="130" y="285">Yvelines</text>
+        </g>
+        <!-- 93 Seine-Saint-Denis (NE) -->
+        <g class="dep-group" data-dep="93">
+          <rect class="dep-shape" x="430" y="160" width="160" height="100" rx="14" data-dep="93" data-name="Seine-Saint-Denis" data-pop="232 000" data-href="/93-seine-saint-denis" tabindex="0" role="button" aria-label="Seine-Saint-Denis — voir la page"/>
+          <text class="dep-num" x="510" y="200">93</text>
+          <text class="dep-label" x="510" y="230">Seine-Saint-Denis</text>
+        </g>
+        <!-- 77 Seine-et-Marne (Est) -->
+        <g class="dep-group" data-dep="77">
+          <rect class="dep-shape" x="600" y="160" width="120" height="220" rx="14" data-dep="77" data-name="Seine-et-Marne" data-pop="245 000" data-href="/77-seine-et-marne" tabindex="0" role="button" aria-label="Seine-et-Marne — voir la page"/>
+          <text class="dep-num" x="660" y="255">77</text>
+          <text class="dep-label" x="660" y="285">Seine-et-Marne</text>
+        </g>
+        <!-- 92 Hauts-de-Seine (centre-ouest) -->
+        <g class="dep-group" data-dep="92">
+          <rect class="dep-shape" x="240" y="160" width="100" height="100" rx="14" data-dep="92" data-name="Hauts-de-Seine" data-pop="278 000" data-href="/92-hauts-de-seine" tabindex="0" role="button" aria-label="Hauts-de-Seine — voir la page"/>
+          <text class="dep-num" x="290" y="200">92</text>
+          <text class="dep-label" x="290" y="230">Hauts-de-Seine</text>
+        </g>
+        <!-- 75 Paris (centre) -->
+        <g class="dep-group" data-dep="75">
+          <rect class="dep-shape" x="360" y="160" width="60" height="100" rx="14" data-dep="75" data-name="Paris" data-pop="465 000" data-href="/" tabindex="0" role="button" aria-label="Paris — voir la page"/>
+          <text class="dep-num" x="390" y="205">75</text>
+          <text class="dep-label" x="390" y="230" style="font-size:11px">Paris</text>
+        </g>
+        <!-- 94 Val-de-Marne (sud-est de Paris) -->
+        <g class="dep-group" data-dep="94">
+          <rect class="dep-shape" x="350" y="280" width="160" height="100" rx="14" data-dep="94" data-name="Val-de-Marne" data-pop="248 000" data-href="/94-val-de-marne" tabindex="0" role="button" aria-label="Val-de-Marne — voir la page"/>
+          <text class="dep-num" x="430" y="320">94</text>
+          <text class="dep-label" x="430" y="350">Val-de-Marne</text>
+        </g>
+        <!-- 91 Essonne (Sud) -->
+        <g class="dep-group" data-dep="91">
+          <rect class="dep-shape" x="180" y="400" width="380" height="120" rx="14" data-dep="91" data-name="Essonne" data-pop="225 000" data-href="/91-essonne" tabindex="0" role="button" aria-label="Essonne — voir la page"/>
+          <text class="dep-num" x="370" y="455">91</text>
+          <text class="dep-label" x="370" y="485">Essonne</text>
+        </g>
+      </svg>
+
+      <!-- TOOLTIP -->
+      <div class="tooltip" id="tooltip" role="tooltip">
+        <strong id="tt-name">—</strong>
+        <div class="tooltip-pop" id="tt-pop">—</div>
+        <a class="tooltip-btn" id="tt-link" href="#">Voir la page</a>
+      </div>
+
+      <!-- MOBILE FALLBACK -->
+      <div class="mobile-grid">
+        <a class="dep-card" href="/"><div class="dep-card-num">75</div><div class="dep-card-name">Paris</div><div class="dep-card-pop">465 000 seniors 65+</div></a>
+        <a class="dep-card" href="/77-seine-et-marne"><div class="dep-card-num">77</div><div class="dep-card-name">Seine-et-Marne</div><div class="dep-card-pop">245 000 seniors 65+</div></a>
+        <a class="dep-card" href="/78-yvelines"><div class="dep-card-num">78</div><div class="dep-card-name">Yvelines</div><div class="dep-card-pop">298 000 seniors 65+</div></a>
+        <a class="dep-card" href="/91-essonne"><div class="dep-card-num">91</div><div class="dep-card-name">Essonne</div><div class="dep-card-pop">225 000 seniors 65+</div></a>
+        <a class="dep-card" href="/92-hauts-de-seine"><div class="dep-card-num">92</div><div class="dep-card-name">Hauts-de-Seine</div><div class="dep-card-pop">278 000 seniors 65+</div></a>
+        <a class="dep-card" href="/93-seine-saint-denis"><div class="dep-card-num">93</div><div class="dep-card-name">Seine-Saint-Denis</div><div class="dep-card-pop">232 000 seniors 65+</div></a>
+        <a class="dep-card" href="/94-val-de-marne"><div class="dep-card-num">94</div><div class="dep-card-name">Val-de-Marne</div><div class="dep-card-pop">248 000 seniors 65+</div></a>
+        <a class="dep-card" href="/95-val-d-oise"><div class="dep-card-num">95</div><div class="dep-card-name">Val-d'Oise</div><div class="dep-card-pop">195 000 seniors 65+</div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVE TABLE -->
+<section class="compare-section">
+  <div class="container">
+    <h2>Tableau comparatif des 8 départements IDF</h2>
+    <p class="lead">Population, part de seniors et accès direct aux pages locales avec les aides spécifiques de chaque département.</p>
+    <div class="table-wrapper">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Département</th>
+            <th>Population totale</th>
+            <th>% Seniors 65+</th>
+            <th>Préfecture</th>
+            <th>Page locale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="dep-tag">75</span>Paris</td><td>2 145 000</td><td>21,7 % (465 000)</td><td>Paris</td><td><a href="/">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">77</span>Seine-et-Marne</td><td>1 440 000</td><td>17,0 % (245 000)</td><td>Melun</td><td><a href="/77-seine-et-marne">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">78</span>Yvelines</td><td>1 460 000</td><td>20,4 % (298 000)</td><td>Versailles</td><td><a href="/78-yvelines">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">91</span>Essonne</td><td>1 320 000</td><td>17,0 % (225 000)</td><td>Évry-Courcouronnes</td><td><a href="/91-essonne">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">92</span>Hauts-de-Seine</td><td>1 640 000</td><td>17,0 % (278 000)</td><td>Nanterre</td><td><a href="/92-hauts-de-seine">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">93</span>Seine-Saint-Denis</td><td>1 660 000</td><td>14,0 % (232 000)</td><td>Bobigny</td><td><a href="/93-seine-saint-denis">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">94</span>Val-de-Marne</td><td>1 410 000</td><td>17,6 % (248 000)</td><td>Créteil</td><td><a href="/94-val-de-marne">Voir la page →</a></td></tr>
+          <tr><td><span class="dep-tag">95</span>Val-d'Oise</td><td>1 250 000</td><td>15,6 % (195 000)</td><td>Cergy</td><td><a href="/95-val-d-oise">Voir la page →</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Un doute sur votre éligibilité ?</h2>
+    <p>Nos conseillers connaissent les aides locales de chaque département IDF. Appel gratuit, sans engagement.</p>
+    <a href="tel:+33604433420" class="cta-phone">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 1.18 2 2 0 013.98 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+      +33 6 04 43 34 20
+    </a>
+    <div class="cta-hours">Lun–Sam · 9h–18h · Appel gratuit</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="/" class="logo" style="margin-bottom:14px">
+          <div class="logo-badge">MPH</div>
+          <div>
+            <div class="logo-name">Mon Projet Habitat</div>
+            <div class="logo-sub">Adaptation · Énergie · Rénovation</div>
+          </div>
+        </a>
+        <p style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.65);margin-top:10px">Service indépendant d'accompagnement administratif. Île-de-France.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="/">Adaptation senior</a>
+        <a href="/energie">Rénovation énergétique</a>
+        <a href="/renovation">Achat à rénover</a>
+        <a href="/carte-idf">Carte IDF</a>
+      </div>
+      <div class="footer-col">
+        <h4>Ressources</h4>
+        <a href="/blog/">Blog</a>
+        <a href="/guide-2026">Guide MaPrimeAdapt 2026</a>
+        <a href="/comparatif-aides-2026">Comparatif aides 2026</a>
+        <a href="/a-propos">À propos</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact &amp; Légal</h4>
+        <a href="tel:+33604433420">+33 6 04 43 34 20</a>
+        <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a>
+        <a href="/mentions-legales.html">Mentions légales</a>
+        <a href="/politique-confidentialite.html">Confidentialité</a>
+        <a href="/cgv.html">CGV</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Mon Projet Habitat est un service indépendant. <strong>Non affilié à l'ANAH, France Rénov' ou l'État.</strong>
+      Les démarches sont accessibles gratuitement sans intermédiaire sur
+      <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const tooltip = document.getElementById('tooltip');
+  const ttName = document.getElementById('tt-name');
+  const ttPop = document.getElementById('tt-pop');
+  const ttLink = document.getElementById('tt-link');
+  const wrapper = document.getElementById('map-wrapper');
+  const shapes = document.querySelectorAll('.dep-shape');
+
+  function showTooltip(target) {
+    const dep = target.dataset.dep;
+    const name = target.dataset.name;
+    const pop = target.dataset.pop;
+    const href = target.dataset.href;
+    ttName.textContent = name + ' (' + dep + ')';
+    ttPop.textContent = pop + ' habitants 65+ ans';
+    ttLink.href = href;
+
+    // position tooltip above the shape
+    const wRect = wrapper.getBoundingClientRect();
+    const sRect = target.getBoundingClientRect();
+    const x = sRect.left - wRect.left + sRect.width / 2;
+    const y = sRect.top - wRect.top;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+    tooltip.classList.add('active');
+  }
+
+  function hideTooltip(e) {
+    // do not hide if entering tooltip itself
+    if (e && e.relatedTarget && (e.relatedTarget === tooltip || tooltip.contains(e.relatedTarget))) return;
+    tooltip.classList.remove('active');
+  }
+
+  shapes.forEach(s => {
+    s.addEventListener('mouseenter', () => showTooltip(s));
+    s.addEventListener('mouseleave', hideTooltip);
+    s.addEventListener('focus', () => showTooltip(s));
+    s.addEventListener('blur', hideTooltip);
+    s.addEventListener('click', () => { window.location.href = s.dataset.href; });
+    s.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = s.dataset.href; }
+    });
+  });
+
+  tooltip.addEventListener('mouseleave', hideTooltip);
+})();
+</script>
+
+</body>
+</html>

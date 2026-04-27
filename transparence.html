@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comment Mon Projet Habitat se rémunère. Transparence totale sur notre modèle économique : aucun frais pour le client, commission de l'artisan partenaire après travaux.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/transparence">
+<title>Transparence : comment on se rémunère | Mon Projet Habitat</title>
+
+<style>
+:root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--white:#fff;--off-white:#ecf5ee;--text:#0f1f18;--muted:#4b5563;--border:#dce8e1;--radius:12px;--font:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--green-mid)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.container-wide{max-width:1080px;margin:0 auto;padding:0 24px}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center}
+.disclaimer-top a{color:#7c2d12;text-decoration:underline}
+
+.header{background:var(--green);padding:18px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+
+.hero{padding:50px 0 30px;background:linear-gradient(160deg,var(--green-pale),#fff);text-align:center}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green-mid);margin-bottom:12px}
+h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.2px;line-height:1.2;color:var(--green);margin-bottom:14px}
+.lead{font-size:18px;color:var(--muted);max-width:680px;margin:0 auto;line-height:1.55}
+
+.section{padding:40px 0}
+h2{font-size:24px;font-weight:800;color:var(--green);margin-bottom:14px;letter-spacing:-.5px;line-height:1.3}
+p{margin-bottom:16px}
+strong{color:var(--green)}
+
+.flow{background:linear-gradient(135deg,var(--green) 0%,#0d2e1e 100%);color:#fff;border-radius:20px;padding:36px;margin:32px 0}
+.flow h2{color:var(--gold)}
+.flow-step{display:flex;gap:18px;align-items:flex-start;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.flow-step:last-child{border-bottom:none}
+.flow-num{width:36px;height:36px;background:var(--gold);color:#000;border-radius:50%;display:grid;place-items:center;font-weight:800;flex-shrink:0;font-size:14px}
+.flow-content{flex:1}
+.flow-title{font-weight:700;font-size:16px;margin-bottom:4px;color:#fff}
+.flow-desc{font-size:14px;color:rgba(255,255,255,.8);line-height:1.6}
+
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+@media(max-width:640px){.compare-grid{grid-template-columns:1fr}}
+.compare-card{padding:24px;border-radius:14px;border:2px solid}
+.compare-good{background:#f0fdf4;border-color:#86efac}
+.compare-bad{background:#fef2f2;border-color:#fecaca}
+.compare-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:10px}
+.compare-good .compare-tag{background:#16a34a;color:#fff}
+.compare-bad .compare-tag{background:#dc2626;color:#fff}
+.compare-card h3{font-size:16px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.compare-card ul{list-style:none;padding:0}
+.compare-card li{padding:6px 0 6px 24px;position:relative;font-size:14px;line-height:1.5}
+.compare-good li::before{content:"\2713";position:absolute;left:0;color:#16a34a;font-weight:800}
+.compare-bad li::before{content:"\2717";position:absolute;left:0;color:#dc2626;font-weight:800}
+
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;padding:20px 24px}
+.faq-q{font-weight:700;font-size:16px;margin-bottom:8px;color:var(--green)}
+.faq-a{font-size:15px;color:var(--text);line-height:1.7}
+
+.cta-block{background:linear-gradient(135deg,var(--green-pale),#fff);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;margin:40px 0}
+.cta-block h2{font-size:22px;color:var(--green);margin-bottom:8px}
+.cta-block p{color:var(--muted);margin-bottom:18px}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#000;padding:14px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px}
+
+.footer{background:var(--green);color:rgba(255,255,255,.7);padding:32px 0;font-size:13px;text-align:center;line-height:1.6;margin-top:50px}
+.footer a{color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Démarches officielles sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>
+</div>
+
+<header class="header">
+  <div class="container-wide header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div><div class="logo-name">Mon Projet Habitat</div><div class="logo-sub">Transparence</div></div>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Transparence totale</span>
+    <h1>Comment on se rémunère</h1>
+    <p class="lead">Notre service est gratuit pour vous. Mais quelqu'un nous paie. Voici qui, comment et pourquoi.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <h2>La règle d'or</h2>
+    <p><strong>Vous ne payez jamais Mon Projet Habitat. Jamais.</strong> Pas d'inscription, pas d'abonnement, pas de frais cachés, pas de commission prélevée sur votre aide ANAH. Notre rémunération vient exclusivement de l'artisan partenaire qui réalise les travaux, sous forme d'une <strong>commission d'apport d'affaires</strong>.</p>
+
+    <h2>Le flux d'argent expliqué</h2>
+
+    <div class="flow">
+      <h2 style="color:var(--gold)">Étape par étape, où va l'argent ?</h2>
+
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content">
+          <div class="flow-title">Premier appel téléphonique</div>
+          <div class="flow-desc">Gratuit, 15 minutes. Aucun engagement, aucune signature, aucun paiement.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content">
+          <div class="flow-title">Visite à domicile et diagnostic AMO</div>
+          <div class="flow-desc">L'AMO (Assistant à Maîtrise d'Ouvrage) est obligatoire dans le cadre du dispositif ANAH. Sa prestation est <strong>incluse dans le dossier ANAH</strong> et financée par l'aide elle-même. Vous ne sortez rien de votre poche.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content">
+          <div class="flow-title">Constitution et dépôt du dossier</div>
+          <div class="flow-desc">Nous montons votre dossier MaPrimeAdapt' (ou MaPrimeRénov'). Cette prestation est gratuite pour vous : nous nous rémunérerons sur l'étape 5.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-content">
+          <div class="flow-title">Choix d'un artisan partenaire</div>
+          <div class="flow-desc">Nous travaillons avec des artisans certifiés Handibat, Silverbat, Qualibat, RGE. Ces artisans nous reversent une commission quand ils signent un chantier que nous leur apportons. C'est notre seul revenu.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-content">
+          <div class="flow-title">Travaux réalisés et payés</div>
+          <div class="flow-desc">Vous payez l'artisan le prix indiqué dans son devis (déduction faite des aides). L'artisan nous reverse <strong>5 à 8% de commission</strong> sur le montant du chantier. Sa marge intègre déjà cette commission : son prix est identique avec ou sans nous.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">6</div>
+        <div class="flow-content">
+          <div class="flow-title">Versement de l'aide ANAH</div>
+          <div class="flow-desc">L'ANAH verse votre prime sur votre compte (ou directement à l'artisan en avance de trésorerie pour les ménages très modestes). 100% de l'aide vous revient. Nous ne prélevons rien dessus.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Pourquoi ce modèle ?</h2>
+    <p>Ce modèle d'apport d'affaires existe dans de nombreux secteurs (immobilier, automobile, assurance). Il permet à un service comme le nôtre d'exister sans coût pour le bénéficiaire, tout en assurant la qualité (les artisans qui paient une commission ont intérêt à bien faire pour qu'on continue à leur apporter des clients).</p>
+
+    <h2>Ce qu'on fait vs ce qu'on ne fait pas</h2>
+
+    <div class="compare-grid">
+      <div class="compare-card compare-good">
+        <span class="compare-tag">Notre engagement</span>
+        <h3>Ce qu'on fait toujours</h3>
+        <ul>
+          <li>Premier conseil 100% gratuit</li>
+          <li>Devis transparent de l'artisan</li>
+          <li>Délai de rétractation 14 jours</li>
+          <li>Suivi du dossier de A à Z</li>
+          <li>Aucun démarchage agressif</li>
+          <li>Aucune signature au 1er RDV</li>
+        </ul>
+      </div>
+      <div class="compare-card compare-bad">
+        <span class="compare-tag">Notre engagement</span>
+        <h3>Ce qu'on ne fait jamais</h3>
+        <ul>
+          <li>Vous demander un acompte</li>
+          <li>Prélever une commission sur votre aide</li>
+          <li>Démarcher chez vous sans RDV</li>
+          <li>Forcer une signature à domicile</li>
+          <li>Vendre vos données à des tiers</li>
+          <li>Surfacturer vos travaux</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Et si je ne veux pas passer par votre artisan partenaire ?</h2>
+    <p>C'est votre droit absolu. Vous pouvez choisir n'importe quel artisan certifié RGE / Handibat. Dans ce cas, nous facturons une <strong>prestation forfaitaire d'accompagnement administratif</strong> (300 à 600 € TTC selon la complexité du dossier) puisque nous n'avons plus de commission artisan. C'est rare car nos partenaires sont compétitifs, mais c'est possible et indiqué clairement avant signature.</p>
+
+    <h2>Le détail légal</h2>
+    <p>Cette relation commerciale est encadrée par un <strong>contrat d'apport d'affaires</strong> signé entre Mon Projet Habitat et chaque artisan partenaire. Vous pouvez demander à voir un exemplaire de ce contrat à tout moment. Notre activité est conforme aux articles L.441-1 et suivants du Code de commerce.</p>
+
+    <h2>Foire aux questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">L'artisan ne va-t-il pas répercuter sa commission sur le devis ?</div>
+      <div class="faq-a">Non. Nos partenaires ont des prix de marché, ni plus ni moins chers qu'ailleurs. Nous comparons régulièrement leurs devis avec ceux de la concurrence pour garantir cela. Si vous trouvez moins cher ailleurs avec une qualité équivalente, dites-le-nous.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Vous touchez quelque chose si l'ANAH refuse mon dossier ?</div>
+      <div class="faq-a">Non. Pas de dossier accepté = pas de chantier = pas de commission. Nous avons donc tout intérêt à monter votre dossier sérieusement et avec le maximum de chances d'acceptation.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Combien gagnez-vous par dossier en moyenne ?</div>
+      <div class="faq-a">Sur un chantier moyen de 12 000 € avec 6% de commission, nous touchons environ 720 €. Ce montant couvre nos heures de travail (12 à 25 par dossier) plus nos frais. Notre marge nette par dossier est d'environ 200-300 €.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Que se passe-t-il si je vous appelle juste pour un conseil sans projet derrière ?</div>
+      <div class="faq-a">Aucun problème. Nous prenons les appels même quand ils ne mènent pas à un dossier. Notre temps est un investissement : si nous vous aidons aujourd'hui sans contrepartie, vous reviendrez peut-être quand vous aurez vraiment besoin, ou vous nous recommanderez à un proche.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Et si je préfère faire moi-même les démarches ?</div>
+      <div class="faq-a">Allez-y. Le site officiel de l'ANAH <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a> est gratuit et accessible. Notre service est utile uniquement à ceux qui veulent gagner du temps ou qui n'ont pas l'aisance administrative pour gérer un dossier seul.</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-block">
+      <h2>Vous avez d'autres questions ?</h2>
+      <p>Posez-les directement à Jérémy. Aucun engagement, aucun calcul d'intérêt.</p>
+      <a href="tel:+33604433420" class="cta-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +33 6 04 43 34 20
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container-wide">
+    <p>Mon Projet Habitat &middot; Service indépendant en Île-de-France &middot; <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+    <p style="margin-top:8px;font-size:11px;opacity:.7">Non affilié à l'ANAH. <a href="/mentions-legales.html">Mentions légales</a> &middot; <a href="/politique-confidentialite.html">Confidentialité</a> &middot; <a href="/cgv.html">CGV</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
