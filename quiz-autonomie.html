@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vos parents peuvent-ils rester chez eux en sécurité ? 7 questions, 3 minutes. Score d'autonomie + recommandations personnalisées + aides à mobiliser.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/quiz-autonomie">
+<title>Mes parents peuvent-ils rester chez eux ? Quiz gratuit | Mon Projet Habitat</title>
+<meta property="og:title" content="Mes parents peuvent-ils rester chez eux ? Le quiz en 3 minutes">
+<meta property="og:description" content="7 questions pour évaluer le risque de perte d'autonomie. Recommandations personnalisées.">
+
+<style>
+:root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--white:#fff;--off-white:#ecf5ee;--text:#0f1f18;--muted:#4b5563;--border:#dce8e1;--radius:12px;--red:#dc2626;--orange:#ea580c;--blue:#2563eb;--font:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--gold)!important;outline-offset:2px}
+a{color:var(--green-mid);text-decoration:none}
+button{font-family:inherit;border:none;cursor:pointer}
+.container{max-width:760px;margin:0 auto;padding:0 24px}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center}
+.disclaimer-top a{color:#7c2d12;text-decoration:underline}
+
+.header{background:var(--green);padding:18px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+
+.hero{padding:50px 0 30px;text-align:center;background:linear-gradient(160deg,var(--green-pale),#fff)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green-mid);margin-bottom:12px}
+h1{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-1.2px;line-height:1.2;color:var(--green);margin-bottom:14px}
+.lead{font-size:17px;color:var(--muted);max-width:560px;margin:0 auto;line-height:1.55}
+.hero-stats{display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.hero-stat{background:rgba(26,61,43,.05);padding:6px 14px;border-radius:100px;font-size:13px;color:var(--green);font-weight:600}
+
+.quiz-section{padding:40px 0 60px}
+.quiz-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:36px;box-shadow:0 4px 30px rgba(26,61,43,.08)}
+
+.progress-bar{height:6px;background:var(--off-white);border-radius:3px;overflow:hidden;margin-bottom:24px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--gold));border-radius:3px;transition:width .4s ease;width:14%}
+.progress-text{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;display:flex;justify-content:space-between}
+
+.question{display:none}
+.question.active{display:block;animation:slide .3s ease}
+@keyframes slide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.question-num{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.question h2{font-size:24px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:20px;letter-spacing:-.5px}
+
+.answers{display:flex;flex-direction:column;gap:10px}
+.answer-btn{padding:18px 22px;background:var(--off-white);border:2px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;color:var(--text);text-align:left;transition:all .15s;display:flex;align-items:center;gap:14px;width:100%}
+.answer-btn:hover{border-color:var(--green-mid);background:var(--green-pale)}
+.answer-btn:active{transform:scale(.98)}
+.answer-icon{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--border);display:grid;place-items:center;font-weight:800;color:var(--muted);flex-shrink:0;font-size:14px;transition:all .15s}
+.answer-btn:hover .answer-icon{border-color:var(--green-mid);color:var(--green)}
+
+.nav-buttons{display:flex;justify-content:space-between;margin-top:24px}
+.btn-back{background:none;color:var(--muted);font-size:14px;font-weight:600;padding:10px 0}
+.btn-back:hover{color:var(--green)}
+.btn-back:disabled{opacity:.3;cursor:default}
+
+/* Result */
+.result{display:none}
+.result.active{display:block;animation:slide .4s ease}
+
+.result-banner{padding:28px;border-radius:16px;text-align:center;margin-bottom:24px;color:#fff}
+.result-banner.high{background:linear-gradient(135deg,#dc2626,#7f1d1d)}
+.result-banner.med{background:linear-gradient(135deg,#ea580c,var(--gold))}
+.result-banner.low{background:linear-gradient(135deg,var(--green-mid),var(--green))}
+
+.result-score{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;margin-bottom:6px}
+.result-level{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;line-height:1.1}
+.result-summary{font-size:15px;line-height:1.55;opacity:.95}
+
+.recos-card{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+.recos-title{font-size:14px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.reco{padding:10px 0 10px 30px;position:relative;font-size:15px;line-height:1.5;border-bottom:1px solid var(--border)}
+.reco:last-child{border-bottom:none}
+.reco::before{content:"\2713";position:absolute;left:0;top:10px;color:var(--green);font-weight:800;font-size:18px}
+.reco strong{color:var(--green)}
+
+.aids-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:520px){.aids-grid{grid-template-columns:1fr}}
+.aid-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;font-size:13px}
+.aid-name{font-weight:700;color:var(--green);margin-bottom:4px}
+.aid-amount{color:var(--gold);font-weight:800;font-size:15px}
+.aid-cond{color:var(--muted);font-size:11px;margin-top:2px}
+
+.cta-result{background:linear-gradient(145deg,var(--green) 0%,#0d2e1e 100%);color:#fff;border-radius:16px;padding:28px;text-align:center;margin-top:24px}
+.cta-result h3{font-size:20px;font-weight:800;margin-bottom:8px}
+.cta-result p{color:rgba(255,255,255,.8);font-size:14px;margin-bottom:20px}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px;transition:transform .15s}
+.btn-cta-gold{background:var(--gold);color:#000}
+.btn-cta-gold:hover{transform:translateY(-2px)}
+.btn-cta-ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff}
+
+.btn-restart{margin-top:18px;background:none;color:var(--muted);font-size:13px;text-decoration:underline;width:100%;text-align:center;padding:8px}
+
+.footer{background:var(--green);color:rgba(255,255,255,.7);padding:32px 0;font-size:13px;text-align:center;margin-top:50px}
+.footer a{color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Démarches officielles sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>
+</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div><div class="logo-name">Mon Projet Habitat</div><div class="logo-sub">Quiz autonomie</div></div>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Quiz gratuit</span>
+    <h1>Mes parents peuvent-ils rester chez eux ?</h1>
+    <p class="lead">7 questions pour évaluer leur autonomie réelle et identifier les aménagements prioritaires.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">3 min</div>
+      <div class="hero-stat">100% gratuit</div>
+      <div class="hero-stat">Sans inscription</div>
+    </div>
+  </div>
+</section>
+
+<section class="quiz-section">
+  <div class="container">
+    <div class="quiz-card">
+
+      <div id="quiz-area">
+        <div class="progress-text"><span>Question <span id="q-current">1</span> / 7</span><span id="q-pct">14%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+        <!-- Q1 -->
+        <div class="question active" data-q="0">
+          <div class="question-num">Mobilité</div>
+          <h2>Vos parents peuvent-ils se lever seuls d'un fauteuil ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Oui, sans difficulté</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Avec un peu d'aide d'un appui</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Difficilement, ils ont besoin d'aide humaine</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Non, presque impossible</button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question" data-q="1">
+          <div class="question-num">Salle de bain</div>
+          <h2>Comment se lavent-ils actuellement ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Douche italienne ou plain-pied, sans danger</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Douche avec marche, mais ils gèrent</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Baignoire, c'est devenu compliqué</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Baignoire, ils ont peur ou ont déjà glissé</button>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question" data-q="2">
+          <div class="question-num">Escaliers</div>
+          <h2>Y a-t-il des escaliers chez eux ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Non, plain-pied uniquement</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Oui, ils les montent sans peine</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Oui, c'est devenu pénible</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Oui, et ils n'utilisent plus l'étage</button>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question" data-q="3">
+          <div class="question-num">Chutes</div>
+          <h2>Ont-ils chuté dans les 12 derniers mois ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Non, jamais</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Une glissade sans gravité</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Oui, une chute avec petites blessures</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Oui, plusieurs fois ou avec hospitalisation</button>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question" data-q="4">
+          <div class="question-num">Quotidien</div>
+          <h2>Gèrent-ils les courses, repas, médicaments ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Oui, totalement autonomes</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Oui, avec un peu de notre aide</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Non, ils ont besoin d'aide régulière</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Non, plus du tout</button>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question" data-q="5">
+          <div class="question-num">Souhait</div>
+          <h2>Veulent-ils rester chez eux ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Absolument, c'est leur priorité</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Oui, si c'est possible</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Ils hésitent</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Ils n'y arrivent plus, on cherche une solution</button>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question" data-q="6">
+          <div class="question-num">Logement</div>
+          <h2>Sont-ils propriétaires de leur logement ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="answer(0)"><span class="answer-icon">A</span>Oui, propriétaires occupants</button>
+            <button class="answer-btn" onclick="answer(1)"><span class="answer-icon">B</span>Locataires du parc privé</button>
+            <button class="answer-btn" onclick="answer(2)"><span class="answer-icon">C</span>Locataires du parc social (HLM)</button>
+            <button class="answer-btn" onclick="answer(3)"><span class="answer-icon">D</span>Hébergés par la famille</button>
+          </div>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn-back" id="btn-back" onclick="goBack()" disabled>&larr; Précédent</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="result" id="result">
+        <div class="result-banner" id="result-banner">
+          <div class="result-score" id="result-score-label">Score d'alerte</div>
+          <div class="result-level" id="result-level">Vigilance modérée</div>
+          <div class="result-summary" id="result-summary">Quelques aménagements seraient bénéfiques pour sécuriser le quotidien de vos parents.</div>
+        </div>
+
+        <div class="recos-card">
+          <div class="recos-title">Recommandations prioritaires</div>
+          <div id="recos-list"></div>
+        </div>
+
+        <div class="recos-card">
+          <div class="recos-title">Aides mobilisables</div>
+          <div class="aids-grid" id="aids-list"></div>
+        </div>
+
+        <div class="cta-result">
+          <h3>Vous voulez aller plus loin ?</h3>
+          <p>Un appel de 15 minutes avec Jérémy pour étudier la situation précise de vos parents et calculer les aides exactes.</p>
+          <div class="cta-row">
+            <a href="tel:+33604433420" class="btn-cta btn-cta-gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              +33 6 04 43 34 20
+            </a>
+            <a href="/contact" class="btn-cta btn-cta-ghost">Formulaire de rappel</a>
+          </div>
+        </div>
+
+        <button class="btn-restart" onclick="restart()">Recommencer le quiz</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Mon Projet Habitat &middot; Service indépendant en Île-de-France &middot; <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+    <p style="margin-top:8px;font-size:11px;opacity:.7">Quiz à valeur indicative. Une évaluation officielle (grille AGGIR) doit être réalisée par un professionnel.</p>
+  </div>
+</footer>
+
+<script>
+let currentQ = 0;
+const totalQ = 7;
+const answers = [];
+
+function answer(score){
+  answers[currentQ] = score;
+  if(currentQ < totalQ - 1){
+    currentQ++;
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showQuestion(){
+  document.querySelectorAll('.question').forEach(q=>q.classList.remove('active'));
+  document.querySelector('.question[data-q="' + currentQ + '"]').classList.add('active');
+  document.getElementById('q-current').textContent = currentQ + 1;
+  const pct = Math.round(((currentQ + 1) / totalQ) * 100);
+  document.getElementById('q-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('btn-back').disabled = currentQ === 0;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function goBack(){
+  if(currentQ > 0){
+    currentQ--;
+    showQuestion();
+  }
+}
+
+function showResult(){
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('result').classList.add('active');
+
+  // Score 0 (autonome) à 18 (perte autonomie elevee). Q7 (logement) ne compte pas pour le score, c'est juste pour l'eligibilite.
+  const score = answers.slice(0,6).reduce((a,b)=>a+b, 0);
+  const proprietaire = answers[6] === 0;
+  const isLocataire = answers[6] === 1 || answers[6] === 2;
+
+  let level, color, summary, recos = [], aids = [];
+
+  if(score <= 4){
+    level = "Bonne autonomie";
+    color = "low";
+    summary = "Vos parents semblent encore autonomes. Quelques aménagements préventifs peuvent leur garantir cette autonomie sur la durée.";
+    recos = [
+      "<strong>Prévention</strong> : barres d'appui dans la salle de bain et les WC, tapis antidérapants",
+      "<strong>Éclairage</strong> : chemins lumineux automatiques pour les déplacements nocturnes",
+      "<strong>Suivi médical</strong> : bilan annuel chez le médecin traitant pour anticiper",
+      "Pas d'urgence à entreprendre des gros travaux"
+    ];
+  } else if(score <= 9){
+    level = "Vigilance modérée";
+    color = "med";
+    summary = "Plusieurs signaux d'alerte sont présents. Il est temps de planifier des aménagements pour éviter l'accélération.";
+    recos = [
+      "<strong>Salle de bain en priorité n°1</strong> : remplacer la baignoire par une douche de plain-pied",
+      "<strong>Sécuriser les escaliers</strong> : main courante, monte-escalier si nécessaire",
+      "<strong>Tester l'APA</strong> : demande au conseil départemental pour évaluer les besoins",
+      "<strong>Anticiper</strong> : commencer le dossier MaPrimeAdapt' avant que la situation se dégrade"
+    ];
+  } else {
+    level = "Action urgente";
+    color = "high";
+    summary = "La situation est préoccupante. Sans aménagements rapides, le risque de chute grave et de placement augmente fortement.";
+    recos = [
+      "<strong>Diagnostic ergothérapeute</strong> : prescrit par le médecin, remboursé en partie",
+      "<strong>Demande APA d'urgence</strong> : aide humaine + équipements (max 1 800 €/mois)",
+      "<strong>Travaux MaPrimeAdapt' immédiat</strong> : douche PMR, monte-escalier, rampes, signalétique",
+      "<strong>Téléassistance</strong> : 30 €/mois, alarme en cas de chute. Action Logement la finance",
+      "<strong>SSIAD ou aide à domicile</strong> : passages quotidiens d'aide-soignante"
+    ];
+  }
+
+  // Aides selon profil
+  if(proprietaire){
+    aids.push({name:"MaPrimeAdapt'", amount:"jusqu'à 15 400 €", cond:"Selon revenus, propriétaire"});
+    aids.push({name:"Caisse de retraite", amount:"jusqu'à 3 500 €", cond:"CNAV / MSA / AGIRC-ARRCO"});
+    aids.push({name:"Action Logement", amount:"jusqu'à 5 000 €", cond:"Anciens salariés du privé"});
+    aids.push({name:"APA à domicile", amount:"jusqu'à 1 800 €/mois", cond:"Selon GIR (1 à 4)"});
+    aids.push({name:"Crédit d'impôt 25%", amount:"−25%", cond:"Sur reste à charge accessibilité"});
+    aids.push({name:"Aides départementales", amount:"jusqu'à 5 000 €", cond:"Variable selon dép. (75/92/94)"});
+  } else if(isLocataire){
+    aids.push({name:"MaPrimeAdapt' locataire", amount:"jusqu'à 15 400 €", cond:"Avec accord du bailleur"});
+    aids.push({name:"APA à domicile", amount:"jusqu'à 1 800 €/mois", cond:"Sans condition de logement"});
+    aids.push({name:"Caisse de retraite", amount:"jusqu'à 3 500 €", cond:"Selon caisse"});
+    aids.push({name:"Aides bailleur social", amount:"Variable", cond:"Si HLM, demander au bailleur"});
+  } else {
+    aids.push({name:"APA à domicile", amount:"jusqu'à 1 800 €/mois", cond:"Sans condition de logement"});
+    aids.push({name:"Crédit d'impôt 25%", amount:"−25%", cond:"Pour vous, l'aidant familial"});
+  }
+
+  document.getElementById('result-banner').classList.add(color);
+  document.getElementById('result-level').textContent = level;
+  document.getElementById('result-summary').textContent = summary;
+  document.getElementById('recos-list').innerHTML = recos.map(r=>'<div class="reco">' + r + '</div>').join('');
+  document.getElementById('aids-list').innerHTML = aids.map(a=>
+    '<div class="aid-card"><div class="aid-name">' + a.name + '</div><div class="aid-amount">' + a.amount + '</div><div class="aid-cond">' + a.cond + '</div></div>'
+  ).join('');
+
+  // GA4 event
+  try { if(typeof gtag !== 'undefined') gtag('event','quiz_complete',{event_category:'engagement',event_label:level,score:score}); } catch(_){}
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function restart(){
+  currentQ = 0;
+  answers.length = 0;
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('result').classList.remove('active');
+  document.getElementById('result-banner').classList.remove('low','med','high');
+  showQuestion();
+}
+</script>
+</body>
+</html>

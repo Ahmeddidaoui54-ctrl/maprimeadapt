@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devis — Mon Projet Habitat</title>
+<style>
+  :root{
+    --green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;
+    --gold:#f59e0b;--gold-light:#fde68a;--text:#111827;--muted:#4b5563;
+    --border:#dce8e1;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--text);background:#f0f0f0;line-height:1.5;}
+
+  .page{
+    width:210mm;min-height:297mm;margin:20px auto;background:#fff;
+    padding:18mm 16mm;box-shadow:0 4px 24px rgba(0,0,0,.12);
+  }
+
+  .head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--green);padding-bottom:6mm;}
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo-badge{width:48px;height:48px;background:var(--green);color:#fff;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:20px;letter-spacing:-1px;}
+  .logo-text strong{display:block;font-size:18px;font-weight:800;color:var(--green);letter-spacing:-.3px;}
+  .logo-text span{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+  .biz-info{font-size:10px;color:var(--muted);text-align:right;line-height:1.5;}
+  .biz-info strong{color:var(--green);font-size:12px;}
+
+  .meta-bar{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:6mm;}
+  .meta-block{background:var(--green-pale);border-radius:8px;padding:5mm;}
+  .meta-block h4{font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:3mm;}
+  .meta-row{display:flex;gap:6px;font-size:12px;color:var(--text);margin-bottom:2mm;}
+  .meta-row label{color:var(--muted);min-width:30mm;}
+  .meta-row .field{flex:1;border-bottom:1px dashed #c8dfcf;min-height:14px;}
+
+  .doc-title{margin-top:7mm;text-align:center;}
+  .doc-title h1{font-size:26px;font-weight:800;color:var(--green);letter-spacing:-1px;}
+  .doc-title h1 span{color:var(--gold);}
+
+  table.items{width:100%;border-collapse:collapse;margin-top:5mm;font-size:12px;}
+  table.items thead{background:var(--green);color:#fff;}
+  table.items th{padding:8px 10px;text-align:left;font-weight:700;font-size:11px;letter-spacing:.3px;text-transform:uppercase;}
+  table.items th.num,table.items td.num{text-align:right;}
+  table.items td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  table.items tbody tr:nth-child(even){background:#f7faf8;}
+  .empty-row td{height:34px;}
+
+  .totals{margin-top:5mm;display:flex;justify-content:flex-end;}
+  .totals-table{width:90mm;font-size:13px;}
+  .totals-table .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);}
+  .totals-table .row.tot{margin-top:4px;background:var(--green);color:#fff;padding:10px 14px;border-radius:8px;font-weight:800;font-size:15px;border:none;}
+
+  .mention-amo{margin-top:6mm;background:var(--green-pale);border-left:4px solid var(--green);padding:4mm 5mm;font-size:11px;color:var(--green);border-radius:6px;}
+
+  .retract{margin-top:5mm;background:var(--gold-light);border:1.5px solid var(--gold);padding:4mm 5mm;border-radius:6px;font-size:11px;color:#92400e;}
+  .retract strong{display:block;color:#78350f;font-size:12px;margin-bottom:2px;}
+
+  .signatures{margin-top:8mm;display:grid;grid-template-columns:1fr 1fr;gap:10mm;}
+  .sig-box{border:1px dashed var(--border);border-radius:6px;padding:5mm;min-height:32mm;}
+  .sig-box label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+  .sig-box .sig-bon{font-size:10px;color:var(--muted);margin-top:2mm;}
+
+  .foot{margin-top:8mm;border-top:1px solid var(--border);padding-top:4mm;text-align:center;font-size:10px;color:var(--muted);line-height:1.5;}
+  .foot strong{color:var(--green);}
+
+  @page{size:A4;margin:0;}
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;}
+    .no-print{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print" style="text-align:center;padding:12px;background:#1a3d2b;color:#fff;font-family:system-ui;font-size:13px;">
+  Modèle devis &middot; <button onclick="window.print()" style="background:#f59e0b;border:none;color:#fff;padding:6px 14px;border-radius:6px;font-weight:700;cursor:pointer;">Imprimer / PDF</button>
+</div>
+
+<div class="page">
+
+  <header class="head">
+    <div class="logo">
+      <div class="logo-badge">MP</div>
+      <div class="logo-text">
+        <strong>Mon Projet Habitat</strong>
+        <span>Conseil &middot; Adaptation &middot; Rénovation</span>
+      </div>
+    </div>
+    <div class="biz-info">
+      <strong>Mon Projet Habitat</strong><br>
+      Jérémy Berthaud — Conseiller habitat<br>
+      [Adresse postale]<br>
+      Tél. 06 04 43 34 20<br>
+      jeremy@maprimeadapt-idf.fr<br>
+      SIRET : [—] &middot; TVA : [—]
+    </div>
+  </header>
+
+  <div class="doc-title">
+    <h1>Devis <span>n° __________</span></h1>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <h4>Informations devis</h4>
+      <div class="meta-row"><label>N° devis</label><div class="field"></div></div>
+      <div class="meta-row"><label>Date d'émission</label><div class="field"></div></div>
+      <div class="meta-row"><label>Validité</label><div class="field">3 mois</div></div>
+      <div class="meta-row"><label>Conseiller</label><div class="field">Jérémy Berthaud</div></div>
+    </div>
+    <div class="meta-block">
+      <h4>Client</h4>
+      <div class="meta-row"><label>Nom &amp; Prénom</label><div class="field"></div></div>
+      <div class="meta-row"><label>Adresse</label><div class="field"></div></div>
+      <div class="meta-row"><label>Code postal / Ville</label><div class="field"></div></div>
+      <div class="meta-row"><label>Téléphone</label><div class="field"></div></div>
+      <div class="meta-row"><label>Email</label><div class="field"></div></div>
+    </div>
+  </div>
+
+  <table class="items">
+    <thead>
+      <tr>
+        <th style="width:50%;">Description de la prestation</th>
+        <th class="num" style="width:12%;">Quantité</th>
+        <th class="num" style="width:18%;">Prix unitaire HT</th>
+        <th class="num" style="width:20%;">Total HT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+      <tr class="empty-row"><td></td><td class="num"></td><td class="num"></td><td class="num"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="totals">
+    <div class="totals-table">
+      <div class="row"><span>Sous-total HT</span><span>__________ €</span></div>
+      <div class="row"><span>TVA (5,5 % / 10 % / 20 %)</span><span>__________ €</span></div>
+      <div class="row tot"><span>TOTAL TTC</span><span>__________ €</span></div>
+    </div>
+  </div>
+
+  <div class="mention-amo">
+    <strong>Notre accompagnement administratif est gratuit.</strong>
+    Ce devis concerne uniquement les travaux réalisés par l'artisan partenaire certifié. Mon Projet Habitat ne facture aucune prestation au client : notre rémunération est prise en charge par l'artisan dans le cadre d'un mandat AMO signé séparément.
+  </div>
+
+  <div class="retract">
+    <strong>Délai de rétractation — 14 jours</strong>
+    Conformément à l'article L.221-18 du Code de la consommation, vous disposez d'un délai de 14 jours calendaires à compter de la signature pour vous rétracter sans avoir à justifier de motifs ni à payer de pénalités. Un formulaire de rétractation vous est remis avec ce devis.
+  </div>
+
+  <div class="signatures">
+    <div class="sig-box">
+      <label>Signature du client</label>
+      <div class="sig-bon">Précédée de la mention manuscrite « Bon pour accord » + date</div>
+    </div>
+    <div class="sig-box">
+      <label>Signature de l'entreprise</label>
+      <div class="sig-bon">Jérémy Berthaud — Mon Projet Habitat</div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <strong>Mon Projet Habitat</strong> &middot; 06 04 43 34 20 &middot; jeremy@maprimeadapt-idf.fr &middot; maprimeadapt-idf.fr<br>
+    Service indépendant d'accompagnement administratif. Non affilié à l'ANAH ni à un organisme public.
+  </footer>
+
+</div>
+</body>
+</html>

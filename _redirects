@@ -10,6 +10,10 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /guide-2026 /guide-2026.html 200
 /blog /blog/index.html 200
 /contact /contact.html 200
+/calculateur /calculateur-ehpad.html 200
+/calculateur-ehpad /calculateur-ehpad.html 200
+/quiz /quiz-autonomie.html 200
+/quiz-autonomie /quiz-autonomie.html 200
 
 # 404 page
 /* /404.html 404
