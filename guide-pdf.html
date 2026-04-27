@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guide PDF imprimable MaPrimeAdapt 2026 — 14 pages : barèmes officiels, plafonds IDF et hors IDF, 22 travaux finançables, pièces à fournir, calendrier, anti-arnaque. Édition avril 2026.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/guide-pdf">
+<title>Guide PDF MaPrimeAdapt 2026 — Imprimable | Mon Projet Habitat</title>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Guide MaPrimeAdapt 2026 — Édition imprimable",
+  "description": "Guide pratique 14 pages : barèmes officiels, plafonds IDF et hors IDF, 22 travaux finançables, pièces à fournir ANAH, rôle de l'AMO, cumul d'aides, calendrier, anti-arnaque, glossaire.",
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-26",
+  "author": {"@type":"Organization","name":"Mon Projet Habitat"},
+  "publisher": {"@type":"Organization","name":"Mon Projet Habitat","url":"https://www.maprimeadapt-idf.fr/"},
+  "inLanguage": "fr-FR",
+  "isAccessibleForFree": true,
+  "url": "https://www.maprimeadapt-idf.fr/guide-pdf"
+}
+</script>
+
+<style>
+:root{
+  --green:#1a3d2b;
+  --green-mid:#2d6a4f;
+  --green-pale:#e8f0ec;
+  --gold:#f59e0b;
+  --gold-soft:#fef3c7;
+  --text:#0f1f18;
+  --muted:#4b5563;
+  --border:#dce8e1;
+  --font:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:var(--font);color:var(--text);line-height:1.55;font-size:11pt;background:#f3f4f6}
+a{color:var(--green-mid);text-decoration:none}
+
+/* ============ ÉCRAN ============ */
+.screen-toolbar{
+  position:sticky;top:0;z-index:50;
+  background:var(--green);color:#fff;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);
+}
+.screen-toolbar .title{font-weight:700;font-size:15px}
+.screen-toolbar .actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-print,.btn-back{
+  background:var(--gold);color:#000;border:none;padding:10px 18px;
+  border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;
+  font-family:var(--font);text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-print:hover{filter:brightness(1.05)}
+.btn-back{background:rgba(255,255,255,.15);color:#fff}
+
+.viewer{
+  max-width:880px;margin:30px auto 60px;padding:0 16px;
+}
+.page{
+  background:#fff;
+  width:210mm;min-height:297mm;
+  margin:0 auto 22px;
+  padding:22mm 18mm 22mm 18mm;
+  box-shadow:0 6px 22px rgba(0,0,0,.08);
+  position:relative;
+  page-break-after:always;
+  break-after:page;
+}
+.page:last-child{page-break-after:auto;break-after:auto}
+@media(max-width:900px){
+  .page{width:auto;min-height:auto;padding:24px 22px;margin-bottom:14px}
+}
+
+/* ============ IMPRESSION ============ */
+@page{
+  size:A4 portrait;
+  margin:18mm 14mm;
+}
+@media print{
+  body{background:#fff}
+  .screen-toolbar,.screen-only{display:none!important}
+  .viewer{margin:0;padding:0;max-width:none}
+  .page{
+    box-shadow:none;
+    margin:0;
+    padding:0;
+    width:auto;min-height:auto;
+    page-break-after:always;
+    break-after:page;
+  }
+  .page:last-child{page-break-after:auto}
+  /* En-tête / pied de page imprimés */
+  .print-header,.print-footer{display:block!important}
+}
+
+/* En-tête / pied de page (cachés à l'écran, visibles à l'impression via running headers fallback) */
+.print-header,.print-footer{display:none}
+
+/* ============ COUVERTURE ============ */
+.cover{
+  display:flex;flex-direction:column;justify-content:space-between;
+  min-height:260mm;
+  background:linear-gradient(165deg,#fff 0%,var(--green-pale) 60%,#fff 100%);
+  padding:30mm 16mm;
+}
+.cover-logo{display:flex;align-items:center;gap:14px}
+.logo-badge{
+  width:54px;height:54px;background:var(--green);color:#fff;
+  border-radius:10px;display:grid;place-items:center;
+  font-weight:800;font-size:18px;letter-spacing:.5px;
+}
+.cover-logo .name{font-weight:800;color:var(--green);font-size:18px}
+.cover-logo .sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+
+.cover-center{text-align:center;padding:0 4mm}
+.cover-eyebrow{
+  display:inline-block;background:var(--gold);color:#000;
+  padding:7px 16px;border-radius:100px;font-size:12px;font-weight:800;
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;
+}
+.cover-title{
+  font-size:40pt;font-weight:900;color:var(--green);
+  line-height:1.05;letter-spacing:-1.5px;margin-bottom:18px;
+}
+.cover-subtitle{
+  font-size:16pt;color:var(--muted);font-weight:500;
+  line-height:1.4;max-width:140mm;margin:0 auto;
+}
+.cover-edition{
+  margin-top:36px;font-size:13pt;color:var(--green-mid);font-weight:700;
+}
+
+.cover-footer{
+  border-top:3px solid var(--gold);padding-top:14px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  font-size:11px;color:var(--muted);
+}
+.cover-footer strong{color:var(--green)}
+
+/* ============ PAGES INTÉRIEURES ============ */
+.page-header{
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:2px solid var(--green);padding-bottom:8px;margin-bottom:18px;
+  font-size:10pt;
+}
+.page-header .lh{display:flex;align-items:center;gap:8px;color:var(--green);font-weight:700}
+.page-header .lh-badge{
+  width:26px;height:26px;background:var(--green);color:#fff;border-radius:5px;
+  display:grid;place-items:center;font-weight:800;font-size:11px;
+}
+.page-header .rh{color:var(--muted);font-size:9pt;text-transform:uppercase;letter-spacing:.6px}
+
+.page-footer{
+  position:absolute;left:18mm;right:18mm;bottom:12mm;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--border);padding-top:8px;
+  font-size:9pt;color:var(--muted);
+}
+@media(max-width:900px){.page-footer{position:static;margin-top:24px}}
+.page-footer .url{color:var(--green);font-weight:600}
+
+h2.section-title{
+  font-size:24pt;color:var(--green);font-weight:900;letter-spacing:-.6px;
+  line-height:1.15;margin-bottom:10px;
+}
+.section-eyebrow{
+  display:inline-block;background:var(--gold-soft);color:#92400e;
+  padding:4px 10px;border-radius:4px;font-size:10pt;font-weight:700;
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;
+}
+h3{font-size:14pt;color:var(--green);font-weight:800;margin:18px 0 8px;letter-spacing:-.2px}
+h4{font-size:12pt;color:var(--green-mid);font-weight:800;margin:14px 0 6px}
+p{margin-bottom:9px;color:var(--text);font-size:11pt;line-height:1.55}
+ul,ol{margin:6px 0 12px 20px}
+ul li,ol li{margin-bottom:5px;font-size:11pt;line-height:1.5}
+
+.lead{font-size:12pt;color:var(--muted);line-height:1.5;margin-bottom:14px}
+
+.callout{
+  background:var(--green-pale);border-left:4px solid var(--green);
+  padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:10.5pt;
+}
+.callout strong{color:var(--green)}
+.callout-gold{
+  background:var(--gold-soft);border-left:4px solid var(--gold);
+  padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:10.5pt;
+}
+.callout-gold strong{color:#92400e}
+
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:10.5pt}
+th{background:var(--green);color:#fff;padding:10px 12px;text-align:left;font-weight:700;font-size:10pt}
+td{padding:9px 12px;border-bottom:1px solid var(--border);font-size:10.5pt}
+tr:nth-child(even) td{background:#f9fbfa}
+.t-num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.profile{
+  border:1px solid var(--border);border-radius:8px;padding:12px;
+  font-size:10pt;background:#fff;
+}
+.profile .tag{
+  display:inline-block;font-size:9pt;font-weight:800;text-transform:uppercase;
+  letter-spacing:.6px;padding:3px 8px;border-radius:4px;margin-bottom:6px;
+}
+.profile.bleu .tag{background:#dbeafe;color:#1e40af}
+.profile.jaune .tag{background:#fef9c3;color:#854d0e}
+.profile.violet .tag{background:#ede9fe;color:#5b21b6}
+.profile.rose .tag{background:#fce7f3;color:#9d174d}
+.profile h5{font-size:11pt;color:var(--green);font-weight:800;margin-bottom:4px}
+
+.toc{margin-top:14px}
+.toc-item{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  padding:8px 0;border-bottom:1px dashed var(--border);font-size:11pt;
+}
+.toc-item .num{font-weight:800;color:var(--green);min-width:34px}
+.toc-item .ttl{flex:1;color:var(--text)}
+.toc-item .dots{flex:1;border-bottom:2px dotted #cbd5d0;height:1px;margin:0 6px;transform:translateY(-4px)}
+.toc-item .pg{color:var(--muted);font-weight:600}
+
+.steps{counter-reset:step;list-style:none;margin:8px 0}
+.steps li{
+  counter-increment:step;position:relative;
+  padding-left:38px;margin-bottom:12px;font-size:10.5pt;line-height:1.55;
+}
+.steps li::before{
+  content:counter(step);
+  position:absolute;left:0;top:-2px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--green);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:12pt;
+}
+
+.checklist{list-style:none;margin:6px 0}
+.checklist li{padding:6px 0 6px 26px;position:relative;font-size:10.5pt;line-height:1.5}
+.checklist li::before{
+  content:"";position:absolute;left:0;top:9px;
+  width:14px;height:14px;border:2px solid var(--green);border-radius:3px;background:#fff;
+}
+
+.warn-list{list-style:none;margin:6px 0}
+.warn-list li{padding:6px 0 6px 26px;position:relative;font-size:10.5pt;line-height:1.5}
+.warn-list li::before{
+  content:"!";position:absolute;left:0;top:5px;
+  width:18px;height:18px;border-radius:50%;
+  background:#dc2626;color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:11pt;
+}
+
+.contact-card{
+  background:var(--green);color:#fff;border-radius:12px;
+  padding:24px;margin-top:14px;
+}
+.contact-card h3{color:var(--gold);font-size:14pt;margin-bottom:10px}
+.contact-card p{color:rgba(255,255,255,.92);font-size:11pt;margin-bottom:6px}
+.contact-card a{color:#fff;font-weight:700;text-decoration:underline}
+
+.disclaimer-box{
+  font-size:9pt;color:var(--muted);
+  border-top:1px solid var(--border);padding-top:12px;margin-top:16px;line-height:1.5;
+}
+
+/* numéros de page (helper visuel) */
+.pageno{font-weight:700;color:var(--green)}
+</style>
+</head>
+<body>
+
+<!-- Toolbar visible uniquement à l'écran -->
+<div class="screen-toolbar screen-only">
+  <div class="title">Guide MaPrimeAdapt 2026 — Édition imprimable</div>
+  <div class="actions">
+    <a href="/guide-2026" class="btn-back">← Retour</a>
+    <button class="btn-print" onclick="window.print()" type="button">Imprimer / Enregistrer en PDF</button>
+  </div>
+</div>
+
+<div class="viewer">
+
+  <!-- ============ COUVERTURE ============ -->
+  <section class="page cover">
+    <div class="cover-logo">
+      <div class="logo-badge">MPH</div>
+      <div>
+        <div class="name">Mon Projet Habitat</div>
+        <div class="sub">Adaptation · Énergie · Rénovation</div>
+      </div>
+    </div>
+
+    <div class="cover-center">
+      <span class="cover-eyebrow">Guide pratique</span>
+      <h1 class="cover-title">Guide<br>MaPrimeAdapt'<br>2026</h1>
+      <p class="cover-subtitle">Tout comprendre des barèmes officiels, des travaux finançables et de la procédure ANAH — pour les seniors et leurs proches en Île-de-France.</p>
+      <div class="cover-edition">Édition avril 2026</div>
+    </div>
+
+    <div class="cover-footer">
+      <div>
+        <strong>Mon Projet Habitat</strong><br>
+        Service indépendant — Île-de-France<br>
+        maprimeadapt-idf.fr
+      </div>
+      <div style="text-align:right">
+        <strong>Non affilié à l'ANAH</strong><br>
+        Démarches officielles gratuites sur<br>
+        monprojet.anah.gouv.fr
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOMMAIRE ============ -->
+  <section class="page">
+    <div class="page-header">
+      <div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div>
+      <div class="rh">Sommaire</div>
+    </div>
+
+    <h2 class="section-title">Sommaire</h2>
+    <p class="lead">14 chapitres pour comprendre, préparer et obtenir MaPrimeAdapt' sereinement.</p>
+
+    <div class="toc">
+      <div class="toc-item"><span class="num">01</span><span class="ttl">Qu'est-ce que MaPrimeAdapt' ?</span><span class="dots"></span><span class="pg">3</span></div>
+      <div class="toc-item"><span class="num">02</span><span class="ttl">Les 4 profils de revenus 2026</span><span class="dots"></span><span class="pg">4</span></div>
+      <div class="toc-item"><span class="num">03</span><span class="ttl">Plafonds officiels Île-de-France</span><span class="dots"></span><span class="pg">5</span></div>
+      <div class="toc-item"><span class="num">04</span><span class="ttl">Plafonds officiels hors Île-de-France</span><span class="dots"></span><span class="pg">6</span></div>
+      <div class="toc-item"><span class="num">05</span><span class="ttl">Les 22 travaux finançables</span><span class="dots"></span><span class="pg">7</span></div>
+      <div class="toc-item"><span class="num">06</span><span class="ttl">Pièces à fournir (liste officielle ANAH)</span><span class="dots"></span><span class="pg">8</span></div>
+      <div class="toc-item"><span class="num">07</span><span class="ttl">Le rôle obligatoire de l'AMO</span><span class="dots"></span><span class="pg">9</span></div>
+      <div class="toc-item"><span class="num">08</span><span class="ttl">Cumuler avec d'autres aides</span><span class="dots"></span><span class="pg">10</span></div>
+      <div class="toc-item"><span class="num">09</span><span class="ttl">Calendrier d'un dossier complet</span><span class="dots"></span><span class="pg">11</span></div>
+      <div class="toc-item"><span class="num">10</span><span class="ttl">Comment éviter les arnaques</span><span class="dots"></span><span class="pg">12</span></div>
+      <div class="toc-item"><span class="num">11</span><span class="ttl">Glossaire</span><span class="dots"></span><span class="pg">13</span></div>
+      <div class="toc-item"><span class="num">12</span><span class="ttl">Et après les travaux ?</span><span class="dots"></span><span class="pg">14</span></div>
+      <div class="toc-item"><span class="num">13</span><span class="ttl">Pour aller plus loin</span><span class="dots"></span><span class="pg">15</span></div>
+      <div class="toc-item"><span class="num">14</span><span class="ttl">Coordonnées &amp; mentions</span><span class="dots"></span><span class="pg">16</span></div>
+    </div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr</span><span class="pageno">2</span></div>
+  </section>
+
+  <!-- ============ PAGE 1 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 1</div></div>
+
+    <span class="section-eyebrow">01 — Comprendre l'aide</span>
+    <h2 class="section-title">Qu'est-ce que MaPrimeAdapt' ?</h2>
+
+    <p class="lead">MaPrimeAdapt' est l'aide nationale de l'<strong>Agence Nationale de l'Habitat (ANAH)</strong> qui finance l'adaptation du logement à la perte d'autonomie liée à l'âge ou au handicap.</p>
+
+    <h3>Une aide unique, fusionnée en 2024</h3>
+    <p>Depuis le 1er janvier 2024, MaPrimeAdapt' remplace trois dispositifs : « Habiter Facile » de l'ANAH, le crédit d'impôt pour adaptation et l'aide CNAV « Bien vieillir chez soi ». L'objectif : un guichet unique, une seule procédure.</p>
+
+    <h3>Pour qui ?</h3>
+    <ul>
+      <li><strong>Seniors</strong> de 70 ans et plus, sans condition de ressources spécifique au-delà des plafonds ANAH.</li>
+      <li><strong>Seniors</strong> de 60 à 69 ans en perte d'autonomie (GIR 1 à 6 ou justificatif équivalent).</li>
+      <li><strong>Personnes en situation de handicap</strong> : taux d'incapacité ≥ 50 % ou éligibilité à la PCH.</li>
+      <li>Propriétaires occupants ou locataires (avec accord du bailleur).</li>
+    </ul>
+
+    <h3>Combien ?</h3>
+    <p>L'aide finance jusqu'à <strong>50 % à 70 % du montant des travaux</strong>, dans la limite de <strong>22 000 € HT de dépenses subventionnables</strong>, soit jusqu'à <strong>15 400 € de prime maximale</strong>.</p>
+
+    <div class="callout"><strong>À retenir :</strong> Le taux dépend de votre catégorie de revenus (4 profils — voir page 4) et le plafond de travaux est commun à tous les bénéficiaires.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">3</span></div>
+  </section>
+
+  <!-- ============ PAGE 2 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 2</div></div>
+
+    <span class="section-eyebrow">02 — Profils</span>
+    <h2 class="section-title">Les 4 profils de revenus 2026</h2>
+
+    <p class="lead">L'ANAH classe les ménages en 4 catégories selon le revenu fiscal de référence. Ce profil détermine le taux de prise en charge.</p>
+
+    <div class="profile-grid">
+      <div class="profile bleu">
+        <span class="tag">Bleu</span>
+        <h5>Très modestes</h5>
+        <p><strong>Taux de prise en charge : 70 %</strong></p>
+        <p>Aide maximale : 15 400 €</p>
+      </div>
+      <div class="profile jaune">
+        <span class="tag">Jaune</span>
+        <h5>Modestes</h5>
+        <p><strong>Taux de prise en charge : 50 %</strong></p>
+        <p>Aide maximale : 11 000 €</p>
+      </div>
+      <div class="profile violet">
+        <span class="tag">Violet</span>
+        <h5>Intermédiaires</h5>
+        <p><strong>Taux : non éligibles MaPrimeAdapt'</strong></p>
+        <p>Mais éligibles à d'autres aides (CNAV, caisses retraite).</p>
+      </div>
+      <div class="profile rose">
+        <span class="tag">Rose</span>
+        <h5>Aisés</h5>
+        <p><strong>Non éligibles MaPrimeAdapt'</strong></p>
+        <p>Dispositifs alternatifs : crédit d'impôt, prêt CNAV.</p>
+      </div>
+    </div>
+
+    <h3>Comment trouver votre revenu fiscal de référence ?</h3>
+    <p>Sur votre <strong>dernier avis d'impôt sur le revenu</strong> (case « Revenu fiscal de référence », première page). C'est la somme prise en compte par l'ANAH, additionnée pour tous les membres du foyer.</p>
+
+    <div class="callout-gold"><strong>Astuce :</strong> en 2026, l'ANAH considère le RFR de l'année N-2 (donc 2024). Si votre situation a changé (retraite, veuvage), vous pouvez demander une prise en compte de la situation actuelle.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">4</span></div>
+  </section>
+
+  <!-- ============ PAGE 3 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 3</div></div>
+
+    <span class="section-eyebrow">03 — Île-de-France</span>
+    <h2 class="section-title">Plafonds officiels Île-de-France</h2>
+
+    <p class="lead">Barèmes ANAH 2026 applicables à Paris et aux 7 départements franciliens (75, 77, 78, 91, 92, 93, 94, 95).</p>
+
+    <table>
+      <thead>
+        <tr><th>Personnes au foyer</th><th class="t-num">Bleu (très modeste)</th><th class="t-num">Jaune (modeste)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 personne</td><td class="t-num">25 714 €</td><td class="t-num">31 313 €</td></tr>
+        <tr><td>2 personnes</td><td class="t-num">37 739 €</td><td class="t-num">45 990 €</td></tr>
+        <tr><td>3 personnes</td><td class="t-num">45 326 €</td><td class="t-num">55 248 €</td></tr>
+        <tr><td>4 personnes</td><td class="t-num">52 925 €</td><td class="t-num">64 510 €</td></tr>
+        <tr><td>5 personnes</td><td class="t-num">60 546 €</td><td class="t-num">73 798 €</td></tr>
+        <tr><td>Par personne supplémentaire</td><td class="t-num">+7 613 €</td><td class="t-num">+9 278 €</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Comment lire ce tableau</h3>
+    <p>Si votre RFR est <strong>inférieur ou égal au montant Bleu</strong>, vous êtes très modeste (taux 70 %). Entre Bleu et Jaune : profil modeste (taux 50 %). Au-dessus : non éligible.</p>
+
+    <h4>Exemple concret</h4>
+    <p>Mme Dupont, veuve, vit seule à Créteil (94). Son RFR 2024 = 22 800 €. Elle est sous le plafond Bleu (25 714 €) → <strong>profil très modeste, prise en charge à 70 %</strong>. Pour 18 000 € de travaux, elle touche 12 600 € de prime.</p>
+
+    <div class="callout"><strong>Source :</strong> Arrêté ANAH du 24 décembre 2025 publié au Journal officiel. Plafonds réévalués chaque année au 1er janvier.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">5</span></div>
+  </section>
+
+  <!-- ============ PAGE 4 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 4</div></div>
+
+    <span class="section-eyebrow">04 — Hors Île-de-France</span>
+    <h2 class="section-title">Plafonds officiels hors Île-de-France</h2>
+
+    <p class="lead">Barèmes ANAH 2026 pour les autres départements de France métropolitaine.</p>
+
+    <table>
+      <thead>
+        <tr><th>Personnes au foyer</th><th class="t-num">Bleu (très modeste)</th><th class="t-num">Jaune (modeste)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 personne</td><td class="t-num">17 894 €</td><td class="t-num">22 941 €</td></tr>
+        <tr><td>2 personnes</td><td class="t-num">26 162 €</td><td class="t-num">33 547 €</td></tr>
+        <tr><td>3 personnes</td><td class="t-num">31 477 €</td><td class="t-num">40 339 €</td></tr>
+        <tr><td>4 personnes</td><td class="t-num">36 792 €</td><td class="t-num">47 160 €</td></tr>
+        <tr><td>5 personnes</td><td class="t-num">42 129 €</td><td class="t-num">53 957 €</td></tr>
+        <tr><td>Par personne supplémentaire</td><td class="t-num">+5 320 €</td><td class="t-num">+6 791 €</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pourquoi un barème différent ?</h3>
+    <p>Le coût de la vie en Île-de-France étant plus élevé, l'ANAH applique des plafonds majorés d'environ 35 à 40 % pour ne pas pénaliser les ménages franciliens. Cette logique est identique à celle des aides au logement (APL).</p>
+
+    <div class="callout-gold"><strong>Cas particuliers :</strong> les départements d'Outre-Mer ont leurs propres barèmes (consulter le site de la DEAL locale). Ce guide concerne la France métropolitaine.</div>
+
+    <h4>Exemple concret</h4>
+    <p>M. et Mme Bernard, retraités, vivent en couple à Tours (37). RFR 2024 = 28 400 €. Plafond Bleu = 26 162 €, Jaune = 33 547 €. Ils sont entre les deux → <strong>profil modeste, prise en charge à 50 %</strong>. Pour 16 000 € de travaux : 8 000 € de prime.</p>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">6</span></div>
+  </section>
+
+  <!-- ============ PAGE 5 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 5</div></div>
+
+    <span class="section-eyebrow">05 — Travaux</span>
+    <h2 class="section-title">Les 22 travaux finançables</h2>
+
+    <p class="lead">L'ANAH a publié une liste limitative de 22 catégories d'aménagements éligibles. Tout travail hors liste est exclu.</p>
+
+    <h3>Salle de bain et sanitaires</h3>
+    <ol>
+      <li>Remplacement baignoire par douche à l'italienne (siphon de sol)</li>
+      <li>Pose de barres d'appui certifiées</li>
+      <li>WC surélevé ou rehausseur fixé</li>
+      <li>Lavabo PMR adapté à hauteur réglable</li>
+      <li>Robinetterie thermostatique anti-brûlure</li>
+    </ol>
+
+    <h3>Circulations et accès</h3>
+    <ol start="6">
+      <li>Suppression de marches et seuils</li>
+      <li>Élargissement de portes (≥ 90 cm)</li>
+      <li>Pose de mains courantes dans les escaliers</li>
+      <li>Rampe d'accès extérieure</li>
+      <li>Monte-escalier électrique</li>
+      <li>Plate-forme élévatrice (PMR)</li>
+    </ol>
+
+    <h3>Sols et sécurité</h3>
+    <ol start="12">
+      <li>Revêtement de sol antidérapant</li>
+      <li>Suppression de moquettes / tapis dangereux</li>
+      <li>Éclairage automatique (détecteurs de présence)</li>
+    </ol>
+
+    <h3>Cuisine</h3>
+    <ol start="15">
+      <li>Plan de travail à hauteur réglable</li>
+      <li>Plaques à induction sécurisées</li>
+      <li>Meubles bas accessibles (tiroirs coulissants)</li>
+    </ol>
+
+    <h3>Confort et autonomie</h3>
+    <ol start="18">
+      <li>Volets roulants motorisés</li>
+      <li>Visiophone / interphone adapté</li>
+      <li>Téléassistance câblée</li>
+      <li>Domotique (commandes vocales, scénarios)</li>
+      <li>Chemin lumineux nocturne</li>
+    </ol>
+
+    <div class="callout"><strong>Point clé :</strong> Tous les équipements doivent être posés par un professionnel et facturés. Pas d'auto-installation. La main d'œuvre est subventionnable.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">7</span></div>
+  </section>
+
+  <!-- ============ PAGE 6 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 6</div></div>
+
+    <span class="section-eyebrow">06 — Dossier</span>
+    <h2 class="section-title">Pièces à fournir (liste officielle ANAH 2026)</h2>
+
+    <p class="lead">Voici l'ensemble des justificatifs à réunir avant de déposer votre dossier sur monprojet.anah.gouv.fr.</p>
+
+    <h3>Identité et logement</h3>
+    <ul class="checklist">
+      <li>Carte nationale d'identité ou passeport (recto-verso, en cours de validité)</li>
+      <li>Titre de propriété ou attestation notariale</li>
+      <li>Dernière taxe foncière du logement concerné</li>
+      <li>Justificatif de domicile (facture énergie ou téléphone fixe < 3 mois)</li>
+    </ul>
+
+    <h3>Revenus</h3>
+    <ul class="checklist">
+      <li>Dernier avis d'impôt sur le revenu (toutes pages)</li>
+      <li>Le cas échéant : avis du conjoint et des co-occupants</li>
+      <li>RIB IBAN au nom du demandeur</li>
+    </ul>
+
+    <h3>Justificatif de la perte d'autonomie</h3>
+    <ul class="checklist">
+      <li>Pour les 70+ ans : aucun justificatif médical exigé</li>
+      <li>Pour les 60-69 ans : grille AGGIR (GIR 1 à 6) ou rapport ergothérapeute</li>
+      <li>Pour le handicap : carte mobilité inclusion (CMI), notification MDPH ou certificat médical taux ≥ 50 %</li>
+    </ul>
+
+    <h3>Travaux et professionnels</h3>
+    <ul class="checklist">
+      <li>Devis détaillés signés par les artisans (au moins 1, idéalement 2 pour comparaison)</li>
+      <li>Attestations RGE ou Qualibat des entreprises (selon postes)</li>
+      <li>Plan ou schéma de l'aménagement (fourni par l'AMO)</li>
+    </ul>
+
+    <h3>Diagnostic AMO</h3>
+    <ul class="checklist">
+      <li>Rapport de diagnostic d'autonomie réalisé par un AMO agréé ANAH</li>
+      <li>Préconisations d'aménagement chiffrées</li>
+      <li>Mandat de représentation signé (si l'AMO dépose pour vous)</li>
+    </ul>
+
+    <div class="callout-gold"><strong>Conseil pratique :</strong> numérisez chaque pièce en PDF lisible (pas de photos floues). L'ANAH refuse régulièrement des dossiers à cause de pièces illisibles, ce qui retarde le traitement de plusieurs mois.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">8</span></div>
+  </section>
+
+  <!-- ============ PAGE 7 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 7</div></div>
+
+    <span class="section-eyebrow">07 — AMO</span>
+    <h2 class="section-title">Le rôle obligatoire de l'AMO</h2>
+
+    <p class="lead">L'Assistance à Maîtrise d'Ouvrage (AMO) est <strong>obligatoire</strong> pour bénéficier de MaPrimeAdapt'. C'est l'un des piliers du dispositif.</p>
+
+    <h3>Qu'est-ce qu'un AMO ?</h3>
+    <p>L'AMO est un professionnel agréé par l'ANAH qui vous accompagne <strong>de la première visite au paiement final</strong>. Il agit comme votre conseiller technique, social et administratif. Il est obligatoirement habilité par l'ANAH (liste officielle disponible sur france-renov.gouv.fr).</p>
+
+    <h3>Ses 5 missions clés</h3>
+    <ol class="steps">
+      <li><strong>Diagnostic au domicile.</strong> Visite gratuite : il évalue les besoins et préconise les aménagements adaptés à votre situation.</li>
+      <li><strong>Choix des artisans.</strong> Il vous oriente vers des professionnels qualifiés (RGE, Qualibat, Handibat) et vérifie les devis.</li>
+      <li><strong>Montage du dossier ANAH.</strong> Il rassemble les pièces, complète le formulaire en ligne et assure la conformité administrative.</li>
+      <li><strong>Suivi des travaux.</strong> Il contrôle l'avancement, vérifie les normes (PMR, antidérapant, etc.) et la facturation.</li>
+      <li><strong>Demande de paiement.</strong> Il dépose la demande de solde après réception des travaux et libère votre prime.</li>
+    </ol>
+
+    <h3>Combien ça coûte ?</h3>
+    <p>La prestation AMO est facturée entre <strong>500 € et 1 500 € HT</strong> selon la complexité du dossier. <strong>Bonne nouvelle :</strong> elle est intégralement subventionnée par l'ANAH, en plus du plafond travaux.</p>
+
+    <div class="callout"><strong>Mon Projet Habitat n'est pas un AMO agréé.</strong> Nous sommes un service indépendant qui vous accompagne en amont (compréhension des aides, simulation, mise en relation avec un AMO de confiance). L'AMO officiel reste indispensable pour valider le dossier.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">9</span></div>
+  </section>
+
+  <!-- ============ PAGE 8 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 8</div></div>
+
+    <span class="section-eyebrow">08 — Cumul</span>
+    <h2 class="section-title">Cumuler avec d'autres aides</h2>
+
+    <p class="lead">MaPrimeAdapt' n'épuise pas les financements possibles. Plusieurs aides peuvent s'y ajouter — légalement et sans pénalité.</p>
+
+    <h3>CNAV — Caisse nationale d'assurance vieillesse</h3>
+    <p>Pour les retraités du régime général GIR 5 ou 6, la CNAV propose un kit prévention jusqu'à <strong>3 500 €</strong> (barre d'appui, monte-escalier, équipements). Compatible avec MaPrimeAdapt' si les travaux sont distincts.</p>
+
+    <h3>Action Logement</h3>
+    <p>Salariés ou anciens salariés du privé (locataires comme propriétaires) : aide « adaptation du logement au vieillissement » jusqu'à <strong>5 000 €</strong>. Cumulable. Demande sur actionlogement.fr.</p>
+
+    <h3>Caisse de retraite complémentaire</h3>
+    <p>Agirc-Arrco propose des aides individuelles pouvant atteindre <strong>3 500 €</strong> selon les caisses. À demander auprès de votre caisse, même après acceptation MaPrimeAdapt'.</p>
+
+    <h3>Conseil départemental</h3>
+    <p>Chaque département peut compléter via l'<strong>APA (Allocation Personnalisée d'Autonomie)</strong> ou la <strong>PCH (Prestation Compensation Handicap)</strong>. Volet « aides techniques » jusqu'à 13 000 € sur 10 ans pour PCH.</p>
+
+    <h3>Crédit d'impôt &amp; TVA réduite</h3>
+    <ul>
+      <li>TVA à 5,5 % automatique sur les travaux d'adaptation (au lieu de 10 % ou 20 %).</li>
+      <li>Crédit d'impôt « équipements PMR » : 25 % du montant TTC, plafonné à 5 000 € sur 5 ans (article 200 quater A CGI).</li>
+    </ul>
+
+    <h3>Caisses MSA, RSI, CNRACL</h3>
+    <p>Régimes spécifiques (agriculteurs, indépendants, fonctionnaires) : aides ponctuelles jusqu'à 3 000 €.</p>
+
+    <div class="callout-gold"><strong>Règle d'or :</strong> chaque organisme doit financer une dépense distincte. Vous ne pouvez pas obtenir 2 aides sur la même facture, mais vous pouvez répartir vos travaux entre plusieurs financeurs.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">10</span></div>
+  </section>
+
+  <!-- ============ PAGE 9 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 9</div></div>
+
+    <span class="section-eyebrow">09 — Calendrier</span>
+    <h2 class="section-title">Calendrier d'un dossier complet</h2>
+
+    <p class="lead">De la première démarche à l'encaissement de la prime, comptez en moyenne <strong>5 à 9 mois</strong>. Voici les étapes type.</p>
+
+    <ol class="steps">
+      <li><strong>Mois 1 — Premier contact &amp; estimation.</strong> Vous prenez rendez-vous avec un AMO. Visite à domicile, identification des besoins, vérification d'éligibilité.</li>
+      <li><strong>Mois 1-2 — Diagnostic AMO &amp; devis artisans.</strong> Préconisations chiffrées, sélection de 1 à 2 artisans, signature des devis.</li>
+      <li><strong>Mois 2-3 — Dépôt du dossier ANAH.</strong> Création du compte sur monprojet.anah.gouv.fr, téléchargement des pièces, signature électronique.</li>
+      <li><strong>Mois 3-5 — Instruction par l'ANAH.</strong> Délai officiel : 4 à 8 semaines en moyenne. L'ANAH peut demander des compléments.</li>
+      <li><strong>Mois 5 — Notification d'accord.</strong> Vous recevez la décision avec le montant de la prime engagé. <strong>Avant cet accord, ne signez aucun bon de commande de travaux.</strong></li>
+      <li><strong>Mois 5-7 — Réalisation des travaux.</strong> Les artisans interviennent. Vous avez jusqu'à 3 ans pour terminer après l'accord.</li>
+      <li><strong>Mois 7-8 — Demande de paiement.</strong> Vous (ou l'AMO) déposez la facture acquittée et le PV de réception. L'ANAH vérifie la conformité.</li>
+      <li><strong>Mois 8-9 — Versement de la prime.</strong> Virement sur votre RIB sous 4 à 6 semaines après validation.</li>
+    </ol>
+
+    <div class="callout"><strong>Avance possible :</strong> si vous êtes profil Bleu (très modeste), l'ANAH peut verser un acompte de 70 % de la prime au démarrage des travaux, sur demande.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">11</span></div>
+  </section>
+
+  <!-- ============ PAGE 10 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 10</div></div>
+
+    <span class="section-eyebrow">10 — Sécurité</span>
+    <h2 class="section-title">Comment éviter les arnaques</h2>
+
+    <p class="lead">Les aides à l'autonomie attirent des sociétés peu scrupuleuses. Cinq réflexes simples pour rester protégé.</p>
+
+    <h3>Les 5 réflexes anti-arnaque</h3>
+    <ul class="warn-list">
+      <li><strong>Refusez tout démarchage téléphonique non sollicité.</strong> Le démarchage pour MaPrimeAdapt' est interdit par la loi du 24 juillet 2020.</li>
+      <li><strong>Ne signez jamais le jour même.</strong> Vous avez 14 jours de rétractation. Toute pression à signer immédiatement = signal d'alerte.</li>
+      <li><strong>Vérifiez l'agrément ANAH de l'AMO</strong> sur france-renov.gouv.fr (annuaire officiel). Tout AMO non listé est suspect.</li>
+      <li><strong>Méfiez-vous du « 1 € symbolique »</strong> et des promesses de gratuité totale. La prime ne couvre jamais 100 % des travaux.</li>
+      <li><strong>Ne donnez jamais vos identifiants</strong> France Connect, impôts ou ANAH par téléphone ou email. L'ANAH ne contacte jamais ainsi.</li>
+    </ul>
+
+    <h3>Numéros utiles à connaître</h3>
+    <table>
+      <tbody>
+        <tr><td><strong>France Rénov'</strong> (info officielle)</td><td>0 808 800 700</td></tr>
+        <tr><td><strong>ANAH</strong> (renseignements généraux)</td><td>0 806 703 803</td></tr>
+        <tr><td><strong>SignalConso</strong> (signaler une arnaque)</td><td>signal.conso.gouv.fr</td></tr>
+        <tr><td><strong>Police / Gendarmerie</strong></td><td>17</td></tr>
+        <tr><td><strong>Service AlloAgri (escroqueries)</strong></td><td>0 805 805 817</td></tr>
+        <tr><td><strong>Bloctel</strong> (anti-démarchage)</td><td>bloctel.gouv.fr</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout-gold"><strong>En cas de doute :</strong> appelez Mon Projet Habitat au <strong>+33 6 04 43 34 20</strong>. Nous vérifions gratuitement la légitimité d'un interlocuteur ou d'un devis.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">12</span></div>
+  </section>
+
+  <!-- ============ PAGE 11 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 11</div></div>
+
+    <span class="section-eyebrow">11 — Glossaire</span>
+    <h2 class="section-title">Glossaire</h2>
+
+    <p class="lead">Les sigles essentiels pour comprendre le langage de l'ANAH et des organismes sociaux.</p>
+
+    <h4>GIR — Groupe Iso-Ressources</h4>
+    <p>Échelle de 1 à 6 mesurant la perte d'autonomie. GIR 1 = dépendance totale ; GIR 6 = autonomie complète. Évaluée par un médecin via la grille AGGIR.</p>
+
+    <h4>APA — Allocation Personnalisée d'Autonomie</h4>
+    <p>Aide financière départementale pour les 60+ en perte d'autonomie (GIR 1 à 4). Finance services à domicile et aides techniques. Demande au Conseil départemental.</p>
+
+    <h4>MDPH — Maison Départementale des Personnes Handicapées</h4>
+    <p>Guichet unique handicap. Délivre la CMI, instruit la PCH et l'AAH. Une MDPH par département.</p>
+
+    <h4>ANAH — Agence Nationale de l'Habitat</h4>
+    <p>Établissement public de l'État qui gère MaPrimeAdapt', MaPrimeRénov' et les aides à la rénovation. Site officiel : monprojet.anah.gouv.fr.</p>
+
+    <h4>AMO — Assistance à Maîtrise d'Ouvrage</h4>
+    <p>Professionnel agréé qui accompagne le bénéficiaire de A à Z dans son dossier ANAH. Obligatoire pour MaPrimeAdapt'.</p>
+
+    <h4>CMI — Carte Mobilité Inclusion</h4>
+    <p>Carte délivrée par la MDPH (mention « invalidité », « priorité » ou « stationnement »). Justifie de la situation de handicap auprès de l'ANAH.</p>
+
+    <h4>RGE — Reconnu Garant de l'Environnement</h4>
+    <p>Label qualité des entreprises de rénovation. Obligatoire pour la plupart des travaux subventionnés. Annuaire officiel : france-renov.gouv.fr.</p>
+
+    <h4>RFR — Revenu Fiscal de Référence</h4>
+    <p>Montant figurant sur l'avis d'imposition. Sert de base de calcul pour l'éligibilité aux aides ANAH.</p>
+
+    <h4>PCH — Prestation de Compensation du Handicap</h4>
+    <p>Aide MDPH pour les personnes handicapées (jusqu'à 60 ans, prolongée jusqu'à 75 si éligible avant 60). Volet « aides techniques » jusqu'à 13 000 € sur 10 ans.</p>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">13</span></div>
+  </section>
+
+  <!-- ============ PAGE 12 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 12</div></div>
+
+    <span class="section-eyebrow">12 — Après les travaux</span>
+    <h2 class="section-title">Et après ?</h2>
+
+    <p class="lead">Les travaux sont finis et la prime versée. Voici les bons réflexes pour préserver votre logement adapté dans la durée.</p>
+
+    <h3>Entretien régulier des équipements</h3>
+    <ul>
+      <li><strong>Monte-escalier :</strong> contrat de maintenance annuel obligatoire. Vérification mécanique et batterie tous les 12 mois.</li>
+      <li><strong>Volets motorisés et domotique :</strong> nettoyage des capteurs, mise à jour logicielle si applicable.</li>
+      <li><strong>Sols antidérapants :</strong> nettoyage non agressif (pas de cire, pas d'huile). Renouveler le traitement tous les 5-7 ans.</li>
+      <li><strong>Barres d'appui :</strong> resserrage des fixations 1 fois par an.</li>
+    </ul>
+
+    <h3>Garanties à conserver</h3>
+    <p>Les artisans engagent leur responsabilité décennale (10 ans) sur les travaux structurels et leur garantie biennale (2 ans) sur les équipements. <strong>Conservez précieusement :</strong></p>
+    <ul>
+      <li>Toutes les factures et le PV de réception</li>
+      <li>Les notices d'utilisation des équipements</li>
+      <li>Les attestations RGE des artisans</li>
+      <li>Le rapport final de l'AMO</li>
+    </ul>
+
+    <h3>Réévaluer dans 2-3 ans</h3>
+    <p>La perte d'autonomie évolue. Faites un nouveau bilan avec votre médecin ou ergothérapeute tous les 2 à 3 ans. <strong>Bonne nouvelle :</strong> MaPrimeAdapt' peut être sollicitée plusieurs fois sur une vie, dans la limite du plafond de 22 000 € HT cumulés.</p>
+
+    <h3>Suivi social</h3>
+    <p>L'AMO vous oriente, si vous le souhaitez, vers le CCAS (Centre Communal d'Action Sociale) de votre commune pour activer d'autres aides : portage des repas, téléassistance, aide à domicile.</p>
+
+    <div class="callout"><strong>Mon Projet Habitat</strong> reste joignable même après votre dossier. N'hésitez pas à appeler en cas de question, panne d'équipement ou nouvelle démarche.</div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">14</span></div>
+  </section>
+
+  <!-- ============ PAGE 13 ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Chapitre 13</div></div>
+
+    <span class="section-eyebrow">13 — Ressources</span>
+    <h2 class="section-title">Pour aller plus loin</h2>
+
+    <p class="lead">Les sources officielles et contacts utiles à conserver.</p>
+
+    <h3>Sites officiels</h3>
+    <table>
+      <tbody>
+        <tr><td><strong>monprojet.anah.gouv.fr</strong></td><td>Dépôt de dossier MaPrimeAdapt' / MaPrimeRénov'</td></tr>
+        <tr><td><strong>france-renov.gouv.fr</strong></td><td>Annuaire officiel des AMO et conseillers</td></tr>
+        <tr><td><strong>service-public.fr</strong></td><td>Fiches officielles aides &amp; droits</td></tr>
+        <tr><td><strong>pour-les-personnes-agees.gouv.fr</strong></td><td>Portail national autonomie</td></tr>
+        <tr><td><strong>handicap.gouv.fr</strong></td><td>Portail national handicap</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Numéros nationaux</h3>
+    <table>
+      <tbody>
+        <tr><td>France Rénov' (gratuit)</td><td>0 808 800 700</td></tr>
+        <tr><td>ANAH</td><td>0 806 703 803</td></tr>
+        <tr><td>3977 — Maltraitance personnes âgées</td><td>3977</td></tr>
+        <tr><td>114 — Urgences sourds &amp; malentendants</td><td>114 (SMS)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Adresses régionales (Île-de-France)</h3>
+    <ul>
+      <li><strong>DRIHL Île-de-France</strong> — Direction régionale et interdépartementale de l'hébergement et du logement.</li>
+      <li><strong>Agence Régionale de Santé (ARS) IDF</strong> — pilotage des politiques autonomie.</li>
+      <li><strong>SOLIHA Paris-Hauts-de-Seine et Grand Paris</strong> — opérateurs AMO majeurs en IDF.</li>
+      <li><strong>Conseils départementaux 75/77/78/91/92/93/94/95</strong> — APA et PCH.</li>
+    </ul>
+
+    <h3>Lectures recommandées</h3>
+    <ul>
+      <li>« Bien vieillir chez soi » — guide CNAV gratuit.</li>
+      <li>« Adapter son logement au vieillissement » — collection ANAH 2025.</li>
+      <li>Rapport « Bien vieillir » Luc Broussy 2021 — fondations du dispositif actuel.</li>
+    </ul>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr/guide-pdf</span><span class="pageno">15</span></div>
+  </section>
+
+  <!-- ============ DERNIÈRE PAGE ============ -->
+  <section class="page">
+    <div class="page-header"><div class="lh"><div class="lh-badge">MPH</div> Guide MaPrimeAdapt' 2026</div><div class="rh">Coordonnées</div></div>
+
+    <span class="section-eyebrow">14 — Nous contacter</span>
+    <h2 class="section-title">Mon Projet Habitat</h2>
+
+    <p class="lead">Service indépendant d'accompagnement administratif et de mise en relation, basé en Île-de-France. Premier appel gratuit, sans engagement, sans démarchage.</p>
+
+    <div class="contact-card">
+      <h3>Nos coordonnées</h3>
+      <p><strong>Téléphone :</strong> <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+      <p><strong>Email :</strong> <a href="mailto:jeremy@maprimeadapt-idf.fr">jeremy@maprimeadapt-idf.fr</a></p>
+      <p><strong>Site :</strong> <a href="https://www.maprimeadapt-idf.fr">www.maprimeadapt-idf.fr</a></p>
+      <p style="margin-top:10px"><strong>Horaires :</strong> du lundi au vendredi, 9h–19h.<br>Zone d'intervention : Paris (75) et toute l'Île-de-France (77, 78, 91, 92, 93, 94, 95).</p>
+    </div>
+
+    <h3>Notre engagement</h3>
+    <ul>
+      <li>Premier rendez-vous gratuit, sans engagement.</li>
+      <li>Pas de démarchage téléphonique, pas de spam.</li>
+      <li>Tarification transparente — communiquée par écrit avant signature.</li>
+      <li>Mise en relation uniquement avec des AMO et artisans agréés.</li>
+    </ul>
+
+    <div class="disclaimer-box">
+      <strong>Mention légale importante.</strong> Mon Projet Habitat est un service indépendant. <strong>Nous ne sommes ni affiliés ni mandatés par l'ANAH, France Rénov' ou l'État.</strong> Les démarches administratives décrites dans ce guide sont accessibles gratuitement, sans intermédiaire, sur le portail officiel <strong>monprojet.anah.gouv.fr</strong>. Notre rôle se limite à l'information, l'orientation et la mise en relation. Les barèmes et plafonds présentés ici sont ceux en vigueur en avril 2026 selon l'arrêté ANAH du 24 décembre 2025 ; ils peuvent évoluer en cours d'année. Vérifiez toujours l'information sur les sources officielles avant toute démarche.<br><br>
+      Édition avril 2026 — Document non contractuel — Reproduction autorisée à titre gratuit pour usage personnel.<br>
+      © Mon Projet Habitat 2026 — Tous droits réservés.
+    </div>
+
+    <div class="page-footer"><span>Mon Projet Habitat</span><span class="url">maprimeadapt-idf.fr</span><span class="pageno">16</span></div>
+  </section>
+
+</div>
+
+<!-- Bouton flottant en bas (écran uniquement) -->
+<div class="screen-only" style="position:fixed;bottom:20px;right:20px;z-index:60">
+  <button class="btn-print" onclick="window.print()" type="button" style="box-shadow:0 8px 24px rgba(245,158,11,.5)">
+    Imprimer / Enregistrer en PDF
+  </button>
+</div>
+
+<script>
+// Tracking GA4 lors de l'impression / téléchargement PDF
+window.addEventListener('beforeprint', function(){
+  if(typeof gtag !== 'undefined') gtag('event','print_guide',{event_category:'lead_magnet',event_label:'guide-pdf-2026'});
+});
+</script>
+
+</body>
+</html>

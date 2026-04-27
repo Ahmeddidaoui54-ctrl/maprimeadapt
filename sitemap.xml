@@ -49,6 +49,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.maprimeadapt-idf.fr/carte-idf</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/comparatif-aides-2026</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.maprimeadapt-idf.fr/blog/</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
