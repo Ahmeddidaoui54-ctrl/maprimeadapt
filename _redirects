@@ -8,6 +8,8 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /a-propos /a-propos.html 200
 /guide /guide-2026.html 200
 /guide-2026 /guide-2026.html 200
+/guide-pdf /guide-pdf.html 200
+/newsletter /newsletter.html 200
 /blog /blog/index.html 200
 /contact /contact.html 200
 /calculateur /calculateur-ehpad.html 200

@@ -134,6 +134,51 @@ h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.2px;line-hei
   </div>
 </section>
 
+<!-- ═══ NEWSLETTER INLINE ═══ -->
+<section class="newsletter-inline" style="background:linear-gradient(135deg,var(--green) 0%,#0d2e1e 100%);padding:56px 0;color:#fff">
+  <div class="container" style="max-width:760px;margin:0 auto;padding:0 24px;text-align:center">
+    <span style="display:inline-block;background:var(--gold);color:#000;padding:5px 14px;border-radius:100px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">Restez informé</span>
+    <h2 style="font-size:clamp(22px,3vw,30px);font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1.2;margin-bottom:10px">La newsletter mensuelle des aides habitat</h2>
+    <p style="color:rgba(255,255,255,.78);font-size:15px;line-height:1.6;max-width:520px;margin:0 auto 22px">1 email par mois. Barèmes officiels, cas concrets, conseils 100% Île-de-France. Désinscription en 1 clic.</p>
+
+    <form id="newsletterInline" onsubmit="submitNewsletterInline(event)" novalidate style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:540px;margin:0 auto">
+      <input type="text" name="website" id="ni-website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <input type="text" id="ni-prenom" placeholder="Prénom" required autocomplete="given-name" style="flex:1 1 140px;min-width:140px;padding:13px 16px;border:none;border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--text)">
+      <input type="email" id="ni-email" placeholder="Votre email" required autocomplete="email" style="flex:2 1 200px;min-width:200px;padding:13px 16px;border:none;border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--text)">
+      <button type="submit" class="ni-btn" style="background:var(--gold);color:#000;padding:13px 24px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;flex:1 1 100%;margin-top:4px">S'abonner</button>
+    </form>
+    <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(255,255,255,.7);max-width:540px;margin:14px auto 0;line-height:1.5;text-align:left">
+      <input type="checkbox" id="ni-consent" required checked style="margin-top:2px;flex-shrink:0;accent-color:var(--gold)">
+      <span>J'accepte de recevoir la newsletter. Données traitées selon notre <a href="/politique-confidentialite.html" style="color:#fff;text-decoration:underline">politique de confidentialité</a>. <a href="/newsletter" style="color:var(--gold);text-decoration:underline;font-weight:600">En savoir plus →</a></span>
+    </label>
+
+    <p id="niConfirm" style="display:none;background:rgba(245,158,11,.15);border:1px solid var(--gold);color:#fff;padding:14px 20px;border-radius:10px;margin-top:20px;font-size:14px">Merci ! Votre inscription est confirmée. Un email arrive dans votre boîte.</p>
+  </div>
+</section>
+<script>
+async function submitNewsletterInline(e){
+  e.preventDefault();
+  if(document.getElementById('ni-website').value) return;
+  const data = {
+    prenom: document.getElementById('ni-prenom').value.trim(),
+    email: document.getElementById('ni-email').value.trim(),
+    consent: document.getElementById('ni-consent').checked,
+    newsletter: true,
+    source: 'newsletter-inline-blog'
+  };
+  if(!data.prenom || !data.email || !data.consent) return;
+  const btn = e.target.querySelector('.ni-btn');
+  btn.disabled = true; btn.textContent = 'Inscription...';
+  try {
+    await fetch('/api/lead', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
+    if(typeof gtag !== 'undefined') gtag('event','newsletter_signup',{event_category:'newsletter',event_label:'blog-inline'});
+    if(typeof fbq !== 'undefined') fbq('track','Subscribe');
+  } catch(_) {}
+  document.getElementById('newsletterInline').style.display = 'none';
+  document.getElementById('niConfirm').style.display = 'block';
+}
+</script>
+
 <!-- ═══ FOOTER HARMONISÉ ═══ -->
 <footer class="footer site-footer" style="background:var(--green);color:rgba(255,255,255,.75);padding:48px 0 24px;font-size:14px;text-align:left">
   <div class="container">
