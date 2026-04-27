@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kit presse Mon Projet Habitat : notre histoire, chiffres clés du marché senior et rénovation, logo HD, photos, citations. Contact presse direct.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/presse">
+<title>Espace presse — Mon Projet Habitat</title>
+<style>
+  :root{
+    --green:#1a3d2b;--green-mid:#2d6a4f;--green-light:#3d8b6a;--green-pale:#e8f0ec;
+    --gold:#f59e0b;--gold-light:#fde68a;--emerald:#059669;
+    --white:#ffffff;--off-white:#ecf5ee;--text:#111827;--muted:#4b5563;
+    --border:#dce8e1;
+    --shadow-md:0 4px 16px rgba(26,61,43,.12);
+    --radius:12px;--radius-lg:20px;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,"Segoe UI",sans-serif;
+    --max:1160px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+  body{font-family:var(--font);color:var(--text);background:#fff;line-height:1.65;font-size:17px;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+
+  .container{max-width:var(--max);margin:0 auto;padding:0 24px;}
+
+  .header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(26,61,43,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-size:16px;font-weight:800;color:var(--green);letter-spacing:-1px;}
+  .logo-text{color:#fff;}
+  .logo-name{font-size:17px;font-weight:700;letter-spacing:-.3px;line-height:1.1;}
+  .logo-sub{font-size:11px;font-weight:400;opacity:.65;letter-spacing:.5px;text-transform:uppercase;}
+  .header-right{display:flex;align-items:center;gap:20px;}
+  .header-phone{display:flex;align-items:center;gap:8px;color:#fff;font-size:14px;font-weight:500;opacity:.85;}
+  .btn-header{background:#fff;color:var(--green);padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;}
+
+  .hero{padding:152px 0 72px;background:linear-gradient(160deg,var(--green) 0%,var(--green-mid) 100%);color:#fff;position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;top:-100px;left:-50px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,.18) 0%,transparent 70%);}
+  .hero-content{position:relative;max-width:760px;}
+  .eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#86efac;margin-bottom:14px;}
+  .hero h1{font-size:clamp(34px,5vw,54px);font-weight:800;letter-spacing:-1.6px;line-height:1.1;}
+  .hero h1 em{font-style:normal;color:#fbbf24;}
+  .hero p{font-size:19px;color:rgba(255,255,255,.78);margin-top:18px;max-width:600px;}
+
+  .section{padding:72px 0;}
+  .section-alt{background:var(--off-white);border-top:2px solid #c8dfcf;border-bottom:2px solid #c8dfcf;}
+  .section-header{text-align:center;margin-bottom:48px;}
+  .section-header .eyebrow{color:var(--green-mid);}
+  h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;letter-spacing:-1.2px;line-height:1.15;}
+  h3{font-size:22px;font-weight:800;color:var(--green);letter-spacing:-.5px;}
+  .section-lead{font-size:17px;color:var(--muted);margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto;}
+
+  /* HISTOIRE */
+  .story{max-width:780px;margin:0 auto;font-size:17px;color:var(--text);line-height:1.85;}
+  .story p{margin-bottom:20px;}
+  .story p:first-letter{font-size:54px;font-weight:800;color:var(--green);float:left;line-height:1;padding-right:10px;padding-top:4px;}
+
+  /* CHIFFRES */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px;}
+  .stat{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 22px;text-align:center;transition:transform .2s;}
+  .stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+  .stat-num{font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--green),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1.5px;line-height:1;}
+  .stat-label{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.4;}
+
+  /* DOWNLOADS */
+  .downloads{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;}
+  .dl-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;transition:transform .2s,border-color .2s;}
+  .dl-card:hover{transform:translateY(-3px);border-color:var(--green-light);box-shadow:var(--shadow-md);}
+  .dl-icon{width:52px;height:52px;border-radius:12px;background:var(--green-pale);color:var(--green);display:grid;place-items:center;margin:0 auto 14px;font-weight:800;font-size:22px;}
+  .dl-card h4{font-size:16px;font-weight:800;color:var(--green);margin-bottom:6px;}
+  .dl-card p{font-size:13px;color:var(--muted);margin-bottom:14px;}
+  .dl-btn{display:inline-flex;align-items:center;gap:6px;background:var(--green);color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;}
+  .dl-btn:hover{background:var(--green-mid);}
+
+  /* CITATIONS */
+  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;}
+  .quote{background:#fff;border-left:4px solid var(--gold);padding:24px 28px;border-radius:8px;box-shadow:var(--shadow-md);position:relative;}
+  .quote::before{content:"\201C";position:absolute;top:-10px;left:18px;font-size:60px;color:var(--gold);font-family:serif;line-height:1;}
+  .quote p{font-style:italic;color:var(--text);font-size:16px;line-height:1.7;margin-top:8px;}
+  .quote cite{display:block;margin-top:14px;font-style:normal;font-size:13px;color:var(--muted);}
+  .quote cite strong{color:var(--green);}
+
+  /* CONTACT PRESSE */
+  .contact-press{background:linear-gradient(135deg,var(--green),var(--green-mid));color:#fff;border-radius:24px;padding:54px 40px;max-width:1100px;margin:60px auto;text-align:center;position:relative;overflow:hidden;}
+  .contact-press::before{content:"";position:absolute;top:-100px;right:-50px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,.2) 0%,transparent 70%);}
+  .contact-press h2{color:#fff;}
+  .contact-press p{color:rgba(255,255,255,.8);margin-top:12px;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto;position:relative;}
+  .contact-block{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:24px;backdrop-filter:blur(8px);}
+  .contact-block .label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fde68a;}
+  .contact-block .value{font-size:22px;font-weight:800;margin-top:6px;color:#fff;letter-spacing:-.5px;}
+  .contact-block a{color:#fff;text-decoration:none;}
+  .contact-block a:hover{color:#fde68a;}
+
+  /* FOOTER */
+  .footer{background:var(--green);color:rgba(255,255,255,.6);padding:60px 0 24px;font-size:13px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;}
+  .footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .footer-logo-badge{width:34px;height:34px;background:#fff;border-radius:7px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px;}
+  .footer-logo-name{color:#fff;font-weight:700;font-size:16px;}
+  .footer-desc{font-size:13px;line-height:1.7;max-width:280px;}
+  .footer-contact{margin-top:18px;}
+  .footer-phone{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px;}
+  .footer-hours{font-size:12px;margin-top:3px;}
+  .footer-col-title{font-size:12px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+  .footer-links{display:flex;flex-direction:column;gap:10px;}
+  .footer-link{color:rgba(255,255,255,.6);font-size:13px;}
+  .footer-link:hover{color:rgba(255,255,255,.95);}
+  .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);}
+  .footer-legal{font-size:12px;line-height:1.7;max-width:680px;}
+
+  @media(max-width:880px){
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .downloads{grid-template-columns:1fr;}
+    .quotes{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:480px){
+    .footer-grid{grid-template-columns:1fr;}
+    .header-phone{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MP</div>
+      <div class="logo-text">
+        <div class="logo-name">Mon Projet Habitat</div>
+        <div class="logo-sub">Île-de-France</div>
+      </div>
+    </a>
+    <div class="header-right">
+      <a href="tel:+33604433420" class="header-phone"><span>06 04 43 34 20</span></a>
+      <a href="/contact" class="btn-header">Nous contacter</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-content">
+    <div class="eyebrow">Espace presse</div>
+    <h1>Aider les seniors à <em>rester chez eux</em></h1>
+    <p>Mon Projet Habitat est un service indépendant qui simplifie l'accès aux aides publiques d'adaptation et de rénovation du logement. Voici les ressources pour parler de nous.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Notre histoire</div>
+      <h2>Trois ans de terrain auprès des seniors d'Île-de-France</h2>
+    </div>
+    <div class="story">
+      <p>Mon Projet Habitat est né d'un constat simple. En accompagnant ses propres parents dans un dossier d'adaptation de logement, Jérémy Berthaud a découvert un parcours administratif décourageant : formulaires complexes, devis introuvables, délais opaques. Une aide publique pourtant créée pour eux, mais qui n'arrivait jamais.</p>
+
+      <p>Conseiller habitat depuis plus de dix ans, Jérémy a fait ce que beaucoup auraient aimé faire : transformer cette expérience en service. Mon Projet Habitat accompagne aujourd'hui des centaines de foyers franciliens dans leurs démarches MaPrimeAdapt' et MaPrimeRénov, gratuitement, sans publicité agressive ni démarchage téléphonique. Le modèle est simple : la rémunération vient de l'artisan partenaire, jamais du senior.</p>
+
+      <p>Notre conviction : la transition démographique se joue dans les salles de bain, sur les marches d'escalier, dans les passoires thermiques que des millions de seniors habitent. L'enjeu n'est pas seulement financier, il est humain. Permettre à une grand-mère de rester chez elle deux ans de plus, c'est éviter un EHPAD, soulager des familles, redonner de la dignité. C'est le métier que nous faisons chaque jour.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Le marché en chiffres</div>
+      <h2>Un enjeu national, une urgence francilienne</h2>
+      <p class="section-lead">Données 2025-2026 : INSEE, ANAH, Observatoire de l'habitat.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">400 K</div>
+        <div class="stat-label">Seniors de 75+ ans en Île-de-France</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5 M</div>
+        <div class="stat-label">Passoires thermiques (DPE F &amp; G) en France</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15 400 €</div>
+        <div class="stat-label">Plafond MaPrimeAdapt' par foyer éligible</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">9 000</div>
+        <div class="stat-label">Décès / an liés aux chutes des seniors à domicile</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">680 M€</div>
+        <div class="stat-label">Budget MaPrimeAdapt' annuel (Loi de finances 2026)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">85 %</div>
+        <div class="stat-label">Des seniors souhaitent vieillir à domicile (Sondage IFOP)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3-6 mois</div>
+        <div class="stat-label">Délai moyen d'instruction d'un dossier ANAH</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+ 12 %</div>
+        <div class="stat-label">Demandes d'adaptation logement (2025 vs 2024)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Kit presse</div>
+      <h2>Téléchargements</h2>
+      <p class="section-lead">Logos, visuels et photos haute résolution disponibles librement pour publication.</p>
+    </div>
+    <div class="downloads">
+      <a href="/assets/logo/" class="dl-card">
+        <div class="dl-icon">L</div>
+        <h4>Logo HD</h4>
+        <p>SVG vectoriel + PNG transparent fond clair / fond sombre</p>
+        <span class="dl-btn">Télécharger</span>
+      </a>
+      <a href="/assets/presse/photo-jeremy-berthaud.jpg" class="dl-card">
+        <div class="dl-icon">P</div>
+        <h4>Photo Jérémy Berthaud</h4>
+        <p>Portrait fondateur — 4000 px, libre de droits presse</p>
+        <span class="dl-btn">Télécharger</span>
+      </a>
+      <a href="/assets/presse/kit-visuels.zip" class="dl-card">
+        <div class="dl-icon">K</div>
+        <h4>Kit visuels</h4>
+        <p>Photos terrain, infographies, captures du site web</p>
+        <span class="dl-btn">Télécharger ZIP</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Citations disponibles</div>
+      <h2>Verbatim libres de reprise</h2>
+      <p class="section-lead">Citations attribuables à Jérémy Berthaud, fondateur de Mon Projet Habitat.</p>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <p>Une aide qui dort dans un budget public, c'est une aide qui n'existe pas. Notre métier, c'est de transformer un droit théorique en travaux réels dans une vraie maison.</p>
+        <cite>— <strong>Jérémy Berthaud</strong>, fondateur de Mon Projet Habitat</cite>
+      </div>
+      <div class="quote">
+        <p>Il y a 400 000 seniors en Île-de-France et un parcours administratif fait pour les bac+5. Ce décalage, c'est la première cause d'échec des dossiers ANAH.</p>
+        <cite>— <strong>Jérémy Berthaud</strong>, fondateur de Mon Projet Habitat</cite>
+      </div>
+      <div class="quote">
+        <p>Adapter un logement coûte vingt fois moins cher qu'une année d'EHPAD. Et c'est bien souvent ce que veulent les familles : que leurs parents restent chez eux.</p>
+        <cite>— <strong>Jérémy Berthaud</strong>, fondateur de Mon Projet Habitat</cite>
+      </div>
+      <div class="quote">
+        <p>Nous ne facturons rien aux seniors. Jamais. Notre rémunération vient des artisans partenaires. C'est la condition pour que ce service ait du sens.</p>
+        <cite>— <strong>Jérémy Berthaud</strong>, fondateur de Mon Projet Habitat</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-press">
+  <div class="container">
+    <div class="eyebrow" style="color:#86efac;">Contact presse</div>
+    <h2>Une interview, un sujet, une vérification ?</h2>
+    <p>Réponse sous 24 h. Disponible pour interviews téléphoniques, plateaux et reportages terrain en IDF.</p>
+    <div class="contact-grid">
+      <div class="contact-block">
+        <div class="label">Email presse</div>
+        <div class="value"><a href="mailto:presse@maprimeadapt-idf.fr">presse@maprimeadapt-idf.fr</a></div>
+      </div>
+      <div class="contact-block">
+        <div class="label">Ligne directe</div>
+        <div class="value"><a href="tel:+33604433420">06 04 43 34 20</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-badge">MP</div>
+          <div class="footer-logo-name">Mon Projet Habitat</div>
+        </div>
+        <p class="footer-desc">Service indépendant d'accompagnement administratif pour les aides à l'adaptation, à l'énergie et à la rénovation. Île-de-France.</p>
+        <div class="footer-contact">
+          <a href="tel:+33604433420" class="footer-phone">06 04 43 34 20</a>
+          <div class="footer-hours">Lun–Sam 9h–18h</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Aides</div>
+        <div class="footer-links">
+          <a class="footer-link" href="/seniors">MaPrimeAdapt</a>
+          <a class="footer-link" href="/energie">MaPrimeRénov</a>
+          <a class="footer-link" href="/renovation">Rénovation globale</a>
+          <a class="footer-link" href="/guide-2026">Guide 2026</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Site</div>
+        <div class="footer-links">
+          <a class="footer-link" href="/a-propos">À propos</a>
+          <a class="footer-link" href="/partenaires">Partenaires</a>
+          <a class="footer-link" href="/presse">Presse</a>
+          <a class="footer-link" href="/blog">Blog</a>
+          <a class="footer-link" href="/contact">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Légal</div>
+        <div class="footer-links">
+          <a class="footer-link" href="/mentions-legales.html">Mentions légales</a>
+          <a class="footer-link" href="/cgv.html">CGV</a>
+          <a class="footer-link" href="/politique-confidentialite.html">Politique RGPD</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-legal">
+        © 2026 Mon Projet Habitat — Service indépendant d'accompagnement administratif. <strong style="color:rgba(255,255,255,.85);">Non affilié à l'ANAH ni à un organisme public.</strong> Les démarches peuvent être effectuées gratuitement et directement par le bénéficiaire sur <a href="https://www.anah.gouv.fr" style="color:rgba(255,255,255,.6);text-decoration:underline;">anah.gouv.fr</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

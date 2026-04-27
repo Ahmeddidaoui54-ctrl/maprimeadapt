@@ -14,6 +14,8 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /calculateur-ehpad /calculateur-ehpad.html 200
 /quiz /quiz-autonomie.html 200
 /quiz-autonomie /quiz-autonomie.html 200
+/partenaires /partenaires.html 200
+/presse /presse.html 200
 
 # 404 page
 /* /404.html 404
