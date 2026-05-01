@@ -175,6 +175,60 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.maprimeadapt-idf.fr/var</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/hyeres</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/toulon</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/la-garde</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/le-pradet</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/carqueiranne</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/la-crau</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/la-londe</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.maprimeadapt-idf.fr/var/bormes-les-mimosas</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.maprimeadapt-idf.fr/mentions-legales.html</loc>
     <lastmod>2026-04-20</lastmod>
     <changefreq>yearly</changefreq>

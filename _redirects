@@ -51,3 +51,25 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /93-seine-saint-denis /departements/93-seine-saint-denis.html 200
 /94-val-de-marne /departements/94-val-de-marne.html 200
 /95-val-d-oise /departements/95-val-d-oise.html 200
+
+# Antenne Var (83) — Hyeres et Var Est
+/var /var/index.html 200
+/var/ /var/index.html 200
+/83 /var/index.html 200
+/var-est /var/index.html 200
+/var/hyeres /var/communes/hyeres.html 200
+/var/toulon /var/communes/toulon.html 200
+/var/la-garde /var/communes/la-garde.html 200
+/var/le-pradet /var/communes/le-pradet.html 200
+/var/carqueiranne /var/communes/carqueiranne.html 200
+/var/la-crau /var/communes/la-crau.html 200
+/var/la-londe /var/communes/la-londe.html 200
+/var/bormes-les-mimosas /var/communes/bormes-les-mimosas.html 200
+/hyeres /var/communes/hyeres.html 200
+/toulon /var/communes/toulon.html 200
+/la-garde /var/communes/la-garde.html 200
+/le-pradet /var/communes/le-pradet.html 200
+/carqueiranne /var/communes/carqueiranne.html 200
+/la-crau /var/communes/la-crau.html 200
+/la-londe /var/communes/la-londe.html 200
+/bormes-les-mimosas /var/communes/bormes-les-mimosas.html 200
