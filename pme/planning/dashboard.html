@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Salariés — Tableau de bord</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
+      --border: #2e3250; --accent: #4f6ef7; --accent2: #7c5cfc;
+      --green: #22c55e; --yellow: #f59e0b; --red: #ef4444;
+      --text: #e2e8f0; --muted: #64748b; --radius: 10px;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    /* ── Layout ── */
+    .layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .sidebar {
+      background: var(--surface); border-right: 1px solid var(--border);
+      padding: 24px 16px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .sidebar h1 { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .nav-btn {
+      background: none; border: none; color: var(--muted); text-align: left;
+      padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px;
+      display: flex; align-items: center; gap: 10px; transition: all .15s;
+    }
+    .nav-btn:hover { background: var(--surface2); color: var(--text); }
+    .nav-btn.active { background: var(--accent); color: #fff; }
+    .main { padding: 32px; overflow-y: auto; }
+
+    /* ── Topbar ── */
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .topbar h2 { font-size: 20px; font-weight: 600; }
+    .api-bar { display: flex; gap: 10px; align-items: center; }
+    .api-bar input {
+      background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: 8px 14px; border-radius: 8px; font-size: 13px; width: 320px;
+    }
+    .btn {
+      padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 600; transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-success { background: var(--green); color: #fff; }
+    .btn-danger  { background: var(--red); color: #fff; }
+    .btn-ghost   { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+    /* ── Cards ── */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .card-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .card-value { font-size: 28px; font-weight: 700; }
+    .card-value.green { color: var(--green); }
+    .card-value.yellow { color: var(--yellow); }
+    .card-value.red { color: var(--red); }
+    .card-value.accent { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: var(--surface2); color: var(--muted); font-weight: 600; text-align: left; padding: 12px 16px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); }
+    tr:hover td { background: var(--surface2); }
+
+    /* ── Badges ── */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-green  { background: #14532d; color: var(--green); }
+    .badge-yellow { background: #78350f; color: var(--yellow); }
+    .badge-red    { background: #7f1d1d; color: var(--red); }
+    .badge-blue   { background: #1e3a5f; color: #60a5fa; }
+    .badge-gray   { background: var(--surface2); color: var(--muted); }
+
+    /* ── Forms ── */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+    .field input, .field select, .field textarea {
+      background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+      padding: 9px 14px; border-radius: 8px; font-size: 14px;
+    }
+    .field input:focus, .field select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+    /* ── Modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 100; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+    .modal h3 { font-size: 17px; margin-bottom: 20px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+    /* ── Sections ── */
+    .section { display: none; }
+    .section.active { display: block; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+
+    /* ── Live indicator ── */
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+    .dot-green { background: var(--green); animation: pulse 2s infinite; }
+    .dot-red   { background: var(--red); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* ── Toast ── */
+    #toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 20px; font-size: 14px; opacity: 0;
+      transition: opacity .3s; z-index: 999; max-width: 340px; }
+    #toast.show { opacity: 1; }
+
+    /* ── Status bar ── */
+    .status-bar { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 6px 16px; font-size: 12px; color: var(--muted); display: flex; gap: 20px; }
+
+    .empty { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+    .mb-20 { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<div id="status-bar" class="status-bar">
+  <span id="api-status">⚪ Non connecté</span>
+  <span id="current-time"></span>
+</div>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h1>📅 Planning RH</h1>
+    <button class="nav-btn active" onclick="nav('dashboard')">📊 Tableau de bord</button>
+    <button class="nav-btn" onclick="nav('live')">🟢 Présences live</button>
+    <button class="nav-btn" onclick="nav('employees')">👥 Salariés</button>
+    <button class="nav-btn" onclick="nav('schedules')">📆 Planning</button>
+    <button class="nav-btn" onclick="nav('timeclock')">🕐 Pointages</button>
+    <button class="nav-btn" onclick="nav('anomalies')">⚠️ Anomalies</button>
+    <button class="nav-btn" onclick="nav('apikeys')">🔑 Clés API</button>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <h2 id="page-title">Tableau de bord</h2>
+      <div class="api-bar">
+        <input type="password" id="api-key-input" placeholder="Clé API (psk_…  ou secret admin)" />
+        <button class="btn btn-primary" onclick="connectApi()">Connecter</button>
+      </div>
+    </div>
+
+    <!-- ── DASHBOARD ── -->
+    <div id="section-dashboard" class="section active">
+      <div class="cards" id="stat-cards">
+        <div class="card"><div class="card-label">Salariés actifs</div><div class="card-value accent" id="stat-employees">—</div></div>
+        <div class="card"><div class="card-label">Présents aujourd'hui</div><div class="card-value green" id="stat-present">—</div></div>
+        <div class="card"><div class="card-label">Shifts prévus</div><div class="card-value accent" id="stat-shifts">—</div></div>
+        <div class="card"><div class="card-label">Anomalies non traitées</div><div class="card-value red" id="stat-anomalies">—</div></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Salarié</th><th>Poste</th><th>Shift prévu</th><th>Statut</th></tr></thead>
+          <tbody id="dashboard-today"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── PRÉSENCES LIVE ── -->
+    <div id="section-live" class="section">
+      <p style="color:var(--muted);margin-bottom:16px;font-size:13px;"><span class="dot dot-green"></span> Mise à jour toutes les 30 secondes</p>
+      <div class="cards">
+        <div class="card"><div class="card-label">Présents</div><div class="card-value green" id="live-present-count">—</div></div>
+        <div class="card"><div class="card-label">Sortis / Absents</div><div class="card-value yellow" id="live-absent-count">—</div></div>
+      </div>
+      <div class="table-wrap mb-20">
+        <table>
+          <thead><tr><th>Salarié</th><th>Poste</th><th>Pointage entrée</th><th>Statut</th></tr></thead>
+          <tbody id="live-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── SALARIÉS ── -->
+    <div id="section-employees" class="section">
+      <div class="section-header">
+        <span></span>
+        <button class="btn btn-success" onclick="openModal('modal-employee')">+ Nouveau salarié</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nom</th><th>Poste</th><th>Contrat</th><th>H/sem</th><th>Email</th><th>Statut</th><th></th></tr></thead>
+          <tbody id="employees-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── PLANNING ── -->
+    <div id="section-schedules" class="section">
+      <div class="section-header">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="date" id="schedule-date" class="field input" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;">
+          <button class="btn btn-ghost" onclick="loadSchedules()">Filtrer</button>
+        </div>
+        <button class="btn btn-success" onclick="openModal('modal-schedule')">+ Ajouter shift</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Salarié</th><th>Début</th><th>Fin</th><th>Poste</th><th>Note</th><th></th></tr></thead>
+          <tbody id="schedules-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── POINTAGES ── -->
+    <div id="section-timeclock" class="section">
+      <div class="section-header">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <select id="tc-employee-filter" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;">
+            <option value="">Tous les salariés</option>
+          </select>
+          <button class="btn btn-ghost" onclick="loadTimeclock()">Filtrer</button>
+        </div>
+        <button class="btn btn-success" onclick="openModal('modal-timeclock')">+ Pointage manuel</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Salarié</th><th>Type</th><th>Heure</th><th>Source</th><th>Note</th><th></th></tr></thead>
+          <tbody id="timeclock-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── ANOMALIES ── -->
+    <div id="section-anomalies" class="section">
+      <div class="section-header">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <select id="anom-severity" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;">
+            <option value="">Toutes sévérités</option>
+            <option value="high">Haute</option>
+            <option value="medium">Moyenne</option>
+            <option value="low">Basse</option>
+          </select>
+          <select id="anom-resolved" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;">
+            <option value="false">Non traitées</option>
+            <option value="true">Traitées</option>
+            <option value="">Toutes</option>
+          </select>
+          <button class="btn btn-ghost" onclick="loadAnomalies()">Filtrer</button>
+        </div>
+        <button class="btn btn-primary" onclick="triggerScan()">🔍 Scanner maintenant</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Détectée</th><th>Salarié</th><th>Type</th><th>Sévérité</th><th>Détail</th><th></th></tr></thead>
+          <tbody id="anomalies-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── CLÉS API ── -->
+    <div id="section-apikeys" class="section">
+      <div class="section-header">
+        <p style="font-size:13px;color:var(--muted);">Chaque clé peut être intégrée dans votre logiciel via l'en-tête <code style="color:var(--accent)">Authorization: Bearer &lt;clé&gt;</code></p>
+        <button class="btn btn-success" onclick="openModal('modal-apikey')">+ Nouvelle clé</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Libellé</th><th>Permissions</th><th>Utilisations</th><th>Dernière utilisation</th><th>Statut</th><th></th></tr></thead>
+          <tbody id="apikeys-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ─────────── MODALS ─────────── -->
+
+<!-- Nouveau salarié -->
+<div class="modal-overlay" id="modal-employee">
+  <div class="modal">
+    <h3>Nouveau salarié</h3>
+    <div class="form-grid">
+      <div class="field"><label>Prénom *</label><input id="emp-first" placeholder="Jean"></div>
+      <div class="field"><label>Nom *</label><input id="emp-last" placeholder="Dupont"></div>
+      <div class="field"><label>Email</label><input id="emp-email" type="email"></div>
+      <div class="field"><label>Téléphone</label><input id="emp-phone"></div>
+      <div class="field"><label>Poste</label><input id="emp-post" placeholder="Caissier, Manager…"></div>
+      <div class="field"><label>Contrat</label>
+        <select id="emp-contract">
+          <option value="CDI">CDI</option><option value="CDD">CDD</option>
+          <option value="interim">Intérim</option><option value="apprenti">Apprenti</option>
+        </select>
+      </div>
+      <div class="field"><label>H/semaine</label><input id="emp-hours" type="number" value="35"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-employee')">Annuler</button>
+      <button class="btn btn-success" onclick="createEmployee()">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Nouveau shift -->
+<div class="modal-overlay" id="modal-schedule">
+  <div class="modal">
+    <h3>Ajouter un shift</h3>
+    <div class="form-grid">
+      <div class="field"><label>Salarié *</label><select id="sh-employee"></select></div>
+      <div class="field"><label>Date *</label><input id="sh-date" type="date"></div>
+      <div class="field"><label>Début *</label><input id="sh-start" type="time" value="09:00"></div>
+      <div class="field"><label>Fin *</label><input id="sh-end" type="time" value="17:00"></div>
+      <div class="field"><label>Poste</label><input id="sh-post"></div>
+      <div class="field"><label>Note</label><input id="sh-note"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-schedule')">Annuler</button>
+      <button class="btn btn-success" onclick="createSchedule()">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pointage manuel -->
+<div class="modal-overlay" id="modal-timeclock">
+  <div class="modal">
+    <h3>Enregistrer un pointage</h3>
+    <div class="form-grid">
+      <div class="field"><label>Salarié *</label><select id="tc-employee"></select></div>
+      <div class="field"><label>Type *</label>
+        <select id="tc-type"><option value="in">Entrée</option><option value="out">Sortie</option></select>
+      </div>
+      <div class="field"><label>Heure (vide = maintenant)</label><input id="tc-time" type="datetime-local"></div>
+      <div class="field"><label>Source</label><input id="tc-source" placeholder="logiciel-caisse, badge…"></div>
+      <div class="field" style="grid-column:1/-1"><label>Note</label><input id="tc-note"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-timeclock')">Annuler</button>
+      <button class="btn btn-success" onclick="createTimeclock()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Nouvelle clé API -->
+<div class="modal-overlay" id="modal-apikey">
+  <div class="modal">
+    <h3>Créer une clé API</h3>
+    <div class="form-grid">
+      <div class="field" style="grid-column:1/-1"><label>Libellé *</label><input id="ak-label" placeholder="Logiciel caisse, Badgeuse entrée…"></div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Permissions</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;" id="ak-perms">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)"><input type="checkbox" value="timeclock:write" checked> Pointage</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)"><input type="checkbox" value="schedules:write"> Planning</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)"><input type="checkbox" value="employees:write"> Salariés</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)"><input type="checkbox" value="anomalies:write"> Anomalies</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)"><input type="checkbox" value="anomalies:scan"> Scan</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)"><input type="checkbox" value="apikeys:write"> Clés API</label>
+        </div>
+      </div>
+    </div>
+    <div id="ak-result" style="display:none;margin-top:16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:6px;">⚠️ Copiez cette clé maintenant, elle ne sera plus affichée :</p>
+      <code id="ak-value" style="color:var(--accent);word-break:break-all;font-size:13px;"></code>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-apikey')">Fermer</button>
+      <button class="btn btn-success" id="ak-submit" onclick="createApiKey()">Générer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Résoudre anomalie -->
+<div class="modal-overlay" id="modal-resolve">
+  <div class="modal">
+    <h3>Résoudre l'anomalie</h3>
+    <input type="hidden" id="resolve-id">
+    <div class="field"><label>Note de résolution</label><input id="resolve-note" placeholder="Explication, action prise…"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-resolve')">Annuler</button>
+      <button class="btn btn-success" onclick="resolveAnomaly()">Marquer traité</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+let API_KEY = '';
+let BASE_URL = window.location.origin;
+let employees = [];
+let liveInterval = null;
+
+// ── Utils ──
+const $ = id => document.getElementById(id);
+const toast = (msg, type='info') => {
+  const el = $('toast');
+  el.textContent = msg;
+  el.style.borderColor = type==='error' ? 'var(--red)' : type==='success' ? 'var(--green)' : 'var(--border)';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+};
+
+async function api(path, opts = {}) {
+  if (!API_KEY) { toast('Entrez votre clé API en haut à droite', 'error'); return null; }
+  try {
+    const r = await fetch(`${BASE_URL}/api${path}`, {
+      ...opts,
+      headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json', ...(opts.headers||{}) }
+    });
+    const data = await r.json();
+    if (!r.ok) { toast(data.error || 'Erreur API', 'error'); return null; }
+    return data;
+  } catch(e) { toast('Erreur réseau: ' + e.message, 'error'); return null; }
+}
+
+// ── Auth ──
+async function connectApi() {
+  API_KEY = $('api-key-input').value.trim();
+  const data = await api('/employees');
+  if (data !== null) {
+    $('api-status').textContent = '🟢 Connecté';
+    employees = data;
+    toast('Connexion réussie', 'success');
+    loadDashboard();
+    populateEmployeeSelects();
+  } else {
+    API_KEY = '';
+    $('api-status').textContent = '🔴 Clé invalide';
+  }
+}
+
+// ── Navigation ──
+function nav(section) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  $(`section-${section}`).classList.add('active');
+  event.currentTarget.classList.add('active');
+
+  const titles = { dashboard:'Tableau de bord', live:'Présences live', employees:'Salariés',
+    schedules:'Planning', timeclock:'Pointages', anomalies:'Anomalies', apikeys:'Clés API' };
+  $('page-title').textContent = titles[section] || section;
+
+  if (liveInterval) { clearInterval(liveInterval); liveInterval = null; }
+
+  const loaders = { dashboard: loadDashboard, live: () => { loadLive(); liveInterval = setInterval(loadLive, 30000); },
+    employees: loadEmployees, schedules: loadSchedules, timeclock: loadTimeclock,
+    anomalies: loadAnomalies, apikeys: loadApiKeys };
+  if (loaders[section]) loaders[section]();
+}
+
+function openModal(id) { $(id).classList.add('open'); }
+function closeModal(id) { $(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); }));
+
+// ── Dashboard ──
+async function loadDashboard() {
+  const [live, today, anomSummary, emps] = await Promise.all([
+    api('/timeclock/live'), api('/schedules/today'), api('/anomalies/summary'), api('/employees')
+  ]);
+  if (!emps) return;
+  employees = emps;
+  $('stat-employees').textContent = emps.filter(e=>e.active).length;
+  $('stat-present').textContent = live ? live.present.length : '—';
+  $('stat-shifts').textContent = today ? today.length : '—';
+  $('stat-anomalies').textContent = anomSummary ? anomSummary.unresolved : '—';
+
+  if (!today) return;
+  const presentIds = live ? new Set(live.present.map(p=>p.employee_id)) : new Set();
+  $('dashboard-today').innerHTML = today.length === 0
+    ? '<tr><td colspan="4" class="empty">Aucun shift prévu aujourd\'hui</td></tr>'
+    : today.map(s => `<tr>
+        <td>${s.planning_employees?.first_name} ${s.planning_employees?.last_name}</td>
+        <td><span class="badge badge-blue">${s.planning_employees?.post || '—'}</span></td>
+        <td>${s.start_time?.slice(0,5)} → ${s.end_time?.slice(0,5)}</td>
+        <td>${presentIds.has(s.employee_id)
+          ? '<span class="badge badge-green"><span class="dot dot-green"></span>Présent</span>'
+          : '<span class="badge badge-gray">Absent</span>'}</td>
+      </tr>`).join('');
+}
+
+// ── Live ──
+async function loadLive() {
+  const data = await api('/timeclock/live');
+  if (!data) return;
+  $('live-present-count').textContent = data.present.length;
+  $('live-absent-count').textContent = data.absent.length;
+  const rows = [...data.present.map(p=>`<tr>
+    <td>${p.planning_employees?.first_name} ${p.planning_employees?.last_name}</td>
+    <td>${p.planning_employees?.post || '—'}</td>
+    <td>${new Date(p.clocked_at).toLocaleTimeString('fr-FR')}</td>
+    <td><span class="badge badge-green"><span class="dot dot-green"></span>Présent</span></td></tr>`),
+  ...data.absent.map(p=>`<tr>
+    <td>${p.planning_employees?.first_name} ${p.planning_employees?.last_name}</td>
+    <td>${p.planning_employees?.post || '—'}</td>
+    <td>${new Date(p.clocked_at).toLocaleTimeString('fr-FR')}</td>
+    <td><span class="badge badge-gray">Sorti</span></td></tr>`)];
+  $('live-table').innerHTML = rows.length ? rows.join('') : '<tr><td colspan="4" class="empty">Aucune donnée</td></tr>';
+}
+
+// ── Employees ──
+async function loadEmployees() {
+  const data = await api('/employees');
+  if (!data) return;
+  employees = data;
+  $('employees-table').innerHTML = data.length === 0
+    ? '<tr><td colspan="7" class="empty">Aucun salarié</td></tr>'
+    : data.map(e => `<tr>
+        <td><strong>${e.first_name} ${e.last_name}</strong></td>
+        <td>${e.post || '—'}</td>
+        <td><span class="badge badge-blue">${e.contract_type || 'CDI'}</span></td>
+        <td>${e.weekly_hours || '—'}h</td>
+        <td>${e.email || '—'}</td>
+        <td>${e.active ? '<span class="badge badge-green">Actif</span>' : '<span class="badge badge-gray">Inactif</span>'}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deactivateEmployee('${e.id}')">Désactiver</button></td>
+      </tr>`).join('');
+  populateEmployeeSelects();
+}
+
+async function createEmployee() {
+  const body = {
+    first_name: $('emp-first').value, last_name: $('emp-last').value,
+    email: $('emp-email').value, phone: $('emp-phone').value,
+    post: $('emp-post').value, contract_type: $('emp-contract').value,
+    weekly_hours: parseFloat($('emp-hours').value) || 35
+  };
+  const data = await api('/employees', { method:'POST', body: JSON.stringify(body) });
+  if (data) { toast('Salarié créé', 'success'); closeModal('modal-employee'); loadEmployees(); }
+}
+
+async function deactivateEmployee(id) {
+  if (!confirm('Désactiver ce salarié ?')) return;
+  const data = await api(`/employees/${id}`, { method:'PATCH', body: JSON.stringify({ active: false }) });
+  if (data) { toast('Salarié désactivé', 'success'); loadEmployees(); }
+}
+
+function populateEmployeeSelects() {
+  const options = employees.filter(e=>e.active).map(e=>`<option value="${e.id}">${e.first_name} ${e.last_name}</option>`).join('');
+  ['sh-employee','tc-employee','tc-employee-filter'].forEach(id => {
+    const el = $(id);
+    if (el) { const prefix = id === 'tc-employee-filter' ? '<option value="">Tous</option>' : ''; el.innerHTML = prefix + options; }
+  });
+}
+
+// ── Schedules ──
+async function loadSchedules() {
+  const date = $('schedule-date').value;
+  const qs = date ? `?date=${date}` : `?from=${new Date().toISOString().slice(0,10)}`;
+  const data = await api(`/schedules${qs}`);
+  if (!data) return;
+  $('schedules-table').innerHTML = data.length === 0
+    ? '<tr><td colspan="7" class="empty">Aucun shift</td></tr>'
+    : data.map(s => `<tr>
+        <td>${s.date}</td>
+        <td>${s.planning_employees?.first_name} ${s.planning_employees?.last_name}</td>
+        <td>${s.start_time?.slice(0,5)}</td><td>${s.end_time?.slice(0,5)}</td>
+        <td>${s.post || '—'}</td><td>${s.note || ''}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteSchedule('${s.id}')">Suppr.</button></td>
+      </tr>`).join('');
+}
+
+async function createSchedule() {
+  const body = {
+    employee_id: $('sh-employee').value, date: $('sh-date').value,
+    start_time: $('sh-start').value, end_time: $('sh-end').value,
+    post: $('sh-post').value, note: $('sh-note').value
+  };
+  const data = await api('/schedules', { method:'POST', body: JSON.stringify(body) });
+  if (data) { toast('Shift créé', 'success'); closeModal('modal-schedule'); loadSchedules(); }
+}
+
+async function deleteSchedule(id) {
+  if (!confirm('Supprimer ce shift ?')) return;
+  const data = await api(`/schedules/${id}`, { method:'DELETE' });
+  if (data) { toast('Shift supprimé', 'success'); loadSchedules(); }
+}
+
+// ── Timeclock ──
+async function loadTimeclock() {
+  const emp = $('tc-employee-filter').value;
+  const qs = emp ? `?employee_id=${emp}&limit=100` : '?limit=100';
+  const data = await api(`/timeclock${qs}`);
+  if (!data) return;
+  $('timeclock-table').innerHTML = data.length === 0
+    ? '<tr><td colspan="6" class="empty">Aucun pointage</td></tr>'
+    : data.map(e => `<tr>
+        <td>${e.planning_employees?.first_name} ${e.planning_employees?.last_name}</td>
+        <td>${e.type === 'in' ? '<span class="badge badge-green">Entrée</span>' : '<span class="badge badge-yellow">Sortie</span>'}</td>
+        <td>${new Date(e.clocked_at).toLocaleString('fr-FR')}</td>
+        <td><span class="badge badge-gray">${e.source || '—'}</span></td>
+        <td>${e.note || ''}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="deleteTimeclock('${e.id}')">Suppr.</button></td>
+      </tr>`).join('');
+}
+
+async function createTimeclock() {
+  const ts = $('tc-time').value;
+  const body = {
+    employee_id: $('tc-employee').value, type: $('tc-type').value,
+    source: $('tc-source').value || 'dashboard', note: $('tc-note').value,
+    ...(ts ? { clocked_at: new Date(ts).toISOString() } : {})
+  };
+  const data = await api('/timeclock', { method:'POST', body: JSON.stringify(body) });
+  if (data) {
+    let msg = `Pointage enregistré`;
+    if (data.anomalies_detected > 0) msg += ` — ⚠️ ${data.anomalies_detected} anomalie(s) détectée(s)`;
+    toast(msg, data.anomalies_detected > 0 ? 'error' : 'success');
+    closeModal('modal-timeclock');
+    loadTimeclock();
+  }
+}
+
+async function deleteTimeclock(id) {
+  const reason = prompt('Motif de suppression (obligatoire) :');
+  if (!reason) return;
+  const data = await api(`/timeclock/${id}`, { method:'DELETE', body: JSON.stringify({ reason }) });
+  if (data) { toast('Pointage supprimé (audit enregistré)', 'success'); loadTimeclock(); }
+}
+
+// ── Anomalies ──
+async function loadAnomalies() {
+  const sev = $('anom-severity').value;
+  const res = $('anom-resolved').value;
+  let qs = '?limit=100';
+  if (sev) qs += `&severity=${sev}`;
+  if (res !== '') qs += `&resolved=${res}`;
+  const data = await api(`/anomalies${qs}`);
+  if (!data) return;
+
+  const sevBadge = { high:'badge-red', medium:'badge-yellow', low:'badge-blue' };
+  $('anomalies-table').innerHTML = data.length === 0
+    ? '<tr><td colspan="6" class="empty">Aucune anomalie</td></tr>'
+    : data.map(a => `<tr>
+        <td>${new Date(a.detected_at).toLocaleString('fr-FR')}</td>
+        <td>${a.planning_employees?.first_name || '—'} ${a.planning_employees?.last_name || ''}</td>
+        <td>${a.label}</td>
+        <td><span class="badge ${sevBadge[a.severity]||'badge-gray'}">${a.severity}</span></td>
+        <td style="font-size:12px;color:var(--muted);">${JSON.stringify(a.detail || {})}</td>
+        <td>${a.resolved
+          ? '<span class="badge badge-gray">Traité</span>'
+          : `<button class="btn btn-primary btn-sm" onclick="openResolve('${a.id}')">Résoudre</button>`}</td>
+      </tr>`).join('');
+}
+
+function openResolve(id) { $('resolve-id').value = id; openModal('modal-resolve'); }
+
+async function resolveAnomaly() {
+  const id = $('resolve-id').value;
+  const note = $('resolve-note').value;
+  const data = await api(`/anomalies/${id}/resolve`, { method:'PATCH', body: JSON.stringify({ resolution_note: note }) });
+  if (data) { toast('Anomalie résolue', 'success'); closeModal('modal-resolve'); loadAnomalies(); }
+}
+
+async function triggerScan() {
+  const data = await api('/anomalies/scan', { method:'POST', body:'{}' });
+  if (data) { toast(`Scan terminé: ${data.detected} anomalie(s) détectée(s)`, 'success'); loadAnomalies(); }
+}
+
+// ── API Keys ──
+async function loadApiKeys() {
+  const data = await api('/apikeys');
+  if (!data) return;
+  $('apikeys-table').innerHTML = data.length === 0
+    ? '<tr><td colspan="6" class="empty">Aucune clé</td></tr>'
+    : data.map(k => `<tr>
+        <td><strong>${k.label}</strong></td>
+        <td style="font-size:12px;">${(k.permissions||[]).join(', ')}</td>
+        <td>${k.use_count || 0}</td>
+        <td>${k.last_used_at ? new Date(k.last_used_at).toLocaleString('fr-FR') : '—'}</td>
+        <td>${k.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-gray">Désactivée</span>'}</td>
+        <td style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm" onclick="toggleKey('${k.id}', ${k.active})">${k.active ? 'Désactiver' : 'Activer'}</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteKey('${k.id}')">Suppr.</button>
+        </td>
+      </tr>`).join('');
+}
+
+async function createApiKey() {
+  const label = $('ak-label').value.trim();
+  if (!label) { toast('Libellé requis', 'error'); return; }
+  const perms = [...document.querySelectorAll('#ak-perms input:checked')].map(c=>c.value);
+  const data = await api('/apikeys', { method:'POST', body: JSON.stringify({ label, permissions: perms }) });
+  if (data) {
+    $('ak-value').textContent = data.key_value;
+    $('ak-result').style.display = 'block';
+    $('ak-submit').style.display = 'none';
+    loadApiKeys();
+  }
+}
+
+async function toggleKey(id, active) {
+  const data = await api(`/apikeys/${id}`, { method:'PATCH', body: JSON.stringify({ active: !active }) });
+  if (data) { toast(`Clé ${active ? 'désactivée' : 'activée'}`, 'success'); loadApiKeys(); }
+}
+
+async function deleteKey(id) {
+  if (!confirm('Supprimer cette clé API ? L\'accès sera immédiatement révoqué.')) return;
+  const data = await api(`/apikeys/${id}`, { method:'DELETE' });
+  if (data) { toast('Clé supprimée', 'success'); loadApiKeys(); }
+}
+
+// ── Clock ──
+setInterval(() => {
+  $('current-time').textContent = new Date().toLocaleString('fr-FR');
+}, 1000);
+
+// Init
+const today = new Date().toISOString().slice(0,10);
+$('schedule-date').value = today;
+$('current-time').textContent = new Date().toLocaleString('fr-FR');
+</script>
+</body>
+</html>
