@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planning & Monitoring Salariés</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--surface:#1e293b;--surface2:#263348;--border:#334155;
+  --text:#f1f5f9;--muted:#94a3b8;
+  --accent:#7c3aed;--accent-light:#a78bfa;--accent-mid:#6d28d9;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.1);
+  --orange:#f97316;--orange-bg:rgba(249,115,22,.1);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.1);
+  --yellow:#eab308;--yellow-bg:rgba(234,179,8,.1);
+}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:1rem}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#1a0550,#7c3aed);
+  border:1px solid var(--accent-mid);border-radius:12px;
+  padding:1.25rem 1.5rem;margin-bottom:1rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;
+}
+.header-left{display:flex;align-items:center;gap:.75rem}
+.header h1{font-size:1.3rem;font-weight:700}
+.header-sub{font-size:.8rem;color:#c4b5fd;margin-top:.15rem}
+.clock{font-size:1.4rem;font-weight:700;color:#a78bfa;font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.badge{background:rgba(167,139,250,.15);border:1px solid var(--accent-light);color:var(--accent-light);padding:.25rem .7rem;border-radius:20px;font-size:.75rem;font-weight:600}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;transition:border-color .2s}
+.kpi:hover{border-color:var(--accent-light)}
+.kpi-val{font-size:2rem;font-weight:800;line-height:1}
+.kpi-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.4rem}
+.kpi.green .kpi-val{color:var(--green)}
+.kpi.orange .kpi-val{color:var(--orange)}
+.kpi.red .kpi-val{color:var(--red)}
+.kpi.purple .kpi-val{color:var(--accent-light)}
+
+/* TABS */
+.tabs{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab{padding:.45rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:.85rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{border-color:var(--accent-light);color:var(--accent-light)}
+.tab.active{background:var(--accent-mid);border-color:var(--accent);color:#fff;font-weight:600}
+.panel{display:none}.panel.active{display:block}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:.75rem}
+.card-title{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.75rem}
+
+/* PLANNING TIMELINE */
+.timeline{overflow-x:auto;padding-bottom:.5rem}
+.tl-grid{display:grid;grid-template-columns:140px repeat(24,1fr);min-width:900px;gap:0}
+.tl-header{background:var(--surface2);border-bottom:1px solid var(--border);padding:.4rem .3rem;font-size:.7rem;color:var(--muted);text-align:center}
+.tl-name{background:var(--surface2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:.5rem .75rem;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.tl-cell{border-right:1px solid rgba(51,65,85,.4);border-bottom:1px solid rgba(51,65,85,.4);height:40px;position:relative}
+.tl-cell.now{background:rgba(124,58,237,.08)}
+.tl-shift{
+  position:absolute;top:4px;bottom:4px;
+  border-radius:4px;display:flex;align-items:center;padding:0 6px;
+  font-size:.7rem;font-weight:600;white-space:nowrap;overflow:hidden;
+  cursor:pointer;transition:opacity .15s;
+}
+.tl-shift:hover{opacity:.85}
+.tl-shift.planifie{background:rgba(124,58,237,.4);border:1px solid var(--accent-light);color:#c4b5fd}
+.tl-shift.actif{background:rgba(34,197,94,.25);border:1px solid var(--green);color:var(--green)}
+.tl-shift.absent{background:rgba(239,68,68,.2);border:1px solid var(--red);color:var(--red)}
+.tl-shift.retard{background:rgba(249,115,22,.2);border:1px solid var(--orange);color:var(--orange)}
+.tl-shift.termine{background:rgba(148,163,184,.15);border:1px solid var(--muted);color:var(--muted)}
+.now-line{position:absolute;top:0;bottom:0;width:2px;background:var(--red);z-index:10;pointer-events:none}
+
+/* ACTIVITY FEED */
+.feed{max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:.4rem}
+.feed::-webkit-scrollbar{width:4px}.feed::-webkit-scrollbar-track{background:transparent}.feed::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.feed-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem .75rem;background:var(--surface2);border-radius:8px;border-left:3px solid var(--border);font-size:.82rem;transition:background .15s}
+.feed-item:hover{background:#2d3f58}
+.feed-item.rouge{border-color:var(--red)}
+.feed-item.orange{border-color:var(--orange)}
+.feed-item.verte{border-color:var(--green)}
+.feed-item.normal{border-color:var(--accent)}
+.feed-time{font-size:.7rem;color:var(--muted);white-space:nowrap;margin-top:.1rem}
+.feed-body{flex:1}
+.feed-name{font-weight:600}
+.feed-action{color:var(--muted);font-size:.78rem;margin-top:.1rem}
+.feed-badge{font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:10px;white-space:nowrap;flex-shrink:0;margin-top:.1rem}
+.feed-badge.rouge{background:var(--red-bg);color:var(--red);border:1px solid var(--red)}
+.feed-badge.orange{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange)}
+.feed-badge.verte{background:var(--green-bg);color:var(--green);border:1px solid var(--green)}
+.feed-badge.normal{background:rgba(167,139,250,.1);color:var(--accent-light);border:1px solid var(--accent-light)}
+
+/* ANOMALY CARDS */
+.anomaly-list{display:flex;flex-direction:column;gap:.5rem}
+.anomaly-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--surface2)}
+.anomaly-item.rouge{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.05)}
+.anomaly-item.orange{border-color:rgba(249,115,22,.4);background:rgba(249,115,22,.05)}
+.anomaly-item.verte{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04)}
+.anomaly-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.rouge .anomaly-dot{background:var(--red)}
+.orange .anomaly-dot{background:var(--orange)}
+.verte .anomaly-dot{background:var(--green)}
+.anomaly-info{flex:1}
+.anomaly-who{font-size:.85rem;font-weight:600}
+.anomaly-desc{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+.anomaly-ts{font-size:.7rem;color:var(--muted);white-space:nowrap}
+.score-pill{font-size:.72rem;font-weight:700;padding:.2rem .55rem;border-radius:20px}
+.rouge .score-pill{background:var(--red-bg);color:var(--red)}
+.orange .score-pill{background:var(--orange-bg);color:var(--orange)}
+.verte .score-pill{background:var(--green-bg);color:var(--green)}
+
+/* EMPLOYEE TABLE */
+.emp-table{width:100%;border-collapse:collapse;font-size:.83rem}
+.emp-table th{text-align:left;padding:.5rem .75rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+.emp-table td{padding:.6rem .75rem;border-bottom:1px solid rgba(51,65,85,.4);vertical-align:middle}
+.emp-table tr:last-child td{border-bottom:none}
+.emp-table tr:hover td{background:rgba(255,255,255,.02)}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.status-dot.actif{background:var(--green)}
+.status-dot.inactif{background:var(--muted)}
+.status-dot.suspendu{background:var(--red)}
+.key-code{font-family:monospace;font-size:.75rem;background:var(--bg);padding:.2rem .45rem;border-radius:4px;color:var(--accent-light);letter-spacing:.05em}
+.copy-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:.15rem .4rem;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .15s}
+.copy-btn:hover{border-color:var(--accent-light);color:var(--accent-light)}
+
+/* KEY TESTER */
+.key-tester{display:flex;flex-direction:column;gap:.75rem}
+.key-input-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.key-input{flex:1;min-width:220px;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.6rem .9rem;border-radius:8px;font-family:monospace;font-size:.85rem}
+.key-input:focus{outline:2px solid var(--accent-light);border-color:transparent}
+.action-select{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.6rem .9rem;border-radius:8px;font-size:.85rem;cursor:pointer}
+.action-select:focus{outline:2px solid var(--accent-light)}
+.result-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:monospace;font-size:.8rem;min-height:80px;white-space:pre-wrap;color:var(--accent-light);line-height:1.6}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.3rem;padding:.5rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.83rem;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none}
+.btn:hover{border-color:var(--accent-light);color:var(--accent-light)}
+.btn-primary{background:var(--accent-mid);border-color:var(--accent);color:#fff;font-weight:600}
+.btn-primary:hover{background:var(--accent);color:#fff}
+.btn-sm{padding:.3rem .65rem;font-size:.75rem}
+.btn-danger{border-color:rgba(239,68,68,.4);color:var(--red)}
+.btn-danger:hover{background:var(--red-bg);border-color:var(--red)}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem}
+.field label{display:block;font-size:.72rem;color:var(--muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.55rem .75rem;border-radius:7px;font-size:.85rem;font-family:inherit}
+.field input:focus,.field select:focus{outline:2px solid var(--accent-light);border-color:transparent}
+
+/* SUMMARY BARS */
+.summary-bar{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;font-size:.83rem}
+.summary-bar-track{flex:1;height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.summary-bar-fill{height:100%;border-radius:99px;transition:width .5s}
+.fill-rouge{background:var(--red)}
+.fill-orange{background:var(--orange)}
+.fill-green{background:var(--green)}
+.fill-purple{background:var(--accent-light)}
+
+/* LIVE DOT */
+.live{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--green)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--accent-mid);color:#fff;padding:.75rem 1.1rem;border-radius:10px;font-size:.85rem;font-weight:600;box-shadow:0 4px 24px rgba(0,0,0,.5);opacity:0;transform:translateY(1rem);transition:all .3s;z-index:9999;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* SCROLL AREA */
+.scroll-area{max-height:340px;overflow-y:auto}
+.scroll-area::-webkit-scrollbar{width:4px}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+@media(max-width:640px){
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+  .tl-grid{grid-template-columns:100px repeat(24,1fr)}
+  .header h1{font-size:1.1rem}
+  .clock{font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div>
+      <h1>👥 Planning & Monitoring Salariés</h1>
+      <div class="header-sub">Détection d'anomalies · Clés API · Temps réel</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+    <span class="live"><span class="live-dot"></span>Démo live</span>
+    <span class="clock" id="clock">--:--:--</span>
+    <span class="badge">MaprimeAdapt RH</span>
+  </div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi green"><div class="kpi-val" id="k-actifs">6</div><div class="kpi-lbl">Salariés actifs</div></div>
+  <div class="kpi purple"><div class="kpi-val" id="k-presents">4</div><div class="kpi-lbl">Présents aujourd'hui</div></div>
+  <div class="kpi orange"><div class="kpi-val" id="k-retards">1</div><div class="kpi-lbl">Retards</div></div>
+  <div class="kpi red"><div class="kpi-val" id="k-anomalies">3</div><div class="kpi-lbl">Anomalies ROUGE</div></div>
+  <div class="kpi" style="--c:var(--muted)"><div class="kpi-val" style="color:var(--muted)" id="k-shifts">7</div><div class="kpi-lbl">Shifts ce jour</div></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('planning')">📅 Planning du jour</button>
+  <button class="tab" onclick="switchTab('activite')">⚡ Activité en temps réel</button>
+  <button class="tab" onclick="switchTab('anomalies')">🚨 Anomalies</button>
+  <button class="tab" onclick="switchTab('salaries')">👤 Salariés & Clés</button>
+  <button class="tab" onclick="switchTab('test')">🔑 Tester une clé</button>
+</div>
+
+<!-- ========== PANEL : PLANNING ========== -->
+<div class="panel active" id="panel-planning">
+  <div class="card">
+    <div class="card-title">
+      <span>📅 Planning du <span id="today-date">--</span></span>
+      <div class="btn-row">
+        <button class="btn btn-sm" onclick="prevDay()">‹ Veille</button>
+        <button class="btn btn-sm" onclick="nextDay()">Lendemain ›</button>
+        <button class="btn btn-sm btn-primary" onclick="openAddShift()">+ Shift</button>
+      </div>
+    </div>
+
+    <!-- Légende -->
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.75rem">
+      <span style="color:#a78bfa">● Planifié</span>
+      <span style="color:var(--green)">● Actif / Présent</span>
+      <span style="color:var(--orange)">● Retard</span>
+      <span style="color:var(--red)">● Absent</span>
+      <span style="color:var(--muted)">● Terminé</span>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-grid" id="tl-grid"><!-- JS --></div>
+    </div>
+  </div>
+
+  <!-- Résumé du jour -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Présences</div>
+      <div id="presence-list" style="display:flex;flex-direction:column;gap:.5rem;font-size:.83rem"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Processus manquants</div>
+      <div id="missing-steps" style="display:flex;flex-direction:column;gap:.4rem;font-size:.82rem"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PANEL : ACTIVITÉ ========== -->
+<div class="panel" id="panel-activite">
+  <div class="card">
+    <div class="card-title">
+      <span>⚡ Journal d'activité</span>
+      <div class="btn-row">
+        <span class="live"><span class="live-dot"></span>Auto-refresh 5s</span>
+        <button class="btn btn-sm" onclick="refreshFeed()">↻ Actualiser</button>
+      </div>
+    </div>
+    <div class="feed" id="activity-feed"><!-- JS --></div>
+  </div>
+</div>
+
+<!-- ========== PANEL : ANOMALIES ========== -->
+<div class="panel" id="panel-anomalies">
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Résumé 7 jours par salarié</div>
+      <div id="anomaly-summary" style="display:flex;flex-direction:column;gap:.6rem"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">
+        <span>Anomalies récentes</span>
+        <select class="action-select" style="padding:.25rem .5rem;font-size:.75rem" onchange="filterAnomalies(this.value)">
+          <option value="">Toutes</option>
+          <option value="ROUGE">ROUGE</option>
+          <option value="ORANGE">ORANGE</option>
+          <option value="VERTE">VERTE</option>
+        </select>
+      </div>
+      <div class="anomaly-list scroll-area" id="anomaly-list"><!-- JS --></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PANEL : SALARIÉS ========== -->
+<div class="panel" id="panel-salaries">
+  <!-- Formulaire ajout -->
+  <div class="card">
+    <div class="card-title">+ Ajouter un salarié (clé API générée automatiquement)</div>
+    <div class="form-grid">
+      <div class="field"><label>Prénom</label><input id="f-prenom" placeholder="Marie"></div>
+      <div class="field"><label>Nom</label><input id="f-nom" placeholder="Dupont"></div>
+      <div class="field"><label>Poste</label>
+        <select id="f-poste">
+          <option value="vendeur">Vendeur</option>
+          <option value="responsable">Responsable</option>
+          <option value="technicien">Technicien</option>
+          <option value="administratif">Administratif</option>
+        </select>
+      </div>
+      <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="marie@exemple.fr"></div>
+    </div>
+    <div style="margin-top:.75rem">
+      <button class="btn btn-primary" onclick="addEmployee()">Créer le salarié & générer la clé</button>
+    </div>
+  </div>
+
+  <!-- Liste -->
+  <div class="card">
+    <div class="card-title">Liste des salariés</div>
+    <div style="overflow-x:auto">
+      <table class="emp-table" id="emp-table">
+        <thead>
+          <tr>
+            <th>Salarié</th><th>Poste</th><th>Statut</th>
+            <th>Clé API</th><th>Anomalies 7j</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="emp-tbody"><!-- JS --></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PANEL : TEST CLÉ ========== -->
+<div class="panel" id="panel-test">
+  <div class="card">
+    <div class="card-title">🔑 Simuler une activité salarié via clé API</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem">
+      Reproduit exactement ce que ferait votre logiciel métier en envoyant la clé du salarié.
+      Le moteur d'anomalies analyse l'action en temps réel.
+    </p>
+    <div class="key-tester">
+      <div class="key-input-row">
+        <div class="field" style="flex:2;min-width:220px">
+          <label>Clé API du salarié</label>
+          <input class="key-input" id="test-key" placeholder="EMP-XXXXXXXX-XXXXXXXX-XXXXXXXX">
+        </div>
+        <div class="field" style="flex:1;min-width:160px">
+          <label>Action</label>
+          <select class="action-select" id="test-action" style="width:100%;padding:.55rem .75rem">
+            <option value="pointage_entree">pointage_entree</option>
+            <option value="pointage_sortie">pointage_sortie</option>
+            <option value="ouverture_caisse">ouverture_caisse</option>
+            <option value="cloture_caisse">cloture_caisse</option>
+            <option value="check_stock">check_stock</option>
+            <option value="acces_coffre">acces_coffre ⚠️</option>
+            <option value="modification_prix">modification_prix ⚠️</option>
+            <option value="annulation_vente">annulation_vente ⚠️</option>
+            <option value="remboursement">remboursement ⚠️</option>
+            <option value="acces_admin">acces_admin 🔴</option>
+            <option value="export_donnees">export_donnees 🔴</option>
+            <option value="action_inconnue">action_inconnue ❓</option>
+          </select>
+        </div>
+        <div class="field" style="flex:1;min-width:140px">
+          <label>Source / Terminal</label>
+          <input class="key-input" id="test-source" placeholder="caisse-01" style="font-family:inherit">
+        </div>
+      </div>
+      <div class="field">
+        <label>Contexte (optionnel)</label>
+        <input class="key-input" id="test-context" placeholder="Ex: montant 450€, client #1042..." style="font-family:inherit;width:100%">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="testActivity()">▶ Envoyer l'activité</button>
+        <button class="btn" onclick="fillDemoKey()">Remplir avec une clé démo</button>
+        <button class="btn" onclick="clearResult()">Effacer</button>
+      </div>
+      <div>
+        <div style="font-size:.72rem;color:var(--muted);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em">Résultat de l'analyse</div>
+        <div class="result-box" id="test-result">En attente d'une action...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comment intégrer -->
+  <div class="card">
+    <div class="card-title">Intégration dans votre logiciel</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">Ajoutez une seule requête HTTP dans votre logiciel existant :</p>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:monospace;font-size:.78rem;color:var(--accent-light);line-height:1.8;overflow-x:auto">
+<span style="color:var(--muted)">// Exemple JavaScript / Node.js</span>
+fetch('<span id="api-url-display">http://localhost:3001</span>/api/rh/activity', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    api_key: '<span style="color:var(--green)">EMP-XXXXXXXX-XXXXXXXX-XXXXXXXX</span>',
+    action:  '<span style="color:var(--green)">pointage_entree</span>',
+    source:  '<span style="color:var(--green)">caisse-01</span>',
+    context: '<span style="color:var(--green)">heure: 08h32</span>'
+  })
+});
+
+<span style="color:var(--muted)">// Réponse : { logged: true, employee: {...}, anomaly: { score, urgence, reasons[] } }</span>
+    </div>
+    <div style="margin-top:.75rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+      <label style="font-size:.8rem;color:var(--muted)">URL de votre API :</label>
+      <input id="api-url-input" value="http://localhost:3001" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.35rem .65rem;border-radius:6px;font-size:.82rem;width:220px" oninput="updateApiUrl(this.value)">
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJOUT SHIFT -->
+<div id="modal-shift" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;width:min(480px,95vw);max-height:90vh;overflow-y:auto">
+    <div style="font-weight:700;font-size:1.1rem;margin-bottom:1.25rem">Planifier un shift</div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Salarié</label>
+        <select id="shift-emp" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.55rem .75rem;border-radius:7px;font-size:.85rem">
+        </select>
+      </div>
+      <div class="field"><label>Type</label>
+        <select id="shift-type" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.55rem .75rem;border-radius:7px;font-size:.85rem">
+          <option value="normal">Normal</option>
+          <option value="matin">Matin</option>
+          <option value="apres-midi">Après-midi</option>
+          <option value="nuit">Nuit</option>
+          <option value="astreinte">Astreinte</option>
+        </select>
+      </div>
+      <div class="field"><label>Début</label><input id="shift-debut" type="datetime-local" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.55rem .75rem;border-radius:7px;font-size:.85rem"></div>
+      <div class="field"><label>Fin</label><input id="shift-fin" type="datetime-local" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.55rem .75rem;border-radius:7px;font-size:.85rem"></div>
+      <div class="field" style="grid-column:1/-1"><label>Note</label><input id="shift-note" placeholder="ex: ouverture magasin" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.55rem .75rem;border-radius:7px;font-size:.85rem"></div>
+    </div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn btn-primary" onclick="saveShift()">Enregistrer</button>
+      <button class="btn" onclick="closeModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DONNÉES DE DÉMO (pas de clé API requise)
+// ============================================================
+const DEMO_EMPLOYEES = [
+  { id:1, prenom:'Marie',   nom:'Dupont',    poste:'responsable',   status:'actif',   api_key:'EMP-A1B2C3D4-E5F6A7B8-C9D0E1F2', anomalies:{rouge:2,orange:1,verte:0} },
+  { id:2, prenom:'Thomas',  nom:'Martin',    poste:'vendeur',       status:'actif',   api_key:'EMP-B2C3D4E5-F6A7B8C9-D0E1F2A3', anomalies:{rouge:0,orange:3,verte:2} },
+  { id:3, prenom:'Camille', nom:'Bernard',   poste:'administratif', status:'actif',   api_key:'EMP-C3D4E5F6-A7B8C9D0-E1F2A3B4', anomalies:{rouge:1,orange:0,verte:1} },
+  { id:4, prenom:'Lucas',   nom:'Petit',     poste:'technicien',    status:'actif',   api_key:'EMP-D4E5F6A7-B8C9D0E1-F2A3B4C5', anomalies:{rouge:0,orange:0,verte:0} },
+  { id:5, prenom:'Sophie',  nom:'Leroy',     poste:'vendeur',       status:'actif',   api_key:'EMP-E5F6A7B8-C9D0E1F2-A3B4C5D6', anomalies:{rouge:0,orange:1,verte:3} },
+  { id:6, prenom:'Alexis',  nom:'Moreau',    poste:'vendeur',       status:'suspendu',api_key:'EMP-F6A7B8C9-D0E1F2A3-B4C5D6E7', anomalies:{rouge:3,orange:2,verte:0} },
+];
+
+const now = new Date();
+const hNow = now.getHours();
+
+const DEMO_SHIFTS = [
+  { id:1, employee_id:1, date_debut: todayAt(8,0),  date_fin: todayAt(17,0), type:'normal',    status:'actif',    poste:'Direction', nom:'Dupont',  prenom:'Marie' },
+  { id:2, employee_id:2, date_debut: todayAt(9,0),  date_fin: todayAt(18,0), type:'normal',    status:'retard',   poste:'Boutique',  nom:'Martin',  prenom:'Thomas' },
+  { id:3, employee_id:3, date_debut: todayAt(8,30), date_fin: todayAt(17,30),type:'normal',    status:'actif',    poste:'Admin',     nom:'Bernard', prenom:'Camille' },
+  { id:4, employee_id:4, date_debut: todayAt(7,0),  date_fin: todayAt(15,0), type:'matin',     status:'termine',  poste:'Technique', nom:'Petit',   prenom:'Lucas' },
+  { id:5, employee_id:5, date_debut: todayAt(13,0), date_fin: todayAt(21,0), type:'apres-midi',status:'planifie', poste:'Boutique',  nom:'Leroy',   prenom:'Sophie' },
+  { id:6, employee_id:6, date_debut: todayAt(10,0), date_fin: todayAt(18,0), type:'normal',    status:'absent',   poste:'Boutique',  nom:'Moreau',  prenom:'Alexis' },
+  { id:7, employee_id:1, date_debut: todayAt(17,0), date_fin: todayAt(19,0), type:'astreinte', status:'planifie', poste:'Direction', nom:'Dupont',  prenom:'Marie' },
+];
+
+const DEMO_ACTIVITY = [
+  { ts: minAgo(2),  prenom:'Marie',   nom:'Dupont',   action:'pointage_entree',    is_anomaly:false, urgence:null,     source:'terminal-01', context:'Badge scanné'},
+  { ts: minAgo(5),  prenom:'Camille', nom:'Bernard',  action:'traitement_courrier', is_anomaly:false, urgence:null,     source:'logiciel-rh', context:'15 emails traités'},
+  { ts: minAgo(12), prenom:'Alexis',  nom:'Moreau',   action:'acces_admin',        is_anomaly:true,  urgence:'ROUGE',  source:'poste-back',  context:'Accès hors shift'},
+  { ts: minAgo(18), prenom:'Thomas',  nom:'Martin',   action:'modification_prix',  is_anomaly:true,  urgence:'ORANGE', source:'caisse-02',   context:'Produit ID #441'},
+  { ts: minAgo(25), prenom:'Lucas',   nom:'Petit',    action:'check_materiel',     is_anomaly:false, urgence:null,     source:'mobile-app',  context:'Inventaire atelier'},
+  { ts: minAgo(31), prenom:'Sophie',  nom:'Leroy',    action:'pointage_entree',    is_anomaly:false, urgence:null,     source:'terminal-01', context:'Badge scanné'},
+  { ts: minAgo(40), prenom:'Alexis',  nom:'Moreau',   action:'export_donnees',     is_anomaly:true,  urgence:'ROUGE',  source:'poste-back',  context:'Export clients CSV'},
+  { ts: minAgo(55), prenom:'Camille', nom:'Bernard',  action:'action_inconnue',    is_anomaly:true,  urgence:'VERTE',  source:'logiciel-rh', context:'Commande non répertoriée'},
+  { ts: minAgo(68), prenom:'Marie',   nom:'Dupont',   action:'brief_equipe',       is_anomaly:false, urgence:null,     source:'logiciel-rh', context:'Brief 9h00'},
+  { ts: minAgo(90), prenom:'Lucas',   nom:'Petit',    action:'pointage_entree',    is_anomaly:false, urgence:null,     source:'terminal-01', context:'Badge scanné'},
+];
+
+const DEMO_ANOMALIES = DEMO_ACTIVITY.filter(a => a.is_anomaly);
+
+const DEMO_MISSING_STEPS = [
+  { prenom:'Thomas', nom:'Martin', action:'ouverture_caisse', heure_attendue:'8h-9h', description:'Caisse non ouverte ce matin' },
+  { prenom:'Alexis', nom:'Moreau', action:'pointage_entree',  heure_attendue:'10h-10h30', description:'Aucun pointage détecté (absent)' },
+];
+
+// ============================================================
+// HELPERS
+// ============================================================
+function todayAt(h, m) {
+  const d = new Date(); d.setHours(h, m, 0, 0); return d;
+}
+function minAgo(n) {
+  return new Date(Date.now() - n * 60000);
+}
+function fmtTime(d) {
+  return d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+}
+function fmtDateTime(d) {
+  return d.toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+function generateKey() {
+  const h = () => Math.random().toString(16).slice(2,10).toUpperCase();
+  return `EMP-${h()}-${h()}-${h()}`;
+}
+function toast(msg, ok=true) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = ok ? 'var(--accent-mid)' : 'var(--red)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// CLOCK
+// ============================================================
+function tick() {
+  document.getElementById('clock').textContent =
+    new Date().toLocaleTimeString('fr-FR');
+}
+tick(); setInterval(tick, 1000);
+
+// Date affichée
+let viewDate = new Date();
+function setTodayLabel() {
+  const opts = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
+  document.getElementById('today-date').textContent =
+    viewDate.toLocaleDateString('fr-FR', opts);
+}
+setTodayLabel();
+function prevDay(){ viewDate.setDate(viewDate.getDate()-1); setTodayLabel(); renderTimeline(); }
+function nextDay(){ viewDate.setDate(viewDate.getDate()+1); setTodayLabel(); renderTimeline(); }
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const panels = ['planning','activite','anomalies','salaries','test'];
+    t.classList.toggle('active', panels[i] === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+}
+
+// ============================================================
+// TIMELINE
+// ============================================================
+function renderTimeline() {
+  const grid = document.getElementById('tl-grid');
+  const hours = Array.from({length:24}, (_,i) => i);
+  const isToday = viewDate.toDateString() === new Date().toDateString();
+  const nowH = isToday ? (new Date().getHours() + new Date().getMinutes()/60) : -1;
+
+  let html = '<div class="tl-header" style="background:var(--surface2);position:sticky;left:0;z-index:2;border-right:1px solid var(--border)">Salarié</div>';
+  hours.forEach(h => {
+    html += `<div class="tl-header">${String(h).padStart(2,'0')}</div>`;
+  });
+
+  DEMO_SHIFTS.forEach(shift => {
+    const deb = new Date(shift.date_debut);
+    const fin = new Date(shift.date_fin);
+    const hDeb = deb.getHours() + deb.getMinutes()/60;
+    const hFin = fin.getHours() + fin.getMinutes()/60;
+    const hDebC = Math.floor(hDeb);
+    const span  = Math.ceil(hFin - hDebC);
+    const offPct= ((hDeb - hDebC) / 1) * 100;
+    const widPct= ((hFin - hDeb) / span) * 100;
+
+    html += `<div class="tl-name" style="position:sticky;left:0;z-index:1;background:var(--surface2)">
+      <span class="status-dot ${shift.status === 'actif' ? 'actif' : shift.status === 'absent' ? 'inactif' : 'actif'}"></span>
+      ${shift.prenom} ${shift.nom[0]}.
+    </div>`;
+
+    for (let h = 0; h < 24; h++) {
+      let inner = '';
+      const isNowCell = isToday && Math.floor(nowH) === h;
+      if (h === hDebC) {
+        const widthCols = Math.min(hFin - hDebC, 24 - hDebC);
+        inner = `<div class="tl-shift ${shift.status}" style="left:${offPct}%;width:${widPct*widthCols}%">
+          ${fmtTime(deb)}–${fmtTime(fin)} · ${shift.poste}
+        </div>`;
+      }
+      if (h > hDebC && h < hFin) { html += ''; continue; }
+      html += `<div class="tl-cell${isNowCell?' now':''}" style="${h===hDebC?`grid-column:span ${Math.min(Math.ceil(hFin-hDebC),24-hDebC)}`:''}">
+        ${inner}
+        ${isNowCell && inner==='' ? `<div class="now-line" style="left:${((nowH-h)/1)*100}%"></div>` : ''}
+      </div>`;
+    }
+  });
+
+  grid.innerHTML = html;
+
+  // Présences
+  const pList = document.getElementById('presence-list');
+  pList.innerHTML = DEMO_SHIFTS.map(s => {
+    const color = s.status==='actif'?'var(--green)':s.status==='absent'?'var(--red)':s.status==='retard'?'var(--orange)':s.status==='termine'?'var(--muted)':'var(--accent-light)';
+    const label = {actif:'Présent',absent:'Absent',retard:'En retard',planifie:'Planifié',termine:'Terminé'}[s.status]||s.status;
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:.4rem .6rem;background:var(--surface2);border-radius:6px">
+      <span style="font-weight:600">${s.prenom} ${s.nom}</span>
+      <span style="font-size:.75rem;color:${color}">${label}</span>
+    </div>`;
+  }).join('');
+
+  // Processus manquants
+  const mList = document.getElementById('missing-steps');
+  if (DEMO_MISSING_STEPS.length === 0) {
+    mList.innerHTML = '<div style="color:var(--green);font-size:.82rem">✓ Aucun processus manquant</div>';
+  } else {
+    mList.innerHTML = DEMO_MISSING_STEPS.map(s =>
+      `<div style="padding:.4rem .6rem;background:rgba(249,115,22,.07);border-left:3px solid var(--orange);border-radius:4px">
+        <div style="font-weight:600">${s.prenom} ${s.nom}</div>
+        <div style="color:var(--muted);font-size:.75rem">${s.description} · ${s.heure_attendue}</div>
+      </div>`
+    ).join('');
+  }
+}
+renderTimeline();
+
+// ============================================================
+// ACTIVITY FEED
+// ============================================================
+let feedData = [...DEMO_ACTIVITY];
+let feedInterval;
+
+function renderFeed() {
+  const el = document.getElementById('activity-feed');
+  el.innerHTML = feedData.map(a => {
+    const urgence = a.urgence ? a.urgence.toLowerCase() : 'normal';
+    return `<div class="feed-item ${urgence}">
+      <div>
+        <div class="feed-time">${fmtDateTime(a.ts)}</div>
+        ${a.urgence ? `<div class="feed-badge ${urgence}">${a.urgence}</div>` : ''}
+      </div>
+      <div class="feed-body">
+        <div class="feed-name">${a.prenom} ${a.nom} <span style="font-size:.75rem;color:var(--muted);font-weight:400">· ${a.source}</span></div>
+        <div class="feed-action">${a.action}${a.context ? ' · '+a.context : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function refreshFeed() {
+  // En démo : ajoute un event aléatoire
+  const emps = DEMO_EMPLOYEES.filter(e => e.status === 'actif');
+  const emp  = emps[Math.floor(Math.random() * emps.length)];
+  const actions = ['pointage_entree','check_stock','pause_dejeuner','cloture_caisse','rapport_intervention'];
+  const action  = actions[Math.floor(Math.random() * actions.length)];
+  feedData.unshift({ ts: new Date(), prenom: emp.prenom, nom: emp.nom, action, is_anomaly: false, urgence: null, source: 'refresh-demo', context: '' });
+  if (feedData.length > 30) feedData.pop();
+  renderFeed();
+}
+renderFeed();
+feedInterval = setInterval(refreshFeed, 5000);
+
+// ============================================================
+// ANOMALIES
+// ============================================================
+let filteredUrgence = '';
+
+function renderAnomalies() {
+  // Summary
+  const summEl = document.getElementById('anomaly-summary');
+  summEl.innerHTML = DEMO_EMPLOYEES.map(e => {
+    const total = e.anomalies.rouge + e.anomalies.orange + e.anomalies.verte;
+    const max   = 6;
+    return `<div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:.25rem;font-size:.82rem">
+        <span style="font-weight:600">${e.prenom} ${e.nom}</span>
+        <span style="display:flex;gap:.4rem">
+          ${e.anomalies.rouge  ? `<span style="color:var(--red);font-size:.72rem">${e.anomalies.rouge}R</span>` : ''}
+          ${e.anomalies.orange ? `<span style="color:var(--orange);font-size:.72rem">${e.anomalies.orange}O</span>` : ''}
+          ${e.anomalies.verte  ? `<span style="color:var(--green);font-size:.72rem">${e.anomalies.verte}V</span>` : ''}
+          ${total === 0 ? '<span style="color:var(--green);font-size:.72rem">✓</span>' : ''}
+        </span>
+      </div>
+      <div style="height:6px;background:var(--border);border-radius:99px;overflow:hidden;display:flex;gap:1px">
+        <div style="width:${Math.round(e.anomalies.rouge/max*100)}%;background:var(--red);border-radius:99px 0 0 99px"></div>
+        <div style="width:${Math.round(e.anomalies.orange/max*100)}%;background:var(--orange)"></div>
+        <div style="width:${Math.round(e.anomalies.verte/max*100)}%;background:var(--green);border-radius:0 99px 99px 0"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // List
+  const listEl = document.getElementById('anomaly-list');
+  const data = filteredUrgence
+    ? DEMO_ANOMALIES.filter(a => a.urgence === filteredUrgence)
+    : DEMO_ANOMALIES;
+  listEl.innerHTML = data.map(a => {
+    const u = a.urgence.toLowerCase();
+    return `<div class="anomaly-item ${u}">
+      <div class="anomaly-dot"></div>
+      <div class="anomaly-info">
+        <div class="anomaly-who">${a.prenom} ${a.nom}</div>
+        <div class="anomaly-desc">${a.action} · ${a.context} · <em>${a.source}</em></div>
+      </div>
+      <div style="text-align:right">
+        <span class="score-pill">${a.urgence}</span>
+        <div class="anomaly-ts">${fmtDateTime(a.ts)}</div>
+      </div>
+    </div>`;
+  }).join('') || '<div style="color:var(--muted);font-size:.83rem;padding:.5rem">Aucune anomalie</div>';
+}
+renderAnomalies();
+
+function filterAnomalies(val) {
+  filteredUrgence = val;
+  renderAnomalies();
+}
+
+// ============================================================
+// SALARIÉS
+// ============================================================
+let employees = [...DEMO_EMPLOYEES];
+
+function renderEmployees() {
+  const tbody = document.getElementById('emp-tbody');
+  tbody.innerHTML = employees.map(e => {
+    const total = e.anomalies.rouge + e.anomalies.orange + e.anomalies.verte;
+    const anomBadge = e.anomalies.rouge > 0
+      ? `<span style="color:var(--red);font-weight:700">${e.anomalies.rouge} ROUGE</span>`
+      : e.anomalies.orange > 0
+      ? `<span style="color:var(--orange)">${e.anomalies.orange} ORANGE</span>`
+      : `<span style="color:var(--green)">✓ RAS</span>`;
+    return `<tr>
+      <td><strong>${e.prenom} ${e.nom}</strong></td>
+      <td><span style="background:rgba(167,139,250,.12);color:var(--accent-light);padding:.15rem .5rem;border-radius:20px;font-size:.75rem">${e.poste}</span></td>
+      <td><span class="status-dot ${e.status}"></span>${e.status}</td>
+      <td>
+        <span class="key-code">${e.api_key}</span>
+        <button class="copy-btn" onclick="copyKey('${e.api_key}')">Copier</button>
+      </td>
+      <td>${anomBadge}</td>
+      <td>
+        <div style="display:flex;gap:.35rem">
+          <button class="btn btn-sm" onclick="useKey('${e.api_key}')">Tester</button>
+          <button class="btn btn-sm btn-danger" onclick="suspendEmp(${e.id})">Suspendre</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+renderEmployees();
+
+function addEmployee() {
+  const prenom = document.getElementById('f-prenom').value.trim();
+  const nom    = document.getElementById('f-nom').value.trim();
+  const poste  = document.getElementById('f-poste').value;
+  const email  = document.getElementById('f-email').value.trim();
+  if (!prenom || !nom) { toast('Prénom et nom requis', false); return; }
+  const emp = { id: employees.length+1, prenom, nom, poste, status:'actif', email, api_key: generateKey(), anomalies:{rouge:0,orange:0,verte:0} };
+  employees.push(emp);
+  DEMO_EMPLOYEES.push(emp);
+  renderEmployees();
+  document.getElementById('f-prenom').value = '';
+  document.getElementById('f-nom').value = '';
+  document.getElementById('f-email').value = '';
+  toast(`✓ ${prenom} ${nom} ajouté · Clé : ${emp.api_key.slice(0,16)}…`);
+}
+
+function copyKey(key) {
+  navigator.clipboard.writeText(key).then(() => toast('Clé copiée !')).catch(() => toast('Copiez manuellement : ' + key));
+}
+
+function suspendEmp(id) {
+  const emp = employees.find(e => e.id === id);
+  if (!emp) return;
+  emp.status = emp.status === 'suspendu' ? 'actif' : 'suspendu';
+  renderEmployees();
+  toast(`${emp.prenom} ${emp.nom} → ${emp.status}`);
+}
+
+function useKey(key) {
+  switchTab('test');
+  document.getElementById('test-key').value = key;
+}
+
+// ============================================================
+// MODAL SHIFT
+// ============================================================
+function openAddShift() {
+  const sel = document.getElementById('shift-emp');
+  sel.innerHTML = employees.map(e => `<option value="${e.id}">${e.prenom} ${e.nom} (${e.poste})</option>`).join('');
+  const now = new Date();
+  const fmt = d => d.toISOString().slice(0,16);
+  document.getElementById('shift-debut').value = fmt(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0));
+  document.getElementById('shift-fin').value   = fmt(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0));
+  document.getElementById('modal-shift').style.display = 'flex';
+}
+function closeModal() {
+  document.getElementById('modal-shift').style.display = 'none';
+}
+function saveShift() {
+  const empId = parseInt(document.getElementById('shift-emp').value);
+  const emp   = employees.find(e => e.id === empId);
+  const deb   = new Date(document.getElementById('shift-debut').value);
+  const fin   = new Date(document.getElementById('shift-fin').value);
+  const type  = document.getElementById('shift-type').value;
+  const note  = document.getElementById('shift-note').value;
+  if (fin <= deb) { toast('La fin doit être après le début', false); return; }
+  DEMO_SHIFTS.push({
+    id: DEMO_SHIFTS.length+1, employee_id: empId,
+    date_debut: deb, date_fin: fin, type, status: 'planifie',
+    poste: emp.poste, nom: emp.nom, prenom: emp.prenom, note
+  });
+  closeModal();
+  renderTimeline();
+  toast(`Shift ajouté : ${emp.prenom} ${fmtTime(deb)}→${fmtTime(fin)}`);
+}
+
+// ============================================================
+// TEST CLÉ
+// ============================================================
+let apiUrl = 'http://localhost:3001';
+
+function updateApiUrl(val) {
+  apiUrl = val;
+  document.getElementById('api-url-display').textContent = val;
+}
+
+function fillDemoKey() {
+  const emp = employees.find(e => e.status === 'actif');
+  if (emp) document.getElementById('test-key').value = emp.api_key;
+  document.getElementById('test-source').value = 'caisse-01';
+}
+
+function clearResult() {
+  document.getElementById('test-result').textContent = 'En attente d\'une action...';
+}
+
+async function testActivity() {
+  const api_key = document.getElementById('test-key').value.trim();
+  const action  = document.getElementById('test-action').value;
+  const source  = document.getElementById('test-source').value || 'dashboard';
+  const context = document.getElementById('test-context').value;
+  const resultEl= document.getElementById('test-result');
+
+  if (!api_key) { toast('Clé API requise', false); return; }
+
+  resultEl.textContent = '⏳ Analyse en cours...';
+  resultEl.style.color = 'var(--muted)';
+
+  // Tenter l'API réelle, sinon mode démo
+  try {
+    const res = await Promise.race([
+      fetch(`${apiUrl}/api/rh/activity`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ api_key, action, source, context })
+      }),
+      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 3000))
+    ]);
+    if (res.ok) {
+      const data = await res.json();
+      displayResult(data, action, api_key);
+      return;
+    }
+  } catch(e) { /* pas d'API, mode démo */ }
+
+  // ── Mode démo offline ──
+  const emp = employees.find(e => e.api_key === api_key);
+  simulateAnalysis(emp, action, source, context);
+}
+
+function simulateAnalysis(emp, action, source, context) {
+  const resultEl = document.getElementById('test-result');
+  const h = new Date().getHours();
+  const sensitives = ['acces_coffre','modification_prix','annulation_vente','remboursement','acces_admin','export_donnees','suppression_enregistrement','action_inconnue'];
+  const processActions = { vendeur:['pointage_entree','ouverture_caisse','check_stock','cloture_caisse','pointage_sortie'], responsable:['pointage_entree','brief_equipe','validation_planning','controle_caisses','rapport_journalier','pointage_sortie'], technicien:['pointage_entree','check_materiel','rapport_intervention','pointage_sortie'], administratif:['pointage_entree','traitement_courrier','pointage_sortie'] };
+
+  let score = 0; const reasons = [];
+
+  if (!emp || emp.status !== 'actif') { score = 10; reasons.push('Clé inconnue ou salarié inactif / suspendu'); }
+  else {
+    if (h < 6 || h >= 23) { score += 4; reasons.push(`Heure inhabituelle : ${h}h (hors plage 6h-23h)`); }
+    if (sensitives.includes(action)) { score += 3; reasons.push(`Action sensible : "${action}"`); }
+    if (emp.status === 'suspendu') { score += 5; reasons.push('Salarié suspendu actif'); }
+    const known = processActions[emp.poste] || [];
+    if (known.length > 0 && !known.includes(action)) { score += 2; reasons.push(`"${action}" absent du processus "${emp.poste}"`); }
+    score = Math.min(score, 10);
+  }
+
+  const urgence = score >= 8 ? 'ROUGE' : score >= 5 ? 'ORANGE' : score >= 2 ? 'VERTE' : null;
+  const colors  = { ROUGE:'var(--red)', ORANGE:'var(--orange)', VERTE:'var(--green)', null:'var(--green)' };
+  resultEl.style.color = colors[urgence] || 'var(--green)';
+
+  const result = {
+    logged: true,
+    mode: '🔵 Démo (API non connectée)',
+    employee: emp ? { id:emp.id, prenom:emp.prenom, nom:emp.nom, poste:emp.poste } : null,
+    action, source, context,
+    anomaly: { score, urgence: urgence || 'AUCUNE', is_anomaly: score > 0, reasons }
+  };
+  resultEl.textContent = JSON.stringify(result, null, 2);
+
+  // Ajouter au feed
+  if (emp) {
+    feedData.unshift({ ts:new Date(), prenom:emp.prenom, nom:emp.nom, action, is_anomaly:score>0, urgence, source, context });
+    if (feedData.length > 30) feedData.pop();
+    renderFeed();
+  }
+
+  if (urgence === 'ROUGE') toast(`🔴 Anomalie ROUGE détectée : score ${score}/10`, false);
+  else if (urgence === 'ORANGE') toast(`⚠️ Anomalie ORANGE : score ${score}/10`);
+  else toast(`✓ Activité enregistrée (score ${score}/10)`);
+}
+
+function displayResult(data, action, key) {
+  const resultEl = document.getElementById('test-result');
+  const u = data.anomaly?.urgence;
+  resultEl.style.color = u === 'ROUGE' ? 'var(--red)' : u === 'ORANGE' ? 'var(--orange)' : 'var(--green)';
+  resultEl.textContent = JSON.stringify({ ...data, mode:'🟢 API connectée' }, null, 2);
+  if (u === 'ROUGE') toast(`🔴 ROUGE score ${data.anomaly?.score}/10`, false);
+  else toast(`✓ Action enregistrée`);
+}
+</script>
+</body>
+</html>

@@ -343,6 +343,7 @@ const hunters = require('./src/hunters');
 const auctionSites = require('./src/auction-sites');
 const funnel = require('./src/alert-funnel');
 const optimizer = require('./src/listing-optimizer');
+const rh = require('./src/employees');
 
 // ── Matin 8h : CHASSE complète (produits + enchères + Web3) ──
 cron.schedule('0 8 * * *', async () => {
@@ -380,15 +381,159 @@ cron.schedule('0 9 * * 1', async () => {
   );
 });
 
-// ── 20h30 : Rapport journalier ──
+// ── 20h30 : Rapport journalier (trading + RH) ──
 cron.schedule('30 20 * * *', async () => {
   console.log('[PIPELINE] Rapport soir');
   await pipeline.eveningReport();
+  await rh.dailyRhReport();
 });
 
-// ── Toutes les 30 min : Check deadlines trades ──
+// ── Toutes les 30 min : Check deadlines trades + pointages manquants ──
 cron.schedule('*/30 * * * *', async () => {
   await dispatch('check_deadlines');
+  await rh.checkMissingCheckIns();
+});
+
+// ============================================================
+// ROUTES RH · Planning & Monitoring des salariés
+// ============================================================
+
+// ── Employés ──
+
+// Créer un salarié (génère la clé API automatiquement)
+app.post('/api/rh/employees', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth N2 minimum requise' });
+  try {
+    const employee = await rh.createEmployee(req.body);
+    res.json(employee);
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+// Liste des salariés
+app.get('/api/rh/employees', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const status = req.query.status || 'actif';
+  const employees = await rh.listEmployees(status === 'all' ? null : status);
+  res.json(employees);
+});
+
+// Détail d'un salarié
+app.get('/api/rh/employees/:id', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const employee = await rh.getEmployee(parseInt(req.params.id));
+  if (!employee) return res.status(404).json({ error: 'Salarié introuvable' });
+  res.json(employee);
+});
+
+// Mettre à jour le statut d'un salarié
+app.patch('/api/rh/employees/:id/status', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth N2 minimum requise' });
+  try {
+    const result = await rh.updateEmployeeStatus(parseInt(req.params.id), req.body.status);
+    res.json(result);
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+// Régénérer la clé API d'un salarié (N1 uniquement)
+app.post('/api/rh/employees/:id/rotate-key', authMiddleware, async (req, res) => {
+  if (req.authLevel !== 'n1') return res.status(403).json({ error: 'Niveau N1 requis pour régénérer une clé' });
+  try {
+    const result = await rh.rotateKey(parseInt(req.params.id));
+    res.json(result);
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+// Étapes de processus d'un poste
+app.get('/api/rh/process/:poste', async (req, res) => {
+  const steps = await rh.getProcessSteps(req.params.poste);
+  res.json(steps);
+});
+
+// Étapes manquantes pour un salarié aujourd'hui
+app.get('/api/rh/employees/:id/missing-steps', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const missing = await rh.checkMissingSteps(parseInt(req.params.id));
+  res.json(missing);
+});
+
+// ── Planning ──
+
+// Créer un shift
+app.post('/api/rh/shifts', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth N2 minimum requise' });
+  try {
+    const shift = await rh.createShift(req.body);
+    res.json(shift);
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+// Planning du jour
+app.get('/api/rh/shifts/today', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const schedule = await rh.getTodaySchedule();
+  res.json(schedule);
+});
+
+// Planning sur une plage
+app.get('/api/rh/shifts', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const { from, to } = req.query;
+  if (!from || !to) return res.status(400).json({ error: 'from et to requis (YYYY-MM-DD)' });
+  const schedule = await rh.getScheduleRange(from, to);
+  res.json(schedule);
+});
+
+// Shifts d'un salarié
+app.get('/api/rh/employees/:id/shifts', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const shifts = await rh.getEmployeeShifts(parseInt(req.params.id), req.query.date);
+  res.json(shifts);
+});
+
+// Mettre à jour le statut d'un shift
+app.patch('/api/rh/shifts/:id/status', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth N2 minimum requise' });
+  try {
+    const result = await rh.updateShiftStatus(parseInt(req.params.id), req.body.status);
+    res.json(result);
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+// ── Monitoring & Anomalies (accessible via clé salarié) ──
+
+// Enregistrer une activité depuis un logiciel externe (clé API dans header ou body)
+app.post('/api/rh/activity', async (req, res) => {
+  const api_key = req.headers['x-employee-key'] || req.body.api_key;
+  const { action, context, source, data } = req.body;
+  if (!api_key) return res.status(400).json({ error: 'Clé API salarié requise (header x-employee-key ou body.api_key)' });
+  if (!action)  return res.status(400).json({ error: 'Champ "action" requis' });
+  try {
+    const result = await rh.logActivity(api_key, action, { context, source: source || req.ip, data });
+    res.json(result);
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+// Anomalies récentes (superviseur)
+app.get('/api/rh/anomalies', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const limit   = Math.min(parseInt(req.query.limit || 50), 200);
+  const urgence = req.query.urgence || null;
+  const anomalies = await rh.getAnomalies({ limit, urgence });
+  res.json(anomalies);
+});
+
+// Résumé anomalies par salarié (7 jours)
+app.get('/api/rh/anomalies/summary', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const summary = await rh.anomalySummary();
+  res.json(summary);
+});
+
+// Rapport RH journalier à la demande
+app.get('/api/rh/report', authMiddleware, async (req, res) => {
+  if (!req.authLevel) return res.status(401).json({ error: 'Auth requise' });
+  const report = await rh.dailyRhReport();
+  res.json(report);
 });
 
 // ============================================================
