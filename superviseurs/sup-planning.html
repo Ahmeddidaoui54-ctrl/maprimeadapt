@@ -203,11 +203,11 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 
 <!-- KPIs -->
 <div class="kpi-row">
-  <div class="kpi green"><div class="kpi-val" id="k-actifs">6</div><div class="kpi-lbl">Salariés actifs</div></div>
-  <div class="kpi purple"><div class="kpi-val" id="k-presents">4</div><div class="kpi-lbl">Présents aujourd'hui</div></div>
+  <div class="kpi green"><div class="kpi-val" id="k-actifs">7</div><div class="kpi-lbl">Salariés actifs</div></div>
+  <div class="kpi purple"><div class="kpi-val" id="k-presents">5</div><div class="kpi-lbl">Présents aujourd'hui</div></div>
   <div class="kpi orange"><div class="kpi-val" id="k-retards">1</div><div class="kpi-lbl">Retards</div></div>
-  <div class="kpi red"><div class="kpi-val" id="k-anomalies">3</div><div class="kpi-lbl">Anomalies ROUGE</div></div>
-  <div class="kpi" style="--c:var(--muted)"><div class="kpi-val" style="color:var(--muted)" id="k-shifts">7</div><div class="kpi-lbl">Shifts ce jour</div></div>
+  <div class="kpi red"><div class="kpi-val" id="k-anomalies">4</div><div class="kpi-lbl">Anomalies ROUGE</div></div>
+  <div class="kpi" style="--c:var(--muted)"><div class="kpi-val" style="color:var(--muted)" id="k-shifts">8</div><div class="kpi-lbl">Shifts ce jour</div></div>
 </div>
 
 <!-- TABS -->
@@ -308,6 +308,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
           <option value="responsable">Responsable</option>
           <option value="technicien">Technicien</option>
           <option value="administratif">Administratif</option>
+          <option value="secretaire">Secrétaire</option>
         </select>
       </div>
       <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="marie@exemple.fr"></div>
@@ -363,6 +364,19 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
             <option value="acces_admin">acces_admin 🔴</option>
             <option value="export_donnees">export_donnees 🔴</option>
             <option value="action_inconnue">action_inconnue ❓</option>
+            <optgroup label="── Secrétaire ──">
+              <option value="ouverture_poste">ouverture_poste</option>
+              <option value="tri_courrier_emails">tri_courrier_emails</option>
+              <option value="gestion_agenda">gestion_agenda</option>
+              <option value="traitement_appels">traitement_appels</option>
+              <option value="saisie_courriers">saisie_courriers</option>
+              <option value="accueil_visiteurs">accueil_visiteurs</option>
+              <option value="suivi_dossiers">suivi_dossiers</option>
+              <option value="saisie_informatique">saisie_informatique</option>
+              <option value="preparation_reunions">preparation_reunions</option>
+              <option value="archivage">archivage</option>
+              <option value="rapport_journalier">rapport_journalier</option>
+            </optgroup>
           </select>
         </div>
         <div class="field" style="flex:1;min-width:140px">
@@ -455,6 +469,7 @@ const DEMO_EMPLOYEES = [
   { id:4, prenom:'Lucas',   nom:'Petit',     poste:'technicien',    status:'actif',   api_key:'EMP-D4E5F6A7-B8C9D0E1-F2A3B4C5', anomalies:{rouge:0,orange:0,verte:0} },
   { id:5, prenom:'Sophie',  nom:'Leroy',     poste:'vendeur',       status:'actif',   api_key:'EMP-E5F6A7B8-C9D0E1F2-A3B4C5D6', anomalies:{rouge:0,orange:1,verte:3} },
   { id:6, prenom:'Alexis',  nom:'Moreau',    poste:'vendeur',       status:'suspendu',api_key:'EMP-F6A7B8C9-D0E1F2A3-B4C5D6E7', anomalies:{rouge:3,orange:2,verte:0} },
+  { id:7, prenom:'Isabelle',nom:'Fontaine',  poste:'secretaire',    status:'actif',   api_key:'EMP-G7H8I9J0-K1L2M3N4-O5P6Q7R8', anomalies:{rouge:0,orange:1,verte:1} },
 ];
 
 const now = new Date();
@@ -466,8 +481,9 @@ const DEMO_SHIFTS = [
   { id:3, employee_id:3, date_debut: todayAt(8,30), date_fin: todayAt(17,30),type:'normal',    status:'actif',    poste:'Admin',     nom:'Bernard', prenom:'Camille' },
   { id:4, employee_id:4, date_debut: todayAt(7,0),  date_fin: todayAt(15,0), type:'matin',     status:'termine',  poste:'Technique', nom:'Petit',   prenom:'Lucas' },
   { id:5, employee_id:5, date_debut: todayAt(13,0), date_fin: todayAt(21,0), type:'apres-midi',status:'planifie', poste:'Boutique',  nom:'Leroy',   prenom:'Sophie' },
-  { id:6, employee_id:6, date_debut: todayAt(10,0), date_fin: todayAt(18,0), type:'normal',    status:'absent',   poste:'Boutique',  nom:'Moreau',  prenom:'Alexis' },
-  { id:7, employee_id:1, date_debut: todayAt(17,0), date_fin: todayAt(19,0), type:'astreinte', status:'planifie', poste:'Direction', nom:'Dupont',  prenom:'Marie' },
+  { id:6, employee_id:6, date_debut: todayAt(10,0), date_fin: todayAt(18,0), type:'normal',    status:'absent',   poste:'Boutique',  nom:'Moreau',   prenom:'Alexis' },
+  { id:7, employee_id:1, date_debut: todayAt(17,0), date_fin: todayAt(19,0), type:'astreinte', status:'planifie', poste:'Direction', nom:'Dupont',   prenom:'Marie' },
+  { id:8, employee_id:7, date_debut: todayAt(8,30), date_fin: todayAt(17,30),type:'normal',    status:'actif',    poste:'Secrétariat',nom:'Fontaine',prenom:'Isabelle' },
 ];
 
 const DEMO_ACTIVITY = [
@@ -481,13 +497,19 @@ const DEMO_ACTIVITY = [
   { ts: minAgo(55), prenom:'Camille', nom:'Bernard',  action:'action_inconnue',    is_anomaly:true,  urgence:'VERTE',  source:'logiciel-rh', context:'Commande non répertoriée'},
   { ts: minAgo(68), prenom:'Marie',   nom:'Dupont',   action:'brief_equipe',       is_anomaly:false, urgence:null,     source:'logiciel-rh', context:'Brief 9h00'},
   { ts: minAgo(90), prenom:'Lucas',   nom:'Petit',    action:'pointage_entree',    is_anomaly:false, urgence:null,     source:'terminal-01', context:'Badge scanné'},
+  { ts: minAgo(3),  prenom:'Isabelle',nom:'Fontaine', action:'tri_courrier_emails', is_anomaly:false, urgence:null,     source:'logiciel-sec', context:'32 emails triés, 4 urgents'},
+  { ts: minAgo(8),  prenom:'Isabelle',nom:'Fontaine', action:'gestion_agenda',      is_anomaly:false, urgence:null,     source:'logiciel-sec', context:'3 RDV confirmés, 1 reporté'},
+  { ts: minAgo(22), prenom:'Isabelle',nom:'Fontaine', action:'saisie_informatique', is_anomaly:true,  urgence:'ORANGE', source:'logiciel-sec', context:'Modification dossier client hors horaire'},
+  { ts: minAgo(47), prenom:'Isabelle',nom:'Fontaine', action:'pointage_entree',     is_anomaly:false, urgence:null,     source:'terminal-01', context:'Badge scanné'},
+  { ts: minAgo(72), prenom:'Isabelle',nom:'Fontaine', action:'acces_admin',         is_anomaly:true,  urgence:'ROUGE',  source:'poste-sec',   context:'Accès panneau admin non autorisé'},
 ];
 
 const DEMO_ANOMALIES = DEMO_ACTIVITY.filter(a => a.is_anomaly);
 
 const DEMO_MISSING_STEPS = [
-  { prenom:'Thomas', nom:'Martin', action:'ouverture_caisse', heure_attendue:'8h-9h', description:'Caisse non ouverte ce matin' },
-  { prenom:'Alexis', nom:'Moreau', action:'pointage_entree',  heure_attendue:'10h-10h30', description:'Aucun pointage détecté (absent)' },
+  { prenom:'Thomas',  nom:'Martin',  action:'ouverture_caisse',   heure_attendue:'8h-9h',    description:'Caisse non ouverte ce matin' },
+  { prenom:'Alexis',  nom:'Moreau',  action:'pointage_entree',    heure_attendue:'10h-10h30',description:'Aucun pointage détecté (absent)' },
+  { prenom:'Isabelle',nom:'Fontaine',action:'rapport_journalier', heure_attendue:'17h-18h',  description:'Compte-rendu journalier non transmis' },
 ];
 
 // ============================================================
@@ -873,7 +895,13 @@ function simulateAnalysis(emp, action, source, context) {
   const resultEl = document.getElementById('test-result');
   const h = new Date().getHours();
   const sensitives = ['acces_coffre','modification_prix','annulation_vente','remboursement','acces_admin','export_donnees','suppression_enregistrement','action_inconnue'];
-  const processActions = { vendeur:['pointage_entree','ouverture_caisse','check_stock','cloture_caisse','pointage_sortie'], responsable:['pointage_entree','brief_equipe','validation_planning','controle_caisses','rapport_journalier','pointage_sortie'], technicien:['pointage_entree','check_materiel','rapport_intervention','pointage_sortie'], administratif:['pointage_entree','traitement_courrier','pointage_sortie'] };
+  const processActions = {
+    vendeur:      ['pointage_entree','ouverture_caisse','check_stock','cloture_caisse','pointage_sortie'],
+    responsable:  ['pointage_entree','brief_equipe','validation_planning','controle_caisses','rapport_journalier','pointage_sortie'],
+    technicien:   ['pointage_entree','check_materiel','rapport_intervention','pointage_sortie'],
+    administratif:['pointage_entree','traitement_courrier','pointage_sortie'],
+    secretaire:   ['pointage_entree','ouverture_poste','tri_courrier_emails','gestion_agenda','traitement_appels','saisie_courriers','accueil_visiteurs','pause_dejeuner','suivi_dossiers','saisie_informatique','preparation_reunions','archivage','rapport_journalier','pointage_sortie'],
+  };
 
   let score = 0; const reasons = [];
 

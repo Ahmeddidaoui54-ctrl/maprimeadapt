@@ -90,5 +90,21 @@ INSERT INTO process_steps (poste, action_name, description, heure_min, heure_max
   ('technicien',     'pointage_sortie',    'Pointage sortie',                         16,  18, true,  4, 30),
   ('administratif',  'pointage_entree',    'Arrivée et pointage entrée',               8,  9,  true,  1, 30),
   ('administratif',  'traitement_courrier','Traitement courrier / emails entrants',    9,  10, true,  2, 60),
-  ('administratif',  'pointage_sortie',    'Pointage sortie',                         17,  18, true,  3, 30)
+  ('administratif',  'pointage_sortie',    'Pointage sortie',                         17,  18, true,  3, 30),
+
+  -- Secrétaire : 14 étapes couvrant la journée complète
+  ('secretaire',     'pointage_entree',         'Arrivée et pointage entrée',                         8,  9,  true,  1,  30),
+  ('secretaire',     'ouverture_poste',          'Démarrage PC, messagerie, logiciels métier',         8,  9,  true,  2,  20),
+  ('secretaire',     'tri_courrier_emails',      'Tri et priorisation courrier physique + emails',     8,  9,  true,  3,  30),
+  ('secretaire',     'gestion_agenda',           'Mise à jour agenda / planning RDV du jour',          9,  10, true,  4,  30),
+  ('secretaire',     'traitement_appels',        'Prise en charge des appels entrants',                9,  12, false, 5,  60),
+  ('secretaire',     'saisie_courriers',         'Rédaction et mise en forme des courriers sortants',  9,  12, false, 6,  90),
+  ('secretaire',     'accueil_visiteurs',        'Accueil et orientation des visiteurs',               9,  17, false, 7,  60),
+  ('secretaire',     'pause_dejeuner',           'Pause déjeuner',                                    12,  14, false, 8,  30),
+  ('secretaire',     'suivi_dossiers',           'Suivi et relance des dossiers en cours',            14,  16, true,  9,  60),
+  ('secretaire',     'saisie_informatique',      'Saisie et mise à jour bases de données / ERP',      14,  16, false, 10, 90),
+  ('secretaire',     'preparation_reunions',     'Préparation documents et salles de réunion',        14,  17, false, 11, 60),
+  ('secretaire',     'archivage',                'Archivage physique et numérique des documents',     16,  17, true,  12, 30),
+  ('secretaire',     'rapport_journalier',       'Compte-rendu journalier et transmission direction', 17,  18, true,  13, 30),
+  ('secretaire',     'pointage_sortie',          'Fermeture poste et pointage sortie',               17,  18, true,  14, 30)
 ON CONFLICT DO NOTHING;
