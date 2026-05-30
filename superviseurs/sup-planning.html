@@ -175,6 +175,29 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 .scroll-area::-webkit-scrollbar{width:4px}
 .scroll-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 
+/* PROCESS SECRÉTAIRE */
+.process-domain{margin-bottom:1.1rem}
+.process-domain-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:.3rem .7rem;border-radius:6px;margin-bottom:.5rem;display:inline-flex;align-items:center;gap:.4rem}
+.domain-rh{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.domain-compta{background:rgba(234,179,8,.1);color:#eab308;border:1px solid rgba(234,179,8,.25)}
+.domain-planning{background:rgba(124,58,237,.15);color:var(--accent-light);border:1px solid rgba(124,58,237,.3)}
+.domain-commu{background:rgba(56,189,248,.1);color:#38bdf8;border:1px solid rgba(56,189,248,.25)}
+.domain-logistique{background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.25)}
+.domain-reporting{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.process-step{display:flex;align-items:center;gap:.65rem;padding:.45rem .7rem;border-radius:7px;font-size:.8rem;margin-bottom:.3rem;background:var(--surface2)}
+.process-step:hover{background:#2d3f58}
+.step-time{font-size:.7rem;color:var(--muted);white-space:nowrap;min-width:60px;font-variant-numeric:tabular-nums}
+.step-name{flex:1;font-weight:500}
+.step-desc{font-size:.72rem;color:var(--muted);margin-left:auto;white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.step-oblig{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.step-oblig.oui{background:var(--green)}
+.step-oblig.non{background:var(--border)}
+.freq-pill{font-size:.65rem;padding:.1rem .4rem;border-radius:20px;font-weight:600;white-space:nowrap}
+.freq-quotidien{background:rgba(124,58,237,.15);color:var(--accent-light)}
+.freq-hebdo{background:rgba(234,179,8,.12);color:#eab308}
+.freq-mensuel{background:rgba(249,115,22,.12);color:var(--orange)}
+.sec-profile{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(34,197,94,.08));border:1px solid rgba(124,58,237,.25);border-radius:10px;padding:1rem;margin-bottom:1rem}
+
 @media(max-width:640px){
   .kpi-row{grid-template-columns:1fr 1fr}
   .grid2{grid-template-columns:1fr}
@@ -217,6 +240,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
   <button class="tab" onclick="switchTab('anomalies')">🚨 Anomalies</button>
   <button class="tab" onclick="switchTab('salaries')">👤 Salariés & Clés</button>
   <button class="tab" onclick="switchTab('test')">🔑 Tester une clé</button>
+  <button class="tab" onclick="switchTab('secretaire')">📋 Processus Secrétaire</button>
 </div>
 
 <!-- ========== PANEL : PLANNING ========== -->
@@ -426,6 +450,72 @@ fetch('<span id="api-url-display">http://localhost:3001</span>/api/rh/activity',
   </div>
 </div>
 
+<!-- ========== PANEL : SECRÉTAIRE ========== -->
+<div class="panel" id="panel-secretaire">
+
+  <!-- Profil -->
+  <div class="sec-profile">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:.75rem">
+      <div>
+        <div style="font-size:1.1rem;font-weight:700">👩‍💼 Secrétaire Polyvalente · Office Manager</div>
+        <div style="font-size:.8rem;color:var(--muted);margin-top:.2rem">Transversal · Autonome · Scalable · Périmètre multi-pôles</div>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <span style="background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);padding:.25rem .65rem;border-radius:20px;font-size:.73rem;font-weight:600">✓ Accès élargi</span>
+        <span style="background:rgba(124,58,237,.15);color:var(--accent-light);border:1px solid rgba(124,58,237,.3);padding:.25rem .65rem;border-radius:20px;font-size:.73rem;font-weight:600">6 domaines</span>
+        <span style="background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.25);padding:.25rem .65rem;border-radius:20px;font-size:.73rem;font-weight:600">37 process</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;font-size:.8rem">
+      <div style="background:rgba(0,0,0,.2);border-radius:7px;padding:.6rem .8rem">
+        <div style="color:var(--muted);font-size:.7rem;margin-bottom:.2rem">DOMAINES COUVERTS</div>
+        <div>Planning · RH · Compta</div>
+        <div>Commu · Logistique · Pilotage</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:7px;padding:.6rem .8rem">
+        <div style="color:var(--muted);font-size:.7rem;margin-bottom:.2rem">RYTHME</div>
+        <div>25 process quotidiens</div>
+        <div>7 hebdo · 5 mensuels</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:7px;padding:.6rem .8rem">
+        <div style="color:var(--muted);font-size:.7rem;margin-bottom:.2rem">ANOMALIES</div>
+        <div>Export & accès admin</div>
+        <div style="color:var(--green);font-size:.72rem">→ permis dans ce périmètre</div>
+      </div>
+      <div style="background:rgba(0,0,0,.2);border-radius:7px;padding:.6rem .8rem">
+        <div style="color:var(--muted);font-size:.7rem;margin-bottom:.2rem">CLÉ API</div>
+        <div style="font-family:monospace;font-size:.72rem;color:var(--accent-light)">EMP-G7H8I9J0-...</div>
+        <div style="color:var(--muted);font-size:.7rem">Isabelle Fontaine</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres fréquence -->
+  <div style="display:flex;gap:.4rem;margin-bottom:.75rem;flex-wrap:wrap">
+    <button class="tab active" id="freq-all"    onclick="filterFreq('all')"       style="font-size:.75rem;padding:.3rem .75rem">Tout voir</button>
+    <button class="tab"        id="freq-quot"   onclick="filterFreq('quotidien')" style="font-size:.75rem;padding:.3rem .75rem">Quotidien</button>
+    <button class="tab"        id="freq-hebdo"  onclick="filterFreq('hebdo')"     style="font-size:.75rem;padding:.3rem .75rem">Hebdo</button>
+    <button class="tab"        id="freq-mensuel"onclick="filterFreq('mensuel')"   style="font-size:.75rem;padding:.3rem .75rem">Mensuel</button>
+  </div>
+
+  <div class="grid2">
+    <!-- Colonne gauche : process par domaine -->
+    <div id="sec-process-list"></div>
+
+    <!-- Colonne droite : progression du jour + stats -->
+    <div>
+      <div class="card" style="margin-bottom:.75rem">
+        <div class="card-title">Progression aujourd'hui — Isabelle Fontaine</div>
+        <div id="sec-progress"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Valeur ajoutée par domaine</div>
+        <div id="sec-value-bars"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL AJOUT SHIFT -->
 <div id="modal-shift" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center">
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;width:min(480px,95vw);max-height:90vh;overflow-y:auto">
@@ -540,6 +630,152 @@ function toast(msg, ok=true) {
 }
 
 // ============================================================
+// PROCESSUS SECRÉTAIRE
+// ============================================================
+const SEC_PROCESS = {
+  planning: {
+    label: '📅 Planning multi-équipes', cls: 'domain-planning',
+    steps: [
+      { action:'coordination_planning_jour', desc:'Vérif absences + adaptation planning',      time:'9h–10h',  oblig:true,  freq:'quotidien', done:true  },
+      { action:'relance_absences',           desc:'Contact salariés absents sans justif',       time:'9h–11h',  oblig:true,  freq:'quotidien', done:true  },
+      { action:'validation_shifts',          desc:'Confirmation shifts du lendemain',            time:'16h–18h', oblig:true,  freq:'quotidien', done:false },
+      { action:'planification_semaine',      desc:'Planning multi-équipes semaine',              time:'Lun 9h',  oblig:true,  freq:'hebdo',     done:false },
+      { action:'validation_planning_suivant',desc:'Planning S+1 + anticipation absences',       time:'Ven 14h', oblig:true,  freq:'hebdo',     done:false },
+      { action:'reunion_coordination',       desc:'Réunion hebdo responsables pôles',            time:'Lun 9h',  oblig:false, freq:'hebdo',     done:false },
+    ]
+  },
+  rh: {
+    label: '👥 RH opérationnel', cls: 'domain-rh',
+    steps: [
+      { action:'saisie_conges_absences',     desc:'Saisie congés & justificatifs dans RH',      time:'10h–17h', oblig:false, freq:'quotidien', done:true  },
+      { action:'suivi_absences_maladies',    desc:'AT/maladie, docs médecine du travail',        time:'10h–17h', oblig:false, freq:'quotidien', done:false },
+      { action:'onboarding_nouveau_salarie', desc:'Accueil arrivants : badge, accès, process',   time:'9h–17h',  oblig:false, freq:'mensuel',   done:false },
+      { action:'bilan_anomalies_mensuel',    desc:'Synthèse anomalies + actions correctives',    time:'1er mois',oblig:true,  freq:'mensuel',   done:false },
+      { action:'audit_process',             desc:'Conformité process par pôle + recommandations',time:'1er mois',oblig:false, freq:'mensuel',   done:false },
+    ]
+  },
+  compta: {
+    label: '💰 Comptabilité légère', cls: 'domain-compta',
+    steps: [
+      { action:'suivi_factures',             desc:'Réception, vérif, classement factures',       time:'10h–12h', oblig:false, freq:'quotidien', done:true  },
+      { action:'relances_clients',           desc:'Relances paiements >30 jours',                time:'14h–17h', oblig:false, freq:'quotidien', done:false },
+      { action:'notes_de_frais',             desc:'Traitement notes de frais équipes',            time:'14h–17h', oblig:false, freq:'quotidien', done:false },
+      { action:'rapprochement_bancaire',     desc:'Relevé bancaire vs factures/paiements',        time:'Lun 9h',  oblig:false, freq:'hebdo',     done:false },
+      { action:'transmission_comptable',     desc:'Pièces comptables → expert-comptable',         time:'1er mois',oblig:true,  freq:'mensuel',   done:false },
+    ]
+  },
+  communication: {
+    label: '📣 Communication', cls: 'domain-commu',
+    steps: [
+      { action:'tri_courrier_emails',        desc:'Tri + priorisation courrier & emails',         time:'8h–9h',   oblig:true,  freq:'quotidien', done:true  },
+      { action:'traitement_appels',          desc:'Filtrage et transfert des appels',              time:'9h–18h',  oblig:false, freq:'quotidien', done:true  },
+      { action:'accueil_visiteurs',          desc:'Accueil, identification, orientation',          time:'9h–17h',  oblig:false, freq:'quotidien', done:true  },
+      { action:'redaction_courriers',        desc:'Mise en forme courriers sortants',              time:'9h–12h',  oblig:false, freq:'quotidien', done:false },
+      { action:'diffusion_notes_internes',   desc:'Transmission notes/circulaires à l\'équipe',   time:'9h–17h',  oblig:false, freq:'quotidien', done:false },
+    ]
+  },
+  logistique: {
+    label: '🔧 Logistique & support', cls: 'domain-logistique',
+    steps: [
+      { action:'gestion_fournitures',        desc:'Stocks bureau, déclenchement commandes',       time:'9h–17h',  oblig:false, freq:'quotidien', done:false },
+      { action:'suivi_prestataires',         desc:'Coord. prestataires externes & livraisons',    time:'9h–17h',  oblig:false, freq:'quotidien', done:false },
+      { action:'gestion_acces_locaux',       desc:'Badges, clés, accès sécurisés des locaux',    time:'8h–18h',  oblig:false, freq:'quotidien', done:true  },
+      { action:'preparation_reunions',       desc:'Ordre du jour, documents, salle réunion',      time:'14h–17h', oblig:false, freq:'quotidien', done:false },
+    ]
+  },
+  reporting: {
+    label: '📊 Pilotage & reporting', cls: 'domain-reporting',
+    steps: [
+      { action:'rapport_journalier',         desc:'CR journalier consolidé → direction',          time:'17h–18h', oblig:true,  freq:'quotidien', done:false },
+      { action:'bilan_semaine_precedente',   desc:'Synthèse KPIs semaine écoulée',                time:'Lun 8h',  oblig:true,  freq:'hebdo',     done:false },
+      { action:'rapport_hebdo_direction',    desc:'Rapport hebdo consolidé multi-services',       time:'Ven 15h', oblig:true,  freq:'hebdo',     done:false },
+      { action:'consolidation_kpis',         desc:'Présences, anomalies, prod, CA',               time:'Ven 15h', oblig:true,  freq:'hebdo',     done:false },
+      { action:'rapport_mensuel',            desc:'Rapport mensuel complet RH+Finance+Ops → DG', time:'1er mois',oblig:true,  freq:'mensuel',   done:false },
+    ]
+  },
+};
+
+const FREQ_COLORS = { quotidien:'freq-quotidien', hebdo:'freq-hebdo', mensuel:'freq-mensuel' };
+const FREQ_LABELS = { quotidien:'Quotidien', hebdo:'Hebdo', mensuel:'Mensuel' };
+let currentFreq = 'all';
+
+function filterFreq(f) {
+  currentFreq = f;
+  ['all','quot','hebdo','mensuel'].forEach(id => {
+    document.getElementById('freq-'+id)?.classList.remove('active');
+  });
+  const map = { all:'freq-all', quotidien:'freq-quot', hebdo:'freq-hebdo', mensuel:'freq-mensuel' };
+  document.getElementById(map[f] || 'freq-all')?.classList.add('active');
+  renderSecretaire();
+}
+
+function renderSecretaire() {
+  const container = document.getElementById('sec-process-list');
+  let html = '';
+
+  for (const [domainKey, domain] of Object.entries(SEC_PROCESS)) {
+    const steps = domain.steps.filter(s =>
+      currentFreq === 'all' || s.freq === currentFreq
+    );
+    if (steps.length === 0) continue;
+
+    html += `<div class="process-domain">
+      <div class="process-domain-title ${domain.cls}">${domain.label}</div>`;
+
+    steps.forEach(s => {
+      const doneStyle = s.done
+        ? 'border-left:3px solid var(--green);opacity:1'
+        : 'border-left:3px solid var(--border);opacity:.85';
+      html += `<div class="process-step" style="${doneStyle}">
+        <span class="step-oblig ${s.oblig ? 'oui' : 'non'}" title="${s.oblig ? 'Obligatoire' : 'Optionnel'}"></span>
+        <span class="step-time">${s.time}</span>
+        <span class="step-name">${s.action}</span>
+        <span class="freq-pill ${FREQ_COLORS[s.freq]}">${FREQ_LABELS[s.freq]}</span>
+        ${s.done ? '<span style="color:var(--green);font-size:.8rem">✓</span>' : ''}
+      </div>`;
+    });
+    html += '</div>';
+  }
+  container.innerHTML = html;
+
+  // Progression
+  const allSteps = Object.values(SEC_PROCESS).flatMap(d => d.steps.filter(s => s.freq === 'quotidien'));
+  const done = allSteps.filter(s => s.done).length;
+  const pct  = Math.round(done / allSteps.length * 100);
+  document.getElementById('sec-progress').innerHTML = `
+    <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem">
+      <span>${done}/${allSteps.length} tâches quotidiennes</span>
+      <span style="font-weight:700;color:${pct>=80?'var(--green)':pct>=50?'var(--orange)':'var(--red)'}">${pct}%</span>
+    </div>
+    <div style="height:10px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:.75rem">
+      <div style="width:${pct}%;height:100%;background:${pct>=80?'var(--green)':pct>=50?'var(--orange)':'var(--red)'};border-radius:99px;transition:width .5s"></div>
+    </div>
+    ${allSteps.filter(s=>s.done).map(s=>`
+      <div style="display:flex;align-items:center;gap:.5rem;font-size:.78rem;padding:.25rem 0;border-bottom:1px solid rgba(51,65,85,.3)">
+        <span style="color:var(--green)">✓</span>
+        <span>${s.action}</span>
+        <span style="margin-left:auto;color:var(--muted);font-size:.7rem">${s.time}</span>
+      </div>`).join('')}`;
+
+  // Valeur par domaine
+  const domainNames = { planning:'Planning', rh:'RH', compta:'Compta', communication:'Commu', logistique:'Logistique', reporting:'Pilotage' };
+  document.getElementById('sec-value-bars').innerHTML = Object.entries(SEC_PROCESS).map(([k,d]) => {
+    const steps = d.steps.length;
+    const oblig = d.steps.filter(s=>s.oblig).length;
+    const pctBar = Math.round(steps / 9 * 100);
+    return `<div style="margin-bottom:.55rem">
+      <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.2rem">
+        <span>${d.label.replace(/^[^\s]+\s/,'')}</span>
+        <span style="color:var(--muted)">${steps} tâches · ${oblig} oblig.</span>
+      </div>
+      <div style="height:6px;background:var(--border);border-radius:99px;overflow:hidden">
+        <div style="width:${Math.min(pctBar,100)}%;height:100%;background:var(--accent-light);border-radius:99px"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
 // CLOCK
 // ============================================================
 function tick() {
@@ -564,7 +800,7 @@ function nextDay(){ viewDate.setDate(viewDate.getDate()+1); setTodayLabel(); ren
 // ============================================================
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t,i) => {
-    const panels = ['planning','activite','anomalies','salaries','test'];
+    const panels = ['planning','activite','anomalies','salaries','test','secretaire'];
     t.classList.toggle('active', panels[i] === name);
   });
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));

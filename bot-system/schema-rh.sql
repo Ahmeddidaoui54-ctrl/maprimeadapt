@@ -92,19 +92,63 @@ INSERT INTO process_steps (poste, action_name, description, heure_min, heure_max
   ('administratif',  'traitement_courrier','Traitement courrier / emails entrants',    9,  10, true,  2, 60),
   ('administratif',  'pointage_sortie',    'Pointage sortie',                         17,  18, true,  3, 30),
 
-  -- Secrétaire : 14 étapes couvrant la journée complète
-  ('secretaire',     'pointage_entree',         'Arrivée et pointage entrée',                         8,  9,  true,  1,  30),
-  ('secretaire',     'ouverture_poste',          'Démarrage PC, messagerie, logiciels métier',         8,  9,  true,  2,  20),
-  ('secretaire',     'tri_courrier_emails',      'Tri et priorisation courrier physique + emails',     8,  9,  true,  3,  30),
-  ('secretaire',     'gestion_agenda',           'Mise à jour agenda / planning RDV du jour',          9,  10, true,  4,  30),
-  ('secretaire',     'traitement_appels',        'Prise en charge des appels entrants',                9,  12, false, 5,  60),
-  ('secretaire',     'saisie_courriers',         'Rédaction et mise en forme des courriers sortants',  9,  12, false, 6,  90),
-  ('secretaire',     'accueil_visiteurs',        'Accueil et orientation des visiteurs',               9,  17, false, 7,  60),
-  ('secretaire',     'pause_dejeuner',           'Pause déjeuner',                                    12,  14, false, 8,  30),
-  ('secretaire',     'suivi_dossiers',           'Suivi et relance des dossiers en cours',            14,  16, true,  9,  60),
-  ('secretaire',     'saisie_informatique',      'Saisie et mise à jour bases de données / ERP',      14,  16, false, 10, 90),
-  ('secretaire',     'preparation_reunions',     'Préparation documents et salles de réunion',        14,  17, false, 11, 60),
-  ('secretaire',     'archivage',                'Archivage physique et numérique des documents',     16,  17, true,  12, 30),
-  ('secretaire',     'rapport_journalier',       'Compte-rendu journalier et transmission direction', 17,  18, true,  13, 30),
-  ('secretaire',     'pointage_sortie',          'Fermeture poste et pointage sortie',               17,  18, true,  14, 30)
+  -- ══════════════════════════════════════════════════════════
+  -- SECRÉTAIRE POLYVALENTE · Office Manager transversal
+  -- Périmètre : tous les pôles · Autonome · Scalable
+  -- ══════════════════════════════════════════════════════════
+
+  -- QUOTIDIEN · Socle (obligatoire chaque jour)
+  ('secretaire', 'pointage_entree',            'Arrivée et pointage entrée',                                   8,  9,  true,  1,  30),
+  ('secretaire', 'ouverture_poste',            'Démarrage PC, messagerie, ERP, outils métier',                 8,  9,  true,  2,  20),
+  ('secretaire', 'tri_courrier_emails',        'Tri + priorisation courrier physique et emails (urgent/normal)',8,  9,  true,  3,  30),
+  ('secretaire', 'gestion_agenda',             'Mise à jour agenda direction + agenda équipes',                 9,  10, true,  4,  30),
+  ('secretaire', 'coordination_planning_jour', 'Vérif absences, adaptation planning multi-équipes du jour',    9,  10, true,  5,  30),
+  ('secretaire', 'relance_absences',           'Contact salariés absents sans justificatif (<1h après shift)',  9,  11, true,  6,  45),
+
+  -- QUOTIDIEN · Communication & accueil
+  ('secretaire', 'traitement_appels',          'Prise en charge, filtrage et transfert des appels entrants',   9,  18, false, 7,  60),
+  ('secretaire', 'accueil_visiteurs',          'Accueil, identification, orientation des visiteurs',           9,  17, false, 8,  60),
+  ('secretaire', 'redaction_courriers',        'Rédaction et mise en forme des courriers sortants',            9,  12, false, 9,  90),
+  ('secretaire', 'diffusion_notes_internes',   'Transmission notes/circulaires internes à l''équipe',          9,  17, false, 10, 60),
+
+  -- QUOTIDIEN · RH opérationnel
+  ('secretaire', 'saisie_conges_absences',     'Saisie congés, absences, justificatifs dans le système RH',   10, 17, false, 11, 60),
+  ('secretaire', 'suivi_absences_maladies',    'Suivi AT/maladie, transmission documents RH/médecine travail', 10, 17, false, 12, 60),
+  ('secretaire', 'validation_shifts',          'Confirmation et ajustement des shifts du lendemain',          16, 18, true,  13, 30),
+
+  -- QUOTIDIEN · Comptabilité légère
+  ('secretaire', 'suivi_factures',             'Réception, vérification, classement factures fournisseurs',   10, 12, false, 14, 90),
+  ('secretaire', 'relances_clients',           'Relances paiements clients en attente (>30 jours)',           14, 17, false, 15, 60),
+  ('secretaire', 'notes_de_frais',             'Traitement et vérification notes de frais équipes',           14, 17, false, 16, 60),
+
+  -- QUOTIDIEN · Logistique & support
+  ('secretaire', 'gestion_fournitures',        'Suivi stocks fournitures bureau, déclenchement commandes',     9,  17, false, 17, 90),
+  ('secretaire', 'suivi_prestataires',         'Coordination prestataires externes (maintenance, livraisons)',  9,  17, false, 18, 90),
+  ('secretaire', 'gestion_acces_locaux',       'Gestion badges, clés, accès sécurisés des locaux',            8,  18, false, 19, 60),
+
+  -- QUOTIDIEN · Clôture
+  ('secretaire', 'suivi_dossiers',             'Suivi avancement dossiers en cours + relances internes',      14,  17, true,  20, 60),
+  ('secretaire', 'preparation_reunions',       'Préparation ordre du jour, documents, salle réunion',         14,  17, false, 21, 60),
+  ('secretaire', 'saisie_informatique',        'Saisie et mise à jour bases de données, ERP, tableaux bord',  14,  17, false, 22, 90),
+  ('secretaire', 'archivage',                  'Archivage physique + numérique (GED) des documents du jour',  16,  18, true,  23, 30),
+  ('secretaire', 'rapport_journalier',         'Compte-rendu journalier consolidé → direction',              17,  18, true,  24, 30),
+  ('secretaire', 'pointage_sortie',            'Fermeture poste, sécurisation données, pointage sortie',     17,  18, true,  25, 30),
+
+  -- HEBDOMADAIRE (lundi matin)
+  ('secretaire', 'bilan_semaine_precedente',   'Synthèse KPIs semaine écoulée (présences, incidents, tâches)', 8,  10, true,  26, 30),
+  ('secretaire', 'planification_semaine',      'Planning multi-équipes semaine : shifts, congés, tâches',      9,  11, true,  27, 45),
+  ('secretaire', 'rapprochement_bancaire',     'Rapprochement relevé bancaire vs factures/paiements',          9,  12, false, 28, 60),
+  ('secretaire', 'reunion_coordination',       'Réunion de coordination hebdo avec responsables pôles',        9,  11, false, 29, 30),
+
+  -- HEBDOMADAIRE (vendredi)
+  ('secretaire', 'rapport_hebdo_direction',    'Rapport hebdomadaire consolidé multi-services → direction',   15,  18, true,  30, 45),
+  ('secretaire', 'consolidation_kpis',         'Consolidation KPIs : présences, anomalies, production, CA',   15,  17, true,  31, 45),
+  ('secretaire', 'validation_planning_suivant','Validation planning semaine suivante + anticipation absences', 14,  17, true,  32, 45),
+
+  -- MENSUEL (1er du mois)
+  ('secretaire', 'rapport_mensuel',            'Rapport mensuel complet : RH, finances, opérations → DG',     8,  12, true,  33, 60),
+  ('secretaire', 'transmission_comptable',     'Transmission pièces comptables à l''expert-comptable',         8,  12, true,  34, 60),
+  ('secretaire', 'bilan_anomalies_mensuel',    'Synthèse anomalies détectées + actions correctives proposées', 9,  12, true,  35, 60),
+  ('secretaire', 'onboarding_nouveau_salarie', 'Accueil nouveaux arrivants : badge, accès, formation process',  9,  17, false, 36, 90),
+  ('secretaire', 'audit_process',              'Vérification conformité process par pôle + recommandations',   9,  17, false, 37, 90)
 ON CONFLICT DO NOTHING;

@@ -16,7 +16,7 @@ const URGENCE = {
   VERTE:  { label: 'VERTE',  min: 2 },
 };
 
-// Actions considérées comme sensibles / haut risque
+// Actions considérées comme sensibles / haut risque (pour tous les postes)
 const SENSITIVE_ACTIONS = new Set([
   'acces_coffre', 'modification_prix', 'annulation_vente', 'remboursement',
   'acces_admin', 'export_donnees', 'suppression_enregistrement',
@@ -26,6 +26,30 @@ const SENSITIVE_ACTIONS = new Set([
 // Plages horaires normales (06h–23h) — toute activité hors plage = anomalie
 const HEURE_MIN_NORMALE = 6;
 const HEURE_MAX_NORMALE = 23;
+
+// ── Profil secrétaire polyvalente ──
+// Ce poste a un périmètre transversal légitime :
+// accès multi-pôles, exports de synthèse, saisies multi-domaines.
+// Les actions ci-dessous sont normales pour ce rôle → ne déclenchent PAS d'anomalie sensible.
+const SECRETAIRE_EXTENDED_PERMS = new Set([
+  // Accès légitimes multi-pôles
+  'export_donnees', 'acces_admin',
+  // RH
+  'saisie_conges_absences', 'suivi_absences_maladies', 'onboarding_nouveau_salarie',
+  'validation_shifts', 'coordination_planning_jour', 'relance_absences',
+  'planification_semaine', 'validation_planning_suivant',
+  // Comptabilité
+  'suivi_factures', 'relances_clients', 'notes_de_frais',
+  'rapprochement_bancaire', 'transmission_comptable',
+  // Reporting & pilotage
+  'rapport_hebdo_direction', 'rapport_mensuel', 'consolidation_kpis',
+  'bilan_semaine_precedente', 'bilan_anomalies_mensuel', 'audit_process',
+  // Logistique & accès
+  'gestion_acces_locaux', 'suivi_prestataires', 'gestion_fournitures',
+]);
+
+// Postes à périmètre large — anomalie sensible pondérée différemment
+const POSTES_ELARGIS = new Set(['secretaire', 'responsable']);
 
 // ============================================================
 // GÉNÉRATION & GESTION DES CLÉS API
@@ -235,10 +259,17 @@ async function scoreAnomaly(employee, action, context, ts, source) {
     reasons.push(`Action à ${hour}h (hors plage ${HEURE_MIN_NORMALE}h-${HEURE_MAX_NORMALE}h)`);
   }
 
-  // A2 · Action sensible
+  // A2 · Action sensible (pondération réduite pour postes à périmètre large)
   if (SENSITIVE_ACTIONS.has(action)) {
-    score += 3;
-    reasons.push(`Action sensible détectée: ${action}`);
+    const isExtended = POSTES_ELARGIS.has(employee.poste) &&
+                       SECRETAIRE_EXTENDED_PERMS.has(action);
+    if (!isExtended) {
+      score += 3;
+      reasons.push(`Action sensible détectée: ${action}`);
+    } else {
+      score += 1;
+      reasons.push(`Action élargie (périmètre ${employee.poste} autorisé): ${action}`);
+    }
   }
 
   // A3 · Salarié suspendu/inactif qui agit quand même
