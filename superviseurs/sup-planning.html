@@ -805,6 +805,7 @@ function switchTab(name) {
   });
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
+  if (name === 'secretaire') renderSecretaire();
 }
 
 // ============================================================
