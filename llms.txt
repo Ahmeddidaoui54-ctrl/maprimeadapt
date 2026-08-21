@@ -1,0 +1,81 @@
+# MaPrimeAdapt IDF — Mon Projet Habitat
+
+> Service indépendant d'accompagnement administratif pour MaPrimeAdapt, MaPrimeRénov et les aides ANAH à la rénovation et à l'adaptation du logement.
+> Spécialiste Île-de-France (75, 77, 78, 91, 92, 93, 94, 95) + antenne Var (83).
+> Simulation gratuite en 3 minutes. Non affilié à l'ANAH ni à l'État.
+> Contact : jeremy@maprimeadapt-idf.fr — +33 6 04 43 34 20.
+
+## Informations vérifiées
+
+- Nom commercial : Mon Projet Habitat (marque : MaPrimeAdapt IDF)
+- Site : https://www.maprimeadapt-idf.fr
+- Zone couverte : Île-de-France (départements 75, 77, 78, 91, 92, 93, 94, 95) et Var (83)
+- Public cible : propriétaires occupants 60 ans et plus, ou 70 ans et plus sans condition d'autonomie, sous plafonds de ressources ANAH
+- Montant maximum de l'aide MaPrimeAdapt : jusqu'à 22 000 € HT de travaux, prise en charge 50 % ou 70 % selon les revenus
+- Prestation : accompagnement AMO — diagnostic autonomie, montage du dossier ANAH, coordination des artisans certifiés RGE / Handibat / Silverbat, suivi des paiements
+- Coût pour le bénéficiaire : gratuit (les honoraires AMO sont intégrés au plan de financement ANAH)
+
+## Docs — pages principales
+
+- [Accueil MaPrimeAdapt](https://www.maprimeadapt-idf.fr/) : présentation générale, éligibilité, simulation gratuite en 3 minutes.
+- [Page pilier MaPrimeAdapt IDF](https://www.maprimeadapt-idf.fr/maprimeadapt-idf.html) : le dossier complet sur MaPrimeAdapt en Île-de-France, montants, plafonds, procédure.
+- [MaPrimeRénov / énergie](https://www.maprimeadapt-idf.fr/energie) : aides à la rénovation énergétique, isolation, chauffage, DPE.
+- [Rénovation globale](https://www.maprimeadapt-idf.fr/renovation) : parcours accompagné, MonAccompagnateurRénov, mandat AMO.
+- [Guide 2026](https://www.maprimeadapt-idf.fr/guide-2026) : guide complet à jour des barèmes 2026.
+- [Comparatif aides 2026](https://www.maprimeadapt-idf.fr/comparatif-aides-2026) : tableau récapitulatif MaPrimeAdapt vs MaPrimeRénov vs aides locales.
+- [Glossaire](https://www.maprimeadapt-idf.fr/glossaire) : lexique ANAH, AMO, RGE, PMR, Handibat, plafonds, GIR.
+- [Étude de cas](https://www.maprimeadapt-idf.fr/etude-de-cas) : dossier réel financé à 70 %.
+- [Carte IDF](https://www.maprimeadapt-idf.fr/carte-idf) : cartographie interactive des départements couverts.
+- [Contact](https://www.maprimeadapt-idf.fr/contact) : formulaire, téléphone, prise de rendez-vous.
+- [Prendre rendez-vous](https://www.maprimeadapt-idf.fr/premier-rdv) : premier rendez-vous téléphonique gratuit de 20 minutes.
+- [Transparence](https://www.maprimeadapt-idf.fr/transparence) : modèle économique, indépendance, absence d'affiliation ANAH.
+
+## Docs — pages départementales Île-de-France
+
+- [Paris (75)](https://www.maprimeadapt-idf.fr/departements/paris-75.html) : Haussmannien, immeubles anciens, aide de la Ville de Paris cumulable.
+- [Seine-et-Marne (77)](https://www.maprimeadapt-idf.fr/77-seine-et-marne) : département mixte historique + pavillonnaire.
+- [Yvelines (78)](https://www.maprimeadapt-idf.fr/78-yvelines) : patrimoine haussmannien, maisons de ville, seniors nombreux.
+- [Essonne (91)](https://www.maprimeadapt-idf.fr/91-essonne) : ville nouvelle et pavillonnaire.
+- [Hauts-de-Seine (92)](https://www.maprimeadapt-idf.fr/92-hauts-de-seine) : bâti cossu, Neuilly, Boulogne, Levallois.
+- [Seine-Saint-Denis (93)](https://www.maprimeadapt-idf.fr/93-seine-saint-denis) : mixte grands ensembles et pavillons.
+- [Val-de-Marne (94)](https://www.maprimeadapt-idf.fr/94-val-de-marne) : Vincennes, Saint-Mandé, Créteil.
+- [Val-d'Oise (95)](https://www.maprimeadapt-idf.fr/95-val-d-oise) : Cergy, Argenteuil, Sarcelles.
+
+## Docs — pages communales prioritaires
+
+- [Paris](https://www.maprimeadapt-idf.fr/paris) : 2,1 M habitants, 22 % de 60+, aide "Paris Logement" cumulable.
+- [Vincennes (94)](https://www.maprimeadapt-idf.fr/vincennes) : immeubles pierre années 30, 26 % de 60+.
+- [Saint-Mandé (94)](https://www.maprimeadapt-idf.fr/saint-mande) : résidentiel bourgeois.
+- [Créteil (94)](https://www.maprimeadapt-idf.fr/creteil) : grands ensembles années 70, ascenseurs et PMR.
+- [Neuilly-sur-Seine (92)](https://www.maprimeadapt-idf.fr/neuilly-sur-seine) : haussmannien cossu.
+- [Boulogne-Billancourt (92)](https://www.maprimeadapt-idf.fr/boulogne-billancourt) : mixte moderne et années 30.
+- [Levallois-Perret (92)](https://www.maprimeadapt-idf.fr/levallois-perret) : dense urbain.
+- [Versailles (78)](https://www.maprimeadapt-idf.fr/versailles) : haussmannien et maisons de ville.
+- [Saint-Germain-en-Laye (78)](https://www.maprimeadapt-idf.fr/saint-germain-en-laye) : patrimoine et pavillons.
+- [Meaux (77)](https://www.maprimeadapt-idf.fr/meaux) : historique et pavillonnaire.
+- [Melun (77)](https://www.maprimeadapt-idf.fr/melun) : préfecture, cœur historique.
+- [Cergy (95)](https://www.maprimeadapt-idf.fr/cergy) : ville nouvelle 70-80.
+- [Argenteuil (95)](https://www.maprimeadapt-idf.fr/argenteuil) : grands ensembles et pavillons.
+- [Évry-Courcouronnes (91)](https://www.maprimeadapt-idf.fr/evry-courcouronnes) : ville nouvelle.
+- [Sarcelles (95)](https://www.maprimeadapt-idf.fr/sarcelles) : grands ensembles emblématiques.
+
+## Docs — articles et outils
+
+- [Comment obtenir MaPrimeAdapt en 2026](https://www.maprimeadapt-idf.fr/blog/comment-obtenir-maprimeadapt-2026.html) : guide pas à pas, plafonds officiels, calendrier.
+- [Passoire thermique : coût de l'inaction](https://www.maprimeadapt-idf.fr/blog/passoire-thermique-cout-inaction.html) : chiffrer le surcoût énergétique.
+- [Arnaques MaPrimeAdapt 2026](https://www.maprimeadapt-idf.fr/blog/arnaques-maprimeadapt-2026.html) : signaux d'alerte, faux conseillers.
+- [Aider mes parents à rester chez eux](https://www.maprimeadapt-idf.fr/blog/aider-mes-parents-rester-chez-eux.html) : guide familles.
+- [Calculateur EHPAD vs domicile](https://www.maprimeadapt-idf.fr/calculateur-ehpad) : simulateur de coût comparé.
+- [Calculateur rénovation](https://www.maprimeadapt-idf.fr/calculateur-renov) : estimation aides MaPrimeRénov.
+- [Quiz autonomie](https://www.maprimeadapt-idf.fr/quiz-autonomie) : évaluation rapide GIR.
+- [Quiz énergie](https://www.maprimeadapt-idf.fr/quiz-energie) : diagnostic éligibilité MaPrimeRénov.
+
+## Optional — pages secondaires
+
+- [À propos](https://www.maprimeadapt-idf.fr/a-propos) : équipe, mission.
+- [Partenaires](https://www.maprimeadapt-idf.fr/partenaires) : artisans, ergothérapeutes.
+- [Presse](https://www.maprimeadapt-idf.fr/presse) : espace presse.
+- [Newsletter](https://www.maprimeadapt-idf.fr/newsletter) : abonnement.
+- [Mentions légales](https://www.maprimeadapt-idf.fr/mentions-legales.html)
+- [CGV](https://www.maprimeadapt-idf.fr/cgv.html)
+- [Politique de confidentialité](https://www.maprimeadapt-idf.fr/politique-confidentialite.html)

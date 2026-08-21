@@ -40,6 +40,31 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /rss /blog/rss.xml 200
 /feed /blog/rss.xml 200
 
+# Communes IDF (jolies URLs, SEO local)
+/paris /communes/paris.html 200
+/vincennes /communes/vincennes.html 200
+/saint-mande /communes/saint-mande.html 200
+/creteil /communes/creteil.html 200
+/neuilly-sur-seine /communes/neuilly-sur-seine.html 200
+/neuilly /communes/neuilly-sur-seine.html 200
+/boulogne-billancourt /communes/boulogne-billancourt.html 200
+/boulogne /communes/boulogne-billancourt.html 200
+/levallois-perret /communes/levallois-perret.html 200
+/levallois /communes/levallois-perret.html 200
+/versailles /communes/versailles.html 200
+/saint-germain-en-laye /communes/saint-germain-en-laye.html 200
+/saint-germain /communes/saint-germain-en-laye.html 200
+/meaux /communes/meaux.html 200
+/melun /communes/melun.html 200
+/cergy /communes/cergy.html 200
+/argenteuil /communes/argenteuil.html 200
+/evry-courcouronnes /communes/evry-courcouronnes.html 200
+/evry /communes/evry-courcouronnes.html 200
+/sarcelles /communes/sarcelles.html 200
+
+# llms.txt (GEO — Generative Engine Optimization)
+/llms.txt /llms.txt 200
+
 # 404 page
 /* /404.html 404
 

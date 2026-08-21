@@ -18,3 +18,6 @@ User-agent: ClaudeBot
 Allow: /
 
 Sitemap: https://www.maprimeadapt-idf.fr/sitemap.xml
+
+# IndexNow key: 7cf95788c79cbdea3d6ab87dff3dfda2
+# Cle IndexNow accessible a https://www.maprimeadapt-idf.fr/7cf95788c79cbdea3d6ab87dff3dfda2.txt
