@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Simulateur pompe à chaleur 2026 : calculez en temps réel MaPrimeRénov' PAC, Coup de pouce, prime sortie fossile, CEE, TVA 5,5% et votre reste à charge. 100% gratuit, sans inscription.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/simulateur-pac">
+<title>Simulateur pompe à chaleur 2026 — Estimez vos aides en 2 minutes | Mon Projet Habitat</title>
+<meta property="og:title" content="Simulateur PAC 2026 : jusqu'à 19 000 € d'aides en 2 minutes">
+<meta property="og:description" content="Calcul immédiat de vos aides PAC : MaPrimeRénov', Coup de pouce, CEE, TVA 5,5% et reste à charge.">
+<meta property="og:type" content="website">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Simulateur pompe à chaleur 2026","applicationCategory":"FinanceApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Simulateur gratuit d'aides pour l'installation d'une pompe à chaleur en 2026 : MaPrimeRénov', Coup de pouce chauffage, prime sortie fossile, CEE, TVA 5,5%, Éco-PTZ.","provider":{"@type":"Organization","name":"Mon Projet Habitat","url":"https://www.maprimeadapt-idf.fr"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Simulateur pompe à chaleur 2026","url":"https://www.maprimeadapt-idf.fr/simulateur-pac","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1",".lead",".result-total"]}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://www.maprimeadapt-idf.fr/"},{"@type":"ListItem","position":2,"name":"Pompe à chaleur","item":"https://www.maprimeadapt-idf.fr/pompe-a-chaleur"},{"@type":"ListItem","position":3,"name":"Simulateur PAC","item":"https://www.maprimeadapt-idf.fr/simulateur-pac"}]}
+</script>
+
+<style>
+:root{--green:#1a3d2b;--green-mid:#2d6a4f;--green-pale:#e8f0ec;--gold:#f59e0b;--gold-light:#fde68a;--white:#fff;--off-white:#ecf5ee;--text:#0f1f18;--muted:#4b5563;--border:#dce8e1;--radius:12px;--red:#dc2626;--font:-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--gold)!important;outline-offset:2px}
+a{color:var(--green-mid);text-decoration:none}
+button{font-family:inherit;border:none;cursor:pointer}
+.container{max-width:780px;margin:0 auto;padding:0 24px}
+
+.disclaimer-top{background:#fff7ed;border-bottom:1px solid #fed7aa;color:#92400e;padding:10px 20px;font-size:13px;text-align:center}
+.disclaimer-top a{color:#7c2d12;text-decoration:underline}
+.alert-2027{background:linear-gradient(90deg,#dc2626,#991b1b);color:#fff;padding:10px 20px;text-align:center;font-size:13px;font-weight:600}
+.alert-2027 a{color:#fde68a;text-decoration:underline;font-weight:800}
+
+.header{background:var(--green);padding:18px 0;border-bottom:2px solid var(--gold)}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo-badge{width:38px;height:38px;background:#fff;border-radius:8px;display:grid;place-items:center;font-weight:800;color:var(--green);font-size:14px}
+.logo-name{font-weight:700;font-size:16px}
+.logo-sub{font-size:11px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
+
+.hero{padding:50px 0 30px;text-align:center;background:linear-gradient(160deg,var(--green-pale),#fff)}
+.eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--green-mid);margin-bottom:12px}
+h1{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-1.2px;line-height:1.2;color:var(--green);margin-bottom:14px}
+.ornament{font-family:Georgia,serif;font-style:italic;color:var(--muted);font-size:15px;margin-bottom:10px}
+.lead{font-size:17px;color:var(--muted);max-width:600px;margin:0 auto;line-height:1.55}
+.hero-stats{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.hero-stat{background:rgba(26,61,43,.06);padding:6px 14px;border-radius:100px;font-size:13px;color:var(--green);font-weight:700}
+
+.quiz-section{padding:40px 0 60px}
+.quiz-card{background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:20px;padding:36px;box-shadow:0 4px 30px rgba(26,61,43,.08)}
+
+.progress-bar{height:6px;background:var(--off-white);border-radius:3px;overflow:hidden;margin-bottom:24px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--gold));border-radius:3px;transition:width .4s ease;width:20%}
+.progress-text{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;display:flex;justify-content:space-between}
+.progress-text .roman{font-family:Georgia,serif;font-style:italic;color:var(--gold)}
+
+.question{display:none}
+.question.active{display:block;animation:slide .3s ease}
+@keyframes slide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.question-num{font-size:13px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
+.question-num .roman{font-family:Georgia,serif;font-style:italic;margin-right:4px}
+.question h2{font-size:24px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:20px;letter-spacing:-.5px}
+
+.answers{display:flex;flex-direction:column;gap:10px}
+.answer-btn{padding:16px 20px;background:var(--off-white);border:2px solid var(--border);border-radius:12px;font-size:15px;font-weight:600;color:var(--text);text-align:left;transition:all .15s;display:flex;align-items:center;gap:14px;width:100%}
+.answer-btn:hover{border-color:var(--green-mid);background:var(--green-pale)}
+.answer-btn.selected{border-color:var(--green);background:var(--green-pale)}
+.answer-btn .letter{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--border);display:grid;place-items:center;font-weight:800;color:var(--muted);flex-shrink:0;font-size:14px;transition:all .15s}
+.answer-btn:hover .letter{border-color:var(--green-mid);color:var(--green)}
+.answer-btn.selected .letter{background:var(--green);color:#fff;border-color:var(--green)}
+.answer-hint{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:3px}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:520px){.field-row{grid-template-columns:1fr}}
+.field-row input{padding:14px;border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:15px}
+.field-row input:focus{border-color:var(--green-mid);outline:none}
+
+.nav-buttons{display:flex;justify-content:space-between;margin-top:24px;gap:12px}
+.btn-back{background:none;color:var(--muted);font-size:14px;font-weight:600;padding:12px 0}
+.btn-back:hover{color:var(--green)}
+.btn-back:disabled{opacity:.3;cursor:default}
+.btn-next{background:var(--green);color:#fff;padding:12px 28px;border-radius:10px;font-weight:700}
+.btn-next:hover{background:var(--green-mid)}
+
+.result{display:none}
+.result.active{display:block;animation:slide .4s ease}
+.result-header{text-align:center;margin-bottom:20px}
+.result-eyebrow{font-size:11px;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.result-title{font-size:22px;font-weight:800;color:var(--green);letter-spacing:-.5px}
+
+.result-total{background:linear-gradient(135deg,var(--green),#0d2e1e);color:#fff;border-radius:16px;padding:32px 24px;text-align:center;margin-bottom:20px;border-top:3px solid var(--gold)}
+.result-total-lbl{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;font-weight:800;margin-bottom:8px}
+.result-total-val{font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1;color:var(--gold)}
+.result-reste{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);font-size:15px}
+.result-reste strong{color:var(--gold);font-size:22px;font-weight:800}
+
+.breakdown{background:var(--off-white);border-radius:12px;padding:20px;margin-bottom:20px}
+.bd-title{font-size:13px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.bd-row{display:flex;justify-content:space-between;padding:8px 0;font-size:15px;border-bottom:1px solid var(--border)}
+.bd-row:last-child{border-bottom:none;font-weight:800;color:var(--green);padding-top:12px;margin-top:4px;border-top:2px solid var(--green)}
+.bd-row .amount{color:var(--green);font-weight:700}
+
+.cta-result{background:#fff;border:2px solid var(--gold);border-radius:16px;padding:28px;text-align:center;margin-top:24px}
+.cta-result h3{font-size:20px;font-weight:800;margin-bottom:8px;color:var(--green)}
+.cta-result p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.cta-form input{width:100%;padding:14px 16px;border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:15px;margin-bottom:10px}
+.cta-form button{width:100%;background:linear-gradient(135deg,#f59e0b,#f97316);color:#000;padding:16px;border-radius:10px;font-weight:800;font-size:16px}
+.cta-alt{margin-top:14px;font-size:13px}
+.cta-alt a{color:var(--green);font-weight:700;text-decoration:underline}
+
+.btn-restart{margin-top:18px;background:none;color:var(--muted);font-size:13px;text-decoration:underline;width:100%;text-align:center;padding:8px}
+
+.footer{background:var(--green);color:rgba(255,255,255,.7);padding:32px 0;font-size:13px;text-align:center;margin-top:50px}
+.footer a{color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<div class="disclaimer-top">
+  <strong>Service indépendant</strong> &mdash; Démarches officielles sur <a href="https://monprojet.anah.gouv.fr" target="_blank" rel="noopener">monprojet.anah.gouv.fr</a>
+</div>
+<div class="alert-2027">
+  ⚠️ Chaudière fioul/gaz ? <strong>Interdiction 2027 dans le neuf</strong> — <a href="/pompe-a-chaleur">Voir toutes les aides →</a>
+</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-badge">MPH</div>
+      <div><div class="logo-name">Mon Projet Habitat</div><div class="logo-sub">Simulateur PAC 2026</div></div>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Simulateur PAC 2026</span>
+    <h1>Combien d'aides pour ma pompe à chaleur&nbsp;?</h1>
+    <p class="ornament">— 5 questions, résultat immédiat.</p>
+    <p class="lead">Estimez en temps réel MaPrimeRénov' PAC, Coup de pouce, prime sortie fossile, CEE, TVA 5,5 % et votre reste à charge.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">2 min</div>
+      <div class="hero-stat">100% gratuit</div>
+      <div class="hero-stat">Sans inscription</div>
+    </div>
+  </div>
+</section>
+
+<section class="quiz-section">
+  <div class="container">
+    <div class="quiz-card">
+      <div id="quiz-area">
+        <div class="progress-text"><span><span class="roman">Étape</span> <span id="q-current">1</span> / 5</span><span id="q-pct">20%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+        <!-- Q1 : Type de logement -->
+        <div class="question active" data-q="0">
+          <div class="question-num"><span class="roman">I.</span>Logement</div>
+          <h2>Quel est votre type de logement ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="pick('type','maison',this)"><span class="letter">A</span><span>Maison individuelle<span class="answer-hint">Pavillon, maison de ville, longère…</span></span></button>
+            <button class="answer-btn" onclick="pick('type','appart',this)"><span class="letter">B</span><span>Appartement<span class="answer-hint">En copropriété ou immeuble</span></span></button>
+          </div>
+          <div class="field-row">
+            <input type="number" id="surface" placeholder="Surface (m²)" value="90" min="15" max="500" oninput="updateSurface()">
+          </div>
+        </div>
+
+        <!-- Q2 : Chauffage actuel -->
+        <div class="question" data-q="1">
+          <div class="question-num"><span class="roman">II.</span>Chauffage actuel</div>
+          <h2>Quel est votre chauffage principal ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="pick('chauf','fioul',this)"><span class="letter">A</span><span>Chaudière fioul<span class="answer-hint">Coup de pouce + prime sortie fossile</span></span></button>
+            <button class="answer-btn" onclick="pick('chauf','gaz',this)"><span class="letter">B</span><span>Chaudière gaz<span class="answer-hint">Interdite en 2027 dans le neuf</span></span></button>
+            <button class="answer-btn" onclick="pick('chauf','elec',this)"><span class="letter">C</span><span>Électrique (convecteurs)</span></button>
+            <button class="answer-btn" onclick="pick('chauf','autre',this)"><span class="letter">D</span><span>Autre (bois, urbain, autre)</span></button>
+          </div>
+        </div>
+
+        <!-- Q3 : Zone géographique -->
+        <div class="question" data-q="2">
+          <div class="question-num"><span class="roman">III.</span>Localisation</div>
+          <h2>Où se trouve votre logement ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="pick('zone','idf-ville',this)"><span class="letter">A</span><span>Paris + petite couronne (75/92/93/94)</span></button>
+            <button class="answer-btn" onclick="pick('zone','idf-banl',this)"><span class="letter">B</span><span>Grande couronne IDF (77/78/91/95)<span class="answer-hint">Pavillonnaire — le plus concerné</span></span></button>
+            <button class="answer-btn" onclick="pick('zone','var',this)"><span class="letter">C</span><span>Var (83)</span></button>
+            <button class="answer-btn" onclick="pick('zone','autre',this)"><span class="letter">D</span><span>Autre région</span></button>
+          </div>
+        </div>
+
+        <!-- Q4 : Revenus -->
+        <div class="question" data-q="3">
+          <div class="question-num"><span class="roman">IV.</span>Revenus foyer</div>
+          <h2>Quel est votre profil de revenus (ANAH) ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="pick('rev','tres_modeste',this)"><span class="letter">A</span><span>Très modestes — profil <strong>Bleu</strong><span class="answer-hint">Ex. couple &lt; 25 700 €/an — MaPrimeRénov' 11 000 €</span></span></button>
+            <button class="answer-btn" onclick="pick('rev','modeste',this)"><span class="letter">B</span><span>Modestes — profil <strong>Jaune</strong><span class="answer-hint">Ex. couple &lt; 31 300 €/an — MaPrimeRénov' 9 000 €</span></span></button>
+            <button class="answer-btn" onclick="pick('rev','intermediaire',this)"><span class="letter">C</span><span>Intermédiaires — profil <strong>Violet</strong><span class="answer-hint">Ex. couple &lt; 46 900 €/an — MaPrimeRénov' 5 000 €</span></span></button>
+            <button class="answer-btn" onclick="pick('rev','superieur',this)"><span class="letter">D</span><span>Supérieurs — profil <strong>Rose</strong><span class="answer-hint">Pas de MaPrimeRénov' PAC mais CEE + TVA + Éco-PTZ</span></span></button>
+          </div>
+        </div>
+
+        <!-- Q5 : Composition foyer -->
+        <div class="question" data-q="4">
+          <div class="question-num"><span class="roman">V.</span>Composition</div>
+          <h2>Combien de personnes composent votre foyer ?</h2>
+          <div class="answers">
+            <button class="answer-btn" onclick="pick('pers',1,this)"><span class="letter">A</span>1 personne</button>
+            <button class="answer-btn" onclick="pick('pers',2,this)"><span class="letter">B</span>2 personnes</button>
+            <button class="answer-btn" onclick="pick('pers',3,this)"><span class="letter">C</span>3 personnes</button>
+            <button class="answer-btn" onclick="pick('pers',4,this)"><span class="letter">D</span>4 personnes</button>
+            <button class="answer-btn" onclick="pick('pers',5,this)"><span class="letter">E</span>5 personnes et plus</button>
+          </div>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn-back" id="btn-back" onclick="goBack()" disabled>&larr; Précédent</button>
+          <button class="btn-next" id="btn-next" onclick="goNext()" style="display:none">Suivant &rarr;</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="result" id="result">
+        <div class="result-header">
+          <div class="result-eyebrow">Votre estimation PAC 2026</div>
+          <div class="result-title">Aides mobilisables sur votre projet</div>
+        </div>
+
+        <div class="result-total">
+          <div class="result-total-lbl">Total aides cumulées</div>
+          <div class="result-total-val" id="r-total">15 400 €</div>
+          <div class="result-reste">Reste à charge : <strong id="r-reste">0 €</strong> sur un chantier de <span id="r-cout">15 000 €</span></div>
+        </div>
+
+        <div class="breakdown">
+          <div class="bd-title">Détail des aides mobilisables</div>
+          <div id="bd-list"></div>
+        </div>
+
+        <div class="cta-result">
+          <h3>Confirmer par un appel expert</h3>
+          <p>Nous vous rappelons sous 24h pour affiner l'estimation et lancer votre dossier gratuitement.</p>
+          <form class="cta-form" action="/api/lead" method="POST" onsubmit="return trackSubmit(this)">
+            <input type="hidden" name="source" value="simulateur-pac">
+            <input type="hidden" name="estimation" id="est-hidden" value="">
+            <input type="text" name="prenom" placeholder="Prénom" required>
+            <input type="tel" name="tel" placeholder="Téléphone" required>
+            <button type="submit">Être rappelé ›</button>
+          </form>
+          <p class="cta-alt">ou appelez directement <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+        </div>
+
+        <button class="btn-restart" onclick="restart()">↺ Recommencer le simulateur</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Mon Projet Habitat &middot; Service indépendant &middot; <a href="tel:+33604433420">+33 6 04 43 34 20</a></p>
+    <p style="margin-top:8px;font-size:11px;opacity:.7">Simulateur à valeur indicative. Les montants définitifs dépendent du devis RGE, du dossier ANAH et du barème 2026 en vigueur au dépôt.</p>
+    <p style="margin-top:12px"><a href="/pompe-a-chaleur">← Retour à la page PAC</a></p>
+  </div>
+</footer>
+
+<script>
+let currentQ = 0;
+const totalQ = 5;
+const state = { type:'maison', chauf:'fioul', zone:'idf-banl', rev:'tres_modeste', pers:2, surface:90 };
+
+function pick(field, value, btn){
+  state[field] = value;
+  btn.parentElement.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  setTimeout(()=>{
+    if (currentQ < totalQ - 1) { currentQ++; showQuestion(); }
+    else { showResult(); }
+  }, 200);
+}
+
+function updateSurface(){
+  const v = parseInt(document.getElementById('surface').value) || 90;
+  state.surface = Math.max(15, Math.min(500, v));
+}
+
+function showQuestion(){
+  document.querySelectorAll('.question').forEach(q=>q.classList.remove('active'));
+  document.querySelector('.question[data-q="' + currentQ + '"]').classList.add('active');
+  document.getElementById('q-current').textContent = currentQ + 1;
+  const pct = Math.round(((currentQ + 1) / totalQ) * 100);
+  document.getElementById('q-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('btn-back').disabled = currentQ === 0;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function goBack(){ if(currentQ > 0){ currentQ--; showQuestion(); } }
+function goNext(){ if(currentQ < totalQ - 1){ currentQ++; showQuestion(); } else showResult(); }
+
+function computeAides(){
+  let cout;
+  if (state.type === 'appart') cout = 12000;
+  else if (state.surface > 130) cout = 17000;
+  else if (state.surface < 70) cout = 13000;
+  else cout = 15000;
+
+  const mprBase = { tres_modeste:11000, modeste:9000, intermediaire:5000, superieur:0 };
+  let mpr = state.type === 'appart' ? 0 : mprBase[state.rev];
+  let cdp = (state.chauf === 'fioul' || state.chauf === 'gaz') ? 5000 : 0;
+  if (state.type === 'appart') cdp = Math.min(cdp, 2500);
+  let fossile = (state.chauf === 'fioul' || state.chauf === 'gaz') ? 500 : 0;
+  const ceeMap = { tres_modeste:1500, modeste:1200, intermediaire:800, superieur:800 };
+  let cee = ceeMap[state.rev];
+  if (state.type === 'appart') cee = Math.min(cee, 800);
+  let bonusZone = 0;
+  if ((state.zone === 'idf-ville' || state.zone === 'idf-banl') && (state.rev === 'tres_modeste' || state.rev === 'modeste')) bonusZone = 500;
+
+  return { cout, mpr, cdp, fossile, cee, bonusZone };
+}
+
+function showResult(){
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('result').classList.add('active');
+
+  const a = computeAides();
+  const total = a.mpr + a.cdp + a.fossile + a.cee + a.bonusZone;
+  const reste = Math.max(0, a.cout - total);
+
+  document.getElementById('r-total').textContent = total.toLocaleString('fr-FR') + ' €';
+  document.getElementById('r-reste').textContent = reste.toLocaleString('fr-FR') + ' €';
+  document.getElementById('r-cout').textContent = a.cout.toLocaleString('fr-FR') + ' €';
+  document.getElementById('est-hidden').value = 'total=' + total + '|reste=' + reste + '|type=' + state.type + '|chauf=' + state.chauf + '|rev=' + state.rev + '|zone=' + state.zone;
+
+  const rows = [];
+  if (a.mpr) rows.push({n:"MaPrimeRénov' PAC", v:a.mpr});
+  if (a.cdp) rows.push({n:'Coup de pouce chauffage', v:a.cdp});
+  if (a.fossile) rows.push({n:'Prime sortie fossile', v:a.fossile});
+  if (a.cee) rows.push({n:'CEE bonifiés', v:a.cee});
+  if (a.bonusZone) rows.push({n:'Bonus zone IDF', v:a.bonusZone});
+  rows.push({n:'TVA 5,5 % (au lieu de 20 %)', v:'auto', hint:true});
+  rows.push({n:'Éco-PTZ (prêt à taux zéro)', v:'jusqu\'à 50 000 €', hint:true});
+  rows.push({n:'TOTAL AIDES', v:total, total:true});
+
+  document.getElementById('bd-list').innerHTML = rows.map(r=>{
+    const val = r.total || !r.hint ? (typeof r.v === 'number' ? r.v.toLocaleString('fr-FR') + ' €' : r.v) : r.v;
+    return '<div class="bd-row"><span>' + r.n + '</span><span class="amount">' + val + '</span></div>';
+  }).join('');
+
+  try { if(typeof gtag !== 'undefined') gtag('event','simulateur_pac_complete',{event_category:'engagement',value:total}); } catch(_){}
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function trackSubmit(f){
+  try { if(typeof gtag !== 'undefined') gtag('event','simulateur_pac_lead',{event_category:'conversion'}); } catch(_){}
+  return true;
+}
+
+function restart(){
+  currentQ = 0;
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('result').classList.remove('active');
+  document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('selected'));
+  showQuestion();
+}
+</script>
+
+</body>
+</html>

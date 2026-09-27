@@ -59,6 +59,22 @@
 - [Évry-Courcouronnes (91)](https://www.maprimeadapt-idf.fr/evry-courcouronnes) : ville nouvelle.
 - [Sarcelles (95)](https://www.maprimeadapt-idf.fr/sarcelles) : grands ensembles emblématiques.
 
+## Pompe a chaleur (PAC) 2026
+
+- [Pompe à chaleur — page pilier](https://www.maprimeadapt-idf.fr/pompe-a-chaleur) : dispositif PAC 2026, cumul jusqu'à 19 000 € d'aides (MaPrimeRénov' PAC, Coup de pouce chauffage, prime sortie fossile, CEE bonifiés, TVA 5,5%, Éco-PTZ), FAQ 8 questions, simulateur inline.
+- [Simulateur PAC 2026](https://www.maprimeadapt-idf.fr/simulateur-pac) : 5 questions (type de logement, chauffage actuel, zone géographique, revenus, composition foyer) et calcul temps réel des aides + reste à charge.
+- [Guide PAC 2026 (blog)](https://www.maprimeadapt-idf.fr/blog/pompe-a-chaleur-aides-2026.html) : article de référence 2500 mots — pourquoi 2026, 6 aides détaillées, choix air/eau vs air/air vs géothermique, 3 cas concrets chiffrés, processus complet, cumul avec Action Logement / Région IDF, prévention arnaques, FAQ 10 questions.
+- [PAC Melun (77)](https://www.maprimeadapt-idf.fr/pac/melun-77.html) : préfecture Seine-et-Marne, 58% de logements fioul/gaz, ~8 500 pavillons éligibles.
+- [PAC Meaux (77)](https://www.maprimeadapt-idf.fr/pac/meaux-77.html) : ville historique + banlieue pavillonnaire, 12 000 pavillons.
+- [PAC Versailles (78)](https://www.maprimeadapt-idf.fr/pac/versailles-78.html) : patrimoine haussmannien, chaudières gaz à remplacer avant 2027.
+- [PAC Mantes-la-Jolie (78)](https://www.maprimeadapt-idf.fr/pac/mantes-la-jolie-78.html) : vallée de la Seine, hameaux fioul.
+- [PAC Argenteuil (95)](https://www.maprimeadapt-idf.fr/pac/argenteuil-95.html) : grande banlieue Val-d'Oise, 14 000 pavillons, fioul dominant.
+- [PAC Cergy (95)](https://www.maprimeadapt-idf.fr/pac/cergy-95.html) : ville nouvelle 70-80, copropriétés gaz.
+- [PAC Créteil (94)](https://www.maprimeadapt-idf.fr/pac/creteil-94.html) : grands ensembles + quartier Front-de-Lac au fioul.
+- [PAC Évry-Courcouronnes (91)](https://www.maprimeadapt-idf.fr/pac/evry-91.html) : ville nouvelle, mix appartements et pavillonnaires fioul.
+
+Contexte réglementaire clé : interdiction d'installation des chaudières au gaz dans le neuf et rénovations lourdes au 1er janvier 2027 (chaudières fioul déjà interdites depuis 2022 dans le neuf).
+
 ## Docs — articles et outils
 
 - [Comment obtenir MaPrimeAdapt en 2026](https://www.maprimeadapt-idf.fr/blog/comment-obtenir-maprimeadapt-2026.html) : guide pas à pas, plafonds officiels, calendrier.

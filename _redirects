@@ -62,6 +62,29 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /evry /communes/evry-courcouronnes.html 200
 /sarcelles /communes/sarcelles.html 200
 
+# Pompe a chaleur (PAC) 2026
+/pac /pompe-a-chaleur.html 200
+/pompe-a-chaleur /pompe-a-chaleur.html 200
+/pompe-chaleur /pompe-a-chaleur.html 200
+/aide-pac /pompe-a-chaleur.html 200
+/aides-pac /pompe-a-chaleur.html 200
+/simulateur-pac /simulateur-pac.html 200
+/pac-simulateur /simulateur-pac.html 200
+/simulateur-pompe-a-chaleur /simulateur-pac.html 200
+/blog/pac /blog/pompe-a-chaleur-aides-2026.html 200
+/pac-melun /pac/melun-77.html 200
+/pac-meaux /pac/meaux-77.html 200
+/pac-versailles /pac/versailles-78.html 200
+/pac-mantes /pac/mantes-la-jolie-78.html 200
+/pac-argenteuil /pac/argenteuil-95.html 200
+/pac-cergy /pac/cergy-95.html 200
+/pac-creteil /pac/creteil-94.html 200
+/pac-evry /pac/evry-91.html 200
+
+# Sitemap index (multi-sitemap)
+/sitemap-index.xml /sitemap-index.xml 200
+/sitemap-pac.xml /sitemap-pac.xml 200
+
 # llms.txt (GEO — Generative Engine Optimization)
 /llms.txt /llms.txt 200
 
