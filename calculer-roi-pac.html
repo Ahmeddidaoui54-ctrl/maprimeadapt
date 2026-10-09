@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculer ROI PAC 2026 : amortissement 2-4 ans. Économies, aides, reste à charge réel.">
+<title>Calculer ROI pompe à chaleur 2026 : amortissement années</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui; background: linear-gradient(135deg, #f0f4f8, #e8eef7); color: #2c3e50; }
+.container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.hero { background: white; border-radius: 12px; padding: 50px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
+.hero h1 { font-size: 32px; font-weight: 700; color: #1a3d2b; }
+.section { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 30px; }
+.section h2 { font-size: 20px; font-weight: 600; color: #1a3d2b; margin-bottom: 15px; }
+.calc { background: #f5f9f7; padding: 20px; border-radius: 8px; }
+.calc-group { margin: 15px 0; }
+.calc-group label { display: block; font-weight: 600; margin-bottom: 5px; }
+.calc-group input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+.result { background: #d4f1e4; border: 2px solid #1a3d2b; border-radius: 8px; padding: 20px; text-align: center; margin-top: 20px; }
+.result-value { font-size: 28px; font-weight: 700; color: #1a3d2b; }
+.table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+.table th, .table td { padding: 10px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+.table th { background: #f5f9f7; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>Calculer ROI PAC 2026 : combien de temps avant amortissement ?</h1>
+    <p>Outil interactif : reste à charge + économies/an = amortissement réel. Données 2026 IDF.</p>
+  </div>
+
+  <div class="section">
+    <h2>Simulateur ROI PAC</h2>
+    <div class="calc">
+      <div class="calc-group">
+        <label>Coût PAC + pose (avant aides) : €</label>
+        <input type="number" id="cout_pac" value="13000" min="10000" max="20000" onchange="calculateROI()">
+      </div>
+      <div class="calc-group">
+        <label>Aides estimées (MaPrimeRénov' + CEE) : €</label>
+        <input type="number" id="aides" value="10800" min="5000" max="15000" onchange="calculateROI()">
+      </div>
+      <div class="calc-group">
+        <label>Économies chauffage estimées/an : €</label>
+        <input type="number" id="eco_par_an" value="1200" min="500" max="2500" onchange="calculateROI()">
+      </div>
+
+      <div class="result">
+        <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-bottom: 10px;">Reste à charge (après aides)</div>
+        <div class="result-value" id="reste_charge">2200€</div>
+
+        <div style="font-size: 13px; color: #666; text-transform: uppercase; margin-top: 20px; margin-bottom: 10px;">Amortissement</div>
+        <div class="result-value" id="amortissement" style="color: #28a745;">1.8 ans</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Cas réels IDF 2026</h2>
+    <table class="table">
+      <tr>
+        <th>Scénario</th>
+        <th>Coût PAC</th>
+        <th>Aides</th>
+        <th>Reste</th>
+        <th>Économies/an</th>
+        <th>Amort.</th>
+      </tr>
+      <tr>
+        <td><strong>Fioul → PAC (100m²)</strong></td>
+        <td>12 500€</td>
+        <td>10 800€</td>
+        <td>1 700€</td>
+        <td>1 200€</td>
+        <td><strong style="color: #28a745;">1.4 ans</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Gaz → PAC (100m²)</strong></td>
+        <td>12 000€</td>
+        <td>10 800€</td>
+        <td>1 200€</td>
+        <td>780€</td>
+        <td><strong style="color: #28a745;">1.5 ans</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Électrique → PAC (100m²)</strong></td>
+        <td>12 500€</td>
+        <td>10 800€</td>
+        <td>1 700€</td>
+        <td>1 860€</td>
+        <td><strong style="color: #28a745;">0.9 ans</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Exemple détaillé 20 ans</h2>
+    <table class="table">
+      <tr>
+        <th>Année</th>
+        <th>Économies cumulées</th>
+        <th>Vs reste à charge</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>0 (installation)</td>
+        <td>0€</td>
+        <td>-2 200€ (avance)</td>
+        <td>Investissement</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1 200€</td>
+        <td>-1 000€ (restant à payer)</td>
+        <td>En amortissement</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>2 400€</td>
+        <td>+200€ (rentable)</td>
+        <td><strong style="color: #28a745;">Amortie</strong></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>6 000€</td>
+        <td>+3 800€ net</td>
+        <td>Pur gain</td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td>24 000€</td>
+        <td>+21 800€ net (hors inflation)</td>
+        <td>Investissement rentable</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Devis personnalisé ?</h2>
+    <p><a href="/remplacer-gaz-pac-melun-77" style="color: #1a3d2b; font-weight: 600;">Calculer pour votre situation (devis gratuit) →</a></p>
+  </div>
+</div>
+
+<script>
+function calculateROI() {
+  const cout_pac = parseInt(document.getElementById('cout_pac').value);
+  const aides = parseInt(document.getElementById('aides').value);
+  const eco_par_an = parseInt(document.getElementById('eco_par_an').value);
+
+  const reste_charge = cout_pac - aides;
+  const amortissement = (reste_charge / eco_par_an).toFixed(1);
+
+  document.getElementById('reste_charge').textContent = reste_charge + '€';
+  document.getElementById('amortissement').textContent = amortissement + ' ans';
+}
+
+calculateROI();
+</script>
+
+</body>
+</html>
