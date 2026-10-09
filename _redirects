@@ -72,13 +72,56 @@ https://www.maprimeadapt-idf.fr/* https://maprimeadapt-idf.fr/:splat 301!
 /pac-simulateur /simulateur-pac.html 200
 /simulateur-pompe-a-chaleur /simulateur-pac.html 200
 /blog/pac /blog/pompe-a-chaleur-aides-2026.html 200
-/pac-melun /pac/melun-77.html 200
+# Phase 2 : 24 pages hyper-locales (8 communes × 3 chauffages)
+
+# Melun 77
+/remplacer-fioul-pac-melun /remplacer-fioul-pac-melun-77.html 200
+/remplacer-gaz-pac-melun /remplacer-gaz-pac-melun-77.html 200
+/remplacer-electrique-pac-melun /remplacer-electrique-pac-melun-77.html 200
+
+# Orsay 91
+/remplacer-fioul-pac-orsay /remplacer-fioul-pac-orsay-91.html 200
+/remplacer-gaz-pac-orsay /remplacer-gaz-pac-orsay-91.html 200
+/remplacer-electrique-pac-orsay /remplacer-electrique-pac-orsay-91.html 200
+
+# Boulogne-Billancourt 92
+/remplacer-fioul-pac-boulogne /remplacer-fioul-pac-boulogne-billancourt-92.html 200
+/remplacer-gaz-pac-boulogne /remplacer-gaz-pac-boulogne-billancourt-92.html 200
+/remplacer-electrique-pac-boulogne /remplacer-electrique-pac-boulogne-billancourt-92.html 200
+
+# Créteil 94
+/remplacer-fioul-pac-creteil /remplacer-fioul-pac-creteil-94.html 200
+/remplacer-gaz-pac-creteil /remplacer-gaz-pac-creteil-94.html 200
+/remplacer-electrique-pac-creteil /remplacer-electrique-pac-creteil-94.html 200
+
+# Nanterre 92
+/remplacer-fioul-pac-nanterre /remplacer-fioul-pac-nanterre-92.html 200
+/remplacer-gaz-pac-nanterre /remplacer-gaz-pac-nanterre-92.html 200
+/remplacer-electrique-pac-nanterre /remplacer-electrique-pac-nanterre-92.html 200
+
+# Villejuif 94
+/remplacer-fioul-pac-villejuif /remplacer-fioul-pac-villejuif-94.html 200
+/remplacer-gaz-pac-villejuif /remplacer-gaz-pac-villejuif-94.html 200
+/remplacer-electrique-pac-villejuif /remplacer-electrique-pac-villejuif-94.html 200
+
+# Vincennes 94
+/remplacer-fioul-pac-vincennes /remplacer-fioul-pac-vincennes-94.html 200
+/remplacer-gaz-pac-vincennes /remplacer-gaz-pac-vincennes-94.html 200
+/remplacer-electrique-pac-vincennes /remplacer-electrique-pac-vincennes-94.html 200
+
+# Saint-Denis 93
+/remplacer-fioul-pac-saint-denis /remplacer-fioul-pac-saint-denis-93.html 200
+/remplacer-gaz-pac-saint-denis /remplacer-gaz-pac-saint-denis-93.html 200
+/remplacer-electrique-pac-saint-denis /remplacer-electrique-pac-saint-denis-93.html 200
+
+# Legacy (old Phase 1)
+/pac-melun /remplacer-fioul-pac-melun-77.html 200
 /pac-meaux /pac/meaux-77.html 200
 /pac-versailles /pac/versailles-78.html 200
 /pac-mantes /pac/mantes-la-jolie-78.html 200
 /pac-argenteuil /pac/argenteuil-95.html 200
 /pac-cergy /pac/cergy-95.html 200
-/pac-creteil /pac/creteil-94.html 200
+/pac-creteil /remplacer-fioul-pac-creteil-94.html 200
 /pac-evry /pac/evry-91.html 200
 
 # Sitemap index (multi-sitemap)
