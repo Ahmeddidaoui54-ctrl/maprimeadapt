@@ -32,16 +32,24 @@ export async function onRequestPost({ request, env }) {
   try { body = await request.json(); }
   catch { return new Response(JSON.stringify({ error:'JSON invalide' }), { status:400, headers: corsHeaders(request) }); }
 
-  const prenom    = sanitize(body.prenom, 50);
-  const nom       = sanitize(body.nom, 50);
-  const telephone = sanitize(body.telephone, 20);
-  const cp        = sanitize(body.cp, 5);
-  const situation = sanitize(body.situation, 100);
-  const consent   = body.consent;
+  // Flexible field mapping (legacy + new format)
+  let prenom    = sanitize(body.prenom || '', 50);
+  let nom       = sanitize(body.nom || '', 50);
+  let telephone = sanitize(body.telephone || body.tel || '', 20);
+  let cp        = sanitize(body.cp || '', 5);
+  let situation = sanitize(body.situation || body.description || '', 100);
+  const consent = body.consent !== false; // Default to true if not provided
 
-  if(!telephone || !consent)       return err('Champs requis manquants', 400, request);
+  // If only 'nom' provided and it looks like "Prénom Nom", split it
+  if(nom && !prenom && nom.includes(' ')) {
+    const parts = nom.trim().split(/\s+/);
+    prenom = parts[0];
+    nom = parts.slice(1).join(' ');
+  }
+
+  if(!telephone)                   return err('Téléphone requis', 400, request);
   if(!isValidPhone(telephone))     return err('Téléphone invalide', 400, request);
-  if(cp && !isValidCP(cp))         return err('Code postal invalide', 400, request);
+  if(cp && !isValidCP(cp))         return err('Code postal invalide (5 chiffres)', 400, request);
 
   const BREVO_KEY  = env.BREVO_API_KEY;
   const LIST_ID    = parseInt(env.BREVO_LIST_ID || '2');

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Remplacer chaudière fioul par PAC à Orsay 91 : aides 10 800€, reste charge 2500€. Devis RGE gratuit 24h.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/remplacer-fioul-pac-orsay-91">
+<title>Remplacer fioul par PAC à Orsay 91 : aides 10 800€ cumulées</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #e8eef7 100%); color: #2c3e50; }
+.container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.hero { background: white; border-radius: 12px; padding: 50px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
+.hero h1 { font-size: 32px; font-weight: 700; color: #1a3d2b; margin-bottom: 15px; }
+.section { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 30px; }
+.section h2 { font-size: 20px; font-weight: 600; color: #1a3d2b; margin-bottom: 15px; border-bottom: 2px solid #f0f4f8; padding-bottom: 10px; }
+.form { background: #1a3d2b; color: white; border-radius: 12px; padding: 40px; }
+.form h2 { color: white; margin-bottom: 20px; }
+.form-group { margin-bottom: 15px; }
+.form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.1); color: white; }
+.btn-submit { width: 100%; padding: 12px; background: white; color: #1a3d2b; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Mon Projet Habitat - Orsay", "telephone": "06 04 43 34 20", "areaServed": {"@type": "City", "name": "Orsay"}}
+</script>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>Remplacer fioul par PAC à Orsay 91 : aides 10 800€ cumulées</h1>
+    <p><strong>Orsay (91) :</strong> Maison au fioul ? PAC 12-14k€ TTC → 10 800€ aides → reste 2500€. Aides MaPrimeRénov' 5k€ + CEE 9k€ + TVA 5.5%. Économies +1200€/an vs fioul. Devis RGE gratuit 24h.</p>
+  </div>
+  <div class="section">
+    <h2>Orsay 91 : situation fioul et aides</h2>
+    <p><strong>Orsay (91) :</strong> Climat continental modéré, 2400 heures chauffage/an. Maisons années 1970-1990 = cuves fioul standard. <strong>Coût fioul 2026 :</strong> 2000-2200€/an. <strong>PAC économie :</strong> 900€/an électricité = gain net 1100€/an.</p>
+    <p style="margin-top: 15px;"><strong>Aides MaPrimeRénov' Orsay :</strong> 5000€ forfait bleu IDF. <strong>CEE :</strong> 9000€. <strong>TVA 5.5% :</strong> 1500€. <strong>Bonus régional :</strong> 1500€. <strong>Total :</strong> 10 800€.</p>
+  </div>
+  <div class="section">
+    <h2>Exemple Orsay 91 : maison 110 m² au fioul</h2>
+    <p><strong>Coût PAC :</strong> 13 500€ TTC. <strong>Aides déduites :</strong> 10 800€. <strong>Reste :</strong> 2700€ (ou 45€/mois Éco-PTZ 0%). <strong>Économies/an :</strong> 1100€. <strong>Amortissement :</strong> 2-3 ans.</p>
+  </div>
+  <div class="form">
+    <h2>Devis PAC gratuit Orsay 91</h2>
+    <form onsubmit="submitForm(event)">
+      <div class="form-group">
+        <label>Nom *</label>
+        <input type="text" name="nom" required>
+      </div>
+      <div class="form-group">
+        <label>Téléphone *</label>
+        <input type="tel" name="tel" placeholder="06 XX XX XX XX" required>
+      </div>
+      <div class="form-group">
+        <label>Surface m²</label>
+        <input type="number" name="surface" placeholder="110">
+      </div>
+      <button type="submit" class="btn-submit">Recevoir devis Orsay RGE</button>
+    </form>
+  </div>
+</div>
+<script>
+function submitForm(e) {
+  e.preventDefault();
+  const data = { nom: e.target.nom.value, tel: e.target.tel.value, surface: e.target.surface.value, source: 'remplacer-fioul-pac-orsay-91', commune: 'Orsay' };
+  fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    .then(r => r.json())
+    .then(r => { if(r.ok) { alert('Devis en 24-48h\n06 04 43 34 20'); e.target.reset(); } });
+}
+</script>
+</body>
+</html>

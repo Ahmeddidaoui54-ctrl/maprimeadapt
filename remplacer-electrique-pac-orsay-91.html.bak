@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Remplacer électrique par PAC à Orsay 91 : économisez 150€/mois. Aides 10 800€. RGE gratuit 24h.">
+<link rel="canonical" href="https://www.maprimeadapt-idf.fr/remplacer-electrique-pac-orsay-91">
+<title>Remplacer électrique par PAC à Orsay 91 : économisez 150€/mois</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #e8eef7 100%); color: #2c3e50; }
+.container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+.hero { background: white; border-radius: 12px; padding: 50px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.hero h1 { font-size: 32px; font-weight: 700; color: #1a3d2b; }
+.section { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 30px; }
+.form { background: #1a3d2b; color: white; border-radius: 12px; padding: 40px; }
+.form-group { margin-bottom: 15px; }
+.form-group input { width: 100%; padding: 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.1); color: white; }
+.btn-submit { width: 100%; padding: 12px; background: white; color: #1a3d2b; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>Remplacer électrique par PAC à Orsay 91 : économisez 150€/mois</h1>
+    <p><strong>Orsay (91) électrique grille-pain ?</strong> PAC COP 3-4 = 280€/mois → 125€/mois. Économisez 155€/mois = 1860€/an. Aides 10 800€ cumulées.</p>
+  </div>
+  <div class="section">
+    <h2>Électrique vs PAC Orsay 91</h2>
+    <p><strong>Coût électrique :</strong> 280€/mois. <strong>Avec PAC :</strong> 125€/mois. <strong>Économie :</strong> 155€/mois = 1860€/an. COP 3-4 = 3-4× plus efficace que résistance.</p>
+  </div>
+  <div class="form">
+    <h2>Devis PAC Orsay 91</h2>
+    <form onsubmit="submitForm(event)">
+      <div class="form-group"><label>Nom *</label><input type="text" name="nom" required></div>
+      <div class="form-group"><label>Téléphone *</label><input type="tel" name="tel" placeholder="06 XX XX XX XX" required></div>
+      <button type="submit" class="btn-submit">Devis (électrique→PAC)</button>
+    </form>
+  </div>
+</div>
+<script>
+function submitForm(e) {
+  e.preventDefault();
+  fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nom: e.target.nom.value, tel: e.target.tel.value, source: 'remplacer-electrique-pac-orsay-91', commune: 'Orsay' }) }).then(r => r.json()).then(r => { if(r.ok) alert('Devis en 24-48h'); });
+}
+</script>
+</body>
+</html>
